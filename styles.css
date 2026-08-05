@@ -865,10 +865,49 @@
     }
     .lib-empty[hidden] { display: none; }
 
+    /* Pack select · 80 packs is far too many for chips, so the group chips narrow to
+       eight and this narrows within them. Sized to fit the longest pack name so the
+       control doesn't resize as the option changes and shove the count sideways. */
+    .lib-pack {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex: 0 1 210px;
+    }
+    .lib-pack .material-symbols-rounded {
+      position: absolute;
+      left: 12px;
+      font-size: 20px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    .lib-pack-select {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 22px;
+      width: 100%;
+      padding: 10px 12px 10px 40px;
+      border: 1px solid var(--border-input);
+      border-radius: var(--radius-pill);
+      background: var(--surface-input);
+      color: var(--text);
+      min-height: var(--touch-target-min);
+      cursor: pointer;
+      /* The native arrow is the one piece of chrome worth keeping: it is the only
+         thing that tells you this is a menu and not the text field beside it. */
+    }
+    .lib-pack-select:hover { border-color: var(--neutral-400); }
+    .lib-pack-select:focus {
+      outline: none;
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px var(--sky-200);
+    }
+    .lib-pack:focus-within .material-symbols-rounded { color: var(--brand); }
+
     /* ---------- Icon library ---------- */
     .glyph-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
       gap: var(--space-3);
     }
     .glyph-cell {
@@ -881,6 +920,11 @@
       border: 1px solid var(--border);
       border-radius: var(--corner-radius-base);
       transition: border-color 120ms ease, box-shadow 120ms ease;
+      /* Reserved so the grid doesn't reflow as lazily-masked glyphs paint in and
+         one- and two-line names disagree about height. With 1,490 cells, a grid that
+         settles row by row while you scroll is unusable. */
+      min-height: 132px;
+      justify-content: flex-start;
     }
     .glyph-cell[hidden] { display: none; }
     .glyph-cell:hover,
@@ -890,12 +934,18 @@
     }
     /* The glyph is painted as a MASK, not an <img>. An <img> renders the file's own
        colors and cannot inherit currentColor, so a single monochrome icon could not
-       follow the theme — dark mode would need a second copy of every file. Masking
-       paints the file's alpha channel with this element's color instead: one file,
-       both themes, and the file stays a normal downloadable SVG. */
+       follow the theme — dark mode would need a second copy of all 1,490 files.
+       Masking paints the file's alpha channel with this element's color instead: one
+       file, both themes, and the file stays a normal downloadable SVG.
+
+       --icon is set by JavaScript as the tile nears the viewport, not in the markup.
+       1,490 mask URLs declared up front is 1,490 requests on load. Until it is set the
+       mask resolves to nothing and the box is simply empty, which is the correct
+       intermediate state. */
     .glyph-cell-glyph {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
+      flex: none;
       background: currentColor;
       color: var(--brand-deep);
       -webkit-mask: var(--icon) center / contain no-repeat;
@@ -909,15 +959,45 @@
       text-align: center;
       overflow-wrap: anywhere;
     }
-    /* Revealed on hover or keyboard focus, like .asset-dl — but unlike the download
-       button it also has to survive a touch device, where there is no hover. The
-       coarse-pointer query at the end of this block keeps it permanently visible
-       there rather than leaving it unreachable. */
-    .glyph-cell-copy {
+    /* Format pills. Always visible rather than revealed on hover: they are the whole
+       point of the page, and hiding the primary action behind a hover state means
+       nobody on a touch device finds it. */
+    .glyph-cell-actions {
+      display: flex;
+      gap: 4px;
+      margin-top: auto;
+      padding-top: var(--space-2);
+    }
+    .glyph-dl {
       font-family: var(--font-micro);
       font-size: 11px;
       font-weight: 700;
-      padding: 4px 10px;
+      letter-spacing: 0.02em;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 120ms ease, border-color 120ms ease;
+    }
+    .glyph-dl:hover,
+    .glyph-dl:focus-visible { color: var(--brand); border-color: var(--brand); }
+    .glyph-dl:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+    .glyph-dl:active { transform: translateY(1px); }
+
+    /* Copy sits in the corner rather than in the row: three pills don't fit a 140px
+       tile, and of the three this is the one only a developer wants. Revealed on
+       hover or keyboard focus, and pinned visible on touch where there is no hover. */
+    .glyph-cell-copy {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
       border-radius: var(--radius-pill);
       border: 1px solid var(--border);
       background: var(--surface);
@@ -926,11 +1006,12 @@
       opacity: 0;
       transition: opacity 120ms ease, color 120ms ease, border-color 120ms ease;
     }
+    .glyph-cell-copy .material-symbols-rounded { font-size: 16px; }
     .glyph-cell:hover .glyph-cell-copy,
     .glyph-cell:focus-within .glyph-cell-copy { opacity: 1; }
     .glyph-cell-copy:hover,
     .glyph-cell-copy:focus-visible { color: var(--brand); border-color: var(--brand); }
-    .glyph-cell-copy:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+    .glyph-cell-copy:focus-visible { opacity: 1; outline: 2px solid var(--brand); outline-offset: 2px; }
     .glyph-cell-copy:active { transform: translateY(1px); }
     @media (hover: none) {
       .glyph-cell-copy { opacity: 1; }
@@ -939,17 +1020,15 @@
     /* Placeholder assets · a visible diagonal hatch, because a placeholder that looks
        like a finished asset is worse than an empty grid — someone will ship it. Every
        stub in assets/ carries "placeholder": true in its manifest row; delete the flag
-       when the real file lands. */
-    [data-placeholder="true"] .glyph-cell-glyph { color: var(--neutral-400); }
-    [data-placeholder="true"] .photo-card-img,
-    .glyph-cell[data-placeholder="true"] {
+       when the real file lands.
+       Only the image gallery uses this now: the icons are real. */
+    [data-placeholder="true"] .photo-card-img {
       background-image: repeating-linear-gradient(
         45deg,
         transparent 0 6px,
         rgba(13, 143, 169, 0.09) 6px 12px
       );
     }
-    [data-placeholder="true"] .glyph-cell-name::after,
     [data-placeholder="true"] .photo-card-meta::after {
       content: ' · placeholder';
       color: var(--accent);
@@ -1090,6 +1169,8 @@
     }
 
     /* ---------- Asset download (JS-injected hover button on any asset tile) ---------- */
+    /* .glyph-cell is here for its own corner Copy button, not for .asset-dl — the
+       icon tiles carry explicit SVG/PNG links instead of a hover download. */
     .logo-card, .glyph-cell, .photo-card-img { position: relative; }
     .asset-dl {
       position: absolute;
@@ -1123,7 +1204,6 @@
     .asset-dl:focus-visible { opacity: 1; transform: none; outline: 2px solid var(--brand); outline-offset: 2px; }
     .asset-dl:active { transform: translateY(1px); }
     .logo-card:hover .asset-dl, .logo-card:focus-within .asset-dl,
-    .glyph-cell:hover .asset-dl, .glyph-cell:focus-within .asset-dl,
     .photo-card:hover .asset-dl, .photo-card:focus-within .asset-dl {
       opacity: 1;
       transform: none;
@@ -1599,10 +1679,14 @@
       .rba-toast { transition: opacity 160ms ease; }
     }
 
+    /* Its own row under the toolbar, not inside it: eight group chips wrapping
+       between a search field and a download button made the toolbar reflow into
+       three ragged lines. */
     .lib-filter {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
+      margin-bottom: var(--space-4);
     }
     .lib-filter-btn {
       font-family: var(--font-sans);

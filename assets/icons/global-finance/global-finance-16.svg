@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 64 64">
+  <!-- Generator: Adobe Illustrator 29.5.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 137)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: none;
+        stroke: #231f20;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <path class="st0" d="M43.05,55.09l-11.05,6.49-11.05-6.49c-6.94-4.08-11.2-11.52-11.2-19.57V5.59l8.51-1.76c9.06-1.87,18.41-1.87,27.47,0l8.51,1.76v29.93c0,8.05-4.26,15.5-11.2,19.57Z"/>
+  <circle class="st0" cx="32" cy="28.18" r="18.24"/>
+  <ellipse class="st0" cx="32" cy="28.18" rx="9.84" ry="18.24"/>
+  <ellipse class="st0" cx="32" cy="28.18" rx="18.24" ry="9.84"/>
+  <path class="st0" d="M29.66,30.52c0,1.29,1.05,2.34,2.34,2.34s2.34-1.05,2.34-2.34-1.05-2.34-2.34-2.34-2.34-1.05-2.34-2.34,1.05-2.34,2.34-2.34,2.34,1.05,2.34,2.34"/>
+  <line class="st0" x1="32" y1="23.51" x2="32" y2="21.58"/>
+  <line class="st0" x1="32" y1="34.79" x2="32" y2="32.86"/>
+</svg>

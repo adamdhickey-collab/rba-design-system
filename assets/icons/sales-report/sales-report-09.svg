@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 64 64">
+  <!-- Generator: Adobe Illustrator 29.5.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 137)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: none;
+        stroke: #282525;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <circle class="st0" cx="24.29" cy="24.29" r="22.11"/>
+  <circle class="st0" cx="24.29" cy="24.29" r="17.83"/>
+  <line class="st0" x1="42.77" y1="45.65" x2="38.42" y2="41.3"/>
+  <line class="st0" x1="45.65" y1="42.77" x2="41.3" y2="38.42"/>
+  <rect class="st0" x="46.72" y="41.12" width="9.91" height="21.13" rx="2.02" ry="2.02" transform="translate(-21.41 51.68) rotate(-45)"/>
+  <line class="st0" x1="12.25" y1="31" x2="37.2" y2="31"/>
+  <line class="st0" x1="32.94" y1="13.46" x2="32.94" y2="27.19"/>
+  <line class="st0" x1="27.46" y1="10.33" x2="27.46" y2="27.19"/>
+  <line class="st0" x1="21.99" y1="20.44" x2="21.99" y2="27.19"/>
+  <line class="st0" x1="16.51" y1="16.27" x2="16.51" y2="27.19"/>
+</svg>

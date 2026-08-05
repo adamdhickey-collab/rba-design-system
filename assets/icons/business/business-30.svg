@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.2.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#231F20;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g>
+	<line class="st0" x1="51.71" y1="43.35" x2="51.71" y2="43.59"/>
+	<path class="st0" d="M51.71,46.14v1.73l-7.36,7.8H7.85c-1.18,0-2.13-0.95-2.13-2.13V14.1c0-1.18,0.95-2.13,2.13-2.13h41.73
+		c1.18,0,2.13,0.95,2.13,2.13v26.83"/>
+	<path class="st0" d="M51.71,14.1l6.54,35.62c0.22,1.21-0.7,2.32-1.93,2.32h-8.27"/>
+	<polyline class="st0" points="51.08,47.9 44.35,47.87 44.35,55.67 	"/>
+	<line class="st0" x1="11.75" y1="20.19" x2="51.19" y2="20.19"/>
+	<line class="st0" x1="8.16" y1="20.19" x2="8.46" y2="20.19"/>
+	<g>
+		<line class="st0" x1="11.31" y1="25.08" x2="15.64" y2="28.82"/>
+		<line class="st0" x1="15.71" y1="25.16" x2="11.25" y2="28.75"/>
+	</g>
+	<g>
+		<line class="st0" x1="11.31" y1="35.61" x2="15.64" y2="39.35"/>
+		<line class="st0" x1="15.71" y1="35.69" x2="11.25" y2="39.27"/>
+	</g>
+	<g>
+		<line class="st0" x1="11.31" y1="46.14" x2="15.64" y2="49.87"/>
+		<line class="st0" x1="15.71" y1="46.21" x2="11.25" y2="49.8"/>
+	</g>
+	<rect x="23.2" y="24.6" class="st0" width="4.7" height="4.7"/>
+	<rect x="23.2" y="35.13" class="st0" width="4.7" height="4.7"/>
+	<rect x="23.2" y="45.65" class="st0" width="4.7" height="4.7"/>
+	<rect x="35.38" y="24.6" class="st0" width="4.7" height="4.7"/>
+	<rect x="35.38" y="35.13" class="st0" width="4.7" height="4.7"/>
+	<rect x="35.38" y="45.65" class="st0" width="4.7" height="4.7"/>
+	<path class="st0" d="M13.51,16.35h-0.12c-1.18,0-2.14-0.96-2.14-2.14v-3.74c0-1.18,0.96-2.14,2.14-2.14h0.12
+		c1.18,0,2.14,0.96,2.14,2.14v1.5"/>
+	<path class="st0" d="M23.48,16.35h-0.12c-1.18,0-2.14-0.96-2.14-2.14v-3.74c0-1.18,0.96-2.14,2.14-2.14h0.12
+		c1.18,0,2.14,0.96,2.14,2.14v1.5"/>
+	<path class="st0" d="M33.45,16.35h-0.12c-1.18,0-2.14-0.96-2.14-2.14v-3.74c0-1.18,0.96-2.14,2.14-2.14h0.12
+		c1.18,0,2.14,0.96,2.14,2.14v1.5"/>
+	<path class="st0" d="M43.42,16.35H43.3c-1.18,0-2.14-0.96-2.14-2.14v-3.74c0-1.18,0.96-2.14,2.14-2.14h0.12
+		c1.18,0,2.14,0.96,2.14,2.14v1.5"/>
+</g>
+</svg>

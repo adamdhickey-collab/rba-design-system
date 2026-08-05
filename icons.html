@@ -91,35 +91,43 @@
         <div class="container">
           <p class="hero-eyebrow">Library</p>
           <h1 class="hero-title">Icons</h1>
-          <p class="hero-sub">Single-color SVGs that take the color of whatever they sit in. Search by name or keyword, download the file, or copy the markup.</p>
+          <p class="hero-sub">1,490 outline icons in 80 packs. One weight, one grid, no color of their own — they take the color of whatever they sit in. Take any one as an SVG or a PNG.</p>
         </div>
       </header>
 
       <section class="block" id="icons">
         <div class="container lib-scope">
 
-          <div class="callout callout--warn">
-            <span class="material-symbols-rounded" aria-hidden="true">construction</span>
+          <div class="callout">
+            <span class="material-symbols-rounded" aria-hidden="true">edit_note</span>
             <div class="callout-body">
-              <p><strong>These twelve icons are placeholders.</strong> They're here so search, filtering, download and copy can be verified end to end. Drop real 24×24 SVGs into <code>assets/icons/</code>, add a row to the manifest at the bottom of this page, and delete the <code>"placeholder"</code> flag. Full instructions in <code>assets/icons/README.md</code>.</p>
+              <p><strong>The names are still the ones the files shipped with.</strong> <code>Finance-04</code> tells you nothing, so search matches the pack and its keywords rather than the filename — typing <em>chart</em> or <em>invoice</em> or <em>hiring</em> works today. Real per-icon names are the next pass, and they slot into the manifest without moving a file.</p>
             </div>
           </div>
 
           <div class="lib-controls">
             <label class="lib-search">
               <span class="material-symbols-rounded" aria-hidden="true">search</span>
-              <input type="search" class="lib-search-input" placeholder="Search icons…" aria-label="Search icons by name or keyword" autocomplete="off" />
+              <input type="search" class="lib-search-input" placeholder="Search 1,490 icons…" aria-label="Search icons by name, pack or keyword" autocomplete="off" />
             </label>
-            <div class="lib-filter" role="group" aria-label="Filter icons by category"></div>
+            <div class="lib-pack">
+              <span class="material-symbols-rounded" aria-hidden="true">category</span>
+              <select class="lib-pack-select" aria-label="Filter icons by pack"></select>
+            </div>
             <span class="lib-count" role="status" aria-live="polite"></span>
             <div class="lib-bundle">
-              <a class="btn btn-secondary btn--sm" href="downloads/rba-icons.zip" download>
+              <a class="btn btn-secondary btn--sm" href="downloads/rba-icons-svg.zip" download>
                 <span class="material-symbols-rounded" aria-hidden="true">folder_zip</span>
-                <span>Download all</span>
+                <span>All SVGs</span>
+              </a>
+              <a class="btn btn-secondary btn--sm" href="downloads/rba-icons-png.zip" download>
+                <span class="material-symbols-rounded" aria-hidden="true">folder_zip</span>
+                <span>All PNGs</span>
               </a>
               <span class="lib-bundle-note">built <span class="js-bundle-date">—</span></span>
             </div>
           </div>
+          <div class="lib-filter" role="group" aria-label="Filter icons by group"></div>
 
           <div class="glyph-grid" id="icon-grid"></div>
           <p class="lib-empty" hidden>No icons match that. Try a shorter word, or clear the filter.</p>
@@ -127,9 +135,11 @@
           <noscript>
             <p class="lib-empty">
               The icon grid is rendered from the manifest below, which needs JavaScript.
-              You can still take the whole set as a zip:
-              <a href="downloads/rba-icons.zip" download>rba-icons.zip</a>, or browse the
-              individual files under <code>assets/icons/</code> in the repository.
+              You can still take the set as a zip —
+              <a href="downloads/rba-icons-svg.zip" download>rba-icons-svg.zip</a> or
+              <a href="downloads/rba-icons-png.zip" download>rba-icons-png.zip</a> — or browse
+              the individual files under <code>assets/icons/</code> in the repository, where
+              each pack has its own folder.
             </p>
           </noscript>
 
@@ -138,11 +148,13 @@
             <table class="table">
               <thead><tr><th>Rule</th><th>Requirement</th></tr></thead>
               <tbody>
-                <tr><td>Color</td><td>The file has no color of its own — it inherits. Set <code>color</code> on the element and the icon follows, which is why the same file works in light and dark.</td></tr>
-                <tr><td>Size</td><td>Drawn on a 24×24 grid. Use it at 16, 20, 24, 32 or 40px. Off-grid sizes blur the strokes.</td></tr>
+                <tr><td>Which format</td><td>SVG unless something refuses it. It stays sharp at any size and takes color from whatever it sits in. The PNG is 267×267 on transparency, drawn in near-black — reach for it only where SVG won't go, and remember it will disappear on a dark background.</td></tr>
+                <tr><td>Color</td><td>The SVG carries a near-black stroke, but on this site it is painted through a CSS mask so it follows the theme. In your own page, either recolor the stroke or mask it the same way — <code>background: currentColor</code> with <code>mask: url(icon.svg)</code>. That is what makes one file work in light and dark.</td></tr>
+                <tr><td>Size</td><td>Drawn on a 64×64 grid at a 2px stroke. Use it at 24px and up; below about 20px the strokes close in on each other and the detail turns to mud.</td></tr>
+                <tr><td>Weight</td><td>Every icon in the set is the same outline weight. Don't mix in a filled or duotone icon from elsewhere — one odd weight on a slide is more noticeable than a missing icon.</td></tr>
                 <tr><td>Pairing with text</td><td>Align to the text's optical centre, not its baseline, and keep 8px between glyph and label.</td></tr>
                 <tr><td>Accessibility</td><td>An icon alone on a control is not a label. Give the control real text or an <code>aria-label</code>; mark decorative icons <code>aria-hidden="true"</code>.</td></tr>
-                <tr><td>Never</td><td>Recolor parts of a single icon, add a second icon family alongside these, rotate or mirror to invent a new meaning, or apply effects.</td></tr>
+                <tr><td>Never</td><td>Recolor parts of a single icon, rotate or mirror one to invent a new meaning, or apply effects.</td></tr>
               </tbody>
             </table>
           </div>
@@ -156,30 +168,108 @@
             <p class="footer-mark">Connect Design System</p>
             <p class="footer-meta u-mt-xs">Brand foundations &amp; asset library</p>
           </div>
-          <p class="footer-meta">Missing an icon? Adding one is a file plus a manifest row — see the README in <code>assets/icons/</code>.</p>
+          <p class="footer-meta">Missing an icon? Drop the pack into <code>icons/</code> and run <code>tools/icons-sync.py</code> — see the README in <code>assets/icons/</code>.</p>
         </div>
       </footer>
 
-  <!-- Icon manifest · the source of truth for this page. The grid above is rendered
-       from it, so adding an icon is two steps: drop the SVG in assets/icons/, add a
-       row here. Inlined rather than fetched so the page also works opened straight
-       off disk — see the "Asset library" block in app.js for why. -->
+  <!-- Icon manifest · GENERATED. Run tools/icons-sync.py to rewrite this block; do not
+       hand-edit anything but the "labels" maps.
+
+       It lists PACKS, not icons. Every file is <slug>-NN.svg with a matching .png, so a
+       slug plus a count reconstructs all 1,490 paths — 13 KB here instead of the ~200 KB
+       a flat list would cost. Inlined rather than fetched so the page also works opened
+       straight off disk; see the "Icon library" block in app.js.
+
+       "labels" is where real names go. { "04": "invoice-paid" } renames Finance-04
+       everywhere it appears and adds the name to search. The sync script reads this
+       block before it rewrites it, so labels survive a re-sync — that is the one thing
+       it guarantees. -->
   <script type="application/json" id="icon-manifest">
   {
-    "version": "1.0",
-    "items": [
-      { "name": "search",      "file": "assets/icons/search.svg",      "category": "Interface",  "tags": ["find", "magnify", "lookup"],                  "placeholder": true },
-      { "name": "download",    "file": "assets/icons/download.svg",    "category": "Interface",  "tags": ["save", "export", "arrow"],                    "placeholder": true },
-      { "name": "check",       "file": "assets/icons/check.svg",       "category": "Interface",  "tags": ["done", "complete", "tick", "success"],        "placeholder": true },
-      { "name": "cloud",       "file": "assets/icons/cloud.svg",       "category": "Services",   "tags": ["infrastructure", "hosting", "azure", "aws"],  "placeholder": true },
-      { "name": "code",        "file": "assets/icons/code.svg",        "category": "Services",   "tags": ["engineering", "software", "development"],     "placeholder": true },
-      { "name": "settings",    "file": "assets/icons/settings.svg",    "category": "Services",   "tags": ["operations", "config", "gear", "managed"],    "placeholder": true },
-      { "name": "chart-bar",   "file": "assets/icons/chart-bar.svg",   "category": "Data",       "tags": ["analytics", "report", "metrics", "graph"],    "placeholder": true },
-      { "name": "chart-line",  "file": "assets/icons/chart-line.svg",  "category": "Data",       "tags": ["trend", "growth", "analytics", "forecast"],   "placeholder": true },
-      { "name": "database",    "file": "assets/icons/database.svg",    "category": "Data",       "tags": ["storage", "sql", "warehouse", "records"],     "placeholder": true },
-      { "name": "building",    "file": "assets/icons/building.svg",    "category": "Industries", "tags": ["enterprise", "office", "corporate"],          "placeholder": true },
-      { "name": "factory",     "file": "assets/icons/factory.svg",     "category": "Industries", "tags": ["manufacturing", "industrial", "plant"],       "placeholder": true },
-      { "name": "shield",      "file": "assets/icons/shield.svg",      "category": "Industries", "tags": ["security", "insurance", "protect", "risk"],   "placeholder": true }
+    "version": "3.0",
+    "generated": "2026-08-05",
+    "total": 1490,
+    "packs": [
+      {"slug": "blueprint", "name": "Blueprint", "group": "Business & strategy", "count": 16, "keywords": "plan draft architecture drawing spec design document scheme"},
+      {"slug": "business", "name": "Business", "group": "Business & strategy", "count": 30, "keywords": "company enterprise corporate commerce growth deal"},
+      {"slug": "business-report", "name": "Business Report", "group": "Business & strategy", "count": 16, "keywords": "chart graph analysis summary results dashboard metrics kpi"},
+      {"slug": "choice", "name": "Choice", "group": "Business & strategy", "count": 16, "keywords": "decision option select fork alternative path pick"},
+      {"slug": "compass", "name": "Compass", "group": "Business & strategy", "count": 16, "keywords": "direction navigate orientation guidance north bearing"},
+      {"slug": "market-study", "name": "Market Study", "group": "Business & strategy", "count": 16, "keywords": "research survey analysis segment competitor insight"},
+      {"slug": "mindset", "name": "Mindset", "group": "Business & strategy", "count": 16, "keywords": "thinking attitude brain mindfulness psychology growth"},
+      {"slug": "motivation", "name": "Motivation", "group": "Business & strategy", "count": 30, "keywords": "drive inspire energy goal ambition encouragement"},
+      {"slug": "opinion", "name": "Opinion", "group": "Business & strategy", "count": 16, "keywords": "feedback review rating comment survey voice sentiment"},
+      {"slug": "prototype", "name": "Prototype", "group": "Business & strategy", "count": 16, "keywords": "wireframe mockup mvp draft iteration concept model"},
+      {"slug": "route", "name": "Route", "group": "Business & strategy", "count": 16, "keywords": "roadmap path journey milestone map direction step"},
+      {"slug": "vision", "name": "Vision", "group": "Business & strategy", "count": 16, "keywords": "strategy future goal target telescope foresight ambition"},
+      {"slug": "wisdom", "name": "Wisdom", "group": "Business & strategy", "count": 16, "keywords": "knowledge insight experience learning owl advice"},
+      {"slug": "big-data", "name": "Big Data", "group": "Data & analytics", "count": 16, "keywords": "database warehouse lake pipeline volume storage server cluster"},
+      {"slug": "business-analytics", "name": "Business Analytics", "group": "Data & analytics", "count": 16, "keywords": "chart graph dashboard metrics kpi report insight bi power"},
+      {"slug": "neuroscience", "name": "Neuroscience", "group": "Data & analytics", "count": 16, "keywords": "brain ai machine learning neural network cognition intelligence"},
+      {"slug": "robotics", "name": "Robotics", "group": "Data & analytics", "count": 30, "keywords": "robot automation ai bot machine rpa android"},
+      {"slug": "circuit", "name": "Circuit", "group": "Technology", "count": 16, "keywords": "chip hardware board electronics processor iot embedded"},
+      {"slug": "front-end-developer", "name": "Front End Developer", "group": "Technology", "count": 16, "keywords": "code programming web html css javascript engineer build"},
+      {"slug": "ftp", "name": "FTP", "group": "Technology", "count": 16, "keywords": "transfer upload download server file network protocol sync"},
+      {"slug": "it-administrator", "name": "IT Administrator", "group": "Technology", "count": 16, "keywords": "sysadmin server infrastructure support network ops helpdesk"},
+      {"slug": "link", "name": "Link", "group": "Technology", "count": 16, "keywords": "url hyperlink chain connect share reference anchor"},
+      {"slug": "troubleshooting", "name": "Troubleshooting", "group": "Technology", "count": 16, "keywords": "debug fix repair support wrench problem error diagnose"},
+      {"slug": "validation", "name": "Validation", "group": "Technology", "count": 16, "keywords": "check verify approve test quality confirm tick compliance"},
+      {"slug": "website-builder", "name": "Website Builder", "group": "Technology", "count": 16, "keywords": "web page cms layout template site design browser"},
+      {"slug": "ai-finance", "name": "AI Finance", "group": "Finance & sales", "count": 16, "keywords": "artificial intelligence machine learning fintech automation money"},
+      {"slug": "audit", "name": "Audit", "group": "Finance & sales", "count": 16, "keywords": "compliance review inspection accounting check control governance"},
+      {"slug": "distributor", "name": "Distributor", "group": "Finance & sales", "count": 16, "keywords": "supply chain wholesale channel partner logistics reseller"},
+      {"slug": "finance", "name": "Finance", "group": "Finance & sales", "count": 30, "keywords": "money cash budget accounting bank currency dollar payment"},
+      {"slug": "fintech", "name": "Fintech", "group": "Finance & sales", "count": 16, "keywords": "digital banking payment wallet crypto mobile money app"},
+      {"slug": "global-finance", "name": "Global Finance", "group": "Finance & sales", "count": 16, "keywords": "international currency exchange world market forex trade"},
+      {"slug": "invoice", "name": "Invoice", "group": "Finance & sales", "count": 16, "keywords": "bill receipt payment billing statement account due"},
+      {"slug": "monetization", "name": "Monetization", "group": "Finance & sales", "count": 16, "keywords": "revenue income earnings profit pricing subscription monetise"},
+      {"slug": "online-shopping", "name": "Online Shopping", "group": "Finance & sales", "count": 30, "keywords": "ecommerce cart basket retail checkout store buy commerce"},
+      {"slug": "sales", "name": "Sales", "group": "Finance & sales", "count": 16, "keywords": "selling revenue deal pipeline target quota conversion"},
+      {"slug": "sales-report", "name": "Sales Report", "group": "Finance & sales", "count": 16, "keywords": "chart graph revenue forecast performance dashboard metrics"},
+      {"slug": "savings", "name": "Savings", "group": "Finance & sales", "count": 16, "keywords": "piggy bank deposit interest fund reserve nest egg"},
+      {"slug": "administrator", "name": "Administrator", "group": "People & teams", "count": 16, "keywords": "admin manager user role permission account staff"},
+      {"slug": "client", "name": "Client", "group": "People & teams", "count": 16, "keywords": "customer account stakeholder buyer relationship crm"},
+      {"slug": "collaboration", "name": "Collaboration", "group": "People & teams", "count": 16, "keywords": "teamwork partnership together cooperate group handshake"},
+      {"slug": "community", "name": "Community", "group": "People & teams", "count": 16, "keywords": "group people network social members audience together"},
+      {"slug": "consultant", "name": "Consultant", "group": "People & teams", "count": 16, "keywords": "advisor expert specialist professional adviser engagement"},
+      {"slug": "customer-service", "name": "Customer Service", "group": "People & teams", "count": 30, "keywords": "support helpdesk call centre agent chat assistance"},
+      {"slug": "expert", "name": "Expert", "group": "People & teams", "count": 16, "keywords": "specialist professional skill mastery authority guru"},
+      {"slug": "freelancer", "name": "Freelancer", "group": "People & teams", "count": 16, "keywords": "contractor remote independent gig self employed"},
+      {"slug": "internship", "name": "Internship", "group": "People & teams", "count": 16, "keywords": "trainee junior graduate placement apprentice learning"},
+      {"slug": "leadership", "name": "Leadership", "group": "People & teams", "count": 16, "keywords": "manager executive director boss lead vision team"},
+      {"slug": "mentoring", "name": "Mentoring", "group": "People & teams", "count": 16, "keywords": "coaching training guidance teach develop support growth"},
+      {"slug": "referral", "name": "Referral", "group": "People & teams", "count": 16, "keywords": "recommend refer word of mouth invite share network"},
+      {"slug": "teamwork", "name": "Teamwork", "group": "People & teams", "count": 30, "keywords": "collaboration group together cooperate squad crew"},
+      {"slug": "vip", "name": "VIP", "group": "People & teams", "count": 16, "keywords": "premium priority exclusive loyalty tier elite member"},
+      {"slug": "working-shift", "name": "Working Shift", "group": "People & teams", "count": 16, "keywords": "roster schedule hours rota time clock attendance"},
+      {"slug": "catalog", "name": "Catalog", "group": "Documents & legal", "count": 16, "keywords": "catalogue brochure listing product index directory"},
+      {"slug": "certificate", "name": "Certificate", "group": "Documents & legal", "count": 16, "keywords": "award diploma accreditation badge qualification credential"},
+      {"slug": "copyright", "name": "Copyright", "group": "Documents & legal", "count": 30, "keywords": "ip intellectual property trademark licence legal rights"},
+      {"slug": "employment-contract", "name": "Employment Contract", "group": "Documents & legal", "count": 16, "keywords": "hr agreement offer hire signature terms job"},
+      {"slug": "journal", "name": "Journal", "group": "Documents & legal", "count": 16, "keywords": "notebook diary log record publication write"},
+      {"slug": "legal-document", "name": "Legal Document", "group": "Documents & legal", "count": 16, "keywords": "law contract agreement court compliance policy terms"},
+      {"slug": "license", "name": "License", "group": "Documents & legal", "count": 16, "keywords": "licence permit certificate authorisation entitlement key"},
+      {"slug": "office-document", "name": "Office Document", "group": "Documents & legal", "count": 16, "keywords": "file paper word docx folder archive record"},
+      {"slug": "paperwork", "name": "Paperwork", "group": "Documents & legal", "count": 16, "keywords": "forms admin filing documents bureaucracy record"},
+      {"slug": "breaking-news", "name": "Breaking News", "group": "Communication & marketing", "count": 16, "keywords": "alert headline urgent bulletin press media announcement"},
+      {"slug": "communication", "name": "Communication", "group": "Communication & marketing", "count": 30, "keywords": "message chat email call talk conversation contact"},
+      {"slug": "creative-skills", "name": "Creative Skills", "group": "Communication & marketing", "count": 16, "keywords": "design art idea craft illustration creativity make"},
+      {"slug": "design-agency", "name": "Design Agency", "group": "Communication & marketing", "count": 16, "keywords": "studio branding creative art direction ux ui portfolio"},
+      {"slug": "flyer", "name": "Flyer", "group": "Communication & marketing", "count": 16, "keywords": "leaflet poster print handout promotion advert"},
+      {"slug": "news", "name": "News", "group": "Communication & marketing", "count": 30, "keywords": "press media article newspaper journalism headline"},
+      {"slug": "newsletter", "name": "Newsletter", "group": "Communication & marketing", "count": 16, "keywords": "email campaign subscribe mailing list broadcast"},
+      {"slug": "presentation", "name": "Presentation", "group": "Communication & marketing", "count": 16, "keywords": "slides deck powerpoint pitch talk projector meeting"},
+      {"slug": "selfie", "name": "Selfie", "group": "Communication & marketing", "count": 16, "keywords": "photo camera phone portrait social picture"},
+      {"slug": "webinar", "name": "Webinar", "group": "Communication & marketing", "count": 16, "keywords": "online seminar broadcast stream video conference training"},
+      {"slug": "workshop", "name": "Workshop", "group": "Communication & marketing", "count": 16, "keywords": "training session facilitation whiteboard collaborate learn"},
+      {"slug": "building", "name": "Building", "group": "Operations & workplace", "count": 30, "keywords": "office tower property real estate architecture city"},
+      {"slug": "delivery", "name": "Delivery", "group": "Operations & workplace", "count": 30, "keywords": "shipping logistics parcel courier truck package transport"},
+      {"slug": "landscape", "name": "Landscape", "group": "Operations & workplace", "count": 30, "keywords": "nature scenery outdoor environment mountain view"},
+      {"slug": "office", "name": "Office", "group": "Operations & workplace", "count": 30, "keywords": "workplace desk workspace room corporate facility"},
+      {"slug": "productivity", "name": "Productivity", "group": "Operations & workplace", "count": 16, "keywords": "efficiency workflow task time management focus output"},
+      {"slug": "schedule", "name": "Schedule", "group": "Operations & workplace", "count": 16, "keywords": "calendar diary planner appointment date timeline booking"},
+      {"slug": "warehouse", "name": "Warehouse", "group": "Operations & workplace", "count": 30, "keywords": "storage inventory stock logistics depot fulfilment"},
+      {"slug": "workflow", "name": "Workflow", "group": "Operations & workplace", "count": 16, "keywords": "process automation pipeline steps flowchart sequence"}
     ]
   }
   </script>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 64 64">
+  <!-- Generator: Adobe Illustrator 29.5.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 137)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: none;
+        stroke: #231f20;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <rect class="st0" x="17.14" y="40.77" width="28.06" height="20.27" rx="2.68" ry="2.68"/>
+  <path class="st0" d="M45.2,47.06h2.46c2.12,0,3.84,1.72,3.84,3.84h0c0,2.12-1.72,3.84-3.84,3.84h-2.46v-7.69h0Z"/>
+  <path class="st0" d="M14.68,47.06h2.46v7.69h-2.46c-2.12,0-3.84-1.72-3.84-3.84h0c0-2.12,1.72-3.84,3.84-3.84Z"/>
+  <path class="st0" d="M34.14,32.92l-2.96,5.13-2.96-5.13H10.84c-1.65,0-2.99-1.34-2.99-2.99V5.96c0-1.66,1.34-3,2.99-3h42.33c1.65,0,2.99,1.34,2.99,3v23.97c0,1.65-1.34,2.99-2.99,2.99h-19.03Z"/>
+  <line class="st0" x1="10.83" y1="50.91" x2="10.83" y2="40.77"/>
+  <line class="st0" x1="51.51" y1="50.91" x2="51.51" y2="40.77"/>
+  <circle class="st0" cx="25.06" cy="47.47" r="2.95"/>
+  <circle class="st0" cx="37.28" cy="47.47" r="2.95"/>
+  <rect class="st0" x="24.18" y="53.41" width="13.99" height="3.98" rx="1.99" ry="1.99"/>
+  <line class="st0" x1="16.4" y1="27.65" x2="16.4" y2="20.51"/>
+  <line class="st0" x1="16.4" y1="11.64" x2="16.4" y2="8.61"/>
+  <rect class="st0" x="13.92" y="11.63" width="4.96" height="8.87"/>
+  <line class="st0" x1="26.8" y1="27.65" x2="26.8" y2="25.39"/>
+  <line class="st0" x1="26.8" y1="16.52" x2="26.8" y2="8.61"/>
+  <rect class="st0" x="24.32" y="16.52" width="4.96" height="8.87"/>
+  <line class="st0" x1="37.2" y1="27.65" x2="37.2" y2="22.56"/>
+  <line class="st0" x1="37.2" y1="13.69" x2="37.2" y2="8.61"/>
+  <rect class="st0" x="34.72" y="13.69" width="4.96" height="8.87"/>
+  <line class="st0" x1="47.6" y1="27.65" x2="47.6" y2="24.68"/>
+  <line class="st0" x1="47.6" y1="15.81" x2="47.6" y2="8.61"/>
+  <rect class="st0" x="45.13" y="15.81" width="4.96" height="8.87"/>
+</svg>

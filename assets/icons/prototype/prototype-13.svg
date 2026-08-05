@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 28.5.0, SVG Export Plug-In . SVG Version: 9.03 Build 54727)  -->
+<svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#231F20;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g>
+	<line class="st0" x1="39.5" y1="8.1" x2="16" y2="8.1"/>
+	<path class="st0" d="M43.8,8.1h5.4c1.8,0,3.3,1.5,3.3,3.3v19"/>
+	<path class="st0" d="M11.7,8.1H6.3c-1.8,0-3.3,1.5-3.3,3.3v32.4c0,1.8,1.5,3.3,3.3,3.3h21.5"/>
+	<line class="st0" x1="2.9" y1="17.1" x2="52.5" y2="17.1"/>
+	<path class="st0" d="M37.5,41.7L35,39.3l4.1-4.1l2.4,2.5c0.8-0.5,1.6-0.8,2.5-1l0-3.5l5.8,0v3.5c0.9,0.2,1.7,0.6,2.5,1l2.4-2.5
+		l4.1,4.1l-2.5,2.5c0.5,0.8,0.8,1.6,1,2.5l3.5,0v5.8h-3.5c-0.2,0.9-0.6,1.7-1,2.5l2.5,2.4l-4.1,4.1l-2.4-2.5c-0.8,0.5-1.6,0.8-2.5,1
+		v3.5h-5.8l0-3.5c-0.9-0.2-1.7-0.6-2.5-1l-2.4,2.5L35,55.1l2.5-2.4c-0.5-0.8-0.8-1.6-1-2.5H33l0-5.8l3.5,0
+		C36.7,43.4,37,42.5,37.5,41.7z"/>
+	<polygon class="st0" points="40.6,43.5 40.6,50.8 47,54.5 53.4,50.8 53.4,43.5 47,39.8 	"/>
+	<polyline class="st0" points="40.6,43.5 47,47.2 53.4,43.5 	"/>
+	<line class="st0" x1="47" y1="47.2" x2="47" y2="54.5"/>
+	<rect x="7" y="21.1" class="st0" width="7.2" height="4.8"/>
+	<rect x="18.4" y="21.1" class="st0" width="7.2" height="4.8"/>
+	<rect x="29.8" y="21.1" class="st0" width="7.2" height="4.8"/>
+	<rect x="41.2" y="21.1" class="st0" width="7.2" height="4.8"/>
+	<rect x="7" y="30.4" class="st0" width="7.2" height="4.8"/>
+	<rect x="18.4" y="30.4" class="st0" width="7.2" height="4.8"/>
+	<path class="st0" d="M13.8,13.4L13.8,13.4c-1.2,0-2.2-1-2.2-2.2V4.9c0-1.2,1-2.2,2.2-2.2h0c1.2,0,2.2,1,2.2,2.2v6.2
+		C16,12.4,15,13.4,13.8,13.4z"/>
+	<path class="st0" d="M41.6,13.4L41.6,13.4c-1.2,0-2.2-1-2.2-2.2V4.9c0-1.2,1-2.2,2.2-2.2h0c1.2,0,2.2,1,2.2,2.2v6.2
+		C43.8,12.4,42.8,13.4,41.6,13.4z"/>
+</g>
+</svg>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 28.3.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g>
+	<circle class="st0" cx="32" cy="32" r="16.3"/>
+	<polyline class="st0" points="26.2,16.8 32,1.8 37.8,16.8 	"/>
+	<polyline class="st0" points="26.2,47.2 32,62.2 37.8,47.2 	"/>
+	<polyline class="st0" points="47.2,26.2 62.2,32 47.2,37.8 	"/>
+	<polyline class="st0" points="16.8,37.8 1.8,32 16.8,26.2 	"/>
+	<polyline class="st0" points="46,40.4 50.4,50.4 40.4,46 	"/>
+	<polyline class="st0" points="18,23.6 13.6,13.6 23.6,18 	"/>
+	<polyline class="st0" points="40.4,18 50.4,13.6 46,23.6 	"/>
+	<polyline class="st0" points="23.6,46 13.6,50.4 18,40.4 	"/>
+	<circle class="st0" cx="32" cy="32" r="12.1"/>
+	<circle class="st0" cx="32" cy="32" r="5.4"/>
+</g>
+</svg>

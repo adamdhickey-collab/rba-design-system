@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.4.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#231F20;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g>
+	<polygon class="st0" points="44.99,27.19 32,37.25 19.01,27.19 19.01,6.56 44.99,6.56 	"/>
+	<line class="st0" x1="14.18" y1="6.56" x2="49.82" y2="6.56"/>
+	<line class="st0" x1="25.01" y1="31.83" x2="25.01" y2="6.56"/>
+	<line class="st0" x1="38.99" y1="31.83" x2="38.99" y2="6.56"/>
+	<line class="st0" x1="16.41" y1="3.09" x2="47.59" y2="3.09"/>
+	
+		<ellipse transform="matrix(0.7071 -0.7071 0.7071 0.7071 -25.3319 37.0024)" class="st0" cx="32" cy="49.08" rx="11.83" ry="11.83"/>
+	<polygon class="st0" points="32,42.12 34.07,46.31 38.69,46.98 35.34,50.24 36.13,54.84 32,52.67 27.87,54.84 28.66,50.24 
+		25.31,46.98 29.93,46.31 	"/>
+</g>
+</svg>

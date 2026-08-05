@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 28.4.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#231F20;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g>
+	<path class="st0" d="M41.5,44.9h-19c-1.9,0-3.4-1.5-3.4-3.4v-19c0-1.9,1.5-3.4,3.4-3.4h19c1.9,0,3.4,1.5,3.4,3.4v19
+		C44.8,43.4,43.3,44.9,41.5,44.9z"/>
+	<rect x="27" y="27" transform="matrix(0.7071 0.7071 -0.7071 0.7071 31.9844 -13.2172)" class="st0" width="9.9" height="9.9"/>
+	<polyline class="st0" points="31.9,19.1 31.9,5 41,5 	"/>
+	<circle class="st0" cx="25.7" cy="12.6" r="2"/>
+	<circle class="st0" cx="43" cy="5" r="2"/>
+	<line class="st0" x1="25.7" y1="19.1" x2="25.7" y2="14.5"/>
+	<circle class="st0" cx="38.2" cy="12.6" r="2"/>
+	<line class="st0" x1="38.2" y1="19.1" x2="38.2" y2="14.5"/>
+	<circle class="st0" cx="59.1" cy="35.4" r="2"/>
+	<circle class="st0" cx="51.5" cy="38.8" r="2"/>
+	<line class="st0" x1="44.9" y1="38.8" x2="49.5" y2="38.8"/>
+	<circle class="st0" cx="51.5" cy="32" r="2"/>
+	<line class="st0" x1="44.9" y1="32" x2="49.5" y2="32"/>
+	<polyline class="st0" points="32.1,44.9 32.1,59 23,59 	"/>
+	<circle class="st0" cx="38.3" cy="51.4" r="2"/>
+	<circle class="st0" cx="21" cy="59" r="2"/>
+	<line class="st0" x1="38.3" y1="44.9" x2="38.3" y2="49.5"/>
+	<circle class="st0" cx="25.8" cy="51.4" r="2"/>
+	<line class="st0" x1="25.8" y1="44.9" x2="25.8" y2="49.5"/>
+	<polyline class="st0" points="44.9,24.4 59.1,24.4 59.1,33.4 	"/>
+	<circle class="st0" cx="4.9" cy="28.4" r="2"/>
+	<circle class="st0" cx="12.5" cy="25" r="2"/>
+	<line class="st0" x1="19.1" y1="25" x2="14.5" y2="25"/>
+	<circle class="st0" cx="12.5" cy="31.8" r="2"/>
+	<line class="st0" x1="19.1" y1="31.8" x2="14.5" y2="31.8"/>
+	<polyline class="st0" points="19.1,39.4 4.9,39.4 4.9,30.4 	"/>
+</g>
+</svg>

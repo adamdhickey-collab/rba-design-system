@@ -265,7 +265,7 @@
         { title: 'Colors',            category: 'Foundations', page: 'index.html',     anchor: '#colors',   keywords: 'palette hex swatch red midnight navy aqua blue grey gradient token' },
         { title: 'Typography',        category: 'Foundations', page: 'index.html',     anchor: '#type',     keywords: 'font fonts typeface montserrat libre caslon serif sans type scale heading body' },
         { title: 'Logos',             category: 'Foundations', page: 'index.html',     anchor: '#logo',     keywords: 'logo mark wordmark monogram clear space reversed svg' },
-        { title: 'Icons',             category: 'Library',     page: 'icons.html',     anchor: '',          keywords: 'icon iconography glyph symbol svg download library' },
+        { title: 'Icons',             category: 'Library',     page: 'icons.html',     anchor: '',          keywords: 'icon iconography glyph symbol svg png outline line download library chart people finance data document technology' },
         { title: 'Brand images',      category: 'Library',     page: 'images.html',    anchor: '',          keywords: 'photo photography image picture illustration stock download' },
         { title: 'Templates & decks', category: 'Library',     page: 'templates.html', anchor: '',          keywords: 'powerpoint pptx deck slides word docx template letterhead document download' },
       ];
@@ -502,8 +502,231 @@
       });
     })();
 
-    // Asset library · renders the icon and image grids from an inlined JSON manifest,
-    // then filters them by free text and category.
+    // Icon library · 1,490 icons in 80 packs, rendered from the manifest that
+    // tools/icons-sync.py writes into the bottom of icons.html.
+    //
+    // The manifest stores PACKS, not icons: every file is <slug>-NN.svg alongside
+    // <slug>-NN.png, so a pack plus a count reconstructs every path. That keeps the
+    // inlined block at 13 KB instead of the ~200 KB a flat list of 1,490 rows would
+    // cost — and inlined it must be, because a fetch() of a local file is blocked by
+    // the file:// origin rules and would leave the grid empty for anyone who
+    // downloaded the repo rather than visiting the hosted site.
+    //
+    // Two things here exist purely because of the scale:
+    //
+    //   1. Masks load lazily. A tile paints its glyph with a CSS mask, and 1,490 tiles
+    //      all carrying a mask URL is 1,490 requests the moment the page opens. An
+    //      IntersectionObserver sets --icon only as a tile nears the viewport, so the
+    //      cost tracks what is actually looked at. Without this the page issues its
+    //      whole request budget on a set nobody scrolls to the end of.
+    //   2. Filtering toggles .hidden on existing tiles rather than re-rendering. The
+    //      tiles are built once; re-creating them on every keystroke would rebuild
+    //      13,000 nodes per character typed.
+    (function () {
+      const grid = document.getElementById('icon-grid');
+      const dataEl = document.getElementById('icon-manifest');
+      if (!grid || !dataEl) return;                 // no-ops on every other page
+
+      let packs = [];
+      try {
+        packs = (JSON.parse(dataEl.textContent) || {}).packs || [];
+      } catch (e) {
+        grid.innerHTML = '<p class="lib-empty">The icon manifest could not be read. ' +
+                         'View source and check the <code>#icon-manifest</code> block.</p>';
+        return;
+      }
+
+      // Flatten packs into icons, precomputing the search haystack once. Doing it per
+      // keystroke across 1,490 rows is the difference between a filter that feels
+      // instant and one that stutters.
+      const icons = [];
+      const groups = [];
+      packs.forEach(pack => {
+        if (groups.indexOf(pack.group) < 0) groups.push(pack.group);
+        const labels = pack.labels || {};
+        for (let i = 1; i <= pack.count; i++) {
+          const num = i < 10 ? '0' + i : String(i);
+          const base = 'assets/icons/' + pack.slug + '/' + pack.slug + '-' + num;
+          // A hand-written label wins over the generated name, but both stay
+          // searchable — someone who knows it as "Finance-04" should still find it
+          // after it has been renamed to "invoice-paid".
+          const label = labels[num] || '';
+          icons.push({
+            pack: pack,
+            name: label || (pack.name + '-' + num),
+            svg: base + '.svg',
+            png: base + '.png',
+            hay: (label + ' ' + pack.name + '-' + num + ' ' + pack.name + ' ' +
+                  pack.group + ' ' + pack.keywords).toLowerCase(),
+          });
+        }
+      });
+
+      // Lazy masks. rootMargin buys roughly a screen of runway so tiles are painted
+      // before they are scrolled into, not as they arrive.
+      const io = 'IntersectionObserver' in window
+        ? new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+              if (!entry.isIntersecting) return;
+              paint(entry.target);
+              io.unobserve(entry.target);
+            });
+          }, { rootMargin: '600px 0px' })
+        : null;
+
+      function paint(glyph) {
+        if (glyph.dataset.painted) return;
+        glyph.dataset.painted = '1';
+        glyph.style.setProperty('--icon', 'url("' + glyph.dataset.src + '")');
+      }
+
+      // Icons are painted with a CSS mask, not an <img>. An <img> renders the file's
+      // own colors and can't inherit currentColor, so a single monochrome file could
+      // not follow the theme — dark mode would need a second copy of all 1,490. The
+      // mask paints the file's alpha with the tile's own color instead, so one file
+      // serves both themes and stays a normal downloadable SVG.
+      function iconTile(item) {
+        const cell = document.createElement('div');
+        cell.className = 'glyph-cell';
+        cell.setAttribute('data-file', item.svg);
+
+        const glyph = document.createElement('span');
+        glyph.className = 'glyph-cell-glyph';
+        glyph.dataset.src = item.svg;
+        glyph.setAttribute('role', 'img');
+        glyph.setAttribute('aria-label', item.name);
+        if (io) io.observe(glyph); else paint(glyph);
+
+        const name = document.createElement('span');
+        name.className = 'glyph-cell-name';
+        name.textContent = item.name;
+
+        // Plain anchors, not buttons: right-click "save as", middle-click and
+        // keyboard all work for free, and the browser handles the download without
+        // any of this script needing to run a second time.
+        const actions = document.createElement('span');
+        actions.className = 'glyph-cell-actions';
+        [['SVG', item.svg], ['PNG', item.png]].forEach(pair => {
+          const a = document.createElement('a');
+          a.className = 'glyph-dl';
+          a.href = pair[1];
+          a.setAttribute('download', '');
+          a.textContent = pair[0];
+          a.setAttribute('aria-label', 'Download ' + item.name + ' as ' + pair[0]);
+          actions.appendChild(a);
+        });
+
+        const copy = document.createElement('button');
+        copy.type = 'button';
+        copy.className = 'glyph-cell-copy js-copy-svg';
+        copy.setAttribute('data-file', item.svg);
+        copy.title = 'Copy SVG markup';
+        copy.setAttribute('aria-label', 'Copy the SVG markup for ' + item.name);
+        copy.innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">content_copy</span>';
+
+        cell.append(glyph, name, actions, copy);
+        return cell;
+      }
+
+      const scope = grid.closest('.lib-scope') || document;
+      const search = scope.querySelector('.lib-search-input');
+      const chips = scope.querySelector('.lib-filter');
+      const select = scope.querySelector('.lib-pack-select');
+      const count = scope.querySelector('.lib-count');
+      let activeGroup = 'all';
+      let activePack = 'all';
+
+      if (chips) {
+        const mk = (value, label, pressed) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'lib-filter-btn';
+          b.setAttribute('data-filter', value);
+          b.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+          b.textContent = label;
+          return b;
+        };
+        chips.appendChild(mk('all', 'All', true));
+        groups.forEach(g => chips.appendChild(mk(g, g, false)));
+        chips.addEventListener('click', ev => {
+          const btn = ev.target.closest('.lib-filter-btn');
+          if (!btn) return;
+          activeGroup = btn.getAttribute('data-filter');
+          chips.querySelectorAll('.lib-filter-btn').forEach(b => {
+            b.setAttribute('aria-pressed', String(b === btn));
+          });
+          // Narrowing the group narrows the pack list with it. Leaving all 80 packs
+          // selectable would let someone pick a combination that matches nothing and
+          // reads as a broken page rather than an empty intersection.
+          fillPacks();
+          activePack = 'all';
+          apply();
+        });
+      }
+
+      function fillPacks() {
+        if (!select) return;
+        const visible = packs.filter(p => activeGroup === 'all' || p.group === activeGroup);
+        select.innerHTML = '';
+        const all = document.createElement('option');
+        all.value = 'all';
+        all.textContent = 'All packs (' + visible.length + ')';
+        select.appendChild(all);
+        visible.forEach(p => {
+          const o = document.createElement('option');
+          o.value = p.slug;
+          o.textContent = p.name + ' · ' + p.count;
+          select.appendChild(o);
+        });
+      }
+
+      if (select) {
+        fillPacks();
+        select.addEventListener('change', () => { activePack = select.value; apply(); });
+      }
+
+      function apply() {
+        const q = search ? search.value.trim().toLowerCase() : '';
+        const cells = grid.children;
+        let shown = 0;
+        for (let i = 0; i < icons.length; i++) {
+          const item = icons[i];
+          const hit = (activeGroup === 'all' || item.pack.group === activeGroup) &&
+                      (activePack === 'all' || item.pack.slug === activePack) &&
+                      (!q || item.hay.indexOf(q) > -1);
+          cells[i].hidden = !hit;
+          if (hit) shown++;
+        }
+        if (count) {
+          const n = shown.toLocaleString();
+          count.textContent = shown === icons.length
+            ? n + ' icons'
+            : n + ' of ' + icons.length.toLocaleString() + ' icons';
+        }
+        const empty = grid.nextElementSibling;
+        if (empty && empty.classList.contains('lib-empty')) empty.hidden = shown > 0;
+      }
+
+      const frag = document.createDocumentFragment();
+      icons.forEach(item => frag.appendChild(iconTile(item)));
+      grid.appendChild(frag);
+
+      if (search) {
+        search.addEventListener('input', apply);
+        // Escape clears rather than blurring — the filter is this page's primary
+        // control, so getting back to "everything" should not cost a reach for the
+        // mouse.
+        search.addEventListener('keydown', ev => {
+          if (ev.key === 'Escape' && search.value) { search.value = ''; apply(); }
+        });
+      }
+      apply();
+    })();
+
+    // Asset library · renders the image grid from an inlined JSON manifest, then
+    // filters it by free text and category. Icons have their own renderer above; this
+    // one stayed generic because a second file-backed gallery is likely and the shape
+    // it needs — name, category, tags, a thumbnail — is the ordinary case.
     //
     // The manifest is inlined in a <script type="application/json"> rather than fetched
     // so the page works when opened straight off disk — a fetch() of a local file is
@@ -514,37 +737,8 @@
     // its row to the manifest. Nothing here is generated at build time.
     (function () {
       const GRIDS = [
-        { grid: 'icon-grid',  manifest: 'icon-manifest',  noun: 'icon',  render: iconTile },
         { grid: 'image-grid', manifest: 'image-manifest', noun: 'image', render: imageTile },
       ];
-
-      // Icons are painted with a CSS mask, not an <img>. An <img> can't inherit
-      // currentColor, so a single monochrome file could not follow the theme — it would
-      // need a second, light-mode copy of every icon. The mask paints --icon's alpha
-      // with the tile's own color instead, so one file serves both themes and stays
-      // separately downloadable.
-      function iconTile(item) {
-        const cell = document.createElement('div');
-        cell.className = 'glyph-cell';
-        cell.setAttribute('data-file', item.file);
-        cell.setAttribute('data-name', item.name);
-        const glyph = document.createElement('span');
-        glyph.className = 'glyph-cell-glyph';
-        glyph.style.setProperty('--icon', 'url("' + item.file + '")');
-        glyph.setAttribute('role', 'img');
-        glyph.setAttribute('aria-label', item.name);
-        const name = document.createElement('span');
-        name.className = 'glyph-cell-name';
-        name.textContent = item.name;
-        const copy = document.createElement('button');
-        copy.type = 'button';
-        copy.className = 'glyph-cell-copy js-copy-svg';
-        copy.setAttribute('data-file', item.file);
-        copy.textContent = 'Copy SVG';
-        cell.append(glyph, name, copy);
-        if (item.placeholder) cell.setAttribute('data-placeholder', 'true');
-        return cell;
-      }
 
       function imageTile(item) {
         const card = document.createElement('div');
@@ -758,13 +952,10 @@
         const v = cls ? cls.slice('brand-logo--'.length) : 'mark';
         attach(card, 'rba-logo-' + v + '.svg', () => ({ svg }));
       });
-      // Icons → the source SVG file. The glyph is painted with a CSS mask rather than
-      // an <img>, so the filename comes off the tile's data-file instead of a src.
-      document.querySelectorAll('.glyph-cell').forEach((cell, i) => {
-        const file = cell.getAttribute('data-file');
-        if (!file) return;
-        attach(cell, file.split('/').pop() || ('rba-icon-' + (i + 1) + '.svg'), () => ({ file }));
-      });
+      // Icon tiles are deliberately NOT handled here. They carry their own SVG and PNG
+      // anchors, which the hover button would only duplicate — and attaching one to
+      // each of 1,490 tiles would add 1,490 buttons and listeners to buy nothing.
+      //
       // Photography → the source image file
       document.querySelectorAll('.photo-card').forEach(card => {
         const img = card.querySelector('img');

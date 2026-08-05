@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 64 64">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #231f20;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.7.3, SVG Export Plug-In . SVG Version: 1.2.0 Build 164)  -->
+  <g>
+    <g id="Layer_1">
+      <g>
+        <rect class="cls-1" x="2.58" y="2.58" width="58.84" height="58.84" rx="3.05" ry="3.05"/>
+        <line class="cls-1" x1="2.58" y1="13.91" x2="61.42" y2="13.91"/>
+        <line class="cls-1" x1="7.33" y1="8.29" x2="29.28" y2="8.29"/>
+        <line class="cls-1" x1="47.1" y1="8.29" x2="49.66" y2="8.29"/>
+        <line class="cls-1" x1="53.74" y1="8.29" x2="56.29" y2="8.29"/>
+        <rect class="cls-1" x="6.8" y="20.44" width="10.35" height="14.23"/>
+        <line class="cls-1" x1="10.24" y1="23.97" x2="13.71" y2="23.97"/>
+        <line class="cls-1" x1="10.24" y1="27.56" x2="13.71" y2="27.56"/>
+        <line class="cls-1" x1="10.24" y1="31.15" x2="13.71" y2="31.15"/>
+        <rect class="cls-1" x="6.8" y="40.29" width="10.35" height="14.23"/>
+        <line class="cls-1" x1="10.24" y1="43.81" x2="13.71" y2="43.81"/>
+        <line class="cls-1" x1="10.24" y1="47.4" x2="13.71" y2="47.4"/>
+        <line class="cls-1" x1="10.24" y1="50.99" x2="13.71" y2="50.99"/>
+        <rect class="cls-1" x="33.78" y="20.44" width="10.35" height="14.23"/>
+        <line class="cls-1" x1="37.22" y1="23.97" x2="40.69" y2="23.97"/>
+        <line class="cls-1" x1="37.22" y1="27.56" x2="40.69" y2="27.56"/>
+        <line class="cls-1" x1="37.22" y1="31.15" x2="40.69" y2="31.15"/>
+        <rect class="cls-1" x="33.78" y="40.29" width="10.35" height="14.23"/>
+        <line class="cls-1" x1="37.22" y1="43.81" x2="40.69" y2="43.81"/>
+        <line class="cls-1" x1="37.22" y1="47.4" x2="40.69" y2="47.4"/>
+        <line class="cls-1" x1="37.22" y1="50.99" x2="40.69" y2="50.99"/>
+        <line class="cls-1" x1="20.35" y1="23.97" x2="30.49" y2="23.97"/>
+        <line class="cls-1" x1="20.35" y1="27.56" x2="30.49" y2="27.56"/>
+        <line class="cls-1" x1="20.35" y1="31.15" x2="27.77" y2="31.15"/>
+        <line class="cls-1" x1="20.35" y1="43.81" x2="30.49" y2="43.81"/>
+        <line class="cls-1" x1="20.35" y1="47.4" x2="30.49" y2="47.4"/>
+        <line class="cls-1" x1="20.35" y1="50.99" x2="27.77" y2="50.99"/>
+        <line class="cls-1" x1="47.69" y1="23.97" x2="57.2" y2="23.97"/>
+        <line class="cls-1" x1="47.69" y1="27.56" x2="57.2" y2="27.56"/>
+        <line class="cls-1" x1="47.69" y1="31.15" x2="54.06" y2="31.15"/>
+        <line class="cls-1" x1="47.69" y1="43.81" x2="57.2" y2="43.81"/>
+        <line class="cls-1" x1="47.69" y1="47.4" x2="57.2" y2="47.4"/>
+        <line class="cls-1" x1="47.69" y1="50.99" x2="54.06" y2="50.99"/>
+      </g>
+    </g>
+  </g>
+</svg>

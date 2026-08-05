@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 64 64">
+  <!-- Generator: Adobe Illustrator 29.5.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 137)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: none;
+        stroke: #231f20;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <path class="st0" d="M8.38,3.24h0c2.9,0,5.25,2.35,5.25,5.25v5.25H3.13v-5.25c0-2.9,2.35-5.25,5.25-5.25Z"/>
+  <path class="st0" d="M50.38,50.27h10.49v5.25c0,2.9-2.35,5.25-5.25,5.25h0c-2.9,0-5.25-2.35-5.25-5.25v-5.25h0Z"/>
+  <line class="st0" x1="50.38" y1="50.27" x2="50.38" y2="44.52"/>
+  <path class="st0" d="M8.37,3.24h36.76c2.9,0,5.25,2.35,5.25,5.25v11.68"/>
+  <path class="st0" d="M55.62,60.76H18.87c-2.9,0-5.25-2.34-5.25-5.25V13.74"/>
+  <rect class="st0" x="23.96" y="20.18" width="36.91" height="24.34"/>
+  <polyline class="st0" points="60.87 20.18 45.59 32.35 42.42 34.88 39.24 32.35 23.95 20.18"/>
+  <line class="st0" x1="60.87" y1="44.52" x2="45.59" y2="32.35"/>
+  <line class="st0" x1="39.24" y1="32.35" x2="23.95" y2="44.52"/>
+  <line class="st0" x1="20.49" y1="8.79" x2="44.33" y2="8.79"/>
+  <line class="st0" x1="20.49" y1="14.63" x2="44.33" y2="14.63"/>
+  <line class="st0" x1="20.49" y1="49.68" x2="44.33" y2="49.68"/>
+  <line class="st0" x1="20.49" y1="55.51" x2="44.33" y2="55.51"/>
+</svg>

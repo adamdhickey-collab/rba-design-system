@@ -1,2 +1,13 @@
 .DS_Store
 **/.DS_Store
+
+# The icon source drop. 80 stock packs, 124 MB, and only about 11 MB of it is
+# servable: each pack ships an Illustrator source and an EPS alongside the svg/
+# and png/ folders, and nobody downloading an icon from a web page opens a .ai.
+#
+# tools/icons-sync.py copies the svg/ and png/ files out of here into
+# assets/icons/, which IS committed. So this folder is a working input, not the
+# asset store — you need it to add or re-sync packs, and not to build or serve
+# the site. Keep the original download somewhere backed up: it is the only copy
+# of the vector sources, and it is not in this repository.
+/icons/

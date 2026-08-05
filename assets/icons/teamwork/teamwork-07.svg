@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.4.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#231F20;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g>
+	<g>
+		<path class="st0" d="M26.15,38.43c0-3.26,2.64-5.9,5.9-5.9l0,0c3.26,0,5.9,2.64,5.9,5.9"/>
+		<path class="st0" d="M35.44,29.13c0,1.88-1.52,3.4-3.4,3.4c-1.88,0-3.4-1.52-3.4-3.4c0-1.88,1.52-3.4,3.4-3.4
+			C33.92,25.74,35.44,27.26,35.44,29.13z"/>
+	</g>
+	<g>
+		<path class="st0" d="M47.73,16.55c0-1.88,1.52-3.4,3.4-3.4l0,0c1.88,0,3.4,1.52,3.4,3.4"/>
+		<path class="st0" d="M53.09,11.19c0,1.08-0.88,1.96-1.96,1.96c-1.08,0-1.96-0.88-1.96-1.96c0-1.08,0.88-1.96,1.96-1.96
+			C52.21,9.23,53.09,10.11,53.09,11.19z"/>
+	</g>
+	<g>
+		<path class="st0" d="M9.73,16.55c0-1.88,1.52-3.4,3.4-3.4l0,0c1.88,0,3.4,1.52,3.4,3.4"/>
+		<path class="st0" d="M15.09,11.19c0,1.08-0.88,1.96-1.96,1.96c-1.08,0-1.96-0.88-1.96-1.96c0-1.08,0.88-1.96,1.96-1.96
+			C14.21,9.23,15.09,10.11,15.09,11.19z"/>
+	</g>
+	<g>
+		<path class="st0" d="M9.73,53.18c0-1.88,1.52-3.4,3.4-3.4l0,0c1.88,0,3.4,1.52,3.4,3.4"/>
+		<circle class="st0" cx="13.13" cy="47.82" r="1.96"/>
+	</g>
+	<g>
+		<path class="st0" d="M47.47,53.18c0-1.88,1.52-3.4,3.4-3.4l0,0c1.88,0,3.4,1.52,3.4,3.4"/>
+		<circle class="st0" cx="50.87" cy="47.82" r="1.96"/>
+	</g>
+	<circle class="st0" cx="32.05" cy="32.08" r="13.26"/>
+	<line class="st0" x1="45" y1="19.64" x2="41.61" y2="22.9"/>
+	
+		<ellipse transform="matrix(0.2298 -0.9732 0.9732 0.2298 25.8756 60.0357)" class="st0" cx="50.87" cy="13.67" rx="8.31" ry="8.31"/>
+	
+		<ellipse transform="matrix(0.3606 -0.9327 0.9327 0.3606 -38.5463 44.4305)" class="st0" cx="13.13" cy="50.33" rx="8.31" ry="8.31"/>
+	<line class="st0" x1="22.52" y1="41.3" x2="19.13" y2="44.56"/>
+	<line class="st0" x1="22.39" y1="22.9" x2="19" y2="19.64"/>
+	<ellipse transform="matrix(0.979 -0.2036 0.2036 0.979 -2.5085 2.9607)" class="st0" cx="13.13" cy="13.67" rx="8.31" ry="8.31"/>
+	
+		<ellipse transform="matrix(0.9732 -0.2298 0.2298 0.9732 -10.2027 13.0333)" class="st0" cx="50.87" cy="50.33" rx="8.31" ry="8.31"/>
+	<line class="st0" x1="44.87" y1="44.56" x2="41.48" y2="41.3"/>
+</g>
+</svg>

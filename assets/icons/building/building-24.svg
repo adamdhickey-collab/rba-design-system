@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.4.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#231F20;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g>
+	
+		<rect x="41.8" y="24.29" transform="matrix(-1 -1.224647e-16 1.224647e-16 -1 96.6963 84.7904)" class="st0" width="13.1" height="36.21"/>
+	<rect x="46.54" y="28.76" class="st0" width="4.39" height="3.9"/>
+	<rect x="46.54" y="36.55" class="st0" width="4.39" height="3.9"/>
+	<rect x="46.54" y="44.35" class="st0" width="4.39" height="3.9"/>
+	<rect x="46.54" y="52.15" class="st0" width="4.39" height="3.9"/>
+	<polyline class="st0" points="41.8,20.87 56.96,20.87 56.96,24.29 54.9,24.29 	"/>
+	<rect x="22.2" y="12.82" class="st0" width="19.59" height="47.68"/>
+	<polyline class="st0" points="41.8,12.82 32,3.5 22.2,12.82 	"/>
+	<rect x="9.1" y="24.29" class="st0" width="13.1" height="36.21"/>
+	
+		<rect x="13.07" y="28.76" transform="matrix(-1 -1.224647e-16 1.224647e-16 -1 30.5293 61.4112)" class="st0" width="4.39" height="3.9"/>
+	
+		<rect x="13.07" y="36.55" transform="matrix(-1 -1.224647e-16 1.224647e-16 -1 30.5293 77.0035)" class="st0" width="4.39" height="3.9"/>
+	
+		<rect x="13.07" y="44.35" transform="matrix(-1 -1.224647e-16 1.224647e-16 -1 30.5293 92.5958)" class="st0" width="4.39" height="3.9"/>
+	
+		<rect x="13.07" y="52.15" transform="matrix(-1 -1.224647e-16 1.224647e-16 -1 30.5293 108.1881)" class="st0" width="4.39" height="3.9"/>
+	<polyline class="st0" points="22.2,20.87 7.04,20.87 7.04,24.29 9.1,24.29 	"/>
+	<rect x="28.76" y="26.1" class="st0" width="6.47" height="34.4"/>
+	<polygon class="st0" points="4.65,33.33 9.1,29.64 9.1,60.5 4.65,60.5 	"/>
+	<polygon class="st0" points="59.35,33.33 54.9,29.64 54.9,60.5 59.35,60.5 	"/>
+	<line class="st0" x1="22.2" y1="16.48" x2="41.8" y2="16.48"/>
+</g>
+</svg>

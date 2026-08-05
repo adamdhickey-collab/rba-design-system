@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 64 64">
+  <!-- Generator: Adobe Illustrator 29.5.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 137)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: none;
+        stroke: #231f20;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <g>
+    <rect class="st0" x="14" y="14" width="36" height="36" rx="4.65" ry="4.65"/>
+    <polyline class="st0" points="14.07 5.69 24.5 5.69 24.5 14"/>
+    <rect class="st0" x="8.32" y="2.81" width="5.75" height="5.75"/>
+    <polyline class="st0" points="39.5 14 39.5 7.69 45.93 7.69"/>
+    <rect class="st0" x="45.93" y="4.81" width="5.75" height="5.75" transform="translate(97.61 15.38) rotate(-180)"/>
+    <rect class="st0" x="29.13" y="1.81" width="5.75" height="5.75"/>
+    <line class="st0" x1="32" y1="14" x2="32" y2="7.56"/>
+    <polyline class="st0" points="49.93 58.31 39.5 58.31 39.5 50"/>
+    <rect class="st0" x="49.93" y="55.44" width="5.75" height="5.75" transform="translate(105.61 116.62) rotate(180)"/>
+    <polyline class="st0" points="24.5 50 24.5 56.31 18.07 56.31"/>
+    <rect class="st0" x="12.32" y="53.44" width="5.75" height="5.75"/>
+    <rect class="st0" x="29.13" y="56.44" width="5.75" height="5.75" transform="translate(64 118.62) rotate(180)"/>
+    <line class="st0" x1="32" y1="50" x2="32" y2="56.44"/>
+    <polyline class="st0" points="58.31 14.07 58.31 24.5 50 24.5"/>
+    <rect class="st0" x="55.44" y="8.32" width="5.75" height="5.75" transform="translate(69.5 -47.12) rotate(90)"/>
+    <polyline class="st0" points="50 39.5 56.31 39.5 56.31 45.93"/>
+    <rect class="st0" x="53.44" y="45.93" width="5.75" height="5.75" transform="translate(7.5 105.12) rotate(-90)"/>
+    <rect class="st0" x="56.44" y="29.13" width="5.75" height="5.75" transform="translate(91.31 -27.31) rotate(90)"/>
+    <line class="st0" x1="50" y1="32" x2="56.44" y2="32"/>
+    <polyline class="st0" points="5.69 49.93 5.69 39.5 14 39.5"/>
+    <rect class="st0" x="2.81" y="49.93" width="5.75" height="5.75" transform="translate(-47.12 58.5) rotate(-90)"/>
+    <polyline class="st0" points="14 24.5 7.69 24.5 7.69 18.07"/>
+    <rect class="st0" x="4.81" y="12.32" width="5.75" height="5.75" transform="translate(22.88 7.5) rotate(90)"/>
+    <rect class="st0" x="1.81" y="29.13" width="5.75" height="5.75" transform="translate(-27.31 36.69) rotate(-90)"/>
+    <line class="st0" x1="14" y1="32" x2="7.56" y2="32"/>
+  </g>
+  <path class="st0" d="M28.47,35.39h0c0,1.76,1.43,3.2,3.2,3.2h.68c1.76,0,3.2-1.43,3.2-3.2v-.19c0-1.76-1.43-3.2-3.2-3.2h-.68c-1.76,0-3.2-1.43-3.2-3.2v-.19c0-1.76,1.43-3.2,3.2-3.2h.68c1.76,0,3.2,1.43,3.2,3.2h0"/>
+  <line class="st0" x1="32" y1="22.71" x2="32" y2="25.42"/>
+  <line class="st0" x1="32" y1="38.58" x2="32" y2="41.29"/>
+  <rect class="st0" x="18.78" y="18.78" width="26.44" height="26.44"/>
+</svg>

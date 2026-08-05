@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 28.6.0, SVG Export Plug-In . SVG Version: 9.03 Build 54939)  -->
+<svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#231F20;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g>
+	<circle class="st0" cx="32.1" cy="47.4" r="5.7"/>
+	<path class="st0" d="M42.2,61.6H22v-4.1c0-2.4,2-4.4,4.4-4.4h11.5c2.4,0,4.4,2,4.4,4.4V61.6z"/>
+	<polyline class="st0" points="49.8,31.4 49.8,37.4 32.1,37.4 14.2,37.4 14.2,31.4 	"/>
+	<line class="st0" x1="32.1" y1="41.8" x2="32.1" y2="37.4"/>
+	<rect x="8.2" y="19.3" class="st0" width="12.1" height="12.1"/>
+	<rect x="43.7" y="19.3" class="st0" width="12.1" height="12.1"/>
+	<polyline class="st0" points="11.4,25 13.5,27.1 17.1,23.5 	"/>
+	<line class="st0" x1="51.9" y1="23.3" x2="47.7" y2="27.4"/>
+	<line class="st0" x1="51.9" y1="27.4" x2="47.7" y2="23.3"/>
+	<path class="st0" d="M36.9,22.2L36.9,22.2c0,0.9-0.7,1.6-1.6,1.6h-6.7c-0.9,0-1.6-0.7-1.6-1.6v0c0-1.9-0.7-3.7-1.9-5.1
+		c-1.5-1.7-2.3-4-2.1-6.5c0.4-4.5,4.1-8,8.5-8.2c5.1-0.2,9.4,3.9,9.4,9c0,2.2-0.8,4.3-2.2,5.8C37.6,18.6,36.9,20.4,36.9,22.2z"/>
+	<path class="st0" d="M33.4,30.8h-2.8c-1,0-1.9-0.8-1.9-1.9v-5.1h6.5v5.1C35.3,29.9,34.4,30.8,33.4,30.8z"/>
+	<line class="st0" x1="28.7" y1="27.3" x2="35.3" y2="27.3"/>
+	<line class="st0" x1="32" y1="13.1" x2="32" y2="23.8"/>
+	<path class="st0" d="M34.7,10.2v1.3c0,0.9-0.7,1.6-1.6,1.6h-2.3c-0.9,0-1.6-0.7-1.6-1.6v-1.3"/>
+</g>
+</svg>

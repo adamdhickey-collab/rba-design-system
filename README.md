@@ -3,22 +3,28 @@
 RBA Consulting's design system — brand foundations and a downloadable asset library. Static HTML,
 CSS and JavaScript — no build step, no dependencies, no package manager.
 
-> **Logos and the palette are real. Icons and images are not yet.** The logo files,
-> favicons, and every colour and type value are imported from the brand's own source. The
-> icon and image tiles are still placeholder stubs, marked as such wherever they appear.
-> The PowerPoint master links to SharePoint rather than being copied here.
+> **Logos, the palette and the icons are real. Images are not yet.** The logo files,
+> favicons, and every colour and type value are imported from the brand's own source, and
+> the icon library holds 1,490 real icons. The image tiles are still placeholder stubs,
+> marked as such wherever they appear. The templates link to SharePoint rather than being
+> copied here.
 >
 > The image gallery stays on placeholders deliberately: no photography exists in the
 > canonical source, and the only real photos available are Getty stock, which cannot be
 > redistributed from a public repo. See
 > [`assets/images/README.md`](assets/images/README.md).
+>
+> The icons are **purchased stock packs** and carry no licence file. Most stock licences
+> allow use but not redistribution as standalone downloads, which is what the icon page
+> does — worth confirming while this repo is public. See
+> [`assets/icons/README.md`](assets/icons/README.md).
 
 ## Pages
 
 | Page | Contents |
 |---|---|
 | `index.html` | Home, plus Colors, Typography, Logos |
-| `icons.html` | Icon library — search, filter, download, copy SVG |
+| `icons.html` | Icon library — 1,490 icons in 80 packs; search, filter, SVG/PNG download, copy SVG |
 | `images.html` | Brand image gallery — filter, download |
 | `templates.html` | Templates & decks — a plain table of files |
 
@@ -51,7 +57,18 @@ python3 -m http.server 3477
 Two steps, and no build:
 
 1. Drop the file into the right folder under `assets/`.
-2. Add a row to that page's manifest (icons and images) or a `<tr>` (templates).
+2. Add a row to that page's manifest (images) or a `<tr>` (templates).
+
+**Icons are the exception** — there are 1,490 of them, so `assets/icons/` is generated
+and hand-added files there get deleted on the next sync. Drop the pack into `icons/` at
+the repo root, add it to the `PACKS` table in `tools/icons-sync.py`, and run:
+
+```bash
+./tools/icons-sync.py
+```
+
+`icons/` is gitignored: only about 11 MB of its 124 MB is servable, the rest being
+Illustrator and EPS sources. **It is not backed up here** — keep the original download.
 
 Each folder has its own README with the exact filenames, formats and manifest shape:
 [logos](assets/logos/README.md) · [icons](assets/icons/README.md) ·
@@ -77,6 +94,12 @@ people the old set.
 
 The script writes no bundle for an empty collection, which is why `templates.html`
 currently shows no bundle button at all rather than a link that would 404.
+
+**The icons ship as two bundles, split by format.** Together they are 9.4 MB, but the
+SVGs alone are 1.3 MB and are what almost everyone wants — one combined zip would make
+the common case download seven times what it needs. Splitting also keeps the 8.2 MB PNG
+zip out of git history on any revision that only touched vectors. Bundles are matched by
+glob in the `COLLECTIONS` table at the top of the script, so a third split is one line.
 
 ## Version and published date
 
@@ -113,8 +136,22 @@ Two decisions worth knowing before you change things:
 
 **Icons are painted with a CSS mask, not `<img>`.** An `<img>` renders the file's own
 colors and can't inherit `currentColor`, so one monochrome file could never follow the
-theme — dark mode would need a second copy of every icon. Masking paints the file's alpha
-with the tile's color instead. Keep icon fills as `currentColor`.
+theme — dark mode would need a second copy of all 1,490. Masking paints the file's alpha
+with the tile's color instead. The near-black stroke inside each file is therefore ignored
+on this site, but is what you get if you download one.
+
+**The icon grid loads its masks lazily.** 1,490 tiles each declaring a mask URL is 1,490
+requests on open, so an `IntersectionObserver` sets the URL only as a tile nears the
+viewport — about 40 requests instead. Filtering toggles `hidden` on existing tiles rather
+than re-rendering, because rebuilding 13,000 nodes per keystroke is not free. Both are
+load-bearing at this size; neither matters for the image gallery, which is why that grid
+still uses the simpler shared renderer.
+
+**The icon manifest stores packs, not icons.** Every file is `<slug>-NN.svg` with a
+matching `.png`, so a slug plus a count reconstructs all 1,490 paths — 13 KB inlined
+instead of ~200 KB. It is generated; the only part meant to be hand-edited is the `labels`
+map that gives icons real names, and `tools/icons-sync.py` preserves those across a
+re-sync.
 
 **Color swatch labels sit below the color, never on it.** RBA's Action blue (`#3178BF`)
 can't carry a label at 4.5:1 against either black or white — its best case is 3.91:1. Text

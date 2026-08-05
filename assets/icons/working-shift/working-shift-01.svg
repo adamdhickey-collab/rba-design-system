@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 64 64">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #231f20;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.7.4, SVG Export Plug-In . SVG Version: 1.2.0 Build 166)  -->
+  <g>
+    <g id="Layer_1">
+      <g>
+        <path class="cls-1" d="M16.96,22.07c-7.54,9.65-6.86,23.62,2.01,32.49,7.07,7.07,17.35,8.93,26.1,5.6"/>
+        <path class="cls-1" d="M25.38,15.18c9.2-4.6,20.69-3.07,28.36,4.61,9.6,9.59,9.6,25.17,0,34.76"/>
+        <polyline class="cls-1" points="53.61 48.48 53.74 54.57 59.58 53.6"/>
+        <circle class="cls-1" cx="36.32" cy="37.15" r="15.12"/>
+        <polyline class="cls-1" points="36.32 28.05 36.32 37.15 42.06 40.99"/>
+        <rect class="cls-1" x="3.06" y="6.91" width="22.32" height="15.16" rx="2.58" ry="2.58"/>
+        <path class="cls-1" d="M11.84,2.24h4.75c1.07,0,1.94.87,1.94,1.94v2.73h-8.63v-2.73c0-1.07.87-1.94,1.94-1.94Z"/>
+        <line class="cls-1" x1="3.06" y1="11.74" x2="25.38" y2="11.74"/>
+        <line class="cls-1" x1="8.22" y1="11.74" x2="8.22" y2="14.03"/>
+        <line class="cls-1" x1="20.22" y1="11.74" x2="20.22" y2="14.03"/>
+      </g>
+    </g>
+  </g>
+</svg>

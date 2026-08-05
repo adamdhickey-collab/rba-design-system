@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 64 64">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #231f20;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.7.3, SVG Export Plug-In . SVG Version: 1.2.0 Build 164)  -->
+  <g>
+    <g id="Layer_1">
+      <g>
+        <polyline class="cls-1" points="41.69 58.07 2.95 58.07 2.95 5.93 41.69 5.93 41.69 13.4"/>
+        <polyline class="cls-1" points="50.67 20.08 52.25 13.4 41.69 13.4 13.51 13.4 2.95 58.07 41.69 58.07"/>
+        <polygon class="cls-1" points="41.68 58.07 2.95 58.07 22.32 20.08 61.05 20.08 41.68 58.07"/>
+        <polygon class="cls-1" points="25.6 47.97 16.53 47.97 25.6 30.17 34.67 30.17 25.6 47.97"/>
+        <line class="cls-1" x1="41.26" y1="30.17" x2="32.19" y2="47.97"/>
+        <line class="cls-1" x1="47.47" y1="30.17" x2="38.4" y2="47.97"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 64 64">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #231f20;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.7.4, SVG Export Plug-In . SVG Version: 1.2.0 Build 166)  -->
+  <g>
+    <g id="Layer_1">
+      <g>
+        <circle class="cls-1" cx="10.7" cy="46.44" r="4"/>
+        <path class="cls-1" d="M8.07,50.43h5.26c3.28,0,5.94,2.66,5.94,5.94v1.11c0,1.49-1.21,2.69-2.69,2.69H4.82c-1.49,0-2.69-1.21-2.69-2.69v-1.11c0-3.28,2.66-5.94,5.94-5.94Z"/>
+        <circle class="cls-1" cx="53.3" cy="46.44" r="4"/>
+        <path class="cls-1" d="M50.67,50.43h5.26c3.28,0,5.94,2.66,5.94,5.94v1.11c0,1.49-1.21,2.69-2.69,2.69h-11.77c-1.49,0-2.69-1.21-2.69-2.69v-1.11c0-3.28,2.66-5.94,5.94-5.94Z"/>
+        <circle class="cls-1" cx="10.7" cy="7.82" r="4"/>
+        <path class="cls-1" d="M8.07,11.81h5.26c3.28,0,5.94,2.66,5.94,5.94v1.11c0,1.49-1.21,2.69-2.69,2.69H4.82c-1.49,0-2.69-1.21-2.69-2.69v-1.11c0-3.28,2.66-5.94,5.94-5.94Z"/>
+        <circle class="cls-1" cx="53.3" cy="7.82" r="4"/>
+        <path class="cls-1" d="M50.67,11.81h5.26c3.28,0,5.94,2.66,5.94,5.94v1.11c0,1.49-1.21,2.69-2.69,2.69h-11.77c-1.49,0-2.69-1.21-2.69-2.69v-1.11c0-3.28,2.66-5.94,5.94-5.94Z"/>
+        <circle class="cls-1" cx="32" cy="35.31" r="12.17"/>
+        <polyline class="cls-1" points="32 30.09 32 35.31 34.96 37.66"/>
+        <line class="cls-1" x1="32" y1="23.14" x2="32" y2="25.88"/>
+        <line class="cls-1" x1="32" y1="44.73" x2="32" y2="47.48"/>
+        <line class="cls-1" x1="44.17" y1="35.31" x2="41.42" y2="35.31"/>
+        <line class="cls-1" x1="22.58" y1="35.31" x2="19.83" y2="35.31"/>
+        <line class="cls-1" x1="53.3" y1="42.44" x2="53.3" y2="21.55"/>
+        <line class="cls-1" x1="44.82" y1="55.3" x2="19.18" y2="55.3"/>
+        <line class="cls-1" x1="10.7" y1="42.44" x2="10.7" y2="21.55"/>
+        <line class="cls-1" x1="44.82" y1="16.68" x2="19.18" y2="16.68"/>
+      </g>
+    </g>
+  </g>
+</svg>

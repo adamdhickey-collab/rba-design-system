@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 64 64">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #231f20;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.7.4, SVG Export Plug-In . SVG Version: 1.2.0 Build 166)  -->
+  <g>
+    <g id="Layer_1">
+      <g>
+        <circle class="cls-1" cx="17.89" cy="27.33" r="3.79"/>
+        <path class="cls-1" d="M15.39,31.13h5c3.11,0,5.64,2.53,5.64,5.64v1.05c0,1.41-1.14,2.55-2.55,2.55h-11.17c-1.41,0-2.55-1.14-2.55-2.55v-1.05c0-3.11,2.53-5.64,5.64-5.64Z"/>
+        <polygon class="cls-1" points="46.07 35.2 46.07 40.38 57.1 32.05 46.07 23.73 46.07 28.9 30.24 28.9 30.24 35.2 46.07 35.2"/>
+        <circle class="cls-1" cx="46.11" cy="48.66" r="3.79"/>
+        <path class="cls-1" d="M40.53,52.45h11.17c1.41,0,2.55,1.14,2.55,2.55v1.05c0,3.11-2.53,5.64-5.64,5.64h-5c-3.11,0-5.64-2.53-5.64-5.64v-1.05c0-1.41,1.14-2.55,2.55-2.55Z" transform="translate(92.23 114.16) rotate(-180)"/>
+        <polygon class="cls-1" points="33.76 56.34 33.76 50.04 17.93 50.04 17.93 44.87 6.9 53.19 17.93 61.52 17.93 56.34 33.76 56.34"/>
+        <circle class="cls-1" cx="31.54" cy="12.16" r="9.86"/>
+        <polyline class="cls-1" points="31.54 7.11 31.54 12.16 28.14 14.2"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 64 64">
+  <!-- Generator: Adobe Illustrator 29.5.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 137)  -->
+  <defs>
+    <style>
+      .st0 {
+        stroke: #231f20;
+      }
+
+      .st0, .st1 {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+
+      .st1 {
+        stroke: #282525;
+      }
+    </style>
+  </defs>
+  <g>
+    <path class="st0" d="M10.45,29.65c1.09-10.09,9.11-18.11,19.2-19.2"/>
+    <path class="st0" d="M34.35,53.55c10.09-1.09,18.11-9.11,19.2-19.2"/>
+    <path class="st0" d="M10.45,34.35c1.09,10.09,9.11,18.11,19.2,19.2"/>
+    <path class="st0" d="M34.35,10.45c10.09,1.09,18.11,9.11,19.2,19.2"/>
+    <rect class="st0" x="29.65" y="3.57" width="4.69" height="13.51"/>
+    <rect class="st0" x="29.65" y="46.92" width="4.69" height="13.51"/>
+    <rect class="st0" x="51.33" y="25.24" width="4.69" height="13.51" transform="translate(85.68 -21.68) rotate(90)"/>
+    <rect class="st0" x="7.98" y="25.24" width="4.69" height="13.51" transform="translate(42.32 21.68) rotate(90)"/>
+  </g>
+  <polyline class="st0" points="3.57 13.14 3.57 3.57 13.14 3.57"/>
+  <polyline class="st0" points="60.43 13.14 60.43 3.57 50.86 3.57"/>
+  <polyline class="st0" points="60.43 50.86 60.43 60.43 50.86 60.43"/>
+  <polyline class="st0" points="3.57 50.86 3.57 60.43 13.14 60.43"/>
+  <path class="st1" d="M28.61,36.46h0c0,1.37,1.11,2.48,2.48,2.48h1.82c1.37,0,2.48-1.11,2.48-2.48v-1.98c0-1.37-1.11-2.48-2.48-2.48h-1.82c-1.37,0-2.48-1.11-2.48-2.48v-1.98c0-1.37,1.11-2.48,2.48-2.48h1.82c1.37,0,2.48,1.11,2.48,2.48h0"/>
+  <line class="st1" x1="32" y1="25.06" x2="32" y2="21.67"/>
+  <line class="st1" x1="32" y1="42.33" x2="32" y2="38.94"/>
+</svg>

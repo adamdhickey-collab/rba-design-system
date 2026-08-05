@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 64 64">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #231f20;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.7.3, SVG Export Plug-In . SVG Version: 1.2.0 Build 164)  -->
+  <g>
+    <g id="Layer_1">
+      <g>
+        <path class="cls-1" d="M8.56,2.3h0c3.13,0,5.67,2.54,5.67,5.67v12.47H2.89V7.96c0-3.13,2.54-5.67,5.67-5.67Z"/>
+        <path class="cls-1" d="M14.22,20.43v35.6c0,3.13,2.54,5.67,5.67,5.67h0c3.13,0,5.67-2.54,5.67-5.67v-10.47h33.94v10.47c0,3.13-2.54,5.67-5.67,5.67H19.89"/>
+        <line class="cls-1" x1="48.17" y1="45.57" x2="48.16" y2="39.67"/>
+        <path class="cls-1" d="M8.56,2.3h33.94c3.13,0,5.67,2.53,5.67,5.66v13"/>
+        <rect class="cls-1" x="51.48" y="30.32" width="6.5" height="9.36"/>
+        <rect class="cls-1" x="44.92" y="20.96" width="6.5" height="18.72"/>
+        <rect class="cls-1" x="38.41" y="26.72" width="6.5" height="12.96"/>
+        <line class="cls-1" x1="35.22" y1="39.68" x2="61.11" y2="39.68"/>
+        <path class="cls-1" d="M19.66,18.28h0c0,1.14.92,2.06,2.06,2.06h1.5c1.14,0,2.06-.92,2.06-2.06v-1.23c0-1.14-.92-2.06-2.06-2.06h-1.5c-1.14,0-2.06-.92-2.06-2.06v-1.23c0-1.14.92-2.06,2.06-2.06h1.5c1.14,0,2.06.92,2.06,2.06h0"/>
+        <line class="cls-1" x1="22.46" y1="9.65" x2="22.46" y2="7.31"/>
+        <line class="cls-1" x1="22.46" y1="22.68" x2="22.46" y2="20.33"/>
+        <line class="cls-1" x1="19.66" y1="28.56" x2="34.04" y2="28.56"/>
+        <line class="cls-1" x1="19.66" y1="34.12" x2="34.04" y2="34.12"/>
+        <line class="cls-1" x1="19.66" y1="39.68" x2="29.14" y2="39.68"/>
+        <line class="cls-1" x1="29.14" y1="11.36" x2="43.47" y2="11.36"/>
+        <line class="cls-1" x1="29.14" y1="15.9" x2="43.47" y2="15.9"/>
+        <line class="cls-1" x1="29.14" y1="20.43" x2="40.6" y2="20.43"/>
+      </g>
+    </g>
+  </g>
+</svg>

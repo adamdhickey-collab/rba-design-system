@@ -25,17 +25,25 @@ command -v zip >/dev/null || { echo "error: 'zip' is not installed." >&2; exit 1
 
 mkdir -p downloads
 
-# Collection -> bundle name. Add a line here when a new collection appears.
+# collection : bundle name : include glob
+#
+# The icons are split by format on purpose. Together they are 9.4 MB, but the SVGs
+# alone are 1.3 MB and are what almost everyone actually wants — one combined
+# bundle would make the common case download seven times what it needs. Splitting
+# also keeps the 8 MB PNG zip out of git history on any revision that only touched
+# vectors.
 COLLECTIONS=(
-  "logos:rba-logos"
-  "icons:rba-icons"
-  "images:rba-images"
-  "templates:rba-templates"
+  "logos:rba-logos:*"
+  "icons:rba-icons-svg:*.svg"
+  "icons:rba-icons-png:*.png"
+  "images:rba-images:*"
+  "templates:rba-templates:*"
 )
 
 for entry in "${COLLECTIONS[@]}"; do
-  src="assets/${entry%%:*}"
-  out="downloads/${entry##*:}.zip"
+  IFS=':' read -r name bundle glob <<< "$entry"
+  src="assets/$name"
+  out="downloads/$bundle.zip"
 
   if [ ! -d "$src" ]; then
     echo "skip  $out — $src does not exist"
@@ -45,15 +53,15 @@ for entry in "${COLLECTIONS[@]}"; do
   # Check for content first. zip exits non-zero with "Nothing to do!" on an empty
   # folder, and letting that noise through would train everyone to ignore this
   # script's output — which is where the staleness warnings live.
-  if [ -z "$(find "$src" -type f ! -name 'README.md' ! -name '.*' -print -quit)" ]; then
-    echo "empty $out — $src has no files yet, no bundle written"
+  if [ -z "$(find "$src" -type f -name "$glob" ! -name 'README.md' ! -name '.*' -print -quit)" ]; then
+    echo "empty $out — $src has no $glob files yet, no bundle written"
     continue
   fi
 
   # -x excludes the folder's own instructions and macOS cruft: a README telling
   # you how to add assets is noise inside a bundle of the assets themselves.
   rm -f "$out"
-  ( cd "$src" && zip -q -r "$ROOT/$out" . -x "README.md" -x ".*" -x "__MACOSX/*" )
+  ( cd "$src" && zip -q -r "$ROOT/$out" . -i "$glob" -x "README.md" -x ".*" -x "__MACOSX/*" )
 
   # The favicons are logo derivatives, so they ride along in the logo bundle rather
   # than becoming a fifth download button for three small PNGs. Nested under
