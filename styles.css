@@ -1,0 +1,1988 @@
+
+
+    /* ---------- Design tokens ----------
+       Two layers, deliberately shallow. Named brand values first, exactly as the
+       RBA Design & Brand Guidelines publish them; then a semantic layer that
+       points at those names. Components only ever reference the semantic layer,
+       which is why the dark theme below is a short re-point rather than a second
+       palette.
+
+       There are no generated 50–900 ramps for the brand hues. The guidelines
+       define flat named colors, so inventing nine steps of each would be this
+       system speaking over the source. The few ramp steps that do exist
+       (--navy-*, --sky-*, --red-*, --neutral-*) are interface scaffolding —
+       hovers, hairlines, recessed fills — and are named for what they scaffold.
+       ---------- */
+    :root {
+      /* ---- Brand · primary. RBA Design & Brand Guidelines v1.0 ---- */
+      --rba-red:      #C8252D;  /* The mark's red. An accent, never a UI fill.   */
+      --midnight:     #1D366D;  /* Primary brand color and the interface anchor. */
+      --action:       #3178BF;  /* Interactive blue — links, controls.           */
+      --aqua:         #14BADB;  /* Bright accent. Carries dark mode.             */
+      --soft-blue:    #8EC3DB;
+      --sky-blue:     #BDE4F1;
+      --white-blue:   #F5FAFC;
+
+      /* ---- Brand · gradient stops (hero and header washes) ---- */
+      --grad-a:       #E6F8FB;
+      --grad-b:       #9DDBF6;
+
+      /* ---- Brand · neutrals ---- */
+      --black:        #333333;
+      --dark-grey:    #666666;
+      --med-grey:     #AAAAAA;
+      --light-grey:   #DDDDDD;
+      --white-grey:   #F5F5F5;
+
+      /* ---- Midnight scaffolding · derived from --midnight for interface depth ---- */
+      --navy-50:      #F4F7FC;
+      --navy-100:     #E4EAF5;
+      --navy-600:     #1D366D;  /* = --midnight */
+      --navy-700:     #172B57;
+      --navy-800:     #122142;
+      --navy-900:     #0D182F;
+      --navy-950:     #080F1E;
+
+      /* ---- Sky scaffolding · light hovers, selected rows, focus rings ---- */
+      --sky-50:       #F5FAFC;  /* = --white-blue */
+      --sky-100:      #E6F4FA;
+      --sky-200:      #BDE4F1;  /* = --sky-blue   */
+      --sky-300:      #8EC3DB;  /* = --soft-blue  */
+      --sky-400:      #14BADB;  /* = --aqua       */
+
+      /* ---- Red scaffolding · destructive and error states only ---- */
+      --red-50:       #FDF3F3;
+      --red-600:      #C8252D;  /* = --rba-red */
+      --red-700:      #A31D24;
+
+      /* ---- Interface neutrals ---- */
+      --neutral-50:   #F7F8FA;
+      --neutral-100:  #F0F2F5;
+      --neutral-200:  #E2E5EA;
+      --neutral-300:  #C9CED6;
+      --neutral-400:  #8A93A1;
+      --neutral-1000: #14171C;
+
+      /* ---- Semantic · surfaces ---- */
+      --bg:             #FFFFFF;
+      --surface:        #FFFFFF;
+      --surface-deep:   var(--navy-900);  /* inverted panels                */
+      --surface-header: var(--navy-600);  /* the navy header band           */
+      --surface-input:  #FFFFFF;
+      --surface-pill:   var(--neutral-100);
+
+      /* ---- Semantic · borders ---- */
+      --border:        #E2E5EA;
+      --border-subtle: #EDEFF3;
+      --border-input:  #C9CED6;
+
+      /* ---- Semantic · text ---- */
+      --text:       #22262E;
+      --text-soft:  #4C5462;
+      --text-muted: #6B7484;
+
+      /* ---- Semantic · brand roles ----
+         --brand is the color a control takes when it is active or selected.
+         It points at midnight in light mode and aqua in dark, so any component
+         referencing it inherits both themes without its own override. */
+      --brand:       var(--midnight);
+      --brand-deep:  var(--navy-800);
+      --on-accent:   #FFFFFF;   /* text and icons on top of a --brand fill */
+
+      /* ---- Type ---- */
+      --font-display: "Libre Caslon Text", "Adobe Caslon Pro", Georgia, serif;
+      --font-sans:    "Montserrat", Arial, Helvetica, sans-serif;
+      /* No separate micro face is licensed, so the smallest labels take the sans
+         at a tightened size. The token stays so the type scale has one name per
+         role and swapping in a real micro cut later is a one-line change. */
+      --font-micro:   "Montserrat", Arial, Helvetica, sans-serif;
+      --display-tracking:    -0.02em;
+      --display-tracking-sm: -0.01em;
+
+      /* ---- Space · 4px base ---- */
+      --space-2: 8px;   --space-3: 12px;  --space-4: 16px;
+      --space-5: 20px;  --space-6: 24px;  --space-7: 32px;
+      --space-8: 40px;  --space-9: 48px;
+      --spacing-sm: 8px;  --spacing-md: 16px;
+      --spacing-lg: 24px; --spacing-xl: 32px;
+      --padding-base: 16px; --padding-lg: 24px;
+
+      /* ---- Shape ---- */
+      --corner-radius-base: 8px;
+      --corner-radius-md:   12px;
+      --corner-radius-lg:   20px;
+      --radius-sm:   4px;
+      --radius-pill: 999px;
+
+      /* ---- Shadow ---- */
+      --shadow-sm: 0 1px 2px rgba(13, 24, 47, 0.06), 0 1px 3px rgba(13, 24, 47, 0.08);
+      --shadow-md: 0 2px 4px rgba(13, 24, 47, 0.06), 0 4px 12px rgba(13, 24, 47, 0.10);
+      --shadow-lg: 0 4px 8px rgba(13, 24, 47, 0.07), 0 12px 32px rgba(13, 24, 47, 0.14);
+
+      /* ---- Accessibility ----
+         WCAG 2.2 target size (minimum). Drives the drawer's nav rows and every
+         icon-only control that has to stay thumb-reachable on a phone. */
+      --touch-target-min: 44px;
+    }
+
+    /* ---------- Reset / base ---------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    h1, h2, h3, h4, h5 { margin: 0; font-weight: 400; }
+    p { margin: 0; }
+    /* Prose links use --navy-700, not --brand. At small sizes --brand (navy-600)
+       only reaches 4.36:1 on the --neutral-100 page background, under the 4.5:1 AA
+       floor; navy-700 clears it on both the page (6.74:1) and --surface (7.44:1),
+       and steps naturally into the --navy-900 hover. --brand is still correct for
+       large display text and for fills carrying --on-accent. */
+    a { color: var(--navy-700); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--navy-900); }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.85em;
+      background: var(--neutral-100);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      color: var(--text-soft);
+    }
+    /* Inside a <pre> block the chip treatment above must not apply — the block
+       supplies its own dark background and text color. */
+    pre code {
+      background: none;
+      padding: 0;
+      border-radius: 0;
+      font-size: inherit;
+      font-family: inherit;
+      color: inherit;
+    }
+
+    /* ---------- Layout primitives ---------- */
+    .container {
+      max-width: 1080px;
+      margin: 0;
+      padding: 0 var(--space-7);
+    }
+
+    /* Visually hidden but still announced/focusable — for headings and labels
+       that a screen reader needs for landmark/heading navigation but the
+       visual design has no room (or need) for. Never use display:none or
+       visibility:hidden here; both remove the element from the a11y tree too. */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Skip link — first focusable element; visible only on keyboard focus */
+    .skip-link {
+      position: absolute;
+      left: var(--space-3);
+      top: -48px;
+      z-index: 1000;
+      background: var(--surface-deep);
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 16px;
+      border-radius: var(--corner-radius-base);
+      text-decoration: none;
+      transition: top 140ms ease;
+    }
+    .skip-link:focus {
+      top: var(--space-3);
+      outline: 2px solid var(--sky-400);
+      outline-offset: 2px;
+    }
+
+    .app-layout {
+      display: flex;
+      align-items: stretch;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 288px;
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      padding: var(--space-6) 0 var(--space-5);
+      z-index: 10;
+    }
+    .sidebar-brand {
+      padding: 0 var(--space-6) var(--space-5);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .sidebar-brand .brand-logo {
+      width: 88px;
+      margin-bottom: var(--space-4);
+    }
+    /* Sans, not the display serif. RBA is a sans brand — the guidelines reserve Libre
+       Caslon for editorial moments, and a brand name set in it reads as someone else's
+       masthead. The serif appears on this site only in the type specimen. */
+    .sidebar-brand-title {
+      font-family: var(--font-sans);
+      font-weight: 800;
+      font-size: 22px;
+      line-height: 28px;
+      letter-spacing: var(--display-tracking-sm);
+      color: var(--brand);
+    }
+    .sidebar-brand-tagline {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      letter-spacing: normal;
+      text-transform: none;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+      padding: 0 var(--space-3);
+    }
+    .sidebar-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .sidebar-section-title {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      letter-spacing: normal;
+      text-transform: none;
+      color: var(--text-muted);
+      font-weight: 700;
+      padding: 0 var(--space-3) 6px;
+    }
+    .sidebar-link {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      align-items: center;
+      gap: var(--space-3);
+      padding: 7px var(--space-3);
+      border-radius: var(--corner-radius-base);
+      text-decoration: none;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-soft);
+      transition: background-color 120ms ease, color 120ms ease;
+      position: relative;
+    }
+    /* Hover stays neutral so midnight reads exclusively as "selected" */
+    .sidebar-link:hover {
+      background: var(--neutral-50);
+      color: var(--text);
+    }
+    .sidebar-link:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--brand);
+      color: var(--text);
+    }
+    /* Top-level (Foundations / System) active state: soft pill, no hard bar */
+    .sidebar-link--active {
+      background: var(--sky-50);
+      color: var(--brand-deep);
+      font-weight: 700;
+    }
+    .sidebar-link-num {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      /* --neutral-400 read 2.53:1 on the sidebar surface — well under AA for
+         11px text. --text-muted clears 6.48:1 light / 5.27:1 dark, is already
+         the system's quiet-text token (and what .sidebar-section-title uses),
+         and stays lighter than the label's --text-soft so the numeral is still
+         secondary. --neutral-500 would have passed at 4.59:1, but that margin
+         is thin enough to break on the next surface change. */
+      color: var(--text-muted);
+      letter-spacing: normal;
+      font-variant-numeric: tabular-nums;
+    }
+    .sidebar-link--active .sidebar-link-num { color: var(--brand); }
+    /* Icon variant — used where a sidebar link carries a real glyph (Getting started's
+       rocket_launch) instead of a numeral or the plain "·" placeholder dot. Overrides the
+       numeral's micro-text sizing; centers the glyph in the same 20px rail the numerals use. */
+    .sidebar-link-num.material-symbols-rounded {
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Collapsible sidebar groups · Foundations / System / Components can each be expanded
+       or collapsed independently, so a long nav (10 Foundations+System links plus ~50
+       component anchors) doesn't have to render fully open all the time. Getting started
+       is a single always-visible link, not a group — nothing to collapse. State is
+       per-group and remembered across page loads (localStorage), but the group containing
+       the CURRENT page/section is always force-expanded on load — see
+       rbaExpandActiveNavGroup in app.js — so navigating in never lands on a
+       collapsed target. */
+    .sidebar-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: var(--space-2);
+      background: none;
+      border: none;
+      padding: 0 var(--space-3) 6px;
+      margin: 0;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      text-align: left;
+      border-radius: var(--corner-radius-base);
+    }
+    .sidebar-section-header:hover .sidebar-section-chevron { color: var(--text); }
+    .sidebar-section-header:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--brand);
+    }
+    .sidebar-section-header .sidebar-section-title { padding: 0; }
+    .sidebar-section-chevron {
+      font-size: 18px !important;
+      color: var(--text-muted);
+      transition: transform 0.15s ease, color 120ms ease;
+      flex-shrink: 0;
+    }
+    .sidebar-section[data-collapsed="true"] .sidebar-section-chevron { transform: rotate(-90deg); }
+    .sidebar-section-body {
+      display: grid;
+      grid-template-rows: 1fr;
+      transition: grid-template-rows 0.18s ease;
+    }
+    .sidebar-section-body-inner {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .sidebar-section[data-collapsed="true"] .sidebar-section-body { grid-template-rows: 0fr; }
+    @media (prefers-reduced-motion: reduce) {
+      .sidebar-section-body,
+      .sidebar-section-chevron { transition: none; }
+    }
+
+    .sidebar-foot {
+      padding: var(--space-5) var(--space-6) 0;
+      border-top: 1px solid var(--border);
+      margin-top: var(--space-5);
+      font-family: var(--font-micro);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: normal;
+      line-height: 1.6;
+    }
+
+    .app-main {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* ==========================================================================
+       Responsive navigation · below the system's lg (1024) breakpoint
+       --------------------------------------------------------------------------
+       The persistent 288px sidebar is the desktop (lg+) pattern. Below lg — which
+       covers tablet portrait (md 768) and every phone size (xs 375 / sm 430) —
+       it becomes an off-canvas drawer following the system's own Sheet component
+       (scrim + side-anchored panel + header/body), opened from a compact sticky
+       top bar. Previously this stacked the whole sidebar — brand, theme toggle,
+       search, and ~20 nav links — above the content, so a phone user scrolled
+       through the entire navigation before reaching a single component.
+
+       The drawer rules are scoped to [data-nav="drawer"], which app.js sets. With
+       JS unavailable the sidebar simply stacks (long, but fully usable) instead
+       of being translated off-screen with no way to open it.
+       ========================================================================== */
+    .mobile-bar { display: none; }
+
+    @media (max-width: 1023.98px) {
+      /* --- no-JS fallback: stack the sidebar above the content --- */
+      .app-layout { flex-direction: column; }
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: var(--space-4);
+      }
+      .sidebar-brand { padding-bottom: var(--space-4); margin-bottom: var(--space-4); }
+      .sidebar-foot { display: none; }
+
+      /* --- enhanced: compact top bar + off-canvas drawer --- */
+      [data-nav="drawer"] .mobile-bar {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        padding: var(--space-3) var(--space-4);
+        background: var(--surface-header);
+        border-bottom: 1px solid var(--border);
+      }
+      .mobile-bar-trigger {
+        all: unset;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--touch-target-min);
+        height: var(--touch-target-min);
+        border-radius: var(--corner-radius-base);
+        color: var(--text);
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .mobile-bar-trigger:hover { background: var(--sky-50); }
+      .mobile-bar-trigger:focus-visible {
+        outline: 2px solid var(--brand);
+        outline-offset: -2px;
+      }
+      .mobile-bar-trigger .material-symbols-rounded { font-size: 24px; }
+      .mobile-bar-title {
+        font-family: var(--font-display);
+        font-size: 20px;
+        line-height: 1;
+        color: var(--brand);
+      }
+      .mobile-bar-meta {
+        font-family: var(--font-micro);
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-left: auto;
+      }
+
+      /* Scrim — mirrors .sheet-frame::before from the Sheet component */
+      [data-nav="drawer"] .nav-scrim {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        background: rgba(2, 55, 25, 0.25);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 200ms ease;
+      }
+      [data-nav="drawer"] .nav-scrim--visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* Drawer — mirrors .sheet (side-anchored panel + shadow) */
+      [data-nav="drawer"] .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: min(320px, 86vw);
+        height: 100dvh;
+        overflow-y: auto;
+        z-index: 60;
+        border-right: 1px solid var(--border);
+        border-bottom: none;
+        padding-bottom: var(--space-6);
+        transform: translateX(-100%);
+        transition: transform 240ms cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 8px 0 24px rgba(16, 28, 22, 0.12);
+      }
+      [data-nav="drawer"] .sidebar--open { transform: translateX(0); }
+
+      /* Bigger hit areas inside the drawer */
+      [data-nav="drawer"] .sidebar-link { min-height: var(--touch-target-min); padding: 10px var(--space-3); }
+      [data-nav="drawer"] .sidebar-search-trigger { min-height: var(--touch-target-min); }
+    }
+
+    /* Desktop (lg+): drawer chrome must never appear */
+    @media (min-width: 1024px) {
+      .mobile-bar, .nav-scrim { display: none !important; }
+    }
+
+    /* md (768) and below · tighten page rhythm for tablet portrait + phones */
+    @media (max-width: 767.98px) {
+      .container { padding-left: var(--space-4); padding-right: var(--space-4); }
+      .block { padding: var(--space-6) 0; }
+      .hero { padding: var(--space-6) 0 var(--space-5); }
+      .section-head { gap: var(--space-4); }
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      background: var(--surface);
+      color: var(--text);
+      padding: var(--space-8) 0 var(--space-7);
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-family: var(--font-micro);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: normal;
+      text-transform: none;
+      color: var(--text-muted);
+      margin-bottom: var(--space-5);
+    }
+    .hero-title {
+      font-family: var(--font-sans);
+      font-weight: 800;
+      font-size: clamp(40px, 5.5vw, 76px);
+      line-height: 1;
+      letter-spacing: var(--display-tracking);
+      color: var(--brand);
+    }
+    .hero-sub {
+      font-family: var(--font-sans);
+      font-weight: 400;
+      font-size: clamp(19px, 1.8vw, 22px);
+      color: var(--text-soft);
+      margin-top: var(--space-5);
+      max-width: 54ch;
+      line-height: 1.55;
+      letter-spacing: -0.005em;
+    }
+    .hero-meta {
+      display: flex;
+      gap: var(--space-6);
+      margin-top: var(--space-7);
+      font-family: var(--font-micro);
+      font-size: 12px;
+      letter-spacing: normal;
+      text-transform: none;
+      color: var(--text-muted);
+    }
+    .hero-meta > span { display: inline-flex; align-items: center; gap: 8px; }
+    .hero-meta > span::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--brand);
+    }
+
+    /* ---------- Section ---------- */
+    section.block {
+      padding: var(--space-9) 0;
+      border-bottom: 1px solid var(--border);
+      scroll-margin-top: var(--space-5);
+    }
+    .section-head {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-4);
+      margin-bottom: var(--space-7);
+      max-width: 760px;
+    }
+    .section-eyebrow {
+      font-family: var(--font-micro);
+      font-size: 12px;
+      letter-spacing: normal;
+      text-transform: none;
+      color: var(--text-muted);
+      margin-bottom: var(--space-4);
+    }
+    /* Sans, matching .hero-title. The display serif is reserved for editorial moments,
+       and a section heading on a reference page isn't one — see the note on
+       .sidebar-brand-title. Libre Caslon appears on this site only in the type
+       specimen, which is the one place it's the subject rather than the voice. */
+    .section-title {
+      font-family: var(--font-sans);
+      font-weight: 800;
+      font-size: clamp(34px, 4.5vw, 56px);
+      line-height: 1.02;
+      color: var(--brand);
+      letter-spacing: var(--display-tracking);
+    }
+    .section-lede {
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--text-soft);
+      max-width: 56ch;
+    }
+
+    /* ---------- Color swatches ---------- */
+    .swatch-group {
+      display: grid;
+      gap: var(--space-5);
+    }
+    .swatch-group + .swatch-group { margin-top: var(--space-7); }
+    .swatch-label {
+      font-family: var(--font-micro);
+      font-size: 12px;
+      letter-spacing: normal;
+      text-transform: none;
+      color: var(--text-muted);
+      margin-bottom: var(--space-3);
+    }
+    .swatch-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: var(--space-3);
+    }
+    .swatch {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--corner-radius-base);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .swatch-chip {
+      height: 96px;
+      position: relative;
+    }
+    .swatch-chip[data-light]::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 0 1px rgba(20, 20, 15, 0.06);
+    }
+    .swatch-meta {
+      padding: var(--space-3) var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .swatch-name {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--text);
+    }
+    .swatch-hex {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: none;
+    }
+
+    /* Figma-style palette columns */
+    /* ---------- Color swatches ----------
+       The color fills a band; the name and hex sit on the card below it, never on the
+       color itself.
+
+       This is the whole reason for the two-part structure. Setting the label on top of
+       the swatch is the more obvious design, but it only works if every color in the
+       palette can carry a label at 4.5:1 — and RBA's Action blue (#3178BF) cannot. Its
+       best case is 3.91:1 against near-black and 3.85:1 against white, so neither label
+       passes AA. Judging it per color would mean shipping one swatch that fails, or
+       quietly making the label bigger to reach the 3:1 large-text threshold and calling
+       it done. Moving the label off the color makes every swatch legible by
+       construction, whatever gets added to the palette later. */
+    .palette-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+      gap: var(--space-4);
+    }
+    /* Kept so the markup can still group colors (primary / neutral) without the grid
+       collapsing them into one run. */
+    .palette-col {
+      display: contents;
+    }
+    .palette-swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+      padding: 0;
+      overflow: hidden;
+      text-align: left;
+      border: 1px solid var(--border);
+      border-radius: var(--corner-radius-base);
+      background: var(--surface);
+      font-family: var(--font-sans);
+      color: var(--text);
+      transition: border-color 120ms ease, box-shadow 120ms ease;
+    }
+    .palette-swatch:hover {
+      border-color: var(--brand);
+      box-shadow: var(--shadow-sm);
+    }
+    /* The color band. An inset hairline keeps the palest values (#F5FAFC, #F5F5F5) from
+       dissolving into the card they sit on. */
+    .palette-swatch-chip {
+      display: block;
+      height: 76px;
+      background: var(--c, var(--surface-pill));
+      box-shadow: inset 0 0 0 1px rgba(13, 24, 47, 0.08);
+    }
+    .palette-swatch-text {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-2);
+      padding: 9px 12px;
+      font-size: 13px;
+      line-height: 18px;
+    }
+    .palette-swatch-name { font-weight: 700; }
+    .palette-swatch-hex {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      text-transform: none;
+      color: var(--text-muted);
+    }
+
+    .palette-pairs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-4);
+    }
+    .palette-pair {
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .palette-note {
+      font-family: var(--font-micro);
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: var(--space-4);
+    }
+
+    /* Official brand primary-palette cards — large swatch + print/digital breakdown,
+       mirrors the RBA Design & Brand Guidelines "Primary colors" spread. */
+    .primary-swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+    .primary-swatch-card {
+      border-radius: var(--radius-sm);
+      padding: var(--space-5);
+      min-height: 148px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-3);
+    }
+    .primary-swatch-name {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 17px;
+    }
+    .primary-swatch-meta {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      opacity: 0.9;
+    }
+
+    /* lg (1024) · wide token grids reflow at the same point the nav does */
+    @media (max-width: 1023.98px) {
+      .palette-columns {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+      .primary-swatch-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      }
+    }
+
+    /* Plain-language glossary of UI terms, used on the Color foundation page */
+    .term-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: var(--space-5) var(--space-6);
+      margin: 0;
+    }
+    .term-item dt {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .term-item dd {
+      margin: 0;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 21px;
+      color: var(--text-soft);
+    }
+
+    /* ---------- Type specimen ---------- */
+    .type-stack { display: grid; gap: var(--space-6); }
+    .type-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: var(--space-6);
+      align-items: baseline;
+      padding-bottom: var(--space-5);
+      border-bottom: 1px dashed var(--border);
+    }
+    .type-meta {
+      font-family: var(--font-micro);
+      font-size: 12px;
+      letter-spacing: normal;
+      text-transform: none;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .type-meta strong {
+      display: block;
+      color: var(--text);
+      font-weight: 700;
+      letter-spacing: normal;
+    }
+    /* Semantic text styles — Desktop, from RBA Design & Brand Guidelines · Typography */
+    .type-h1 {
+      font-family: var(--font-display);
+      font-size: 56px;
+      line-height: 60px;
+      font-weight: 400;
+      color: var(--brand);
+      letter-spacing: var(--display-tracking);
+    }
+    .type-h1-italic {
+      font-family: var(--font-display);
+      font-size: 56px;
+      line-height: 60px;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--brand);
+      letter-spacing: var(--display-tracking);
+    }
+    .type-h2 {
+      font-family: var(--font-sans);
+      font-size: 32px;
+      line-height: 42px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .type-h3 {
+      font-family: var(--font-sans);
+      font-size: 28px;
+      line-height: 38px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .type-h4 {
+      font-family: var(--font-sans);
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .type-h5 {
+      font-family: var(--font-sans);
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .type-subtitle {
+      font-family: var(--font-sans);
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 400;
+      color: var(--text);
+    }
+    .type-body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+      color: var(--text);
+    }
+    .type-body-bold {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .type-caption {
+      font-family: var(--font-micro);
+      font-size: 12px;
+      line-height: 19px;
+      font-weight: 400;
+      color: var(--text-soft);
+    }
+    .type-caption-bold {
+      font-family: var(--font-micro);
+      font-size: 12px;
+      line-height: 19px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* ---------- Interface icons · Material Symbols Rounded ----------
+       The functional glyphs this site uses for its own controls (search, download,
+       chevrons). Distinct from the brand icon library on icons.html, which ships as
+       downloadable SVG files. */
+    .material-symbols-rounded {
+      font-family: 'Material Symbols Rounded';
+      font-weight: 400;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+      font-variation-settings: 'opsz' 24;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    /* ---------- Asset library · shared toolbar ----------
+       icons.html and images.html use the same control strip: a text filter, category
+       chips, a live count, and a bundle download. The chips and the grid are both
+       rendered from the page's inlined manifest, so this markup carries no asset
+       names — see the "Asset library" block in app.js. */
+    .lib-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+    .lib-search {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex: 1 1 240px;
+      max-width: 360px;
+    }
+    .lib-search .material-symbols-rounded {
+      position: absolute;
+      left: 12px;
+      font-size: 20px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    .lib-search-input {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 22px;
+      width: 100%;
+      padding: 10px 12px 10px 40px;
+      border: 1px solid var(--border-input);
+      border-radius: var(--radius-pill);
+      background: var(--surface-input);
+      color: var(--text);
+      min-height: var(--touch-target-min);
+    }
+    .lib-search-input::placeholder { color: var(--text-muted); }
+    .lib-count {
+      font-family: var(--font-micro);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    /* Pushed to its own end of the strip: it acts on the whole collection, not on
+       whatever the filter currently shows, and sitting beside the count would imply
+       otherwise. */
+    .lib-bundle {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-left: auto;
+    }
+    .lib-bundle-note {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .lib-empty {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 22px;
+      color: var(--text-muted);
+      padding: var(--space-7) 0;
+      margin: 0;
+      text-align: center;
+    }
+    .lib-empty[hidden] { display: none; }
+
+    /* ---------- Icon library ---------- */
+    .glyph-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+      gap: var(--space-3);
+    }
+    .glyph-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-4) var(--space-3) var(--space-3);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--corner-radius-base);
+      transition: border-color 120ms ease, box-shadow 120ms ease;
+    }
+    .glyph-cell[hidden] { display: none; }
+    .glyph-cell:hover,
+    .glyph-cell:focus-within {
+      border-color: var(--brand);
+      box-shadow: var(--shadow-sm);
+    }
+    /* The glyph is painted as a MASK, not an <img>. An <img> renders the file's own
+       colors and cannot inherit currentColor, so a single monochrome icon could not
+       follow the theme — dark mode would need a second copy of every file. Masking
+       paints the file's alpha channel with this element's color instead: one file,
+       both themes, and the file stays a normal downloadable SVG. */
+    .glyph-cell-glyph {
+      width: 40px;
+      height: 40px;
+      background: currentColor;
+      color: var(--brand-deep);
+      -webkit-mask: var(--icon) center / contain no-repeat;
+              mask: var(--icon) center / contain no-repeat;
+    }
+    .glyph-cell-name {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      line-height: 15px;
+      color: var(--text-soft);
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+    /* Revealed on hover or keyboard focus, like .asset-dl — but unlike the download
+       button it also has to survive a touch device, where there is no hover. The
+       coarse-pointer query at the end of this block keeps it permanently visible
+       there rather than leaving it unreachable. */
+    .glyph-cell-copy {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 120ms ease, color 120ms ease, border-color 120ms ease;
+    }
+    .glyph-cell:hover .glyph-cell-copy,
+    .glyph-cell:focus-within .glyph-cell-copy { opacity: 1; }
+    .glyph-cell-copy:hover,
+    .glyph-cell-copy:focus-visible { color: var(--brand); border-color: var(--brand); }
+    @media (hover: none) {
+      .glyph-cell-copy { opacity: 1; }
+    }
+
+    /* Placeholder assets · a visible diagonal hatch, because a placeholder that looks
+       like a finished asset is worse than an empty grid — someone will ship it. Every
+       stub in assets/ carries "placeholder": true in its manifest row; delete the flag
+       when the real file lands. */
+    [data-placeholder="true"] .glyph-cell-glyph { color: var(--neutral-400); }
+    [data-placeholder="true"] .photo-card-img,
+    .glyph-cell[data-placeholder="true"] {
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent 0 6px,
+        rgba(200, 37, 45, 0.07) 6px 12px
+      );
+    }
+    [data-placeholder="true"] .glyph-cell-name::after,
+    [data-placeholder="true"] .photo-card-meta::after {
+      content: ' · placeholder';
+      color: var(--red-600);
+      font-weight: 700;
+    }
+    /* ---------- Logo ---------- */
+    .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-4);
+    }
+    .logo-card {
+      aspect-ratio: 2 / 1;
+      border-radius: var(--corner-radius-base);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-6);
+      position: relative;
+      overflow: hidden;
+    }
+    /* Every swatch below is a fixed real-world background — "this logo goes on a light
+       page," "this logo goes on midnight" — not a demo of the site's own light/dark
+       toggle. They intentionally use literal values instead of --surface/--brand so the
+       logo + background pairing (and its contrast) can't be repointed out from under it by
+       [data-theme="dark"]. */
+    .logo-card[data-bg="light"]   { background: #FFFFFF;          border: 1px solid #DBDDDC; }
+    .logo-card[data-bg="paper"]   { background: var(--navy-50);  border: 1px solid var(--navy-100); }
+    .logo-card[data-bg="midnight"]   { background: var(--navy-600); }
+    .logo-card[data-bg="deep"]    { background: var(--surface-deep); }
+    .logo-card[data-bg="dark"]    { background: var(--neutral-1000); }
+    .logo-card[data-bg="white"]   { background: #FFFFFF;          border: 1px solid #DBDDDC; }
+
+    .logo-card-label {
+      position: absolute;
+      bottom: var(--space-3);
+      left: var(--space-4);
+      font-family: var(--font-micro);
+      font-size: 11px;
+      letter-spacing: normal;
+      text-transform: none;
+      color: rgba(0, 0, 0, 0.55);
+    }
+    .logo-card[data-bg="midnight"] .logo-card-label,
+    .logo-card[data-bg="deep"] .logo-card-label,
+    .logo-card[data-bg="dark"] .logo-card-label { color: rgba(255,255,255,0.7); }
+
+    /* The RBA mark, referenced via <use href="#rba-logo">.
+       Two custom properties drive every colorway, so one SVG symbol serves all four:
+       `color` paints the wordmark (its paths use currentColor) and --mark-fill paints
+       the monogram. Adding a colorway is one line here, never a second copy of the art. */
+    .brand-logo {
+      width: 180px;
+      height: auto;
+      display: block;
+      color: var(--brand);
+    }
+    .brand-logo--primary { color: var(--midnight); --mark-fill: var(--rba-red); }  /* Midnight wordmark + red monogram — the default */
+    .brand-logo--white   { color: #fff;           --mark-fill: #fff; }            /* Reversed, for photography and midnight fills */
+    .brand-logo--black   { color: #000;           --mark-fill: #000; }            /* One-color black, for fax/print/engraving */
+    .brand-logo--red     { color: var(--rba-red); --mark-fill: var(--rba-red); }
+
+    /* ---------- Wide token tables · horizontal scroll ----------
+       Four columns of monospace token names and hex values give these tables a
+       min-content width of ~580px, and a table can't shrink below that — so on
+       a phone the widest one dragged the whole document 221px wider than the
+       viewport. The table now scrolls inside its own frame, the treatment
+       .btn-matrix and .avatar-matrix already use for dense reference grids.
+       The wrapper is a focusable, labelled region so the scroll is reachable by
+       keyboard, and padding-bottom keeps a classic scrollbar off the table's
+       bottom border. */
+    .token-table-scroll {
+      overflow-x: auto;
+      border-radius: var(--corner-radius-base);
+      padding-bottom: 4px;
+    }
+    .token-table-scroll:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--sky-200);
+    }
+
+    .token-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: var(--corner-radius-base);
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      font-family: var(--font-sans);
+    }
+    .token-table th,
+    .token-table td {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 14px;
+      line-height: 20px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .token-table tr:last-child td { border-bottom: none; }
+    .token-table th {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      letter-spacing: normal;
+      text-transform: none;
+      color: var(--text-muted);
+      font-weight: 700;
+      background: var(--neutral-50);
+    }
+    .token-table .token-name {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .token-table .token-swatch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+    .token-table .token-swatch::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      background: var(--c);
+      box-shadow: inset 0 0 0 1px rgba(20, 20, 15, 0.1);
+    }
+
+    /* ---------- Asset download (JS-injected hover button on any asset tile) ---------- */
+    .logo-card, .glyph-cell, .photo-card-img { position: relative; }
+    .asset-dl {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      background: var(--surface);
+      color: var(--text-soft);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      opacity: 0;
+      transform: translateY(-2px);
+      transition: opacity 120ms ease, transform 120ms ease, background 120ms ease, color 120ms ease, border-color 120ms ease;
+      z-index: 4;
+    }
+    .asset-dl .material-symbols-rounded { font-size: 18px; }
+    .asset-dl:hover, .asset-dl:focus-visible {
+      background: var(--brand);
+      color: var(--on-accent);
+      border-color: var(--brand);
+    }
+    .logo-card:hover .asset-dl, .logo-card:focus-within .asset-dl,
+    .glyph-cell:hover .asset-dl, .glyph-cell:focus-within .asset-dl,
+    .photo-card:hover .asset-dl, .photo-card:focus-within .asset-dl {
+      opacity: 1;
+      transform: none;
+    }
+    /* Touch / no-hover devices: keep the affordance visible */
+    @media (hover: none) {
+      .asset-dl { opacity: 1; transform: none; }
+    }
+
+    /* ---------- Brand photography gallery ---------- */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: var(--space-4);
+    }
+    .photo-card { display: flex; flex-direction: column; gap: var(--space-2); }
+    .photo-card-img {
+      aspect-ratio: 4 / 3;
+      border-radius: var(--corner-radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--neutral-100);
+    }
+    .photo-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .photo-card-label {
+      font-family: var(--font-micro);
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Buttons */
+    .btn {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 24px;
+      padding: 8px 16px;
+      border-radius: var(--corner-radius-base);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+      letter-spacing: normal;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--sky-200);
+    }
+    .btn[disabled],
+    .btn--disabled {
+      cursor: not-allowed;
+      opacity: 1;
+      background: var(--neutral-100) !important;
+      color: var(--neutral-400) !important;
+      border-color: transparent !important;
+    }
+
+    /* Sizes */
+    .btn--sm { padding: 8px 12px; font-size: 12px; line-height: 18px; }
+    .btn--lg { padding: 16px 24px; font-size: 20px; line-height: 26px; gap: 16px; border-radius: var(--corner-radius-md); }
+
+    /* Icon-only */
+    .btn--icon {
+      padding: 8px;
+      width: 40px;
+      height: 40px;
+    }
+    .btn--icon.btn--sm { padding: 8px; width: 34px; height: 34px; }
+    .btn--icon.btn--lg { padding: 16px; width: 58px; height: 58px; }
+    .btn .material-symbols-rounded { font-size: 20px; }
+    .btn--lg .material-symbols-rounded { font-size: 24px; }
+    .btn--sm .material-symbols-rounded { font-size: 16px; }
+
+    /* Styles · light theme */
+    .btn-primary {
+      background: var(--brand);
+      color: var(--on-accent);
+    }
+    .btn-primary:hover    { background: var(--navy-700); }
+    .btn-primary:active   { background: var(--navy-800); }
+    .btn-primary[disabled],
+    .btn-primary.btn--disabled { background: var(--neutral-100) !important; color: var(--neutral-400) !important; }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--brand);
+      border-color: var(--brand);
+    }
+    .btn-secondary:hover {
+      background: var(--sky-50);
+      color: var(--navy-700);
+      border-color: var(--navy-700);
+    }
+    .btn-secondary[disabled],
+    .btn-secondary.btn--disabled { background: transparent !important; border-color: var(--neutral-300) !important; color: var(--neutral-400) !important; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--brand);
+    }
+    .btn-ghost:hover { background: var(--sky-50); color: var(--navy-700); }
+    .btn-ghost[disabled],
+    .btn-ghost.btn--disabled { background: transparent !important; color: var(--neutral-400) !important; }
+
+    /* Always white, not var(--on-accent) — the danger fill is red in both
+       themes (never repoints to the dark-mode lime brand color), so it never
+       needs the accent-aware swap; higher specificity than .btn-primary alone
+       keeps this correct regardless of theme with no parallel override needed. */
+    .btn-primary.btn--danger    { background: var(--red-600); color: #fff; }
+    .btn-primary.btn--danger:hover  { background: var(--red-700); }
+    .btn-secondary.btn--danger  { color: var(--red-600); border-color: var(--red-600); }
+    .btn-secondary.btn--danger:hover { background: var(--red-50); color: var(--red-700); border-color: var(--red-700); }
+    .btn-ghost.btn--danger      { color: var(--red-600); }
+    .btn-ghost.btn--danger:hover { background: var(--red-50); color: var(--red-700); }
+
+    .btn-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+
+    /* ---------- Footer ---------- */
+    footer {
+      background: var(--navy-950);
+      color: var(--navy-100);
+      padding: var(--space-8) 0 var(--space-6);
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: var(--space-5);
+    }
+    .footer-mark {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 18px;
+      color: #fff;
+    }
+    .footer-mark .sub { color: var(--sky-400); font-weight: 400; }
+    .footer-meta {
+      font-family: var(--font-micro);
+      font-size: 12px;
+      letter-spacing: normal;
+      text-transform: none;
+      color: var(--sky-400);
+    }
+
+    @media (max-width: 767.98px) {
+      .type-row { grid-template-columns: 1fr; gap: var(--space-2); }
+    }
+
+    /* Tables */
+    .table { width: 100%; border-collapse: collapse; }
+    .table th, .table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); font-family: var(--font-sans); font-size: 14px; color: var(--text); }
+    .table tr:last-child td { border-bottom: none; }
+    .table th { background: var(--neutral-50); font-weight: 700; font-size: 13px; text-transform: none; letter-spacing: normal; color: var(--text-muted); }
+    .table th .material-symbols-rounded { font-size: 14px; color: inherit; vertical-align: middle; margin-left: 4px; }
+    .table tbody tr { transition: background-color 100ms ease; }
+    .table tbody tr:hover { background: var(--sky-50); }
+
+    /* Group header = a section link to its page. Bullet column dropped; label fills the row. */
+    .sidebar-group {
+      grid-template-columns: 1fr;
+      font-weight: 600;
+      color: var(--text-soft);
+    }
+    .sidebar-group .sidebar-link-num { display: none; }
+    .sidebar-group:hover { background: var(--neutral-50); color: var(--text); }
+    /* Open group: signalled with weight + brand colour only — no fill, no bar.
+       The expanded children below carry the visual emphasis. */
+    .sidebar-group--active,
+    .sidebar-group--active:hover {
+      color: var(--brand-deep);
+      font-weight: 700;
+      background: transparent;
+    }
+
+    /* Children hang off a single continuous guide line */
+    .sidebar-group-children {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      margin: 2px 0 var(--space-4);
+    }
+    .sidebar-group-children::before {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 3px;
+      bottom: 3px;
+      width: 1.5px;
+      border-radius: 1px;
+      background: var(--border);
+    }
+    .sidebar-link--child {
+      grid-template-columns: 1fr;
+      padding: 6px var(--space-3) 6px 32px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .sidebar-link--child .sidebar-link-num { display: none; }
+    .sidebar-link--child:hover { background: var(--neutral-50); color: var(--text); }
+    /* Selected child: soft pill + the guide line lights up beside it in midnight */
+    .sidebar-link--child.sidebar-link--active {
+      color: var(--brand-deep);
+      font-weight: 700;
+      background: var(--sky-50);
+    }
+    .sidebar-link--child.sidebar-link--active::before {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 4px;
+      bottom: 4px;
+      width: 1.5px;
+      border-radius: 1px;
+      background: var(--brand);
+    }
+
+    /* ====================================================================
+       Dark theme · midnight palette
+       Usage:  <html data-theme="dark">  (or any ancestor [data-theme="dark"] / .theme-dark)
+
+       Almost everything flips automatically because this block re-points the
+       semantic surface / border / text / brand tokens the components already
+       reference. Only rules that hard-code a light literal need a fix, and those
+       follow the token block.
+
+       Note --brand: midnight is the light-mode brand color, but midnight on a
+       near-black page is unreadable — a midnight fill would disappear and
+       midnight text would fail contrast outright. So in dark mode --brand
+       re-points to aqua, the guidelines' bright accent, and --on-accent flips to
+       a near-black ink to sit on top of it. This is a role swap, not a new
+       palette: both values are published brand colors.
+       ==================================================================== */
+    [data-theme="dark"], .theme-dark {
+      /* Surfaces — navy-tinted rather than neutral grey, so dark mode still
+         reads as RBA and not as a generic inverted theme. */
+      --bg:             #0E1726;
+      --surface:        #131F32;
+      --surface-header: #101A2A;
+      --surface-input:  #0B1320;
+      --surface-pill:   #1A2942;
+      --surface-deep:   #080F1E;
+      /* Borders */
+      --border:         #2A3B55;
+      --border-subtle:  #1F2C40;
+      --border-input:   #354863;
+      /* Text */
+      --text:           #FFFFFF;
+      --text-soft:      #A8BBD4;
+      --text-muted:     #8496AF;
+      /* Brand roles — see the note above on why --brand moves to aqua */
+      --brand:          var(--aqua);
+      --brand-deep:     var(--aqua);
+      --on-accent:      #06121C;
+
+      /* Re-point the light interface neutrals so anything referencing them
+         inherits dark mode without a per-component override. */
+      --neutral-50:   #1A2942;
+      --neutral-100:  #1A2942;
+      --neutral-200:  #2A3B55;
+      --neutral-300:  #354863;
+      --neutral-400:  #8496AF;
+      /* Sky scaffolding: light hovers and selected rows become subtle darks.
+         --sky-200 stays bright — it is the focus ring, which has to survive. */
+      --sky-50:  #16233A;
+      --sky-100: #1C2C46;
+      --sky-200: #3F7FA8;
+
+      /* --navy-*, --rba-red, --midnight and the gradient stops are NOT
+         re-pointed. They are published brand constants, and the swatch boards and
+         logo cards exist to show those exact values — a logo card demonstrating
+         "the mark on midnight" has to stay midnight in both themes, or the page
+         is documenting the theme instead of the brand. */
+    }
+
+    /* ---- Dark theme · fixes for rules that hard-code a light value ---- */
+    [data-theme="dark"] body { background: var(--bg); color: var(--text); }
+    [data-theme="dark"] a { color: var(--sky-300); }
+    [data-theme="dark"] a:hover { color: var(--aqua); }
+
+    /* Primary buttons need no override: .btn-primary already fills with --brand
+       and inks with --on-accent, both re-pointed above. */
+    [data-theme="dark"] .btn-primary:hover  { background: #4FD2EA; }
+    [data-theme="dark"] .btn-primary:active { background: var(--aqua); }
+    /* Outline and ghost hovers read in aqua, not midnight */
+    [data-theme="dark"] .btn-secondary:hover,
+    [data-theme="dark"] .btn-ghost:hover { color: var(--aqua); border-color: var(--aqua); }
+
+    /* The sidebar wordmark stays white; aqua is reserved for accents */
+    [data-theme="dark"] .sidebar-brand-title { color: #FFFFFF; }
+    .theme-toggle-row {
+      display: flex;
+      align-items: center;
+      margin-top: var(--spacing-xl);
+    }
+    .theme-toggle {
+      all: unset;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      border-radius: var(--radius-pill);
+      flex-shrink: 0;
+    }
+    .theme-toggle:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--sky-200);
+    }
+
+    /* Grid (not flex) so both columns are exactly equal regardless of label
+       length — the thumb is sized off 50% and has to line up with either side. */
+    .theme-toggle-track {
+      position: relative;
+      display: inline-grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+      padding: 3px;
+      background: var(--surface-pill);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      transition: background-color 160ms ease, border-color 160ms ease;
+    }
+    .theme-toggle-thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: calc(50% - 3px);
+      height: calc(100% - 6px);
+      border-radius: var(--radius-pill);
+      background: var(--surface);
+      /* --border-subtle reads under 1.3:1 against the thumb/track fill in both
+         themes — too faint to register as a boundary (WCAG 1.4.11 wants 3:1).
+         --text-muted clears 4.8–6.5:1 in both themes and is already
+         theme-aware, so the thumb stays legible without a new token. */
+      border: 1px solid var(--text-muted);
+      box-shadow: var(--shadow-sm);
+      transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .theme-toggle-opt {
+      position: relative;
+      z-index: 1;
+      flex: 1 1 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 4px 10px;
+      white-space: nowrap;
+      font-family: var(--font-micro);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: normal;
+      text-transform: none;
+      color: var(--text);
+      /* The unselected side is dimmed rather than hidden. 0.62 is the most
+         transparent this can go while the label still clears 4.5:1 against the
+         track in BOTH themes — measured, not eyeballed. Going lower reads
+         nicer but drops the inactive label below AA. */
+      opacity: 0.62;
+      transition: opacity 160ms ease;
+    }
+    .theme-toggle-glyph { font-size: 14px; color: inherit; }
+    /* Active side: html has no data-theme in light, data-theme="dark" in dark. */
+    html:not([data-theme="dark"]) .theme-toggle-opt--light,
+    [data-theme="dark"] .theme-toggle-opt--dark { opacity: 1; }
+    [data-theme="dark"] .theme-toggle-thumb { transform: translateX(100%); }
+
+    /* Dark mode reverses the sidebar wordmark. The primary colorway is a midnight
+       wordmark, which all but disappears against the dark sidebar — so here, and only
+       here, it takes the reversed treatment. The monogram keeps its red: that reads
+       fine on dark, and dropping it would cost the sidebar its one spot of brand color.
+
+       Scoped to .sidebar-brand deliberately. The logo cards in the Logos section must
+       NOT follow the theme — each one documents the mark on a specific fixed
+       background, and "primary on white" has to stay primary on white. */
+    [data-theme="dark"] .sidebar-brand .brand-logo--primary { color: #FFFFFF; }
+
+    .sidebar-search { margin: 0 var(--space-3) var(--space-5); }
+    .sidebar-search-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: 11px var(--space-3);
+      border: 1px solid var(--border);
+      border-radius: var(--corner-radius-base);
+      background: var(--surface-input);
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      cursor: pointer;
+      transition: border-color 120ms ease, color 120ms ease, transform 120ms ease;
+    }
+    .sidebar-search-trigger:hover { border-color: var(--brand); color: var(--text); }
+    .sidebar-search-trigger:active { transform: translateY(1px); }
+    .sidebar-search-trigger:focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: 2px;
+    }
+    .sidebar-search-trigger .material-symbols-rounded { font-size: 18px; color: inherit; }
+    .sidebar-search-trigger-label { flex: 1; text-align: left; }
+    .sidebar-search-kbd {
+      font-family: var(--font-micro);
+      font-size: 10px;
+      letter-spacing: normal;
+      text-transform: none;
+      padding: 2px 5px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .search-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 12, 6, 0.55);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 12vh var(--space-5) var(--space-5);
+      z-index: 100;
+    }
+    .search-overlay[hidden] { display: none; }
+    .search-panel {
+      width: 100%;
+      max-width: 560px;
+      max-height: 70vh;
+      background: var(--surface);
+      border-radius: var(--corner-radius-lg);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    /* The Cmd+K palette's bare text input. Named .search-field, NOT .search-input:
+       .search-input is the Search Input *component* (a bordered, filled <label>
+       wrapper) defined above. Both were once called .search-input at equal
+       specificity, so this rule — being later — stripped the component's border
+       and background everywhere, while the component's flex/padding/min-height
+       leaked onto this input. Keep the two names distinct. */
+    .search-field {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: var(--font-sans);
+      font-size: 16px;
+      color: var(--text);
+    }
+    .search-field::placeholder { color: var(--text-muted); }
+    .search-esc {
+      font-family: var(--font-micro);
+      font-size: 10px;
+      letter-spacing: normal;
+      text-transform: none;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .search-results { overflow-y: auto; padding: var(--space-3); }
+    .search-result-item {
+      width: 100%;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding: 12px var(--space-4);
+      border: none;
+      background: transparent;
+      border-radius: var(--corner-radius-base);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+    }
+    .search-result-title { flex: 1; font-weight: 700; }
+    .search-result-category {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      letter-spacing: normal;
+      text-transform: none;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .search-result-item--active,
+    .search-result-item:hover { background: var(--sky-50); }
+    .search-result-item:active { background: var(--sky-100); }
+    .search-empty {
+      padding: var(--space-6);
+      text-align: center;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 14px;
+    }
+
+    .palette-swatch { cursor: pointer; position: relative; }
+    /* "Copy" rides on the color band, where it overlaps no text. It's an affordance
+       rather than content — it appears only on hover or focus, and the click target is
+       the whole swatch either way — so its own contrast on the band is not a barrier to
+       anyone: the swatch's real label is always readable below. */
+    .palette-swatch::before {
+      content: 'Copy';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-family: var(--font-micro);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: var(--radius-pill);
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: var(--shadow-sm);
+      opacity: 0;
+      transition: opacity 120ms ease;
+      pointer-events: none;
+    }
+    .palette-swatch:hover::before,
+    .palette-swatch:focus-visible::before { opacity: 1; }
+    .palette-swatch:focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: 2px;
+    }
+
+    /* Toast · copy confirmation, bottom-center, auto-dismiss */
+    .rba-toast {
+      position: fixed;
+      bottom: var(--space-6);
+      left: 50%;
+      transform: translate(-50%, 12px);
+      z-index: 100;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: var(--surface-deep);
+      color: #fff;
+      border-radius: var(--radius-pill);
+      box-shadow: var(--shadow-lg);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 700;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+    .rba-toast--visible {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+    .rba-toast::before {
+      content: 'check';
+      font-family: 'Material Symbols Rounded';
+      font-size: 16px;
+      color: var(--sky-400);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .rba-toast { transition: opacity 160ms ease; }
+    }
+
+    .lib-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .lib-filter-btn {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      line-height: 18px;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-soft);
+      cursor: pointer;
+      transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+    }
+    .lib-filter-btn:hover { border-color: var(--brand); color: var(--text); }
+    .lib-filter-btn[aria-pressed="true"] {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: var(--on-accent);
+    }
+    /* ---------- Brand image gallery · metadata line ----------
+       Format, pixel dimensions and file size, so someone can tell before downloading
+       whether a photo is big enough for the slide they're building. */
+    .photo-card-meta {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      line-height: 15px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* ---------- Callout ----------
+       Used for the home page's "how to use this" note and for the standing warning
+       that a collection is still placeholders. --tone repoints the rule and the
+       heading; everything else is shared. */
+    .callout {
+      display: flex;
+      gap: var(--space-3);
+      padding: var(--padding-lg);
+      margin: 0 0 var(--space-6);
+      border-radius: var(--corner-radius-base);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--tone, var(--brand));
+      background: var(--surface);
+    }
+    .callout .material-symbols-rounded {
+      font-size: 20px;
+      color: var(--tone, var(--brand));
+    }
+    .callout-body { font-family: var(--font-sans); font-size: 14px; line-height: 21px; color: var(--text-soft); }
+    .callout-body > :first-child { margin-top: 0; }
+    .callout-body > :last-child { margin-bottom: 0; }
+    .callout-body strong { color: var(--text); font-weight: 700; }
+    .callout--warn { --tone: var(--red-600); }
+
+    /* ---------- File list · templates & decks ----------
+       A table rather than a gallery: these are files people fetch by name, and a
+       thumbnail of a slide deck tells you nothing a filename doesn't. */
+    .file-format {
+      font-family: var(--font-micro);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: var(--radius-sm);
+      background: var(--surface-pill);
+      color: var(--text-soft);
+      white-space: nowrap;
+    }
+    .file-name { font-weight: 700; color: var(--text); }
+    .file-note {
+      display: block;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    /* A row whose file isn't stocked yet. The link is replaced by inert text rather
+       than a disabled-looking anchor — there is nothing to click, so there should be
+       nothing that looks clickable. */
+    .file-pending {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .table tr[data-status="pending"] .file-name { color: var(--text-soft); }
+
+    /* ---------- Home · section cards ---------- */
+    .home-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-4);
+    }
+    .home-card {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      padding: var(--padding-lg);
+      border: 1px solid var(--border);
+      border-radius: var(--corner-radius-base);
+      background: var(--surface);
+      color: inherit;
+      text-decoration: none;
+      transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+    }
+    .home-card:hover {
+      border-color: var(--brand);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    .home-card .material-symbols-rounded { color: var(--brand); }
+    .home-card-title {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 17px;
+      line-height: 24px;
+      color: var(--text);
+    }
+    .home-card-desc {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--text-muted);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .home-card:hover { transform: none; }
+    }

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 120" role="img" aria-label="RBA (placeholder logo)">
+  <title>RBA — PLACEHOLDER LOGO, NOT FOR USE</title>
+  <!-- This is scaffolding, not the RBA logo. It exists so the Logos section, the
+       colorway cards, and the download button can all be built and verified before the
+       real artwork arrives. The word PLACEHOLDER is drawn into the mark on purpose: a
+       stub that looks like a finished logo is the one that gets shipped by mistake.
+
+       To replace it: drop the four real files into this folder as rba-logo-primary.svg,
+       rba-logo-white.svg, rba-logo-black.svg and rba-logo-red.svg, then swap the
+       <symbol id="rba-logo"> block at the top of every page for the real artwork. See
+       README.md in this folder. -->
+  <!-- Monogram. Uses --mark-fill so the four colorways in styles.css can repaint it. -->
+  <rect x="0" y="12" width="96" height="96" rx="14" style="fill: var(--mark-fill, #C8252D)"/>
+  <text x="48" y="78" text-anchor="middle" font-family="Montserrat, Arial, sans-serif"
+        font-size="58" font-weight="800" fill="#FFFFFF">R</text>
+  <!-- Wordmark. currentColor, so `color` on the <svg> drives it. -->
+  <text x="118" y="76" font-family="Montserrat, Arial, sans-serif" font-size="58"
+        font-weight="800" letter-spacing="-1" fill="currentColor">RBA</text>
+  <text x="120" y="100" font-family="Montserrat, Arial, sans-serif" font-size="13"
+        font-weight="700" letter-spacing="3" fill="#C8252D">PLACEHOLDER</text>
+</svg>

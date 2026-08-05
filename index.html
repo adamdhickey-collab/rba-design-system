@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RBA Design System</title>
+  <meta name="description" content="Brand foundations and downloadable assets for RBA Consulting — colors, typography, logos, icons, images and templates." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..700,0..1,-25..0&display=block" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <!-- PLACEHOLDER LOGO. Not the RBA mark — see assets/logos/README.md for how to
+       replace it. The wordmark paths use currentColor and the monogram uses
+       --mark-fill, which is how one symbol serves all four colorways (styles.css,
+       "Logo"). Keep that contract when you swap in the real artwork. -->
+  <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true" focusable="false">
+    <symbol id="rba-logo" viewBox="0 0 360 120">
+      <rect x="0" y="12" width="96" height="96" rx="14" style="fill: var(--mark-fill, #C8252D)"/>
+      <text x="48" y="78" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="58" font-weight="800" fill="#FFFFFF">R</text>
+      <text x="118" y="76" font-family="Montserrat, Arial, sans-serif" font-size="58" font-weight="800" letter-spacing="-1" fill="currentColor">RBA</text>
+      <text x="120" y="100" font-family="Montserrat, Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="3" fill="#C8252D">PLACEHOLDER</text>
+    </symbol>
+  </svg>
+
+  <div class="app-layout">
+
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" style="text-decoration:none; display:block;"><svg class="brand-logo brand-logo--primary" viewBox="0 0 360 120" role="img" aria-label="RBA"><use href="#rba-logo"/></svg></a>
+        <span class="sidebar-brand-title">RBA</span>
+        <span class="sidebar-brand-tagline">Design System · <span class="js-version">v1.0</span></span>
+        <div class="theme-toggle-row">
+          <button type="button" id="theme-toggle" class="theme-toggle" role="switch" aria-checked="false" aria-label="Light mode">
+            <span class="theme-toggle-track" aria-hidden="true">
+              <span class="theme-toggle-thumb"></span>
+              <span class="theme-toggle-opt theme-toggle-opt--light">
+                <span class="material-symbols-rounded theme-toggle-glyph">light_mode</span>
+                <span class="theme-toggle-opt-label">Light</span>
+              </span>
+              <span class="theme-toggle-opt theme-toggle-opt--dark">
+                <span class="material-symbols-rounded theme-toggle-glyph">dark_mode</span>
+                <span class="theme-toggle-opt-label">Dark</span>
+              </span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="sidebar-search">
+        <button type="button" class="sidebar-search-trigger" id="search-trigger" aria-haspopup="dialog">
+          <span class="material-symbols-rounded" aria-hidden="true">search</span>
+          <span class="sidebar-search-trigger-label">Search</span>
+          <span class="sidebar-search-kbd">⌘K</span>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Design system sections">
+        <div class="sidebar-section" data-nav-group="foundations">
+          <button type="button" class="sidebar-section-header" aria-expanded="true" aria-controls="nav-foundations">
+            <span class="sidebar-section-title">Foundations</span>
+            <span class="material-symbols-rounded sidebar-section-chevron" aria-hidden="true">expand_more</span>
+          </button>
+          <div class="sidebar-section-body" id="nav-foundations">
+            <div class="sidebar-section-body-inner">
+              <a href="#colors" class="sidebar-link"><span class="sidebar-link-num">01</span><span>Colors</span></a>
+              <a href="#type" class="sidebar-link"><span class="sidebar-link-num">02</span><span>Typography</span></a>
+              <a href="#logo" class="sidebar-link"><span class="sidebar-link-num">03</span><span>Logos</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-section" data-nav-group="library">
+          <button type="button" class="sidebar-section-header" aria-expanded="true" aria-controls="nav-library">
+            <span class="sidebar-section-title">Library</span>
+            <span class="material-symbols-rounded sidebar-section-chevron" aria-hidden="true">expand_more</span>
+          </button>
+          <div class="sidebar-section-body" id="nav-library">
+            <div class="sidebar-section-body-inner">
+              <a href="icons.html" class="sidebar-link"><span class="sidebar-link-num">04</span><span>Icons</span></a>
+              <a href="images.html" class="sidebar-link"><span class="sidebar-link-num">05</span><span>Brand images</span></a>
+              <a href="templates.html" class="sidebar-link"><span class="sidebar-link-num">06</span><span>Templates &amp; decks</span></a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="sidebar-foot">
+        Updated <span class="js-updated">2026.08.05</span><br>Brand &amp; Design Guidelines v1.0
+      </div>
+    </aside>
+
+    <div class="app-main" id="main-content" tabindex="-1">
+
+      <header class="hero">
+        <div class="container">
+          <p class="hero-eyebrow">RBA Consulting</p>
+          <h1 class="hero-title">Design System</h1>
+          <p class="hero-sub">The colors, type and logos that make something look like RBA — plus the icons, images and templates you need to build it. Everything here is downloadable and current.</p>
+          <div class="hero-meta">
+            <span class="js-version">v1.0</span>
+            <span>Updated <span class="js-updated">2026.08.05</span></span>
+            <span class="theme-label">Light theme</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="block" id="start">
+        <div class="container">
+          <div class="callout">
+            <span class="material-symbols-rounded" aria-hidden="true">lightbulb</span>
+            <div class="callout-body">
+              <p><strong>How to use this.</strong> Foundations tell you what the brand is — copy a hex, check a typeface, grab a logo. The library is where files live: hover any tile to download it, or take a whole collection as a zip. Press <kbd>⌘K</kbd> to jump anywhere.</p>
+              <p>Light and dark both ship. The toggle in the sidebar remembers your choice across pages.</p>
+            </div>
+          </div>
+
+          <div class="callout callout--warn">
+            <span class="material-symbols-rounded" aria-hidden="true">construction</span>
+            <div class="callout-body">
+              <p><strong>The assets are placeholders right now.</strong> The structure, search, filtering, theming and downloads are all real and working — the logo, icons, images and templates are stubs, marked as such wherever they appear. Each folder under <code>assets/</code> has a README naming the exact files to drop in.</p>
+            </div>
+          </div>
+
+          <div class="home-grid">
+            <a class="home-card" href="#colors">
+              <span class="material-symbols-rounded" aria-hidden="true">palette</span>
+              <span class="home-card-title">Colors</span>
+              <span class="home-card-desc">The palette with hex values, click any swatch to copy.</span>
+            </a>
+            <a class="home-card" href="#type">
+              <span class="material-symbols-rounded" aria-hidden="true">text_fields</span>
+              <span class="home-card-title">Typography</span>
+              <span class="home-card-desc">Montserrat and Libre Caslon Text, with the full scale.</span>
+            </a>
+            <a class="home-card" href="#logo">
+              <span class="material-symbols-rounded" aria-hidden="true">workspaces</span>
+              <span class="home-card-title">Logos</span>
+              <span class="home-card-desc">Every colorway, on every background it has to survive.</span>
+            </a>
+            <a class="home-card" href="icons.html">
+              <span class="material-symbols-rounded" aria-hidden="true">interests</span>
+              <span class="home-card-title">Icons</span>
+              <span class="home-card-desc">Searchable library. Download an SVG or copy its markup.</span>
+            </a>
+            <a class="home-card" href="images.html">
+              <span class="material-symbols-rounded" aria-hidden="true">image</span>
+              <span class="home-card-title">Brand images</span>
+              <span class="home-card-desc">Approved photography, sized and ready to place.</span>
+            </a>
+            <a class="home-card" href="templates.html">
+              <span class="material-symbols-rounded" aria-hidden="true">description</span>
+              <span class="home-card-title">Templates &amp; decks</span>
+              <span class="home-card-desc">PowerPoint and Word files, always the current version.</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="colors">
+        <div class="container">
+          <div class="section-head">
+            <p class="section-eyebrow">01 · Foundations</p>
+            <h2 class="section-title">Colors</h2>
+            <p class="section-lede">Seven brand colors and five neutrals, from the RBA Design &amp; Brand Guidelines v1.0. Click any swatch to copy its hex.</p>
+          </div>
+
+          <h3 class="type-h4">Primary</h3>
+          <p class="palette-note">Midnight is the interface anchor and carries most of the surface area. RBA Red is the mark's color and works as an accent — a headline rule, a highlight, a single emphasised number — never as a large fill or a button background.</p>
+          <div class="palette-columns">
+            <div class="palette-col">
+              <button type="button" class="palette-swatch" style="--c: #C8252D" aria-label="Copy RBA Red hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">RBA Red</span>
+                  <span class="palette-swatch-hex">#C8252D</span>
+                </span>
+              </button>
+              <button type="button" class="palette-swatch" style="--c: #1D366D" aria-label="Copy Midnight hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">Midnight</span>
+                  <span class="palette-swatch-hex">#1D366D</span>
+                </span>
+              </button>
+              <button type="button" class="palette-swatch" style="--c: #3178BF" aria-label="Copy Action hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">Action</span>
+                  <span class="palette-swatch-hex">#3178BF</span>
+                </span>
+              </button>
+            </div>
+            <div class="palette-col">
+              <button type="button" class="palette-swatch" style="--c: #14BADB" aria-label="Copy Aqua hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">Aqua</span>
+                  <span class="palette-swatch-hex">#14BADB</span>
+                </span>
+              </button>
+              <button type="button" class="palette-swatch" style="--c: #8EC3DB" aria-label="Copy Soft Blue hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">Soft Blue</span>
+                  <span class="palette-swatch-hex">#8EC3DB</span>
+                </span>
+              </button>
+              <button type="button" class="palette-swatch" style="--c: #BDE4F1" aria-label="Copy Sky hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">Sky</span>
+                  <span class="palette-swatch-hex">#BDE4F1</span>
+                </span>
+              </button>
+              <button type="button" class="palette-swatch" style="--c: #F5FAFC" aria-label="Copy White Blue hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">White Blue</span>
+                  <span class="palette-swatch-hex">#F5FAFC</span>
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <h3 class="type-h4" style="margin-top: 40px;">Neutrals</h3>
+          <p class="palette-note">Text, rules and recessed surfaces. Black is <code>#333333</code>, not <code>#000000</code> — pure black is not in the palette.</p>
+          <div class="palette-columns">
+            <div class="palette-col">
+              <button type="button" class="palette-swatch" style="--c: #333333" aria-label="Copy Black hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">Black</span>
+                  <span class="palette-swatch-hex">#333333</span>
+                </span>
+              </button>
+              <button type="button" class="palette-swatch" style="--c: #666666" aria-label="Copy Dark Grey hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">Dark Grey</span>
+                  <span class="palette-swatch-hex">#666666</span>
+                </span>
+              </button>
+              <button type="button" class="palette-swatch" style="--c: #AAAAAA" aria-label="Copy Medium Grey hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">Medium Grey</span>
+                  <span class="palette-swatch-hex">#AAAAAA</span>
+                </span>
+              </button>
+            </div>
+            <div class="palette-col">
+              <button type="button" class="palette-swatch" style="--c: #DDDDDD" aria-label="Copy Light Grey hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">Light Grey</span>
+                  <span class="palette-swatch-hex">#DDDDDD</span>
+                </span>
+              </button>
+              <button type="button" class="palette-swatch" style="--c: #F5F5F5" aria-label="Copy White Grey hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">White Grey</span>
+                  <span class="palette-swatch-hex">#F5F5F5</span>
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <h3 class="type-h4" style="margin-top: 40px;">Gradient</h3>
+          <p class="palette-note">The two-stop wash used behind heroes and header bands. Always this pair, always light-to-mid — it sits under type, so it can never get dark enough to fight the text on top of it.</p>
+          <div class="palette-pairs">
+            <div class="palette-pair">
+              <div style="height: 96px; border-radius: 8px; background: linear-gradient(135deg, #E6F8FB 0%, #9DDBF6 100%);"></div>
+              <p class="palette-note" style="margin-top: 8px;"><code>#E6F8FB</code> → <code>#9DDBF6</code>, 135°</p>
+            </div>
+          </div>
+
+          <h3 class="type-h4" style="margin-top: 40px;">Tokens</h3>
+          <p class="palette-note">The CSS custom properties this system exposes. Reference these rather than raw hex values so a palette correction lands everywhere at once.</p>
+          <div class="token-table-scroll" tabindex="0" role="region" aria-label="Color tokens, scrollable">
+            <table class="token-table">
+              <thead>
+                <tr><th>Token</th><th>Value</th><th>Role</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="token-name">--rba-red</td><td><span class="token-swatch" style="background:#C8252D"></span>#C8252D</td><td>Accent. The mark's red.</td></tr>
+                <tr><td class="token-name">--midnight</td><td><span class="token-swatch" style="background:#1D366D"></span>#1D366D</td><td>Primary brand color, interface anchor.</td></tr>
+                <tr><td class="token-name">--action</td><td><span class="token-swatch" style="background:#3178BF"></span>#3178BF</td><td>Links and interactive controls.</td></tr>
+                <tr><td class="token-name">--aqua</td><td><span class="token-swatch" style="background:#14BADB"></span>#14BADB</td><td>Bright accent. Becomes --brand in dark mode.</td></tr>
+                <tr><td class="token-name">--soft-blue</td><td><span class="token-swatch" style="background:#8EC3DB"></span>#8EC3DB</td><td>Secondary fills.</td></tr>
+                <tr><td class="token-name">--sky-blue</td><td><span class="token-swatch" style="background:#BDE4F1"></span>#BDE4F1</td><td>Tints and selected states.</td></tr>
+                <tr><td class="token-name">--white-blue</td><td><span class="token-swatch" style="background:#F5FAFC"></span>#F5FAFC</td><td>Page washes.</td></tr>
+                <tr><td class="token-name">--black</td><td><span class="token-swatch" style="background:#333333"></span>#333333</td><td>Body text.</td></tr>
+                <tr><td class="token-name">--dark-grey</td><td><span class="token-swatch" style="background:#666666"></span>#666666</td><td>Secondary text.</td></tr>
+                <tr><td class="token-name">--med-grey</td><td><span class="token-swatch" style="background:#AAAAAA"></span>#AAAAAA</td><td>Muted text, disabled states.</td></tr>
+                <tr><td class="token-name">--light-grey</td><td><span class="token-swatch" style="background:#DDDDDD"></span>#DDDDDD</td><td>Borders and rules.</td></tr>
+                <tr><td class="token-name">--white-grey</td><td><span class="token-swatch" style="background:#F5F5F5"></span>#F5F5F5</td><td>Recessed surfaces.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="type">
+        <div class="container">
+          <div class="section-head">
+            <p class="section-eyebrow">02 · Foundations</p>
+            <h2 class="section-title">Typography</h2>
+            <p class="section-lede">Two typefaces. Montserrat carries everything functional; Libre Caslon Text is reserved for editorial display. Both are Google Fonts, so there is nothing to license and nothing to install.</p>
+          </div>
+
+          <div class="term-grid">
+            <div class="term-item">
+              <p class="type-h2" style="font-family: var(--font-sans);">Montserrat</p>
+              <p class="type-meta">Sans · 400 / 500 / 600 / 700 / 800</p>
+              <p class="type-body">Headings, body copy, interface, labels. Everything unless there's a reason otherwise.</p>
+            </div>
+            <div class="term-item">
+              <p class="type-h2" style="font-family: var(--font-display);">Libre Caslon Text</p>
+              <p class="type-meta">Serif · 400 / 400 italic / 700</p>
+              <p class="type-body">Editorial display only — a pull quote, a report cover, a single statement headline. Never body copy, never UI.</p>
+            </div>
+          </div>
+
+          <h3 class="type-h4" style="margin-top: 40px;">Scale</h3>
+          <div class="type-stack">
+            <div class="type-row">
+              <p class="type-h1">Heading 1</p>
+              <p class="type-meta">Montserrat 800 · clamp(36px, 5vw, 56px) · -0.02em</p>
+            </div>
+            <div class="type-row">
+              <p class="type-h1-italic">Heading 1, editorial</p>
+              <p class="type-meta">Libre Caslon Text 400 italic · same size · display moments only</p>
+            </div>
+            <div class="type-row">
+              <p class="type-h2">Heading 2</p>
+              <p class="type-meta">Montserrat 700 · 36px / 44px</p>
+            </div>
+            <div class="type-row">
+              <p class="type-h3">Heading 3</p>
+              <p class="type-meta">Montserrat 700 · 28px / 36px</p>
+            </div>
+            <div class="type-row">
+              <p class="type-h4">Heading 4</p>
+              <p class="type-meta">Montserrat 700 · 22px / 30px</p>
+            </div>
+            <div class="type-row">
+              <p class="type-h5">Heading 5</p>
+              <p class="type-meta">Montserrat 700 · 18px / 26px</p>
+            </div>
+            <div class="type-row">
+              <p class="type-subtitle">Subtitle · sits under a heading to carry the qualifier</p>
+              <p class="type-meta">Montserrat 500 · 20px / 30px</p>
+            </div>
+            <div class="type-row">
+              <p class="type-body">Body. The default for running text — long enough to read, short enough to scan. Measure caps around 68 characters, because past that the eye loses the line on its way back.</p>
+              <p class="type-meta">Montserrat 400 · 16px / 26px</p>
+            </div>
+            <div class="type-row">
+              <p class="type-body-bold">Body bold · emphasis inside running text</p>
+              <p class="type-meta">Montserrat 700 · 16px / 26px</p>
+            </div>
+            <div class="type-row">
+              <p class="type-caption">Caption · image credits, footnotes, table notes</p>
+              <p class="type-meta">Montserrat 400 · 13px / 19px</p>
+            </div>
+            <div class="type-row">
+              <p class="type-caption-bold">Caption bold · labels and eyebrows</p>
+              <p class="type-meta">Montserrat 700 · 13px / 19px</p>
+            </div>
+          </div>
+
+          <h3 class="type-h4" style="margin-top: 40px;">Tokens</h3>
+          <div class="token-table-scroll" tabindex="0" role="region" aria-label="Typography tokens, scrollable">
+            <table class="token-table">
+              <thead><tr><th>Token</th><th>Value</th><th>Role</th></tr></thead>
+              <tbody>
+                <tr><td class="token-name">--font-sans</td><td>"Montserrat", Arial, Helvetica, sans-serif</td><td>Everything functional.</td></tr>
+                <tr><td class="token-name">--font-display</td><td>"Libre Caslon Text", "Adobe Caslon Pro", Georgia, serif</td><td>Editorial display.</td></tr>
+                <tr><td class="token-name">--font-micro</td><td>"Montserrat", Arial, Helvetica, sans-serif</td><td>Smallest labels. Points at the sans until a micro cut is licensed.</td></tr>
+                <tr><td class="token-name">--display-tracking</td><td>-0.02em</td><td>Large display sizes.</td></tr>
+                <tr><td class="token-name">--display-tracking-sm</td><td>-0.01em</td><td>Mid display sizes.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="logo">
+        <div class="container">
+          <div class="section-head">
+            <p class="section-eyebrow">03 · Foundations</p>
+            <h2 class="section-title">Logos</h2>
+            <p class="section-lede">Four colorways, shown on the backgrounds each one exists to survive. Hover any card to download that colorway as an SVG.</p>
+          </div>
+
+          <div class="callout callout--warn">
+            <span class="material-symbols-rounded" aria-hidden="true">warning</span>
+            <div class="callout-body">
+              <p><strong>These are placeholder marks, not the RBA logo.</strong> They exist so the colorways, the backgrounds and the download button can be verified before the real artwork lands. Replace them before anyone uses this page — see <code>assets/logos/README.md</code>.</p>
+            </div>
+          </div>
+
+          <h3 class="type-h4">Colorways</h3>
+          <p class="palette-note">Each card is a real-world background, not a demo of this site's own theme — these stay fixed when you flip light and dark, because "the mark on midnight" has to keep being midnight.</p>
+          <div class="logo-grid">
+            <div class="logo-card" data-bg="light">
+              <svg class="brand-logo brand-logo--primary" viewBox="0 0 360 120" role="img" aria-label="RBA logo, primary"><use href="#rba-logo"/></svg>
+              <span class="logo-card-label">Primary · on white</span>
+            </div>
+            <div class="logo-card" data-bg="paper">
+              <svg class="brand-logo brand-logo--primary" viewBox="0 0 360 120" role="img" aria-label="RBA logo, primary on tint"><use href="#rba-logo"/></svg>
+              <span class="logo-card-label">Primary · on tint</span>
+            </div>
+            <div class="logo-card" data-bg="midnight">
+              <svg class="brand-logo brand-logo--white" viewBox="0 0 360 120" role="img" aria-label="RBA logo, reversed on midnight"><use href="#rba-logo"/></svg>
+              <span class="logo-card-label">Reversed · on midnight</span>
+            </div>
+            <div class="logo-card" data-bg="dark">
+              <svg class="brand-logo brand-logo--white" viewBox="0 0 360 120" role="img" aria-label="RBA logo, reversed on black"><use href="#rba-logo"/></svg>
+              <span class="logo-card-label">Reversed · on black</span>
+            </div>
+            <div class="logo-card" data-bg="light">
+              <svg class="brand-logo brand-logo--black" viewBox="0 0 360 120" role="img" aria-label="RBA logo, one-color black"><use href="#rba-logo"/></svg>
+              <span class="logo-card-label">One-color black</span>
+            </div>
+            <div class="logo-card" data-bg="light">
+              <svg class="brand-logo brand-logo--red" viewBox="0 0 360 120" role="img" aria-label="RBA logo, one-color red"><use href="#rba-logo"/></svg>
+              <span class="logo-card-label">One-color red</span>
+            </div>
+          </div>
+
+          <h3 class="type-h4" style="margin-top: 40px;">Rules</h3>
+          <div class="token-table-scroll" tabindex="0" role="region" aria-label="Logo rules, scrollable">
+            <table class="table">
+              <thead><tr><th>Rule</th><th>Requirement</th></tr></thead>
+              <tbody>
+                <tr><td>Clear space</td><td>The height of the monogram on all four sides. Nothing enters it — not type, not an image edge, not another logo.</td></tr>
+                <tr><td>Minimum size</td><td>24px monogram height on screen, 0.25in in print. Below that the wordmark stops resolving.</td></tr>
+                <tr><td>Which colorway</td><td>Primary wherever it fits. Reversed on midnight, on black, and over photography. One-color black or red only where the process genuinely allows a single ink.</td></tr>
+                <tr><td>Over photography</td><td>Reversed, on a part of the image that is dark and quiet. If the mark needs a scrim to be legible, the photo is wrong for it.</td></tr>
+                <tr><td>Never</td><td>Redraw or retype it. Recolor outside these four. Stretch, skew, rotate, outline, or add a shadow or glow. Rebuild it from a screenshot. Place it on a background that breaks its contrast.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="palette-note" style="margin-top: 24px;">
+            <a class="btn btn-secondary btn--sm" href="downloads/rba-logos.zip" download>
+              <span class="material-symbols-rounded" aria-hidden="true">folder_zip</span>
+              <span>Download all logos</span>
+            </a>
+            <span class="lib-bundle-note" style="margin-left: 12px;">Bundle built <span class="js-bundle-date">—</span></span>
+          </p>
+        </div>
+      </section>
+
+      <footer>
+        <div class="container footer-inner">
+          <div>
+            <p class="footer-mark">RBA<span class="sub"> Design System</span></p>
+            <p class="footer-meta" style="margin-top: 6px;">Brand foundations &amp; asset library · <span class="js-version">v1.0</span></p>
+          </div>
+          <p class="footer-meta">Need something that isn't here? Ask the design team — and if it's a brand asset, it belongs in this repo rather than in a thread.</p>
+        </div>
+      </footer>
+
+    </div><!-- /.app-main -->
+  </div><!-- /.app-layout -->
+
+  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search the RBA Design System" hidden>
+    <div class="search-panel">
+      <div class="search-input-row">
+        <span class="material-symbols-rounded" aria-hidden="true">search</span>
+        <input type="text" class="search-field" id="search-input" placeholder="Search colors, type, logos, icons, templates…" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="search-results" aria-label="Search the RBA Design System" />
+        <kbd class="search-esc">Esc</kbd>
+      </div>
+      <div class="search-results" id="search-results" role="listbox" aria-label="Search results"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
