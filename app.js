@@ -223,8 +223,8 @@
         '<button type="button" class="mobile-bar-trigger" aria-expanded="false" aria-controls="' + sidebar.id + '" aria-label="Open navigation">' +
           '<span class="material-symbols-rounded" aria-hidden="true">menu</span>' +
         '</button>' +
-        '<span class="mobile-bar-title">RBA</span>' +
-        '<span class="mobile-bar-meta">Design System · <span class="js-version">v1.2</span></span>';
+        '<span class="mobile-bar-title">Connect</span>' +
+        '<span class="mobile-bar-meta">Design System · <span class="js-version">v1.0</span></span>';
       layout.parentNode.insertBefore(bar, layout);
 
       const scrim = document.createElement('div');
@@ -754,9 +754,8 @@
     // Asset downloads · injects a hover "download" button onto every asset tile, so a
     // logo colorway, an icon, or a photograph can be pulled straight off the page.
     //   - Inline SVG (the logo colorways) is serialized to a standalone file: <use>
-    //     refs are inlined from their <symbol>, and the tile's computed color plus
-    //     --mark-fill are baked on as literals so the file is correct when opened
-    //     outside a browser.
+    //     refs are inlined from their <symbol> and the tile's computed color is baked
+    //     onto the root, so currentColor resolves when the file is opened alone.
     //   - File-backed assets (icons, photography) download their source file
     //     directly. Those tiles also carry a plain <a download> link, so the button
     //     here is a convenience, not the only route.
@@ -782,29 +781,17 @@
           Array.from(ref.childNodes).forEach(n => g.appendChild(n.cloneNode(true)));
           u.replaceWith(g);
         });
+        // Bake the resolved color onto the root. Every path in the mark is
+        // fill="currentColor", so this one declaration is the whole colorway — and it has
+        // to be a literal, not a var(), because plenty of standalone SVG consumers
+        // (Preview, older design tools, thumbnailers) don't resolve custom properties at
+        // all and would render the file black.
+        //
+        // The block lockup needs nothing here: its fills are fixed in the symbol.
         const cs = getComputedStyle(svg);
-        const mf = cs.getPropertyValue('--mark-fill').trim();
-        let style = 'color:' + cs.color + ';';
-        if (mf) style += '--mark-fill:' + mf + ';';
         clone.setAttribute('xmlns', SVGNS);
         clone.removeAttribute('class');
-        clone.setAttribute('style', style);
-        // The monogram path carries its own inline `fill: var(--mark-fill, …)` from the
-        // source symbol. Setting the custom property on the root is enough for a
-        // browser, but many standalone SVG consumers (Preview, older design tools,
-        // thumbnailers) don't resolve CSS custom properties at all — they fall through
-        // to the static fallback, so every colorway but the default would download with
-        // the wrong monogram color. Bake the resolved literal in place of the var()
-        // reference so the file renders correctly with zero custom-property support.
-        clone.querySelectorAll('[style*="--mark-fill"]').forEach(el => {
-          let s = el.getAttribute('style');
-          // Always resolve to a literal — even when mf is empty, substitute var()'s own
-          // fallback text rather than leaving the reference in place. A renderer with no
-          // var() support doesn't know to apply that fallback; it just drops the
-          // declaration and the path renders black.
-          s = s.replace(/var\(--mark-fill\s*(?:,\s*([^)]+))?\)/g, (_, fallback) => mf || fallback || '#C8252D');
-          el.setAttribute('style', s);
-        });
+        clone.setAttribute('style', 'color:' + cs.color + ';');
         const out = '<?xml version="1.0" encoding="UTF-8"?>\n' + new XMLSerializer().serializeToString(clone);
         return URL.createObjectURL(new Blob([out], { type: 'image/svg+xml' }));
       }

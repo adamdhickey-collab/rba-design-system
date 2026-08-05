@@ -52,3 +52,16 @@ than anywhere else in this repo:
 ```bash
 ./tools/build-bundles.sh
 ```
+
+## Fonts
+
+The canonical project bundles the brand-approved TTFs (20 Montserrat cuts, 3 Libre Caslon
+Text) under its own `fonts/` folder and loads them with `@font-face`. This site instead
+loads both faces from Google Fonts, because they are the same open-licensed families and a
+CDN link needs no files in the repo.
+
+If a **font download** is ever wanted here — someone installing Montserrat locally to build
+a deck — copy the 23 TTFs across from the design-system project into `assets/fonts/`, add a
+collection to `tools/build-bundles.sh`, and list it on this page. They were not imported
+automatically: they are binaries, they are already available from Google Fonts, and nothing
+on this site renders differently without them.

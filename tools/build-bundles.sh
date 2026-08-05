@@ -55,6 +55,13 @@ for entry in "${COLLECTIONS[@]}"; do
   rm -f "$out"
   ( cd "$src" && zip -q -r "$ROOT/$out" . -x "README.md" -x ".*" -x "__MACOSX/*" )
 
+  # The favicons are logo derivatives, so they ride along in the logo bundle rather
+  # than becoming a fifth download button for three small PNGs. Nested under
+  # favicons/ inside the zip so it's obvious what they are.
+  if [ "$src" = "assets/logos" ] && [ -d assets/favicons ]; then
+    ( cd assets && zip -q -r "$ROOT/$out" favicons -x "*/README.md" -x ".*" -x "__MACOSX/*" )
+  fi
+
   if [ -f "$out" ]; then
     count=$(unzip -Z1 "$out" 2>/dev/null | grep -cv '/$' || true)
     printf 'built %-32s %s file(s), %s\n' "$out" "$count" "$(du -h "$out" | cut -f1 | tr -d ' ')"

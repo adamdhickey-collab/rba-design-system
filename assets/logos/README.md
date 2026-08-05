@@ -42,3 +42,13 @@ Delete the placeholder warning from the Logos section of `index.html`, delete
 ```bash
 ./tools/build-bundles.sh
 ```
+
+## Favicons and app icons
+
+`../favicons/` holds the browser and app icons built from the block lockup —
+`favicon-16.png`, `favicon-32.png`, `apple-touch-180.png`. This site uses them as its
+own favicon, and they ship inside `downloads/rba-logos.zip`.
+
+The design-system project also has `mark-on-navy-512.png`, `mark-transparent-512.png`,
+`maskable-512.png` and `favicon-48.png`. Those weren't imported — pull them across if a
+PWA manifest or a large app icon is ever needed.

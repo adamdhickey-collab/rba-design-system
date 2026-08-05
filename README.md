@@ -1,12 +1,12 @@
-# RBA Design System
+# Connect Design System
 
-Brand foundations and a downloadable asset library for RBA Consulting. Static HTML,
+RBA Consulting's design system — brand foundations and a downloadable asset library. Static HTML,
 CSS and JavaScript — no build step, no dependencies, no package manager.
 
-> **The assets are placeholders.** Structure, search, filtering, theming and downloads
-> are all real and working. The logo, icons, images and templates are stubs, marked as
-> such wherever they appear. **Replacing the placeholder logo is the first thing to do** —
-> see [`assets/logos/README.md`](assets/logos/README.md).
+> **Logos and the palette are real. Icons and images are not yet.** The logo files,
+> favicons, and every colour and type value are imported from the brand's own source. The
+> icon and image tiles are still placeholder stubs, marked as such wherever they appear.
+> The PowerPoint master links to SharePoint rather than being copied here.
 
 ## Pages
 
@@ -16,6 +16,11 @@ CSS and JavaScript — no build step, no dependencies, no package manager.
 | `icons.html` | Icon library — search, filter, download, copy SVG |
 | `images.html` | Brand image gallery — filter, download |
 | `templates.html` | Templates & decks — a plain table of files |
+
+The logo, favicons and all token values were imported from the RBA Design System project on
+claude.ai/design via `DesignSync`. The PowerPoint master is **not** copied into this repo:
+SharePoint holds the version that actually gets updated, and a duplicate here would go
+stale without anyone noticing, so `templates.html` links to it instead.
 
 The sidebar, theme toggle and ⌘K search palette are byte-identical across all four.
 
@@ -88,21 +93,45 @@ on the color would mean either shipping a swatch that fails AA or inflating the 
 reach the large-text threshold. The label sits on the card instead, so every swatch is
 legible by construction whatever gets added to the palette.
 
-## Palette provenance
+## Palette provenance — resolved
 
-Colors and typefaces come from the `:root` block in `RBA Redesign/brand.html`, labelled
-"RBA brand palette — Design & Brand Guidelines v1.0".
+**Source of truth: `colors_and_type.css` in the RBA Design System project on
+claude.ai/design.** It states "All values match the canonical brand guidelines, Feb 2026"
+and cites `BRAND_TOKENS.md` / `SKILL.md`. Every colour, type and radius value in this repo
+is imported from it. Where the two disagree, that file wins — correct it there and
+re-import rather than editing values here, or they drift and neither is authoritative.
 
-**There may be a competing source.** There is also an `rba-brand-skills` repo and a
-published RBA Design System with a `colors_and_type.css`. If those disagree with what's
-here, pick which one wins and record the decision — a brand site with two sources of truth
-has none.
+An earlier version of this site was seeded from `RBA Redesign/brand.html`, which turned out
+to be an incomplete subset. Reconciling against the canonical source changed real things:
+
+- **RBA Red is logo-only.** Never a button, heading, link, chart series or border. This
+  site had been using it for caution notices; those are now accent teal. There is no red
+  anywhere in the interface — only in the mark itself.
+- **Aqua `#14BADB` is decorative only** — it fails AA as text. `--accent #0D8FA9` is the
+  teal that can carry type.
+- **Eight colours were missing entirely**, including `--primary-hover`, `--secondary`,
+  `--accent`, `--navy-dark`, `--bg-dark` and the 8-value data-visualization set.
+- **There are two gradients, both vertical**, not one at 135°.
+- **The type scale was wrong.** Official is hero 100px Libre Caslon / h1 48 / h2 40 / h3 36
+  / h4 32 / h5 24 / h6 20 / body-lg 20 / body 16 / body-sm 14.
+- **The hero is the serif.** The canonical file defines the hero as Libre Caslon and
+  comments that it is the only place the serif is used. An earlier pass had switched it to
+  Montserrat on the reasoning that a reference page isn't an editorial moment; the
+  published system overrules that.
+
+The type specimen documents the official scale exactly. The site's own furniture is set
+smaller on purpose — the official scale is a marketing scale — and that divergence is
+noted in `styles.css` where it happens.
 
 ## Typefaces
 
 Montserrat and Libre Caslon Text, both from Google Fonts, loaded via a `<link>`. There are
 no font files in this repo and no `@font-face` rules, so nothing here needs a licence
 check before it ships.
+
+The canonical project bundles the brand-approved TTFs and loads them with `@font-face`.
+Same families, open-licensed either way. If a font *download* is ever wanted here, see
+[`assets/templates/README.md`](assets/templates/README.md).
 
 Libre Caslon appears in exactly one place on this site: the type specimen, where it is the
 subject rather than the voice. Headings, including the hero, are Montserrat — the
