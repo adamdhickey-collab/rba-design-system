@@ -536,7 +536,11 @@
         return;
       }
 
-      // Flatten packs into icons, precomputing the search haystack once. Doing it per
+      // Hyphens and underscores become spaces so a typed query and a written name
+      // meet in the middle: "pie chart", "pie-chart" and "Pie Chart" are one thing.
+      const flatten = s => s.toLowerCase().replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
+
+      // Flatten packs into icons, precomputing the search haystacks once. Doing it per
       // keystroke across 1,490 rows is the difference between a filter that feels
       // instant and one that stutters.
       const icons = [];
@@ -551,13 +555,28 @@
           // searchable — someone who knows it as "Finance-04" should still find it
           // after it has been renamed to "invoice-paid".
           const label = labels[num] || '';
+          const filed = pack.name + '-' + num;
           icons.push({
             pack: pack,
-            name: label || (pack.name + '-' + num),
+            name: label || filed,
+            // Named icons lose the pack from their visible label, and names repeat
+            // across packs on purpose — a handshake in Collaboration and one in
+            // Client are both handshakes. The tooltip carries what the tile no
+            // longer shows, so two identical labels are still tellable apart.
+            title: label ? label + ' · ' + pack.name + ' · ' + filed : filed,
             svg: base + '.svg',
             png: base + '.png',
-            hay: (label + ' ' + pack.name + '-' + num + ' ' + pack.name + ' ' +
-                  pack.group + ' ' + pack.keywords).toLowerCase(),
+            // Two haystacks, both hyphen-flattened. Flattening is what lets "pie
+            // chart" find pie-chart-dollar — names are hyphenated and queries are
+            // typed with spaces, and a plain substring test bridges neither.
+            //
+            // They are separate because a name match and a pack-keyword match are
+            // not worth the same. "wallet" is a keyword on the whole Fintech pack,
+            // so without this the three actual wallet icons sit behind sixteen
+            // icons that merely belong to a pack that mentions wallets.
+            nameHay: flatten(label + ' ' + filed),
+            hay: flatten(label + ' ' + filed + ' ' + pack.name + ' ' +
+                         pack.group + ' ' + pack.keywords),
           });
         }
       });
@@ -589,6 +608,7 @@
         const cell = document.createElement('div');
         cell.className = 'glyph-cell';
         cell.setAttribute('data-file', item.svg);
+        cell.title = item.title;
 
         const glyph = document.createElement('span');
         glyph.className = 'glyph-cell-glyph';
@@ -627,6 +647,16 @@
         cell.append(glyph, name, actions, copy);
         return cell;
       }
+
+      // Counted from the manifest rather than written into the page, so the callout
+      // can't drift from reality as packs get named a few at a time.
+      const namedCount = packs.reduce((n, p) => n + Object.keys(p.labels || {}).length, 0);
+      document.querySelectorAll('.js-naming-progress').forEach(el => {
+        el.textContent = namedCount >= icons.length
+          ? 'Every icon has a real name.'
+          : namedCount.toLocaleString() + ' of ' + icons.length.toLocaleString() +
+            ' icons have real names so far.';
+      });
 
       const scope = grid.closest('.lib-scope') || document;
       const search = scope.querySelector('.lib-search-input');
@@ -686,15 +716,26 @@
       }
 
       function apply() {
-        const q = search ? search.value.trim().toLowerCase() : '';
+        // Every word must appear, in any order: "invoice review" and "review
+        // invoice" both land on invoice-review, and each extra word narrows rather
+        // than widening. A single substring test can do neither.
+        const terms = search ? flatten(search.value).split(' ').filter(Boolean) : [];
         const cells = grid.children;
         let shown = 0;
         for (let i = 0; i < icons.length; i++) {
           const item = icons[i];
-          const hit = (activeGroup === 'all' || item.pack.group === activeGroup) &&
-                      (activePack === 'all' || item.pack.slug === activePack) &&
-                      (!q || item.hay.indexOf(q) > -1);
+          const inScope = (activeGroup === 'all' || item.pack.group === activeGroup) &&
+                          (activePack === 'all' || item.pack.slug === activePack);
+          let hit = inScope, byName = false;
+          if (hit && terms.length) {
+            hit = terms.every(t => item.hay.indexOf(t) > -1);
+            byName = hit && terms.every(t => item.nameHay.indexOf(t) > -1);
+          }
           cells[i].hidden = !hit;
+          // Name matches float to the front of the grid. CSS order rather than
+          // reordering nodes: moving up to 1,490 elements on every keystroke would
+          // cost far more than setting one property on the ones still showing.
+          cells[i].style.order = (hit && terms.length && !byName) ? '1' : '';
           if (hit) shown++;
         }
         if (count) {

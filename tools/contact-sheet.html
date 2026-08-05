@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Contact sheet</title>
+<!--
+  A working tool, not part of the site. Renders one icon pack large and numbered so
+  the icons can actually be looked at and named — you cannot name "Finance-04" from
+  its filename, and the library grid is too small and too busy to read from.
+
+      tools/contact-sheet.html?pack=finance
+      tools/contact-sheet.html?pack=finance,audit,invoice
+      tools/contact-sheet.html?pack=finance&cols=4
+
+  Reads the same manifest as the site, so it can never show a pack that isn't
+  staged. Deliberately unstyled beyond legibility: big glyphs, obvious numbers,
+  white background, no theme.
+
+  ON COLUMN COUNT — this is the whole usability of the tool. Screenshots of the
+  browser pane are capped near 800px wide, so a sheet rendered wider is scaled
+  down and the fine 2px strokes turn to mush. Set the viewport to 800 wide and
+  keep to 4 columns: each icon then lands at ~150px in the capture, which is the
+  difference between naming an icon and guessing at it. Guessing is worse than
+  leaving it numbered.
+-->
+<style>
+  body { margin: 0; padding: 12px 14px; background: #fff; color: #111;
+         font: 500 13px/1.3 ui-sans-serif, system-ui, sans-serif; }
+  h2 { font-size: 16px; margin: 10px 0 8px; }
+  h2 span { font-weight: 400; color: #666; }
+  .sheet { display: grid; grid-template-columns: repeat(var(--cols, 4), 1fr); gap: 8px; }
+  .cell { display: flex; flex-direction: column; align-items: center; gap: 2px;
+          border: 1px solid #ddd; border-radius: 6px; padding: 6px 4px 4px; }
+  /* Painted as an <img>, not a mask: on a contact sheet the file's own near-black
+     stroke is exactly what we want to see, and there is no theme to follow. */
+  .cell img { width: 100%; height: auto; display: block; }
+  .num { font-variant-numeric: tabular-nums; font-weight: 700; font-size: 14px;
+         color: #b00; letter-spacing: 0.03em; }
+</style>
+</head>
+<body>
+<div id="out">Loading…</div>
+<script>
+(async () => {
+  const qs = new URLSearchParams(location.search);
+  const want = (qs.get('pack') || '').split(',').filter(Boolean);
+  document.body.style.setProperty('--cols', qs.get('cols') || '4');
+  const html = await (await fetch('../icons.html')).text();
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const data = JSON.parse(doc.getElementById('icon-manifest').textContent);
+  const packs = want.length ? data.packs.filter(p => want.includes(p.slug)) : data.packs;
+
+  const out = document.getElementById('out');
+  out.textContent = '';
+  if (!packs.length) { out.textContent = 'No such pack. Known: ' + data.packs.map(p => p.slug).join(', '); return; }
+
+  packs.forEach(p => {
+    const h = document.createElement('h2');
+    h.innerHTML = p.name + ' <span>· ' + p.slug + ' · ' + p.count + ' icons · ' + p.group + '</span>';
+    const sheet = document.createElement('div');
+    sheet.className = 'sheet';
+    for (let i = 1; i <= p.count; i++) {
+      const num = String(i).padStart(2, '0');
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      const img = document.createElement('img');
+      img.src = '../assets/icons/' + p.slug + '/' + p.slug + '-' + num + '.svg';
+      img.alt = '';
+      const n = document.createElement('span');
+      n.className = 'num';
+      n.textContent = num + (p.labels && p.labels[num] ? ' ' + p.labels[num] : '');
+      cell.append(img, n);
+      sheet.appendChild(cell);
+    }
+    out.append(h, sheet);
+  });
+  document.title = packs.map(p => p.slug).join(', ');
+})();
+</script>
+</body>
+</html>
