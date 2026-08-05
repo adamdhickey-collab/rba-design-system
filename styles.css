@@ -1687,6 +1687,15 @@
       white-space: nowrap;
     }
     .file-name { font-weight: 700; color: var(--text); }
+    /* Who a template is for. A company-wide master and one team's working file both
+       belong on this page, but conflating them is how a team's spreadsheet ends up in
+       front of a client. */
+    .file-scope {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
     .file-note {
       display: block;
       font-size: 13px;
@@ -1694,17 +1703,6 @@
       color: var(--text-muted);
       margin-top: 2px;
     }
-    /* A row whose file isn't stocked yet. The link is replaced by inert text rather
-       than a disabled-looking anchor — there is nothing to click, so there should be
-       nothing that looks clickable. */
-    .file-pending {
-      font-family: var(--font-micro);
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      white-space: nowrap;
-    }
-    .table tr[data-status="pending"] .file-name { color: var(--text-soft); }
 
     /* ---------- Home · section cards ---------- */
     .home-grid {

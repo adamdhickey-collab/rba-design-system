@@ -1,57 +1,43 @@
 # Templates & decks
 
-Empty. **No template files are stocked yet** — every row on `templates.html` shows
-"Not yet stocked".
+**No template files live in this folder, and that is the design.** Every row on
+`templates.html` links to SharePoint instead.
+
+SharePoint holds the copies that actually get updated. A duplicate in this repo would go
+stale the first time someone revised the original, and nobody would notice — the same
+failure mode the zip bundles guard against with a build date, except here there is no
+build date to warn you. A link is always current; a copy is only current by luck.
 
 ## Adding a template
 
-1. Drop the file in this folder (`.pptx`, `.docx`, `.potx`, `.dotx`, `.xlsx`).
-2. Edit the row in `templates.html`.
+1. Put the file in the appropriate SharePoint templates folder — for the DXC team that is
+   [Strategy/Templates](https://rbaconsulting.sharepoint.com/sites/rba_digital_experience_and_commerce/Shared%20Documents/Strategy/Templates).
+2. Add a `<tr>` to the table in `templates.html`: name, one-line note, format, scope
+   (Company-wide or the owning team), the file's real last-modified date, and a link.
 
-Unlike the icon and image grids, this page is **plain HTML, not rendered from a
-manifest**. There are only ever a handful of templates, a `<tr>` is no harder to
-edit than a JSON row, and hand-writing it means the table and its download links
-work with JavaScript switched off.
+The table is plain HTML rather than a manifest — there are only ever a handful of rows, and
+hand-writing it means the page works with JavaScript off.
 
-To stock a row, replace:
+**Put the real date in.** That column is what makes staleness visible: the consultant
+profile reads "30 Apr 2021", which is how you can tell at a glance that it predates the
+2026 brand.
 
-```html
-<td><span class="file-pending">Not yet stocked</span></td>
-```
+## Scope matters
 
-with:
+A company-wide master and one team's working spreadsheet can both be useful, but they are
+not the same thing, and conflating them is how a team's internal estimate sheet ends up in
+front of a client. Mark every row.
 
-```html
-<td>
-  <a class="btn btn-secondary btn--sm" href="assets/templates/rba-presentation.pptx" download>
-    <span class="material-symbols-rounded" aria-hidden="true">download</span>
-    <span>Download</span>
-  </a>
-</td>
-```
+## What is stocked
 
-Then fill in the Size and Updated cells, and delete `data-status="pending"` from
-the `<tr>`.
+Company-wide: the PowerPoint master, the consultant 1-page profile.
+DXC team: stakeholder interview deck, measurement strategy, estimate spreadsheet, event
+tracking and UTM schema.
 
-## Before you upload a template
-
-The template is what everyone else's work inherits, so the checks matter more here
-than anywhere else in this repo:
-
-- **Fonts:** Montserrat throughout, Libre Caslon Text only for editorial display.
-  Don't leave a theme font set to Calibri.
-- **Theme palette:** the file's own theme colors should be the RBA palette, so
-  someone using the built-in picker lands on brand colors by default.
-- **Layouts:** build real master layouts. If people have to paste free text boxes
-  onto blank slides, the template isn't doing its job.
-- **Strip the content:** no client names, no pricing, no notes from the deck you
-  built it from. Check the speaker notes and the document properties too.
-
-## After adding templates
-
-```bash
-./tools/build-bundles.sh
-```
+Searched and **not found** as of August 2026: a letterhead, a client proposal deck, and a
+case study document. Rows for those three existed here as scaffolding placeholders and were
+removed rather than left implying files that don't exist. If any get made, they belong in
+the company-wide group.
 
 ## Fonts
 

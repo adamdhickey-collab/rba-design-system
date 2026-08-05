@@ -101,76 +101,121 @@
           <div class="callout callout--warn">
             <span class="material-symbols-rounded" aria-hidden="true">construction</span>
             <div class="callout-body">
-              <p><strong>The PowerPoint master links to SharePoint; the rest aren&rsquo;t stocked yet.</strong> The deck deliberately isn&rsquo;t copied into this repo — SharePoint holds the version that actually gets updated, and a duplicate here would go stale without anyone noticing. The remaining rows have nothing to click yet; drop the files into <code>assets/templates/</code> and turn each row into a download. Instructions in <code>assets/templates/README.md</code>.</p>
+              <p><strong>These link to SharePoint rather than living here.</strong> SharePoint holds the copies that actually get updated; a duplicate in this repo would go stale without anyone noticing. Follow a link and you always get the current file.</p>
+              <p><strong>Copy before you edit.</strong> Save your own copy to the right Team first — never edit the template in place. That rule is the templates folder&rsquo;s own, and it is the one that keeps every row here trustworthy.</p>
             </div>
           </div>
 
-          <!-- This table is deliberately plain HTML, not rendered from a manifest like the
-               icon and image grids. There are only ever a handful of templates, a <tr> is
-               no harder to edit than a JSON row, and hand-writing it means the page — and
-               every download link on it — works with JavaScript switched off.
+          <!-- Plain HTML, not rendered from a manifest like the icon and image grids: there
+               are only ever a handful of templates, a <tr> is no harder to edit than a JSON
+               row, and hand-writing it means the table works with JavaScript switched off.
 
-               To stock a row: drop the file in assets/templates/, then replace
-                   <span class="file-pending">Not yet stocked</span>
-               with
-                   <a class="btn btn-secondary btn--sm" href="assets/templates/FILE" download>…</a>
-               and delete this row's data-status="pending". -->
+               Every row links to SharePoint. That is deliberate — see the callout above —
+               so adding a template is: copy its SharePoint URL, add a <tr>, and put the
+               real last-modified date in the Updated column. The dates are the whole point
+               of that column; a row whose date has gone quiet is the signal that a template
+               needs revisiting. -->
           <div class="token-table-scroll" tabindex="0" role="region" aria-label="Templates and decks, scrollable">
             <table class="table">
               <thead>
                 <tr>
                   <th>Template</th>
                   <th>Format</th>
-                  <th>Size</th>
+                  <th>Scope</th>
                   <th>Updated</th>
-                  <th>Download</th>
+                  <th>Open</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>
                     <span class="file-name">RBA PowerPoint Master Template 2026 v04</span>
-                    <span class="file-note">The standard deck. Title, agenda, section, content and closing layouts, in both light and midnight. Lives in SharePoint, not in this repo — see the note below.</span>
+                    <span class="file-note">The standard deck. Title, agenda, section, content and closing layouts, in both light and midnight. Start every client deck from this.</span>
                   </td>
                   <td><span class="file-format">pptx</span></td>
-                  <td>—</td>
+                  <td><span class="file-scope">Company-wide</span></td>
                   <td>17 Apr 2026</td>
                   <td>
                     <a class="btn btn-secondary btn--sm" href="https://rbaconsulting.sharepoint.com/sites/rba_digital_experience_and_commerce/Shared%20Documents/Strategy/Templates/RBA%20PowerPoint%20Master%20Template%202026%20v04.pptx">
                       <span class="material-symbols-rounded" aria-hidden="true">open_in_new</span>
-                      <span>Open in SharePoint</span>
+                      <span>Open</span>
                     </a>
                   </td>
                 </tr>
-                <tr data-status="pending">
+                <tr>
                   <td>
-                    <span class="file-name">Client proposal deck</span>
-                    <span class="file-note">Proposal structure with pricing and scope layouts already built.</span>
+                    <span class="file-name">Consultant 1-page profile</span>
+                    <span class="file-note">The one-page consultant bio. Predates the 2026 brand — check it against Colors and Typography before sending one out.</span>
                   </td>
                   <td><span class="file-format">pptx</span></td>
-                  <td>—</td>
-                  <td>—</td>
-                  <td><span class="file-pending">Not yet stocked</span></td>
-                </tr>
-                <tr data-status="pending">
+                  <td><span class="file-scope">Company-wide</span></td>
+                  <td>30 Apr 2021</td>
                   <td>
-                    <span class="file-name">Letterhead</span>
-                    <span class="file-note">Word document with the logo, margins and type styles set correctly.</span>
+                    <a class="btn btn-secondary btn--sm" href="https://rbaconsulting.sharepoint.com/sites/CorporateServices/Consultant_Profiles/Templates/RBA%20Consultant%201-Page%20Profile%20Master%20Template.pptx">
+                      <span class="material-symbols-rounded" aria-hidden="true">open_in_new</span>
+                      <span>Open</span>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="file-name">Stakeholder interview deck</span>
+                    <span class="file-note">Agenda and prompts for a discovery session. Pairs with the interview-guide skill in the design-system project.</span>
+                  </td>
+                  <td><span class="file-format">pptx</span></td>
+                  <td><span class="file-scope">DXC team</span></td>
+                  <td>18 Apr 2023</td>
+                  <td>
+                    <a class="btn btn-secondary btn--sm" href="https://rbaconsulting.sharepoint.com/sites/rba_digital_experience_and_commerce/Shared%20Documents/Strategy/Templates/stakeholder-interviews-template%20-%20Copy.pptx">
+                      <span class="material-symbols-rounded" aria-hidden="true">open_in_new</span>
+                      <span>Open</span>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="file-name">Measurement strategy</span>
+                    <span class="file-note">Word document structuring a measurement plan — mission, KPIs, reporting cadence.</span>
                   </td>
                   <td><span class="file-format">docx</span></td>
-                  <td>—</td>
-                  <td>—</td>
-                  <td><span class="file-pending">Not yet stocked</span></td>
-                </tr>
-                <tr data-status="pending">
+                  <td><span class="file-scope">DXC team</span></td>
+                  <td>5 Aug 2024</td>
                   <td>
-                    <span class="file-name">Case study</span>
-                    <span class="file-note">Two-page layout for a single engagement — situation, approach, outcome.</span>
+                    <a class="btn btn-secondary btn--sm" href="https://rbaconsulting.sharepoint.com/sites/rba_digital_experience_and_commerce/Shared%20Documents/Strategy/Templates/Measurement%20Strategy.docx">
+                      <span class="material-symbols-rounded" aria-hidden="true">open_in_new</span>
+                      <span>Open</span>
+                    </a>
                   </td>
-                  <td><span class="file-format">docx</span></td>
-                  <td>—</td>
-                  <td>—</td>
-                  <td><span class="file-pending">Not yet stocked</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="file-name">Estimate spreadsheet</span>
+                    <span class="file-note">Task-by-task effort estimate with low/high ranges and staffing notes. The most recently maintained of these.</span>
+                  </td>
+                  <td><span class="file-format">xlsx</span></td>
+                  <td><span class="file-scope">DXC team</span></td>
+                  <td>3 Aug 2026</td>
+                  <td>
+                    <a class="btn btn-secondary btn--sm" href="https://rbaconsulting.sharepoint.com/sites/rba_digital_experience_and_commerce/Shared%20Documents/Strategy/Templates/Estimate%20Spreadsheet%20Template.xlsx">
+                      <span class="material-symbols-rounded" aria-hidden="true">open_in_new</span>
+                      <span>Open</span>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="file-name">Event tracking &amp; UTM schema</span>
+                    <span class="file-note">Naming scheme for analytics events and campaign URLs, so tagging stays consistent across a site.</span>
+                  </td>
+                  <td><span class="file-format">xlsx</span></td>
+                  <td><span class="file-scope">DXC team</span></td>
+                  <td>27 Jan 2022</td>
+                  <td>
+                    <a class="btn btn-secondary btn--sm" href="https://rbaconsulting.sharepoint.com/sites/rba_digital_experience_and_commerce/Shared%20Documents/Strategy/Templates/Event%20Tracking%20and%20UTMs%20Schema%20Template.xlsx">
+                      <span class="material-symbols-rounded" aria-hidden="true">open_in_new</span>
+                      <span>Open</span>
+                    </a>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -188,7 +233,11 @@
                    <span class="lib-bundle-note lib-bundle-note--inline">Bundle built <span class="js-bundle-date">—</span></span>
           -->
           <p class="palette-note u-mt-md">
-            <span class="file-pending">No bundle yet — nothing to zip until templates are stocked.</span>
+            <a class="btn btn-secondary btn--sm" href="https://rbaconsulting.sharepoint.com/sites/rba_digital_experience_and_commerce/Shared%20Documents/Strategy/Templates">
+              <span class="material-symbols-rounded" aria-hidden="true">folder_open</span>
+              <span>Open the templates folder</span>
+            </a>
+            <span class="lib-bundle-note lib-bundle-note--inline">No zip: these live in SharePoint, not in this repo</span>
           </p>
 
           <h3 class="subhead">Working in a template</h3>
@@ -200,6 +249,7 @@
                 <tr><td>Use the layouts</td><td>Build on the master layouts rather than pasting free text boxes onto a blank slide. That's what keeps type and spacing right without your having to think about it.</td></tr>
                 <tr><td>Type</td><td>Montserrat throughout. If it isn't installed, install it — don't accept a substitution, and don't switch the deck to Calibri.</td></tr>
                 <tr><td>Color</td><td>The theme palette in the file is the brand palette. Don't reach for the custom color picker.</td></tr>
+                <tr><td>Never edit the template</td><td>Save a copy to the right Team first, then edit that. Editing a template in place breaks it for everyone who opens it next.</td></tr>
                 <tr><td>Don't touch the furniture</td><td>The deck says it itself, on its own instructions slide: leave the logo, the background gradient and the accent bar alone. They're positioned to the brand's spec.</td></tr>
                 <tr><td>Changes</td><td>Need a layout that doesn't exist? Ask for it to be added to the template rather than building it once in your own copy.</td></tr>
               </tbody>
