@@ -120,6 +120,15 @@ no licence file — only a `readme.txt` listing what's in the box. Most stock ic
 licences permit use in work product but **not** redistribution of the assets
 themselves as standalone downloads, which is exactly what this page does.
 
-That is fine behind RBA's login. It is worth a second look while this repository
-is public. Whoever purchased the packs should confirm the licence covers
-republication before this goes any wider.
+That is fine behind RBA's login, which is where this is headed.
+
+**Current state, decided deliberately:** the repository is private, so the icons
+can't be browsed or cloned as source. The GitHub Pages site is still public —
+private Pages needs GitHub Enterprise Cloud, and on a personal account a private
+repo publishes its Pages site to anyone with the URL anyway. So every icon is
+still individually downloadable from
+`adamdhickey-collab.github.io/rba-design-system`. The URL is unlisted and
+unlinked, which makes it obscure rather than private.
+
+Whoever purchased the packs should confirm the licence covers republication. The
+hub move settles it either way, since that sits behind a login.

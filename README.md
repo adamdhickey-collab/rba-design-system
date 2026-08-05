@@ -16,7 +16,8 @@ CSS and JavaScript — no build step, no dependencies, no package manager.
 >
 > The icons are **purchased stock packs** and carry no licence file. Most stock licences
 > allow use but not redistribution as standalone downloads, which is what the icon page
-> does — worth confirming while this repo is public. See
+> does. The repo is private for that reason; the Pages site is still public, because
+> private Pages needs GitHub Enterprise Cloud. Obscure, not private — see
 > [`assets/icons/README.md`](assets/icons/README.md).
 
 ## Pages
