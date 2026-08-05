@@ -1,0 +1,58 @@
+name: Deploy to Pages
+
+# Stamps the version and published date into app.js, then publishes. The point is that
+# what the site claims about itself is always what was actually deployed — no hand-edited
+# version number, and no "updated" date that quietly refers to some earlier build.
+#
+# Nothing is committed back to the branch. The stamp happens on the checked-out copy on
+# the way to the Pages artifact, so main stays clean and there is no push loop.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# A queued run should replace an older queued run, but never interrupt one mid-publish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history: the version is the commit count, which a shallow clone gets wrong.
+          fetch-depth: 0
+
+      - name: Stamp version and published date
+        run: |
+          set -euo pipefail
+          VERSION="1.$(git rev-list --count HEAD)"
+          PUBLISHED="$(date -u '+%d %b %Y')"
+
+          # Fail loudly rather than publishing a page that lies about itself.
+          grep -q "^    const RBA_VERSION   = 'dev';" app.js
+          grep -q "^    const RBA_PUBLISHED = 'not yet published';" app.js
+
+          sed -i "s|^    const RBA_VERSION   = 'dev';|    const RBA_VERSION   = '${VERSION}';|" app.js
+          sed -i "s|^    const RBA_PUBLISHED = 'not yet published';|    const RBA_PUBLISHED = '${PUBLISHED}';|" app.js
+
+          echo "Stamped v${VERSION}, published ${PUBLISHED}"
+          grep -n "RBA_VERSION\|RBA_PUBLISHED" app.js | head -2
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4

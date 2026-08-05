@@ -26,7 +26,6 @@
           if (link) {
             document.querySelectorAll('.sidebar-link--active').forEach((l) => l.classList.remove('sidebar-link--active'));
             link.classList.add('sidebar-link--active');
-            if (window.rbaExpandActiveNavGroup) window.rbaExpandActiveNavGroup();
           }
         }, 150);
       });
@@ -41,7 +40,6 @@
     function rbaRevealActiveNav() {
       const sidebar = document.querySelector('.sidebar');
       if (!sidebar) return null;
-      if (window.rbaExpandActiveNavGroup) window.rbaExpandActiveNavGroup();
       const active = sidebar.querySelector('.sidebar-group--active') ||
                      sidebar.querySelector('.sidebar-link--active');
       if (!active) return null;
@@ -123,56 +121,6 @@
       update();
     })();
 
-    // Sidebar groups · expand/collapse, one open/closed state per group, remembered
-    // across page loads. A group starts expanded if it contains the current page's
-    // active link/section (so navigating in never lands on a collapsed target) or if
-    // the user previously left it open — collapsed otherwise. Scroll-spy's continuous
-    // updates deliberately do NOT re-trigger this (see setActive above) — only page
-    // load and explicit navigation force a group open, so scrolling never fights a
-    // group the user just closed by hand.
-    (function () {
-      const STORAGE_PREFIX = 'rba-nav-open:';
-      const groups = document.querySelectorAll('.sidebar-section[data-nav-group]');
-
-      function setCollapsed(section, header, collapsed, persist) {
-        section.setAttribute('data-collapsed', collapsed ? 'true' : 'false');
-        header.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
-        if (persist) {
-          try { localStorage.setItem(STORAGE_PREFIX + section.getAttribute('data-nav-group'), collapsed ? '0' : '1'); } catch (e) {}
-        }
-      }
-
-      groups.forEach(section => {
-        const key = section.getAttribute('data-nav-group');
-        const header = section.querySelector('.sidebar-section-header');
-        const body = section.querySelector('.sidebar-section-body');
-        if (!header || !body) return;
-
-        let stored = null;
-        try { stored = localStorage.getItem(STORAGE_PREFIX + key); } catch (e) {}
-        const hasActive = !!section.querySelector('.sidebar-link--active, .sidebar-group--active');
-        const startCollapsed = stored !== null ? stored === '0' : !hasActive;
-        setCollapsed(section, header, startCollapsed, false);
-
-        header.addEventListener('click', () => {
-          setCollapsed(section, header, section.getAttribute('data-collapsed') !== 'true', true);
-        });
-      });
-
-      // Exposed so rbaRevealActiveNav (and the hash-jump above) can force a group
-      // open without touching localStorage — correcting DISPLAY for the page you're
-      // actually on, not overriding what the user chose to leave closed elsewhere.
-      window.rbaExpandActiveNavGroup = function () {
-        const active = document.querySelector('.sidebar-link--active, .sidebar-group--active');
-        if (!active) return;
-        const section = active.closest('.sidebar-section[data-nav-group]');
-        if (!section || section.getAttribute('data-collapsed') !== 'true') return;
-        const header = section.querySelector('.sidebar-section-header');
-        section.setAttribute('data-collapsed', 'false');
-        if (header) header.setAttribute('aria-expanded', 'true');
-      };
-    })();
-
     // Theme toggle · light / dark, persisted across pages
     (function () {
       const KEY = 'rba-theme';
@@ -188,9 +136,6 @@
           // is keeping the switch's accessible name in step with what's shown.
           toggle.setAttribute('aria-label', theme === 'dark' ? 'Dark mode' : 'Light mode');
         }
-        document.querySelectorAll('.theme-label').forEach(el => {
-          el.textContent = theme === 'dark' ? 'Dark theme' : 'Light theme';
-        });
       }
       let saved = null;
       try { saved = localStorage.getItem(KEY); } catch (e) {}
@@ -223,8 +168,7 @@
         '<button type="button" class="mobile-bar-trigger" aria-expanded="false" aria-controls="' + sidebar.id + '" aria-label="Open navigation">' +
           '<span class="material-symbols-rounded" aria-hidden="true">menu</span>' +
         '</button>' +
-        '<span class="mobile-bar-title">Connect</span>' +
-        '<span class="mobile-bar-meta">Design System · <span class="js-version">v1.0</span></span>';
+        '<span class="mobile-bar-title">Connect Design System</span>';
       layout.parentNode.insertBefore(bar, layout);
 
       const scrim = document.createElement('div');
@@ -239,13 +183,8 @@
       const isOpen = () => sidebar.classList.contains('sidebar--open');
 
       function focusables() {
-        // offsetParent!==null alone isn't enough: a collapsed sidebar section
-        // uses grid-template-rows:0fr + overflow:hidden (see styles.css), which
-        // clips content to zero height without display:none — its links keep a
-        // non-null offsetParent and stay natively tabbable even though nothing
-        // is visible. Exclude anything inside a section collapsed this way.
         return Array.from(sidebar.querySelectorAll('a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])'))
-          .filter(el => el.offsetParent !== null && !el.closest('.sidebar-section[data-collapsed="true"]'));
+          .filter(el => el.offsetParent !== null);
       }
 
       function open() {
@@ -532,25 +471,23 @@
       });
     })();
 
-    // Version + last-updated · single source of truth. Bump RBA_VERSION on each
-    // release; the updated date is derived from the page's own last-modified
-    // timestamp so it never needs manual editing.
+    // Version and published date · both stamped at deploy time, neither maintained by hand.
+    //
+    // .github/workflows/deploy.yml rewrites the two constants below on every push to main
+    // and then publishes, so what the page shows is always what was actually deployed.
+    // RBA_VERSION is 1.<number of commits on main>, which increments on its own; the date
+    // is the deploy date. Keep both on one line, in this exact shape — the workflow's sed
+    // depends on it, and so does tools/build-bundles.sh for the bundle stamp.
+    //
+    // The placeholders are what you see when running from a working copy that has never
+    // been deployed. That is deliberate: "dev" is more honest than a stale number.
+    const RBA_VERSION   = 'dev';
+    const RBA_PUBLISHED = 'not yet published';
     (function () {
-      const RBA_VERSION = '1.0';
-
-      document.querySelectorAll('.js-version').forEach(el => {
-        el.textContent = 'v' + RBA_VERSION;
-      });
-
-      const updatedEls = document.querySelectorAll('.js-updated');
-      if (updatedEls.length) {
-        const d = new Date(document.lastModified);
-        if (!isNaN(d.getTime())) {
-          const pad = n => String(n).padStart(2, '0');
-          const stamp = pad(d.getMonth() + 1) + '.' + pad(d.getDate()) + '.' + d.getFullYear();
-          updatedEls.forEach(el => { el.textContent = stamp; });
-        }
-      }
+      const label = RBA_VERSION === 'dev'
+        ? 'Dev build · not published'
+        : 'v' + RBA_VERSION + ' · published ' + RBA_PUBLISHED;
+      document.querySelectorAll('.js-release').forEach(el => { el.textContent = label; });
     })();
 
     // Bundle build date · the zip bundles under downloads/ are pre-built and committed,

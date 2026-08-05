@@ -17,7 +17,7 @@ CSS and JavaScript — no build step, no dependencies, no package manager.
 
 | Page | Contents |
 |---|---|
-| `index.html` | Home, plus Foundations: Colors, Typography, Logos |
+| `index.html` | Home, plus Colors, Typography, Logos |
 | `icons.html` | Icon library — search, filter, download, copy SVG |
 | `images.html` | Brand image gallery — filter, download |
 | `templates.html` | Templates & decks — a plain table of files |
@@ -27,7 +27,10 @@ claude.ai/design via `DesignSync`. The PowerPoint master is **not** copied into 
 SharePoint holds the version that actually gets updated, and a duplicate here would go
 stale without anyone noticing, so `templates.html` links to it instead.
 
-The sidebar, theme toggle and ⌘K search palette are byte-identical across all four.
+The sidebar, theme toggle and ⌘K search palette are byte-identical across all four. The
+rail is a flat list of six links — it previously had Foundations/Library groups with
+collapse state persisted to localStorage, which was two levels of hierarchy and ~90 lines
+of CSS and JS to navigate six destinations.
 
 ## Running it
 
@@ -75,13 +78,34 @@ people the old set.
 The script writes no bundle for an empty collection, which is why `templates.html`
 currently shows no bundle button at all rather than a link that would 404.
 
+## Version and published date
+
+Both are stamped at deploy time by `.github/workflows/deploy.yml`, so what the page shows
+is always what was actually deployed:
+
+- **Version** is `1.<number of commits on main>` — it increments on its own, no file to
+  bump and nothing to forget.
+- **Published** is the deploy date.
+
+The workflow rewrites two constants in `app.js` on the way to the Pages artifact and
+commits nothing back, so `main` stays clean and there is no push loop. It `grep`s for both
+lines first and fails the build if either has changed shape — better a red run than a page
+quietly claiming the wrong version. If you edit those two lines, keep them on one line in
+exactly the form the workflow expects.
+
+A working copy that has never been deployed shows **"Dev build · not published"** rather
+than a stale number.
+
+Note this means Pages deploys **from the Action, not from the branch**. Changing the Pages
+source back to "deploy from a branch" would serve the unstamped file.
+
 ## How it's put together
 
 - **`styles.css`** — one stylesheet. Every token is in a single `:root` block at the top,
   with the dark theme as a short re-point below it rather than a second palette.
 - **`app.js`** — one script, plain IIFEs, no dependencies. Hash-scrolling, scroll-spy,
-  collapsible nav groups, theme toggle, off-canvas drawer with focus trap, ⌘K search,
-  the manifest-driven asset grids, clipboard copy, and SVG serialisation for downloads.
+  theme toggle, off-canvas drawer with focus trap, ⌘K search, the manifest-driven asset
+  grids, clipboard copy, and SVG serialisation for downloads.
 - **Manifests are inlined** as `<script type="application/json">` rather than fetched, so
   the pages work opened straight off disk.
 

@@ -206,22 +206,6 @@
       padding: 0 var(--space-7);
     }
 
-    /* Visually hidden but still announced/focusable — for headings and labels
-       that a screen reader needs for landmark/heading navigation but the
-       visual design has no room (or need) for. Never use display:none or
-       visibility:hidden here; both remove the element from the a11y tree too. */
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
     /* Skip link — first focusable element; visible only on keyboard focus */
     .skip-link {
       position: absolute;
@@ -278,21 +262,19 @@
     /* Sans, not the display serif. RBA is a sans brand — the guidelines reserve Libre
        Caslon for editorial moments, and a brand name set in it reads as someone else's
        masthead. The serif appears on this site only in the type specimen. */
+    /* Two lines by design — "Connect Design System" is the system's name and gets to be
+       stated in full, which at 20px in a 288px rail means it wraps. The <br> is in the
+       markup rather than left to chance so the break lands after "Connect" every time
+       instead of orphaning "System". */
+    .sidebar-brand-title > span { display: block; }
     .sidebar-brand-title {
+      display: block;
       font-family: var(--font-sans);
       font-weight: 800;
-      font-size: 22px;
-      line-height: 28px;
+      font-size: 20px;
+      line-height: 1.2;
       letter-spacing: var(--display-tracking-sm);
       color: var(--brand);
-    }
-    .sidebar-brand-tagline {
-      font-family: var(--font-micro);
-      font-size: 11px;
-      letter-spacing: normal;
-      text-transform: none;
-      color: var(--text-muted);
-      margin-top: 2px;
     }
 
     .sidebar-nav {
@@ -302,26 +284,10 @@
       gap: var(--space-5);
       padding: 0 var(--space-3);
     }
-    .sidebar-section {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
-    .sidebar-section-title {
-      font-family: var(--font-micro);
-      font-size: 11px;
-      letter-spacing: normal;
-      text-transform: none;
-      color: var(--text-muted);
-      font-weight: 700;
-      padding: 0 var(--space-3) 6px;
-    }
     .sidebar-link {
-      display: grid;
-      grid-template-columns: 20px 1fr;
+      display: flex;
       align-items: center;
-      gap: var(--space-3);
-      padding: 7px var(--space-3);
+      padding: 9px var(--space-3);
       border-radius: var(--corner-radius-base);
       text-decoration: none;
       font-family: var(--font-sans);
@@ -347,29 +313,6 @@
       color: var(--brand-deep);
       font-weight: 700;
     }
-    .sidebar-link-num {
-      font-family: var(--font-micro);
-      font-size: 11px;
-      /* --neutral-400 read 2.53:1 on the sidebar surface — well under AA for
-         11px text. --text-muted clears 6.48:1 light / 5.27:1 dark, is already
-         the system's quiet-text token (and what .sidebar-section-title uses),
-         and stays lighter than the label's --text-soft so the numeral is still
-         secondary. --neutral-500 would have passed at 4.59:1, but that margin
-         is thin enough to break on the next surface change. */
-      color: var(--text-muted);
-      letter-spacing: normal;
-      font-variant-numeric: tabular-nums;
-    }
-    .sidebar-link--active .sidebar-link-num { color: var(--brand); }
-    /* Icon variant — used where a sidebar link carries a real glyph (Getting started's
-       rocket_launch) instead of a numeral or the plain "·" placeholder dot. Overrides the
-       numeral's micro-text sizing; centers the glyph in the same 20px rail the numerals use. */
-    .sidebar-link-num.material-symbols-rounded {
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
 
     /* Collapsible sidebar groups · Foundations / System / Components can each be expanded
        or collapsed independently, so a long nav (10 Foundations+System links plus ~50
@@ -379,51 +322,6 @@
        the CURRENT page/section is always force-expanded on load — see
        rbaExpandActiveNavGroup in app.js — so navigating in never lands on a
        collapsed target. */
-    .sidebar-section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      gap: var(--space-2);
-      background: none;
-      border: none;
-      padding: 0 var(--space-3) 6px;
-      margin: 0;
-      font: inherit;
-      color: inherit;
-      cursor: pointer;
-      text-align: left;
-      border-radius: var(--corner-radius-base);
-    }
-    .sidebar-section-header:hover .sidebar-section-chevron { color: var(--text); }
-    .sidebar-section-header:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 2px var(--brand);
-    }
-    .sidebar-section-header .sidebar-section-title { padding: 0; }
-    .sidebar-section-chevron {
-      font-size: 18px !important;
-      color: var(--text-muted);
-      transition: transform 0.15s ease, color 120ms ease;
-      flex-shrink: 0;
-    }
-    .sidebar-section[data-collapsed="true"] .sidebar-section-chevron { transform: rotate(-90deg); }
-    .sidebar-section-body {
-      display: grid;
-      grid-template-rows: 1fr;
-      transition: grid-template-rows 0.18s ease;
-    }
-    .sidebar-section-body-inner {
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
-    .sidebar-section[data-collapsed="true"] .sidebar-section-body { grid-template-rows: 0fr; }
-    @media (prefers-reduced-motion: reduce) {
-      .sidebar-section-body,
-      .sidebar-section-chevron { transition: none; }
-    }
 
     .sidebar-foot {
       padding: var(--space-5) var(--space-6) 0;
@@ -508,19 +406,13 @@
         line-height: 1;
         color: var(--brand);
       }
-      .mobile-bar-meta {
-        font-family: var(--font-micro);
-        font-size: 11px;
-        color: var(--text-muted);
-        margin-left: auto;
-      }
 
-      /* Scrim — mirrors .sheet-frame::before from the Sheet component */
+      /* Scrim */
       [data-nav="drawer"] .nav-scrim {
         position: fixed;
         inset: 0;
         z-index: 50;
-        background: rgba(2, 55, 25, 0.25);
+        background: rgba(13, 24, 47, 0.32);
         opacity: 0;
         pointer-events: none;
         transition: opacity 200ms ease;
@@ -530,7 +422,7 @@
         pointer-events: auto;
       }
 
-      /* Drawer — mirrors .sheet (side-anchored panel + shadow) */
+      /* Drawer — side-anchored panel + shadow */
       [data-nav="drawer"] .sidebar {
         position: fixed;
         top: 0;
@@ -609,24 +501,6 @@
       line-height: 1.55;
       letter-spacing: -0.005em;
     }
-    .hero-meta {
-      display: flex;
-      gap: var(--space-6);
-      margin-top: var(--space-7);
-      font-family: var(--font-micro);
-      font-size: 12px;
-      letter-spacing: normal;
-      text-transform: none;
-      color: var(--text-muted);
-    }
-    .hero-meta > span { display: inline-flex; align-items: center; gap: 8px; }
-    .hero-meta > span::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--brand);
-    }
 
     /* ---------- Section ---------- */
     section.block {
@@ -670,24 +544,6 @@
     }
 
     /* ---------- Color swatches ---------- */
-    .swatch-group {
-      display: grid;
-      gap: var(--space-5);
-    }
-    .swatch-group + .swatch-group { margin-top: var(--space-7); }
-    .swatch-label {
-      font-family: var(--font-micro);
-      font-size: 12px;
-      letter-spacing: normal;
-      text-transform: none;
-      color: var(--text-muted);
-      margin-bottom: var(--space-3);
-    }
-    .swatch-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: var(--space-3);
-    }
     .swatch {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -706,12 +562,6 @@
       inset: 0;
       box-shadow: inset 0 0 0 1px rgba(20, 20, 15, 0.06);
     }
-    .swatch-meta {
-      padding: var(--space-3) var(--space-4);
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
     .swatch-name {
       font-weight: 700;
       font-size: 13px;
@@ -724,7 +574,6 @@
       text-transform: none;
     }
 
-    /* Figma-style palette columns */
     /* ---------- Color swatches ----------
        The color fills a band; the name and hex sit on the card below it, never on the
        color itself.
@@ -820,41 +669,10 @@
       margin-bottom: var(--space-4);
     }
 
-    /* Official brand primary-palette cards — large swatch + print/digital breakdown,
-       mirrors the RBA Design & Brand Guidelines "Primary colors" spread. */
-    .primary-swatch-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--space-4);
-    }
-    .primary-swatch-card {
-      border-radius: var(--radius-sm);
-      padding: var(--space-5);
-      min-height: 148px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: var(--space-3);
-    }
-    .primary-swatch-name {
-      font-family: var(--font-sans);
-      font-weight: 700;
-      font-size: 17px;
-    }
-    .primary-swatch-meta {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 12px;
-      line-height: 1.7;
-      opacity: 0.9;
-    }
-
     /* lg (1024) · wide token grids reflow at the same point the nav does */
     @media (max-width: 1023.98px) {
       .palette-columns {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      }
-      .primary-swatch-grid {
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       }
     }
 
@@ -925,15 +743,6 @@
       letter-spacing: -0.03em;
       color: var(--brand);
     }
-    .type-hero-italic {
-      font-family: var(--font-display);
-      font-size: clamp(48px, 8vw, 100px);
-      line-height: 1.10;
-      font-style: italic;
-      font-weight: 400;
-      letter-spacing: -0.03em;
-      color: var(--brand);
-    }
     .type-h1 { font-family: var(--font-sans); font-size: 48px; line-height: 1.2; font-weight: 800; color: var(--brand); }
     .type-h2 { font-family: var(--font-sans); font-size: 40px; line-height: 1.2; font-weight: 800; color: var(--brand); }
     .type-h3 { font-family: var(--font-sans); font-size: 36px; line-height: 1.2; font-weight: 800; color: var(--brand); }
@@ -942,40 +751,11 @@
     .type-h6 { font-family: var(--font-sans); font-size: 20px; line-height: 1.2; font-weight: 800; color: var(--brand); }
     .type-body-lg { font-family: var(--font-sans); font-size: 20px; line-height: 1.5; font-weight: 400; color: var(--text); }
     .type-body-sm { font-family: var(--font-sans); font-size: 14px; line-height: 1.5; font-weight: 400; color: var(--text); }
-
-    .type-subtitle {
-      font-family: var(--font-sans);
-      font-size: 20px;
-      line-height: 28px;
-      font-weight: 400;
-      color: var(--text);
-    }
     .type-body {
       font-family: var(--font-sans);
       font-size: 16px;
       line-height: 24px;
       font-weight: 400;
-      color: var(--text);
-    }
-    .type-body-bold {
-      font-family: var(--font-sans);
-      font-size: 16px;
-      line-height: 24px;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .type-caption {
-      font-family: var(--font-micro);
-      font-size: 12px;
-      line-height: 19px;
-      font-weight: 400;
-      color: var(--text-soft);
-    }
-    .type-caption-bold {
-      font-family: var(--font-micro);
-      font-size: 12px;
-      line-height: 19px;
-      font-weight: 700;
       color: var(--text);
     }
 
@@ -1230,8 +1010,7 @@
       color: var(--rba-red);
     }
     .brand-logo--red   { color: var(--rba-red); }  /* The mark's own red — default, on light backgrounds */
-    .brand-logo--white { color: #FFFFFF; }         /* Reversed: midnight, black, photography */
-    .brand-logo--black { color: #000000; }         /* Single-ink print and engraving only */
+    .brand-logo--white { color: #FFFFFF; }
     /* The sidebar wordmark — the site's own chrome rather than a published colorway. */
     .brand-logo--primary { color: var(--rba-red); }
     /* The block lockup carries its own fills (red field, knocked-out mark), so `color`
@@ -1242,9 +1021,8 @@
        Four columns of monospace token names and hex values give these tables a
        min-content width of ~580px, and a table can't shrink below that — so on
        a phone the widest one dragged the whole document 221px wider than the
-       viewport. The table now scrolls inside its own frame, the treatment
-       .btn-matrix and .avatar-matrix already use for dense reference grids.
-       The wrapper is a focusable, labelled region so the scroll is reachable by
+       viewport. The table now scrolls inside its own frame, and the wrapper is a
+       focusable, labelled region so the scroll is reachable by
        keyboard, and padding-bottom keeps a classic scrollbar off the table's
        bottom border. */
     .token-table-scroll {
@@ -1400,8 +1178,7 @@
       outline: none;
       box-shadow: 0 0 0 3px var(--sky-200);
     }
-    .btn[disabled],
-    .btn--disabled {
+    .btn[disabled] {
       cursor: not-allowed;
       opacity: 1;
       background: var(--neutral-100) !important;
@@ -1411,29 +1188,12 @@
 
     /* Sizes */
     .btn--sm { padding: 8px 12px; font-size: 12px; line-height: 18px; }
-    .btn--lg { padding: 16px 24px; font-size: 20px; line-height: 26px; gap: 16px; border-radius: var(--corner-radius-md); }
 
     /* Icon-only */
-    .btn--icon {
-      padding: 8px;
-      width: 40px;
-      height: 40px;
-    }
-    .btn--icon.btn--sm { padding: 8px; width: 34px; height: 34px; }
-    .btn--icon.btn--lg { padding: 16px; width: 58px; height: 58px; }
     .btn .material-symbols-rounded { font-size: 20px; }
-    .btn--lg .material-symbols-rounded { font-size: 24px; }
     .btn--sm .material-symbols-rounded { font-size: 16px; }
 
     /* Styles · light theme */
-    .btn-primary {
-      background: var(--brand);
-      color: var(--on-accent);
-    }
-    .btn-primary:hover    { background: var(--navy-700); }
-    .btn-primary:active   { background: var(--navy-800); }
-    .btn-primary[disabled],
-    .btn-primary.btn--disabled { background: var(--neutral-100) !important; color: var(--neutral-400) !important; }
 
     .btn-secondary {
       background: transparent;
@@ -1445,23 +1205,7 @@
       color: var(--navy-700);
       border-color: var(--navy-700);
     }
-    .btn-secondary[disabled],
-    .btn-secondary.btn--disabled { background: transparent !important; border-color: var(--neutral-300) !important; color: var(--neutral-400) !important; }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--brand);
-    }
-    .btn-ghost:hover { background: var(--sky-50); color: var(--navy-700); }
-    .btn-ghost[disabled],
-    .btn-ghost.btn--disabled { background: transparent !important; color: var(--neutral-400) !important; }
-
-    /* Always white, not var(--on-accent) — the danger fill is red in both
-       themes (never repoints to the dark-mode lime brand color), so it never
-       needs the accent-aware swap; higher specificity than .btn-primary alone
-       keeps this correct regardless of theme with no parallel override needed. */
-
-    .btn-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+    .btn-secondary[disabled] { background: transparent !important; border-color: var(--neutral-300) !important; color: var(--neutral-400) !important; }
 
     /* ---------- Footer ---------- */
     footer {
@@ -1482,7 +1226,6 @@
       font-size: 18px;
       color: #fff;
     }
-    .footer-mark .sub { color: var(--sky-400); font-weight: 400; }
     .footer-meta {
       font-family: var(--font-micro);
       font-size: 12px;
@@ -1504,69 +1247,9 @@
     .table tbody tr { transition: background-color 100ms ease; }
     .table tbody tr:hover { background: var(--sky-50); }
 
-    /* Group header = a section link to its page. Bullet column dropped; label fills the row. */
-    .sidebar-group {
-      grid-template-columns: 1fr;
-      font-weight: 600;
-      color: var(--text-soft);
-    }
-    .sidebar-group .sidebar-link-num { display: none; }
-    .sidebar-group:hover { background: var(--neutral-50); color: var(--text); }
-    /* Open group: signalled with weight + brand colour only — no fill, no bar.
-       The expanded children below carry the visual emphasis. */
-    .sidebar-group--active,
-    .sidebar-group--active:hover {
-      color: var(--brand-deep);
-      font-weight: 700;
-      background: transparent;
-    }
-
-    /* Children hang off a single continuous guide line */
-    .sidebar-group-children {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      margin: 2px 0 var(--space-4);
-    }
-    .sidebar-group-children::before {
-      content: '';
-      position: absolute;
-      left: 19px;
-      top: 3px;
-      bottom: 3px;
-      width: 1.5px;
-      border-radius: 1px;
-      background: var(--border);
-    }
-    .sidebar-link--child {
-      grid-template-columns: 1fr;
-      padding: 6px var(--space-3) 6px 32px;
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-    .sidebar-link--child .sidebar-link-num { display: none; }
-    .sidebar-link--child:hover { background: var(--neutral-50); color: var(--text); }
-    /* Selected child: soft pill + the guide line lights up beside it in midnight */
-    .sidebar-link--child.sidebar-link--active {
-      color: var(--brand-deep);
-      font-weight: 700;
-      background: var(--sky-50);
-    }
-    .sidebar-link--child.sidebar-link--active::before {
-      content: '';
-      position: absolute;
-      left: 19px;
-      top: 4px;
-      bottom: 4px;
-      width: 1.5px;
-      border-radius: 1px;
-      background: var(--brand);
-    }
-
     /* ====================================================================
        Dark theme · midnight palette
-       Usage:  <html data-theme="dark">  (or any ancestor [data-theme="dark"] / .theme-dark)
+       Usage:  <html data-theme="dark">, set by the theme toggle in app.js.
 
        Almost everything flips automatically because this block re-points the
        semantic surface / border / text / brand tokens the components already
@@ -1580,7 +1263,7 @@
        a near-black ink to sit on top of it. This is a role swap, not a new
        palette: both values are published brand colors.
        ==================================================================== */
-    [data-theme="dark"], .theme-dark {
+    [data-theme="dark"] {
       /* Surfaces — navy-tinted rather than neutral grey, so dark mode still
          reads as RBA and not as a generic inverted theme. */
       --bg:             #0E1726;
@@ -1627,14 +1310,8 @@
     [data-theme="dark"] a { color: var(--sky-300); }
     [data-theme="dark"] a:hover { color: var(--aqua); }
 
-    /* Primary buttons need no override: .btn-primary already fills with --brand
-       and inks with --on-accent, both re-pointed above. */
-    [data-theme="dark"] .btn-primary:hover  { background: #4FD2EA; }
-    [data-theme="dark"] .btn-primary:active { background: var(--aqua); }
     /* Outline and ghost hovers read in aqua, not midnight */
-    [data-theme="dark"] .btn-secondary:hover,
-    [data-theme="dark"] .btn-ghost:hover { color: var(--aqua); border-color: var(--aqua); }
-
+    [data-theme="dark"] .btn-secondary:hover
     /* The sidebar wordmark stays white; aqua is reserved for accents */
     [data-theme="dark"] .sidebar-brand-title { color: #FFFFFF; }
 
@@ -2124,7 +1801,6 @@
     .u-mt-sm { margin-top: var(--space-2); }
     .u-mt-xs { margin-top: 6px; }
     .u-mt-md { margin-top: var(--space-6); }
-    .u-mt-lg { margin-top: var(--space-8); }
 
     /* Sub-heading inside a section (Primary / Neutrals / Tokens / Scale / Rules).
        Carries its own top space so every section's rhythm is identical — including the
