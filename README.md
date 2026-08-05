@@ -7,6 +7,11 @@ CSS and JavaScript — no build step, no dependencies, no package manager.
 > favicons, and every colour and type value are imported from the brand's own source. The
 > icon and image tiles are still placeholder stubs, marked as such wherever they appear.
 > The PowerPoint master links to SharePoint rather than being copied here.
+>
+> The image gallery stays on placeholders deliberately: no photography exists in the
+> canonical source, and the only real photos available are Getty stock, which cannot be
+> redistributed from a public repo. See
+> [`assets/images/README.md`](assets/images/README.md).
 
 ## Pages
 
