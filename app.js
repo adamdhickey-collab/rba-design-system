@@ -575,6 +575,9 @@
             // so without this the three actual wallet icons sit behind sixteen
             // icons that merely belong to a pack that mentions wallets.
             nameHay: flatten(label + ' ' + filed),
+            // Leading space on every word, so indexOf(' ' + term) is a word-start
+            // test without a regex per keystroke per icon.
+            nameWords: ' ' + flatten(label + ' ' + filed).split(' ').join('  '),
             hay: flatten(label + ' ' + filed + ' ' + pack.name + ' ' +
                          pack.group + ' ' + pack.keywords),
           });
@@ -726,16 +729,27 @@
           const item = icons[i];
           const inScope = (activeGroup === 'all' || item.pack.group === activeGroup) &&
                           (activePack === 'all' || item.pack.slug === activePack);
-          let hit = inScope, byName = false;
+          let hit = inScope, tier = 0;
           if (hit && terms.length) {
             hit = terms.every(t => item.hay.indexOf(t) > -1);
-            byName = hit && terms.every(t => item.nameHay.indexOf(t) > -1);
+            if (hit) {
+              // Three tiers, because substring matching alone ranks badly once every
+              // icon has a name. "owl" is inside "bowl" and "knowledge", so a plain
+              // contains-test buries owl-graduation-cap under compass-bowl. Matching
+              // the START of a word puts the icon you meant first.
+              //   0 — every term starts a word in the name  (owl → owl-graduation-cap)
+              //   1 — every term appears in the name at all (owl → compass-bowl)
+              //   2 — matched only through the pack's keywords
+              if (terms.every(t => item.nameWords.indexOf(' ' + t) > -1)) tier = 0;
+              else if (terms.every(t => item.nameHay.indexOf(t) > -1)) tier = 1;
+              else tier = 2;
+            }
           }
           cells[i].hidden = !hit;
-          // Name matches float to the front of the grid. CSS order rather than
-          // reordering nodes: moving up to 1,490 elements on every keystroke would
-          // cost far more than setting one property on the ones still showing.
-          cells[i].style.order = (hit && terms.length && !byName) ? '1' : '';
+          // CSS order rather than reordering nodes: moving up to 1,490 elements on
+          // every keystroke would cost far more than setting one property on the
+          // ones still showing.
+          cells[i].style.order = (hit && terms.length && tier) ? String(tier) : '';
           if (hit) shown++;
         }
         if (count) {

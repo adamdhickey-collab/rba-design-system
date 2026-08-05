@@ -151,8 +151,15 @@ still uses the simpler shared renderer.
 **The icon manifest stores packs, not icons.** Every file is `<slug>-NN.svg` with a
 matching `.png`, so a slug plus a count reconstructs all 1,490 paths — 13 KB inlined
 instead of ~200 KB. It is generated; the only part meant to be hand-edited is the `labels`
-map that gives icons real names, and `tools/icons-sync.py` preserves those across a
-re-sync.
+map that names the icons, and `tools/icons-sync.py` preserves those across a re-sync.
+
+**Icon search ranks in three tiers, and the tiers are the point.** With 1,490 named icons
+a plain substring test ranks badly — "owl" is inside "b*owl*" and "kn*owl*edge". So a term
+matching the START of a word in the name wins, a term matching the name anywhere comes
+next, and a match that only came through the pack's keywords comes last. Queries are also
+split into terms that must all match in any order, and both sides are hyphen-flattened, so
+"pie chart" reaches `pie-chart-dollar` and "office chair" puts `office-chair` above
+`reading-in-armchair`. A filter pass over the whole set costs about 1 ms.
 
 **Color swatch labels sit below the color, never on it.** RBA's Action blue (`#3178BF`)
 can't carry a label at 4.5:1 against either black or white — its best case is 3.91:1. Text

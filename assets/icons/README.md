@@ -42,15 +42,26 @@ To check the manifest still matches what is staged, without writing anything:
 ./tools/icons-sync.py --check
 ```
 
-## Giving icons real names
+## Names
 
-`Finance-04` tells you nothing, which is the biggest weakness of the library as
-it stands. Search papers over it by matching each pack's keywords, so *invoice*
-and *chart* and *hiring* find something today — but that is a whole pack at a
-time, not the one icon someone wants.
+**All 1,490 icons are named.** They were named by eye, a pack at a time, from
+contact sheets rendered by `tools/contact-sheet.html` — you cannot name an icon
+from `Finance-04`, and the library grid is too small and too busy to read from.
 
-Real names go in the manifest, not in filenames. Each pack takes an optional
-`labels` map of icon number to name:
+The rule: **the name contains the object that is drawn.** Search is substring
+matching, so the word someone types has to be IN the name. An early pass used
+functional names and `gavel` returned nothing, because the gavel had been filed
+as `legal-approval`; `gavel-approved` answers both words. Where a pack is
+genuinely repetitive — Circuit is sixteen views of a chip, Robotics is thirty
+robots — the names say what actually differs (`robot-dog`, `robot-claw-gripper`)
+rather than inventing variety that isn't in the artwork.
+
+Names repeat across packs on purpose: a handshake in Collaboration and one in
+Client are both handshakes. Each tile's tooltip carries `name · pack · original
+filename` so two identical labels stay tellable apart.
+
+Names live in the manifest, not in filenames. Each pack has a `labels` map of
+icon number to name:
 
 ```json
 { "slug": "finance", "name": "Finance", "count": 30, "labels": { "04": "invoice-paid", "11": "piggy-bank" } }
@@ -60,11 +71,21 @@ A label replaces the displayed name everywhere and joins the search haystack
 **alongside** the old one, so someone who knows it as `Finance-04` still finds it
 after it is renamed. No file moves, no link breaks, no bundle rebuild.
 
+Renaming or correcting one is a one-line patch:
+
+```bash
+echo '{"finance": {"04": "better-name"}}' | ./tools/icons-label.py -
+```
+
+`icons-label.py` merges rather than replaces, validates that the pack and icon
+exist and that the name is lowercase-hyphenated, and refuses the whole patch on
+any error rather than applying half of it. `--report` prints coverage and any
+names used twice.
+
 The sync script reads the existing manifest out of `icons.html` before it
 rewrites it, so **labels survive a re-sync** — that is the single guarantee the
 script is built around. A label pointing at an icon that no longer exists is
-dropped. Naming a pack at a time is the practical unit of work; there is no need
-to do all 1,490 before any of it is useful.
+dropped.
 
 ## File requirements
 
