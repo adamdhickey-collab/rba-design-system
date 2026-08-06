@@ -40,6 +40,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BOOK = os.path.join(ROOT, 'assets', 'images', 'RBA_Adobe_Stock_Shortlist.xlsx')
 PAGE = os.path.join(ROOT, 'images.html')
 SHOTS = os.path.join(ROOT, 'assets', 'images', 'shortlist')
+PREVIEWS = os.path.join(ROOT, 'assets', 'images', 'previews.json')
 BEGIN = '  <script type="application/json" id="image-manifest">'
 END = '  </script>'
 NS = '{http://schemas.openxmlformats.org/spreadsheetml/2006/main}'
@@ -81,18 +82,32 @@ def read_rows():
     return [[cell(c) for c in r.findall(NS + 'c')] for r in sh.iter(NS + 'row')]
 
 
+def load_previews():
+    """{adobe-id: url}, written by tools/images-fetch-previews.py.
+
+    Kept in its own file rather than in the workbook because it is fetched data,
+    not editorial: regenerating it should never risk clobbering someone's typing.
+    A hand-entered "Preview URL" column in the workbook still wins over it."""
+    if not os.path.exists(PREVIEWS):
+        return {}
+    try:
+        return json.load(open(PREVIEWS, encoding='utf-8'))
+    except ValueError:
+        sys.exit('error: %s is not valid JSON' % os.path.relpath(PREVIEWS, ROOT))
+
+
 def build():
     rows = read_rows()
+    fetched = load_previews()
     head = rows[0]
     idx = {name: i for i, name in enumerate(head)}
     need = ['Category', 'Rank', 'Priority', 'Adobe Stock ID', 'Asset title', 'Contributor',
             'Dimensions', 'Why it stands out', 'Suggested RBA use', 'Crop / overlay note',
             'Adobe Stock URL']
-    # Optional. Add a "Preview URL" column to the workbook and the cards will use
-    # it until a licensed file is staged locally, which then takes over. There is
-    # no way to populate it automatically: Adobe Stock 403s scripted requests and
-    # serves a real browser an empty page, so these have to be pasted in (or come
-    # from the Adobe Stock API, which returns thumbnail URLs against a key).
+    # Preview URLs are optional and come from either of two places, in order:
+    # a hand-typed "Preview URL" column in the workbook, then whatever
+    # tools/images-fetch-previews.py put in assets/images/previews.json. Typing
+    # beats fetching so a re-fetch never overwrites a deliberate choice.
     missing = [n for n in need if n not in idx]
     if missing:
         sys.exit('error: workbook is missing column(s): %s' % ', '.join(missing))
@@ -122,6 +137,7 @@ def build():
             'url': get('Adobe Stock URL'),
         }
         preview = (r[idx['Preview URL']].strip() if 'Preview URL' in idx and idx['Preview URL'] < len(r) else '')
+        preview = preview or fetched.get(aid, '')
         if preview:
             item['preview'] = preview
         items.append(item)

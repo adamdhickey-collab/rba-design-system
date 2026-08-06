@@ -11,3 +11,6 @@
 # the site. Keep the original download somewhere backed up: it is the only copy
 # of the vector sources, and it is not in this repository.
 /icons/
+
+# Adobe Stock API key. A credential — never commit it.
+/.adobe-stock-key
