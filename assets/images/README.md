@@ -26,11 +26,27 @@ Stock, which is the one place the actual image can be seen today.
 
 ## Filling a card in
 
-Licence the image, then drop the file here named after its Adobe Stock ID:
+Drop the file here named after its Adobe Stock ID:
 
 ```
 assets/images/shortlist/1904000970.jpg
 ```
+
+**There is a helper for doing this fifty times.** Serve the site and open
+`tools/save-previews.html`. It lists every candidate in shortlist order with the
+Adobe Stock link, the exact filename to save as and a copy button, and it probes
+the folder as you go — so it doubles as the progress tracker. Close it, come back
+later, hit Re-check and it knows where you got to.
+
+Two other routes to the same place:
+
+- **`tools/images-fetch-previews.py`** pulls preview URLs from the Adobe Stock
+  API in one pass. Needs a free API key — see that script's header.
+- **A `Preview URL` column** in the workbook, hand-pasted, which `images-sync.py`
+  reads.
+
+A local file always beats a preview URL, so licensing an image later upgrades its
+card with nothing to undo.
 
 `.jpg`, `.jpeg`, `.png` and `.webp` all work — the page tries each in turn. The
 card picks it up on the next load. **No manifest edit, no rebuild, no code
