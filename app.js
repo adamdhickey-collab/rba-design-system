@@ -976,6 +976,60 @@
       apply();
     })();
 
+    // Chart tooltips · one element, delegated, hover AND keyboard.
+    //
+    // Marks carry data-label/data-value and are tabbable, so the same interaction
+    // answers "what is this bar" for a mouse, a keyboard and a screen reader —
+    // the tip is a live region, so focusing a mark announces the value rather
+    // than only painting it. No library: three static figures do not justify a
+    // charting dependency on a page that has none.
+    (function () {
+      const tip = document.getElementById('viz-tip');
+      const scope = document.querySelector('.viz-examples');
+      if (!tip || !scope) return;
+
+      function show(el) {
+        const label = el.getAttribute('data-label');
+        const value = el.getAttribute('data-value');
+        if (!label) return;
+        tip.innerHTML = '';
+        const b = document.createElement('b');
+        b.textContent = label;
+        tip.append(b, document.createTextNode(value || ''));
+        tip.hidden = false;
+        place(el);
+      }
+      function place(el) {
+        const r = el.getBoundingClientRect();
+        const t = tip.getBoundingClientRect();
+        // Above the mark by default; flip below when there is no room, and keep
+        // the whole thing inside the viewport rather than letting it clip.
+        let x = r.left + r.width / 2 - t.width / 2;
+        let y = r.top - t.height - 10;
+        if (y < 8) y = r.bottom + 10;
+        x = Math.max(8, Math.min(x, window.innerWidth - t.width - 8));
+        tip.style.left = Math.round(x) + 'px';
+        tip.style.top = Math.round(y) + 'px';
+      }
+      const hide = () => { tip.hidden = true; };
+
+      scope.addEventListener('mouseover', e => {
+        const m = e.target.closest('.viz-mark, .viz-dot');
+        if (m) show(m);
+      });
+      scope.addEventListener('mouseout', e => {
+        if (e.target.closest('.viz-mark, .viz-dot')) hide();
+      });
+      scope.addEventListener('focusin', e => {
+        const m = e.target.closest('.viz-mark, .viz-dot');
+        if (m) show(m);
+      });
+      scope.addEventListener('focusout', hide);
+      // A tooltip anchored to a mark is wrong the moment the page moves under it.
+      window.addEventListener('scroll', hide, { passive: true });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') hide(); });
+    })();
+
     // Copy SVG · reads an icon's source file and puts its markup on the clipboard, for
     // pasting straight into a template or a codebase.
     //
