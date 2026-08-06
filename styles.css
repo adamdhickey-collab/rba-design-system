@@ -266,12 +266,17 @@
        stated in full, which at 20px in a 288px rail means it wraps. The <br> is in the
        markup rather than left to chance so the break lands after "Connect" every time
        instead of orphaning "System". */
-    .sidebar-brand-title > span { display: block; }
     .sidebar-brand-title {
       display: block;
       font-family: var(--font-sans);
       font-weight: 800;
-      font-size: 20px;
+      /* Sized to sit on ONE line. The rail gives it 239px; at the old 20px the
+         string measured 250px, so it wrapped — and it was wrapped deliberately,
+         with two block spans, to control where the break landed. 17px measures
+         212px, which clears it with room for the Arial fallback if Montserrat
+         hasn't loaded. If the name ever gets longer, drop the size rather than
+         reintroducing a break: the rail reads as one label. */
+      font-size: 17px;
       line-height: 1.2;
       letter-spacing: var(--display-tracking-sm);
       color: var(--brand);
@@ -490,6 +495,17 @@
       line-height: 1.1;
       letter-spacing: -0.03em;
       color: var(--brand);
+    }
+    /* For a page title too long to hold one line at the display size. "Icons" and
+       "Brand images" are short enough to keep the full 84px; "RBA Connect Design
+       System" is 25 characters and needs 1,080px there, against the 1,016px the
+       content column actually has at 1440. Rather than shrink every title to suit
+       the longest one, the long title takes its own step down.
+
+       The ceiling is set so the line still fits at 1024 — the narrowest width that
+       still shows the rail — where the column is only ~600px. */
+    .hero-title--long {
+      font-size: clamp(38px, 4.4vw, 62px);
     }
     .hero-sub {
       font-family: var(--font-sans);
@@ -1390,8 +1406,20 @@
     [data-theme="dark"] a { color: var(--sky-300); }
     [data-theme="dark"] a:hover { color: var(--aqua); }
 
-    /* Outline and ghost hovers read in aqua, not midnight */
-    [data-theme="dark"] .btn-secondary:hover
+    /* Outline and ghost hovers read in aqua, not midnight.
+
+       This rule lost its declaration block in the original scaffold and nothing
+       caught it, because the failure is silent: with no braces, the comment below
+       became part of the selector and CSS read the two as ONE descendant selector
+       — `.btn-secondary:hover [data-theme="dark"] .sidebar-brand-title` — which
+       matches nothing. So both rules were dead. The secondary button kept its
+       light-theme hover (sky-50 on navy-700) in dark mode, and the sidebar
+       wordmark fell through to var(--brand), which re-points to aqua. */
+    [data-theme="dark"] .btn-secondary:hover {
+      background: transparent;
+      color: var(--aqua);
+      border-color: var(--aqua);
+    }
     /* The sidebar wordmark stays white; aqua is reserved for accents */
     [data-theme="dark"] .sidebar-brand-title { color: #FFFFFF; }
 

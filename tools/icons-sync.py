@@ -365,9 +365,17 @@ def main():
     updated = text[:i + len(BEGIN)] + '\n' + block + '\n' + text[j:]
 
     stale = updated != text
+
+    # "generated" is a stamp, not content. Comparing it would make --check fail
+    # every time the clock passes midnight, on a file nobody touched — a false
+    # alarm that teaches people to ignore the one signal this flag exists to give.
+    # So the staleness question is asked of everything EXCEPT that line.
+    drop_stamp = lambda s: re.sub(r'\n\s*"generated": "[^"]*",', '', s)
+    really_stale = drop_stamp(updated) != drop_stamp(text)
+
     if args.check:
         print('%d packs, %d icons' % (len(manifest_packs), total))
-        if stale:
+        if really_stale:
             print('manifest in icons.html is STALE — run ./tools/icons-sync.py')
             sys.exit(1)
         print('manifest is current')

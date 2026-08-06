@@ -34,10 +34,18 @@ claude.ai/design via `DesignSync`. The PowerPoint master is **not** copied into 
 SharePoint holds the version that actually gets updated, and a duplicate here would go
 stale without anyone noticing, so `templates.html` links to it instead.
 
-The sidebar, theme toggle and ⌘K search palette are byte-identical across all four. The
-rail is a flat list of six links — it previously had Foundations/Library groups with
-collapse state persisted to localStorage, which was two levels of hierarchy and ~90 lines
-of CSS and JS to navigate six destinations.
+The theme toggle and ⌘K search palette are identical across all four pages. The rail is a
+flat list of six links — it previously had Foundations/Library groups with collapse state
+persisted to localStorage, which was two levels of hierarchy and ~90 lines of CSS and JS
+to navigate six destinations.
+
+**The rail is NOT identical across pages, in two deliberate ways.** Each page marks its
+own link with `sidebar-link--active` and `aria-current="page"`. And the first three links
+point at sections that only exist on the home page, so they are written `#colors` on
+`index.html` — a same-page scroll, which is what the scroll-spy binds to — and
+`index.html#colors` everywhere else. Writing a bare `#colors` on the library pages is the
+one mistake to avoid here: the link stays clickable, changes the URL, and goes nowhere,
+because there is no such section on that page to scroll to.
 
 ## Running it
 
