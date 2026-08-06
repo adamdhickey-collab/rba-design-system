@@ -2455,8 +2455,27 @@
     .viz-data tbody th { font-weight: 600; }
     .viz-data td { text-align: right; font-variant-numeric: tabular-nums; }
 
-    @media (max-width: 640px) {
+    @media (max-width: 900px) {
       .viz-examples { grid-template-columns: 1fr; }
+    }
+    /* Below tablet the charts scroll inside their own card rather than shrinking
+       into illegibility. SVG text scales with the viewBox, so the wide figure at
+       333px was rendering its 11px labels at about 3.5px — technically present,
+       actually unreadable. A chart you scroll is better than one you can't read,
+       and the scroll is contained to the figure so the page itself never moves
+       sideways. Same pattern as .token-table-scroll elsewhere. */
+    @media (max-width: 900px) {
+      .viz-figure {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .viz-figure .viz-chart { min-width: 440px; }
+      /* 780 rather than matching the 1040 viewBox: past this the scroll costs
+         more than the legibility buys, and the data table right underneath is
+         the better read on a phone anyway. */
+      .viz-figure--wide .viz-chart { min-width: 780px; }
+      /* The caption and the data table should wrap, not ride the scroll. */
+      .viz-figure-head, .viz-data { position: sticky; left: 0; }
     }
     /* The chip carries its OWN pattern, not a flat colour with the pattern named
        underneath. The section's whole argument is that these eight do not
