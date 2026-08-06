@@ -88,6 +88,11 @@ def build():
     need = ['Category', 'Rank', 'Priority', 'Adobe Stock ID', 'Asset title', 'Contributor',
             'Dimensions', 'Why it stands out', 'Suggested RBA use', 'Crop / overlay note',
             'Adobe Stock URL']
+    # Optional. Add a "Preview URL" column to the workbook and the cards will use
+    # it until a licensed file is staged locally, which then takes over. There is
+    # no way to populate it automatically: Adobe Stock 403s scripted requests and
+    # serves a real browser an empty page, so these have to be pasted in (or come
+    # from the Adobe Stock API, which returns thumbnail URLs against a key).
     missing = [n for n in need if n not in idx]
     if missing:
         sys.exit('error: workbook is missing column(s): %s' % ', '.join(missing))
@@ -103,7 +108,7 @@ def build():
         if cat not in SHORT:
             problems.append('row %d: category "%s" is not in the SHORT table in this script' % (n, cat))
             continue
-        items.append({
+        item = {
             'id': aid,
             'title': get('Asset title'),
             'cat': SHORT[cat],
@@ -115,7 +120,11 @@ def build():
             'use': get('Suggested RBA use'),
             'crop': get('Crop / overlay note'),
             'url': get('Adobe Stock URL'),
-        })
+        }
+        preview = (r[idx['Preview URL']].strip() if 'Preview URL' in idx and idx['Preview URL'] < len(r) else '')
+        if preview:
+            item['preview'] = preview
+        items.append(item)
     if problems:
         sys.exit('error: workbook has problems:\n  - ' + '\n  - '.join(problems))
 
@@ -156,9 +165,11 @@ def main():
     if os.path.isdir(SHOTS):
         have = {os.path.splitext(f)[0] for f in os.listdir(SHOTS) if not f.startswith('.')}
         staged = len([it for it in items if it['id'] in have])
+    previews = len([it for it in items if it.get('preview')])
 
     if args.check:
-        print('%d candidates in %d categories, %d with an image staged' % (len(items), len(order), staged))
+        print('%d candidates in %d categories, %d staged locally, %d with a preview URL'
+              % (len(items), len(order), staged, previews))
         if updated != text:
             print('manifest in images.html is STALE — run ./tools/images-sync.py')
             sys.exit(1)
@@ -171,6 +182,7 @@ def main():
     for c in order:
         print('  %-22s %d' % (c, sum(1 for i in items if i['cat'] == c)))
     print('\nimages staged in assets/images/shortlist/: %d of %d' % (staged, len(items)))
+    print('rows carrying a Preview URL: %d of %d' % (previews, len(items)))
     if staged < len(items):
         print('Drop licensed files there named <adobe-id>.jpg to fill the remaining slots.')
 

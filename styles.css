@@ -282,11 +282,15 @@
       color: var(--brand);
     }
 
+    /* 2px, not --space-5. Six links with 24px between them read as six unrelated
+       buttons rather than one list, and pushed the last one most of a screen down
+       the rail. The hover/active pill still gives each link its own footprint, so
+       they stay separable without the gap doing it. */
     .sidebar-nav {
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: var(--space-5);
+      gap: 2px;
       padding: 0 var(--space-3);
     }
     .sidebar-link {
@@ -473,39 +477,24 @@
       overflow: hidden;
       border-bottom: 1px solid var(--border);
     }
-    .hero-eyebrow {
-      font-family: var(--font-micro);
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: normal;
-      text-transform: none;
-      color: var(--text-muted);
-      margin-bottom: var(--space-5);
-    }
     /* Libre Caslon, per the canonical source: colors_and_type.css defines .hero-display
        as the serif at 100px/110%/-3% and comments that the hero is "only place Libre
        Caslon is used". An earlier pass set this to Montserrat on the reasoning that a
        reference page isn't an editorial moment — the published system says otherwise, and
        it decides. Capped below 100px because this hero sits above a navigation rail
        rather than filling a landing page. */
+    /* ONE page-title size, every page. It was clamp(44px, 6vw, 84px) with a
+       smaller --long modifier only on the homepage, so "Icons" and the home
+       headline were set at different sizes — they are the same level of heading
+       and should look it. The ceiling is the one that holds a long title on a
+       single line at 1024, the narrowest width that still shows the rail. */
     .hero-title {
       font-family: var(--font-display);
       font-weight: 400;
-      font-size: clamp(44px, 6vw, 84px);
+      font-size: clamp(38px, 4.4vw, 62px);
       line-height: 1.1;
       letter-spacing: -0.03em;
       color: var(--brand);
-    }
-    /* For a page title too long to hold one line at the display size. "Icons" and
-       "Brand images" are short enough to keep the full 84px; "RBA Connect Design
-       System" is 25 characters and needs 1,080px there, against the 1,016px the
-       content column actually has at 1440. Rather than shrink every title to suit
-       the longest one, the long title takes its own step down.
-
-       The ceiling is set so the line still fits at 1024 — the narrowest width that
-       still shows the rail — where the column is only ~600px. */
-    .hero-title--long {
-      font-size: clamp(38px, 4.4vw, 62px);
     }
     .hero-sub {
       font-family: var(--font-sans);
@@ -531,14 +520,6 @@
       gap: var(--space-4);
       margin-bottom: var(--space-7);
       max-width: 760px;
-    }
-    .section-eyebrow {
-      font-family: var(--font-micro);
-      font-size: 12px;
-      letter-spacing: normal;
-      text-transform: none;
-      color: var(--text-muted);
-      margin-bottom: var(--space-4);
     }
     /* Sans, matching .hero-title. The display serif is reserved for editorial moments,
        and a section heading on a reference page isn't one — see the note on

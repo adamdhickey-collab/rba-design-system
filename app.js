@@ -776,6 +776,22 @@
       icons.forEach(item => frag.appendChild(iconTile(item)));
       grid.appendChild(frag);
 
+      // Paint what is already on screen straight away rather than waiting for the
+      // observer's first callback. The observer is the right mechanism for the
+      // other ~1,450 tiles, but its first delivery is scheduled off the rendering
+      // loop — so anything that delays or suppresses that (a background tab, a
+      // restored session, a throttled renderer) leaves the visible grid blank,
+      // which reads as "the icons are broken" rather than "the icons are late".
+      // Belt and braces: the observer still owns everything below the fold.
+      requestAnimationFrame(() => {
+        const limit = window.innerHeight + 600;
+        grid.querySelectorAll('.glyph-cell-glyph').forEach(g => {
+          if (g.dataset.painted) return;
+          const top = g.getBoundingClientRect().top;
+          if (top < limit) { paint(g); if (io) io.unobserve(g); }
+        });
+      });
+
       if (search) {
         search.addEventListener('input', apply);
         // Escape clears rather than blurring — the filter is this page's primary
@@ -823,9 +839,18 @@
       // Try each extension in turn; the first that loads wins. A miss on all of
       // them just leaves the slot, which is the honest state until someone buys
       // the image.
+      // Three ways a card can get a picture, in order of preference:
+      //   1. a licensed file staged at assets/images/shortlist/<adobe-id>.<ext>
+      //   2. a preview URL carried in the manifest ("preview" on the row)
+      //   3. nothing — the slot stays, which is the honest state
+      // Local wins over preview so that licensing an image silently upgrades the
+      // card without anyone having to go and remove the preview URL.
       function findImage(cell, item) {
+        const local = EXTS.map(e => 'assets/images/shortlist/' + item.id + '.' + e);
+        const candidates = local.concat(item.preview ? [item.preview] : []);
         let i = 0;
         const probe = new Image();
+        probe.referrerPolicy = 'no-referrer';
         probe.onload = () => {
           const frame = cell.querySelector('.shot-frame');
           frame.classList.add('shot-frame--filled');
@@ -833,9 +858,8 @@
           const slot = frame.querySelector('.shot-slot');
           if (slot) slot.remove();
         };
-        probe.onerror = () => { if (++i < EXTS.length) probe.src = base + EXTS[i]; };
-        const base = 'assets/images/shortlist/' + item.id + '.';
-        probe.src = base + EXTS[0];
+        probe.onerror = () => { if (++i < candidates.length) probe.src = candidates[i]; };
+        probe.src = candidates[0];
       }
 
       function card(item) {
