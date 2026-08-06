@@ -105,29 +105,33 @@
             </div>
           </div>
 
-          <div class="lib-controls">
-            <label class="lib-search">
-              <span class="material-symbols-rounded" aria-hidden="true">search</span>
-              <input type="search" class="lib-search-input" placeholder="Search 1,490 icons…" aria-label="Search icons by name, pack or keyword" autocomplete="off" />
-            </label>
-            <div class="lib-pack">
-              <span class="material-symbols-rounded" aria-hidden="true">category</span>
-              <select class="lib-pack-select" aria-label="Filter icons by pack"></select>
+          <!-- One panel, three zones: narrow it (search + pack), then the chips,
+               then take it (the bundles). The controls used to sit in a single
+               undifferentiated row where a text field, a select, a live count and
+               two outlined buttons all competed at the same weight. -->
+          <div class="lib-toolbar">
+            <div class="lib-toolbar-row">
+              <label class="lib-search">
+                <span class="material-symbols-rounded" aria-hidden="true">search</span>
+                <input type="search" class="lib-search-input" placeholder="Search 1,490 icons…" aria-label="Search icons by name, pack or keyword" autocomplete="off" />
+              </label>
+              <div class="lib-pack">
+                <span class="material-symbols-rounded" aria-hidden="true">category</span>
+                <select class="lib-pack-select" aria-label="Filter icons by pack"></select>
+                <span class="material-symbols-rounded lib-pack-caret" aria-hidden="true">expand_more</span>
+              </div>
+              <span class="lib-count" role="status" aria-live="polite"></span>
+              <div class="lib-bundle">
+                <span class="lib-bundle-label">Download all</span>
+                <div class="lib-bundle-group">
+                  <a class="lib-bundle-btn" href="downloads/rba-icons-svg.zip" download>SVG</a>
+                  <a class="lib-bundle-btn" href="downloads/rba-icons-png.zip" download>PNG</a>
+                </div>
+                <span class="lib-bundle-note">built <span class="js-bundle-date">—</span></span>
+              </div>
             </div>
-            <span class="lib-count" role="status" aria-live="polite"></span>
-            <div class="lib-bundle">
-              <a class="btn btn-secondary btn--sm" href="downloads/rba-icons-svg.zip" download>
-                <span class="material-symbols-rounded" aria-hidden="true">folder_zip</span>
-                <span>All SVGs</span>
-              </a>
-              <a class="btn btn-secondary btn--sm" href="downloads/rba-icons-png.zip" download>
-                <span class="material-symbols-rounded" aria-hidden="true">folder_zip</span>
-                <span>All PNGs</span>
-              </a>
-              <span class="lib-bundle-note">built <span class="js-bundle-date">—</span></span>
-            </div>
+            <div class="lib-filter" role="group" aria-label="Filter icons by group"></div>
           </div>
-          <div class="lib-filter" role="group" aria-label="Filter icons by group"></div>
 
           <div class="glyph-grid" id="icon-grid"></div>
           <p class="lib-empty" hidden>No icons match that. Try a shorter word, or clear the filter.</p>
@@ -284,6 +288,11 @@
         <kbd class="search-esc">Esc</kbd>
       </div>
       <div class="search-results" id="search-results" role="listbox" aria-label="Search results"></div>
+      <div class="search-foot" aria-hidden="true">
+        <span><kbd>&uarr;</kbd><kbd>&darr;</kbd> navigate</span>
+        <span><kbd>&crarr;</kbd> open</span>
+        <span><kbd>Esc</kbd> close</span>
+      </div>
     </div>
   </div>
 

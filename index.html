@@ -268,14 +268,6 @@
                 </span>
                 <span class="palette-swatch-note">Body text</span>
               </button>
-              <button type="button" class="palette-swatch" style="--c: #444441" aria-label="Copy Secondary Text hex">
-                <span class="palette-swatch-chip" aria-hidden="true"></span>
-                <span class="palette-swatch-text">
-                  <span class="palette-swatch-name">Text Secondary</span>
-                  <span class="palette-swatch-hex">#444441</span>
-                </span>
-                <span class="palette-swatch-note">Secondary text</span>
-              </button>
               <button type="button" class="palette-swatch" style="--c: #666666" aria-label="Copy Dark Grey hex">
                 <span class="palette-swatch-chip" aria-hidden="true"></span>
                 <span class="palette-swatch-text">
@@ -328,21 +320,26 @@
           </div>
 
           <h3 class="subhead">Gradients</h3>
-          <p class="palette-note">Both run vertically, top to bottom. The angle is part of the specification — a diagonal version is a different asset, not a variation.</p>
+          <p class="palette-note">Runs vertically, top to bottom. The angle is part of the specification — a diagonal version is a different asset, not a variation.</p>
           <div class="palette-pairs">
             <div class="palette-pair">
               <div class="gradient-demo gradient-demo--sky" role="img" aria-label="Sky gradient, #E6F8FB to #9DDBF6, vertical"></div>
               <p class="palette-note u-mt-sm"><strong>Sky</strong> · <code>#E6F8FB</code> → <code>#9DDBF6</code> · 180°</p>
             </div>
-            <div class="palette-pair">
-              <div class="gradient-demo gradient-demo--hero" role="img" aria-label="Hero gradient, #E6F8FB to #BDE4F1, vertical"></div>
-              <p class="palette-note u-mt-sm"><strong>Hero</strong> · <code>#E6F8FB</code> → <code>#BDE4F1</code> · 180°</p>
+          </div>
+          <p class="palette-note u-mt-sm">The canonical set also defines <code>--grad-hero</code> (<code>#E6F8FB</code> → <code>#BDE4F1</code>), which is the same ramp stopping short. It is still in the token table, but it isn&rsquo;t shown here: side by side the two invite a choice that doesn&rsquo;t matter, and its end stop is already on this page as the Sky&nbsp;Blue swatch. Reach for Sky.</p>
+
+          <h3 class="subhead">Data visualization</h3>
+          <p class="palette-note">An ordered set, AA-compliant against the page, each value paired with a fill pattern. Use them in order rather than picking by eye.</p>
+
+          <div class="callout callout--warn u-mt-md">
+            <span class="material-symbols-rounded" aria-hidden="true">warning</span>
+            <div class="callout-body">
+              <p><strong>The patterns are not optional, and not just for print.</strong> Measured as a categorical set, these eight do not separate on colour alone: the closest pair, <code>--viz-5</code> and <code>--viz-8</code>, sit at a perceptual distance of 2.2 where about 15 is the readable floor, and no reordering gets the worst neighbouring pair above 7.9. That is a property of eight values drawn from one narrow blue-slate range, not of the ordering. So a series is identified by <strong>pattern plus a direct label</strong>, and colour is the thing that makes the chart look like RBA rather than the thing that tells the series apart. Past about four series, split the chart rather than reaching for <code>--viz-5</code>.</p>
             </div>
           </div>
 
-          <h3 class="subhead">Data visualization</h3>
-          <p class="palette-note">An ordered set, AA-compliant, each value intended to pair with a fill pattern so the series still separate when a chart is printed in mono. Use them in order rather than picking by eye.</p>
-          <div class="viz-row">
+          <div class="viz-row u-mt-md">
             <span class="viz-chip" style="--c: #1D366D"><span class="viz-chip-hex">#1D366D</span><span class="viz-chip-note">Solid</span></span>
             <span class="viz-chip" style="--c: #6B859C"><span class="viz-chip-hex">#6B859C</span><span class="viz-chip-note">45° lines</span></span>
             <span class="viz-chip" style="--c: #0A7A91"><span class="viz-chip-hex">#0A7A91</span><span class="viz-chip-note">Horizontal</span></span>
@@ -353,6 +350,139 @@
             <span class="viz-chip" style="--c: #4A5568"><span class="viz-chip-hex">#4A5568</span><span class="viz-chip-note">Large dots</span></span>
           </div>
 
+          <h4 class="viz-subhead">In use</h4>
+          <p class="palette-note">Three worked examples. Every series carries a pattern and a label; the grid stays out of the way; values sit in text ink, never in the series colour.</p>
+
+          <div class="viz-examples">
+
+            <!-- Patterns carry the series colour explicitly, one <pattern> per
+                 colour+texture pair. They cannot use currentColor: inside a
+                 <pattern> that resolves against the pattern's OWN ancestor chain,
+                 not the element referencing it, so every fill came out the page's
+                 text colour. var(--viz-N) works because custom properties inherit
+                 from :root, which this <defs> is inside. -->
+            <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+              <defs>
+                <pattern id="pv3-diag" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                  <rect width="8" height="8" fill="var(--viz-3)" opacity="0.28"/>
+                  <rect width="4" height="8" fill="var(--viz-3)"/>
+                </pattern>
+                <pattern id="pv7-horiz" width="8" height="8" patternUnits="userSpaceOnUse">
+                  <rect width="8" height="8" fill="var(--viz-7)" opacity="0.28"/>
+                  <rect width="8" height="4" fill="var(--viz-7)"/>
+                </pattern>
+                <pattern id="pv4-vert" width="8" height="8" patternUnits="userSpaceOnUse">
+                  <rect width="8" height="8" fill="var(--viz-4)" opacity="0.28"/>
+                  <rect width="4" height="8" fill="var(--viz-4)"/>
+                </pattern>
+              </defs>
+            </svg>
+
+            <!-- 1 · Magnitude across categories, one series. No legend: the title names it. -->
+            <figure class="viz-figure">
+              <figcaption class="viz-figure-head">
+                <span class="viz-figure-title">Engagements by practice, FY26</span>
+                <span class="viz-figure-note">One series &middot; solid <code>--viz-1</code> &middot; direct-labelled, so there is no legend and no axis to read against</span>
+              </figcaption>
+              <svg class="viz-chart" viewBox="0 0 560 236" role="img"
+                   aria-label="Bar chart of engagements by practice for FY26. Digital experience 48, Data and AI 41, Cloud 33, Managed services 22, Strategy 14.">
+                <g fill="var(--viz-1)">
+                  <rect x="4"   y="46"  width="76" height="150" rx="4"/>
+                  <rect x="112" y="68"  width="76" height="128" rx="4"/>
+                  <rect x="220" y="93"  width="76" height="103" rx="4"/>
+                  <rect x="328" y="128" width="76" height="68"  rx="4"/>
+                  <rect x="436" y="154" width="76" height="42"  rx="4"/>
+                </g>
+                <g class="viz-value">
+                  <text x="42"  y="36">48</text><text x="150" y="58">41</text>
+                  <text x="258" y="83">33</text><text x="366" y="118">22</text>
+                  <text x="474" y="144">14</text>
+                </g>
+                <line class="viz-axis" x1="0" y1="196" x2="560" y2="196"/>
+                <g class="viz-label">
+                  <text x="42"  y="216">Digital exp.</text><text x="150" y="216">Data &amp; AI</text>
+                  <text x="258" y="216">Cloud</text><text x="366" y="216">Managed</text>
+                  <text x="474" y="216">Strategy</text>
+                </g>
+              </svg>
+            </figure>
+
+            <!-- 2 · Change over time. Labelled at the line end so the eye never has
+                 to travel to a legend and back; dash style is the second cue. -->
+            <figure class="viz-figure">
+              <figcaption class="viz-figure-head">
+                <span class="viz-figure-title">Delivery hours by quarter</span>
+                <span class="viz-figure-note">Three series &middot; <code>--viz-1</code>, <code>--viz-3</code>, <code>--viz-7</code> &middot; labelled at the line end, dash pattern as the second cue</span>
+              </figcaption>
+              <svg class="viz-chart" viewBox="0 0 560 236" role="img"
+                   aria-label="Line chart of delivery hours by quarter. Digital experience rises from 30 to 76. Data and AI rises from 18 to 62. Cloud stays flat between 34 and 40.">
+                <g class="viz-grid">
+                  <line x1="0" y1="40"  x2="392" y2="40"/><line x1="0" y1="88" x2="392" y2="88"/>
+                  <line x1="0" y1="136" x2="392" y2="136"/>
+                </g>
+                <polyline class="viz-line" style="stroke: var(--viz-1)" points="0,168 98,138 196,102 294,70 392,42"/>
+                <polyline class="viz-line viz-line--dash" style="stroke: var(--viz-3)" points="0,186 98,170 196,138 294,108 392,62"/>
+                <polyline class="viz-line viz-line--dot" style="stroke: var(--viz-7)" points="0,160 98,156 196,164 294,148 392,150"/>
+                <g class="viz-series-label">
+                  <text x="400" y="46"  style="fill: var(--viz-1)">Digital exp.</text>
+                  <text x="400" y="66"  style="fill: var(--viz-3)">Data &amp; AI</text>
+                  <text x="400" y="154" style="fill: var(--viz-7)">Cloud</text>
+                </g>
+                <line class="viz-axis" x1="0" y1="196" x2="392" y2="196"/>
+                <g class="viz-label">
+                  <text x="0"   y="216" text-anchor="start">Q1</text><text x="98" y="216">Q2</text>
+                  <text x="196" y="216">Q3</text><text x="294" y="216">Q4</text>
+                  <text x="392" y="216" text-anchor="end">Q5</text>
+                </g>
+              </svg>
+            </figure>
+
+            <!-- 3 · Parts of a whole. Four is the practical ceiling here. Values sit
+                 UNDER the bar, not on it: white on --viz-3, --viz-4 and --viz-7 all
+                 fall short of 4.5:1, and the rule below says text wears text ink. -->
+            <figure class="viz-figure viz-figure--wide">
+              <figcaption class="viz-figure-head">
+                <span class="viz-figure-title">Programme spend by workstream</span>
+                <span class="viz-figure-note">Four series &middot; a different pattern each &middot; 2px surface gaps between segments, values under the bar in text ink</span>
+              </figcaption>
+              <svg class="viz-chart" viewBox="0 0 900 104" role="img"
+                   aria-label="Stacked bar of programme spend. Build 42 percent, Run 27 percent, Discovery 19 percent, Enablement 12 percent.">
+                <rect x="0"   y="0" width="376" height="52" rx="4" fill="var(--viz-1)"/>
+                <rect x="380" y="0" width="239" height="52" rx="4" fill="url(#pv3-diag)"/>
+                <rect x="623" y="0" width="167" height="52" rx="4" fill="url(#pv7-horiz)"/>
+                <rect x="794" y="0" width="106" height="52" rx="4" fill="url(#pv4-vert)"/>
+                <g class="viz-value">
+                  <text x="0"   y="78" text-anchor="start">42%</text>
+                  <text x="380" y="78" text-anchor="start">27%</text>
+                  <text x="623" y="78" text-anchor="start">19%</text>
+                  <text x="794" y="78" text-anchor="start">12%</text>
+                </g>
+                <g class="viz-label">
+                  <text x="0"   y="96" text-anchor="start">Build</text>
+                  <text x="380" y="96" text-anchor="start">Run</text>
+                  <text x="623" y="96" text-anchor="start">Discovery</text>
+                  <text x="794" y="96" text-anchor="start">Enablement</text>
+                </g>
+              </svg>
+            </figure>
+
+          </div>
+
+          <div class="token-table-scroll u-mt-md" tabindex="0" role="region" aria-label="Chart rules, scrollable">
+            <table class="table">
+              <thead><tr><th>Rule</th><th>Requirement</th></tr></thead>
+              <tbody>
+                <tr><td>Order</td><td>Take <code>--viz-1</code>, then <code>--viz-2</code>, and so on. Never pick by eye and never cycle back to the start for a ninth series — fold the tail into &ldquo;Other&rdquo;, or split the chart.</td></tr>
+                <tr><td>How many</td><td>Four is the comfortable ceiling. These eight are drawn from one narrow blue-slate range and the later values are hard to tell apart even with full colour vision.</td></tr>
+                <tr><td>Pattern</td><td>Every series gets one. It is the thing doing the separating, so it belongs on screen as much as in print, and it must survive a greyscale photocopy.</td></tr>
+                <tr><td>Labels</td><td>Label series directly where they sit. A legend alone makes the reader hold a colour in their head and go looking for it, which is exactly what this palette is worst at.</td></tr>
+                <tr><td>Text</td><td>Values and axis labels use text ink, never the series colour. A number tinted to match its bar is harder to read and adds nothing.</td></tr>
+                <tr><td>One axis</td><td>Never two y-scales on one chart. Two measures of different size are two charts, or one indexed to a common base.</td></tr>
+                <tr><td>Never</td><td>RBA Red for a series — it is the logo mark only. Aqua for anything carrying a value, and no gradients on a data mark.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
           <h3 class="subhead">Tokens</h3>
           <p class="palette-note">Reference these rather than raw hex, so a palette correction lands everywhere at once.</p>
           <div class="token-table-scroll" tabindex="0" role="region" aria-label="Color tokens, scrollable">
@@ -361,25 +491,25 @@
                 <tr><th>Token</th><th>Value</th><th>Role</th></tr>
               </thead>
               <tbody>
-                <tr><td class="token-name">--rba-red</td><td><span class="token-swatch" style="--c: #C8252D"></span>#C8252D</td><td>Logo mark only. Never on UI.</td></tr>
-                <tr><td class="token-name">--midnight</td><td><span class="token-swatch" style="--c: #1D366D"></span>#1D366D</td><td>Headings, nav, primary buttons.</td></tr>
-                <tr><td class="token-name">--primary-hover</td><td><span class="token-swatch" style="--c: #2A4A8A"></span>#2A4A8A</td><td>Primary button hover.</td></tr>
-                <tr><td class="token-name">--primary-dark</td><td><span class="token-swatch" style="--c: #162A57"></span>#162A57</td><td>Deep navy accents.</td></tr>
-                <tr><td class="token-name">--secondary</td><td><span class="token-swatch" style="--c: #185FA5"></span>#185FA5</td><td>Secondary links and elements.</td></tr>
-                <tr><td class="token-name">--action</td><td><span class="token-swatch" style="--c: #3178BF"></span>#3178BF</td><td>Links, highlights.</td></tr>
-                <tr><td class="token-name">--accent</td><td><span class="token-swatch" style="--c: #0D8FA9"></span>#0D8FA9</td><td>CTA buttons, active states.</td></tr>
-                <tr><td class="token-name">--aqua</td><td><span class="token-swatch" style="--c: #14BADB"></span>#14BADB</td><td>Decorative only — fails AA for text.</td></tr>
-                <tr><td class="token-name">--soft-blue</td><td><span class="token-swatch" style="--c: #8EC3DB"></span>#8EC3DB</td><td>Decorative.</td></tr>
-                <tr><td class="token-name">--sky-blue</td><td><span class="token-swatch" style="--c: #BDE4F1"></span>#BDE4F1</td><td>Hero-gradient end, backgrounds.</td></tr>
-                <tr><td class="token-name">--white-blue</td><td><span class="token-swatch" style="--c: #F5FAFC"></span>#F5FAFC</td><td>Subtle tinted surface.</td></tr>
-                <tr><td class="token-name">--black</td><td><span class="token-swatch" style="--c: #333333"></span>#333333</td><td>Body text.</td></tr>
-                <tr><td class="token-name">--text-sec</td><td><span class="token-swatch" style="--c: #444441"></span>#444441</td><td>Secondary text.</td></tr>
-                <tr><td class="token-name">--dark-grey</td><td><span class="token-swatch" style="--c: #666666"></span>#666666</td><td>Muted text.</td></tr>
-                <tr><td class="token-name">--med-grey</td><td><span class="token-swatch" style="--c: #AAAAAA"></span>#AAAAAA</td><td>Strong borders.</td></tr>
-                <tr><td class="token-name">--light-grey</td><td><span class="token-swatch" style="--c: #DDDDDD"></span>#DDDDDD</td><td>Default borders.</td></tr>
-                <tr><td class="token-name">--white-grey</td><td><span class="token-swatch" style="--c: #F5F5F5"></span>#F5F5F5</td><td>Alt surface.</td></tr>
-                <tr><td class="token-name">--navy-dark</td><td><span class="token-swatch" style="--c: #182449"></span>#182449</td><td>Deck dark background, deep sections.</td></tr>
-                <tr><td class="token-name">--bg-dark</td><td><span class="token-swatch" style="--c: #1A2332"></span>#1A2332</td><td>Footer, dark CTA.</td></tr>
+                <tr><td class="token-name">--rba-red</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#C8252D" aria-label="Copy #C8252D"><span class="token-swatch" style="--c: #C8252D" aria-hidden="true"></span><code class="token-hex">#C8252D</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Logo mark only. Never on UI.</td></tr>
+                <tr><td class="token-name">--midnight</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#1D366D" aria-label="Copy #1D366D"><span class="token-swatch" style="--c: #1D366D" aria-hidden="true"></span><code class="token-hex">#1D366D</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Headings, nav, primary buttons.</td></tr>
+                <tr><td class="token-name">--primary-hover</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#2A4A8A" aria-label="Copy #2A4A8A"><span class="token-swatch" style="--c: #2A4A8A" aria-hidden="true"></span><code class="token-hex">#2A4A8A</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Primary button hover.</td></tr>
+                <tr><td class="token-name">--primary-dark</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#162A57" aria-label="Copy #162A57"><span class="token-swatch" style="--c: #162A57" aria-hidden="true"></span><code class="token-hex">#162A57</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Deep navy accents.</td></tr>
+                <tr><td class="token-name">--secondary</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#185FA5" aria-label="Copy #185FA5"><span class="token-swatch" style="--c: #185FA5" aria-hidden="true"></span><code class="token-hex">#185FA5</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Secondary links and elements.</td></tr>
+                <tr><td class="token-name">--action</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#3178BF" aria-label="Copy #3178BF"><span class="token-swatch" style="--c: #3178BF" aria-hidden="true"></span><code class="token-hex">#3178BF</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Links, highlights.</td></tr>
+                <tr><td class="token-name">--accent</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#0D8FA9" aria-label="Copy #0D8FA9"><span class="token-swatch" style="--c: #0D8FA9" aria-hidden="true"></span><code class="token-hex">#0D8FA9</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>CTA buttons, active states.</td></tr>
+                <tr><td class="token-name">--aqua</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#14BADB" aria-label="Copy #14BADB"><span class="token-swatch" style="--c: #14BADB" aria-hidden="true"></span><code class="token-hex">#14BADB</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Decorative only — fails AA for text.</td></tr>
+                <tr><td class="token-name">--soft-blue</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#8EC3DB" aria-label="Copy #8EC3DB"><span class="token-swatch" style="--c: #8EC3DB" aria-hidden="true"></span><code class="token-hex">#8EC3DB</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Decorative.</td></tr>
+                <tr><td class="token-name">--sky-blue</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#BDE4F1" aria-label="Copy #BDE4F1"><span class="token-swatch" style="--c: #BDE4F1" aria-hidden="true"></span><code class="token-hex">#BDE4F1</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Hero-gradient end, backgrounds.</td></tr>
+                <tr><td class="token-name">--white-blue</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#F5FAFC" aria-label="Copy #F5FAFC"><span class="token-swatch" style="--c: #F5FAFC" aria-hidden="true"></span><code class="token-hex">#F5FAFC</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Subtle tinted surface.</td></tr>
+                <tr><td class="token-name">--black</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#333333" aria-label="Copy #333333"><span class="token-swatch" style="--c: #333333" aria-hidden="true"></span><code class="token-hex">#333333</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Body text.</td></tr>
+                <tr><td class="token-name">--text-sec</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#444441" aria-label="Copy #444441"><span class="token-swatch" style="--c: #444441" aria-hidden="true"></span><code class="token-hex">#444441</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Secondary text.</td></tr>
+                <tr><td class="token-name">--dark-grey</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#666666" aria-label="Copy #666666"><span class="token-swatch" style="--c: #666666" aria-hidden="true"></span><code class="token-hex">#666666</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Muted text.</td></tr>
+                <tr><td class="token-name">--med-grey</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#AAAAAA" aria-label="Copy #AAAAAA"><span class="token-swatch" style="--c: #AAAAAA" aria-hidden="true"></span><code class="token-hex">#AAAAAA</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Strong borders.</td></tr>
+                <tr><td class="token-name">--light-grey</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#DDDDDD" aria-label="Copy #DDDDDD"><span class="token-swatch" style="--c: #DDDDDD" aria-hidden="true"></span><code class="token-hex">#DDDDDD</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Default borders.</td></tr>
+                <tr><td class="token-name">--white-grey</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#F5F5F5" aria-label="Copy #F5F5F5"><span class="token-swatch" style="--c: #F5F5F5" aria-hidden="true"></span><code class="token-hex">#F5F5F5</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Alt surface.</td></tr>
+                <tr><td class="token-name">--navy-dark</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#182449" aria-label="Copy #182449"><span class="token-swatch" style="--c: #182449" aria-hidden="true"></span><code class="token-hex">#182449</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Deck dark background, deep sections.</td></tr>
+                <tr><td class="token-name">--bg-dark</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#1A2332" aria-label="Copy #1A2332"><span class="token-swatch" style="--c: #1A2332" aria-hidden="true"></span><code class="token-hex">#1A2332</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Footer, dark CTA.</td></tr>
                 <tr><td class="token-name">--grad-sky</td><td>180° #E6F8FB → #9DDBF6</td><td>Section wash.</td></tr>
                 <tr><td class="token-name">--grad-hero</td><td>180° #E6F8FB → #BDE4F1</td><td>Hero wash.</td></tr>
                 <tr><td class="token-name">--viz-1 … --viz-8</td><td>Ordered 8-colour set</td><td>Charts. Pair each with a pattern.</td></tr>
@@ -572,6 +702,11 @@
         <kbd class="search-esc">Esc</kbd>
       </div>
       <div class="search-results" id="search-results" role="listbox" aria-label="Search results"></div>
+      <div class="search-foot" aria-hidden="true">
+        <span><kbd>&uarr;</kbd><kbd>&darr;</kbd> navigate</span>
+        <span><kbd>&crarr;</kbd> open</span>
+        <span><kbd>Esc</kbd> close</span>
+      </div>
     </div>
   </div>
 

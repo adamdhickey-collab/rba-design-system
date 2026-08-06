@@ -469,6 +469,16 @@
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); copy(); }
         });
       });
+
+      // Token table · the whole value cell is a real <button>, so Enter and Space
+      // come free and none of the ARIA scaffolding above is needed. Delegated
+      // because there are nineteen of them and they never change.
+      document.addEventListener('click', (ev) => {
+        const btn = ev.target.closest('.js-copy-hex');
+        if (!btn) return;
+        const value = btn.getAttribute('data-copy');
+        if (value) rbaCopy(value, 'Copied ' + value);
+      });
     })();
 
     // Version and published date · both stamped at deploy time, neither maintained by hand.

@@ -716,14 +716,24 @@
 
     /* ---------- Type specimen ---------- */
     .type-stack { display: grid; gap: var(--space-6); }
+    /* The specimen takes the flexible column and the caption a fixed one. It was
+       the other way round — the specimen was pinned to 160px while the 12px
+       caption got 1fr — so "Hero display" at 100px wrapped over three lines and
+       every heading below it wrapped too. A specimen that can't show its own line
+       isn't a specimen.
+
+       minmax(0, 1fr) rather than 1fr: a grid track sized 1fr refuses to shrink
+       below its content's min-content width, and 100px type has a wide one, so
+       the caption column would be squeezed out instead. */
     .type-row {
       display: grid;
-      grid-template-columns: 160px 1fr;
+      grid-template-columns: minmax(0, 1fr) 232px;
       gap: var(--space-6);
       align-items: baseline;
       padding-bottom: var(--space-5);
       border-bottom: 1px dashed var(--border);
     }
+    .type-row .type-meta { text-align: right; }
     .type-meta {
       font-family: var(--font-micro);
       font-size: 12px;
@@ -803,6 +813,23 @@
        chips, a live count, and a bundle download. The chips and the grid are both
        rendered from the page's inlined manifest, so this markup carries no asset
        names — see the "Asset library" block in app.js. */
+    /* One panel holding the whole control surface, so the grid below reads as its
+       result rather than as a sibling. Inputs and chips are deliberately different
+       shapes: the pill inputs are things you TYPE INTO or OPEN, the chips are
+       things you TOGGLE. Same radius on both made them one undifferentiated row. */
+    .lib-toolbar {
+      background: var(--surface-2, var(--neutral-50));
+      border: 1px solid var(--border);
+      border-radius: var(--corner-radius-lg);
+      padding: var(--space-4);
+      margin-bottom: var(--space-5);
+    }
+    .lib-toolbar-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-3);
+    }
     .lib-controls {
       display: flex;
       flex-wrap: wrap;
@@ -852,8 +879,9 @@
       font-family: var(--font-micro);
       font-size: 12px;
       font-weight: 700;
-      color: var(--text-muted);
+      color: var(--text-soft);
       white-space: nowrap;
+      padding-left: var(--space-1, 4px);
     }
     /* Pushed to its own end of the strip: it acts on the whole collection, not on
        whatever the filter currently shows, and sitting beside the count would imply
@@ -861,9 +889,38 @@
     .lib-bundle {
       display: flex;
       align-items: center;
-      gap: var(--space-3);
+      gap: var(--space-2);
       margin-left: auto;
     }
+    .lib-bundle-label {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    /* Segmented: two formats of ONE action, so they share a border and a hairline
+       rather than reading as two unrelated buttons shouting at equal volume. */
+    .lib-bundle-group {
+      display: inline-flex;
+      border: 1px solid var(--border-input);
+      border-radius: var(--radius-pill);
+      background: var(--surface);
+      overflow: hidden;
+    }
+    .lib-bundle-btn {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 7px 14px;
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: background-color 120ms ease, color 120ms ease;
+    }
+    .lib-bundle-btn + .lib-bundle-btn { border-left: 1px solid var(--border); }
+    .lib-bundle-btn:hover { background: var(--brand); color: var(--on-accent); }
+    .lib-bundle-btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
     .lib-bundle-note {
       font-family: var(--font-micro);
       font-size: 11px;
@@ -897,20 +954,30 @@
       color: var(--text-muted);
       pointer-events: none;
     }
+    .lib-pack-caret {
+      position: absolute;
+      right: 12px;
+      font-size: 18px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
     .lib-pack-select {
+      -webkit-appearance: none;
+      appearance: none;
       font-family: var(--font-sans);
       font-size: 14px;
       line-height: 22px;
       width: 100%;
-      padding: 10px 12px 10px 40px;
+      padding: 10px 34px 10px 40px;
       border: 1px solid var(--border-input);
       border-radius: var(--radius-pill);
       background: var(--surface-input);
       color: var(--text);
       min-height: var(--touch-target-min);
       cursor: pointer;
-      /* The native arrow is the one piece of chrome worth keeping: it is the only
-         thing that tells you this is a menu and not the text field beside it. */
+      /* appearance:none plus our own caret: the native control renders at a
+         different height and metal on each OS, which is what made this sit half a
+         pixel off the search field beside it. The caret still says "menu". */
     }
     .lib-pack-select:hover { border-color: var(--neutral-400); }
     .lib-pack-select:focus {
@@ -1167,22 +1234,53 @@
       color: var(--text);
       white-space: nowrap;
     }
-    .token-table .token-swatch {
+    /* The value cell is one button: chip, hex, copy. It used to be an empty
+       <span> painting the chip via ::before with the hex as a bare sibling text
+       node — so the 8px gap applied inside the span and never reached the hex,
+       and the two ran together. Making the whole cell the control also gives the
+       copy a target worth hitting instead of a 16px icon. */
+    .token-copy {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      padding: 5px 10px 5px 6px;
+      margin: -5px -10px -5px -6px;   /* sit flush; the padding is hit area only */
+      border: 1px solid transparent;
+      border-radius: var(--radius-pill);
+      background: none;
+      cursor: pointer;
+      font: inherit;
+      color: inherit;
+      transition: background-color 120ms ease, border-color 120ms ease;
+    }
+    .token-copy:hover { background: var(--surface); border-color: var(--border); }
+    .token-copy:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+    .token-copy:active { transform: translateY(1px); }
+    .token-swatch {
+      width: 18px;
+      height: 18px;
+      flex: none;
+      border-radius: 4px;
+      background: var(--c);
+      box-shadow: inset 0 0 0 1px rgba(20, 20, 15, 0.14);
+    }
+    .token-hex {
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       font-size: 13px;
       color: var(--text-soft);
+      letter-spacing: 0.01em;
     }
-    .token-table .token-swatch::before {
-      content: '';
-      width: 16px;
-      height: 16px;
-      border-radius: 3px;
-      background: var(--c);
-      box-shadow: inset 0 0 0 1px rgba(20, 20, 15, 0.1);
+    /* Revealed on hover/focus so nineteen rows aren't nineteen competing icons,
+       but pinned on touch where there is no hover to reveal it. */
+    .token-copy-icon {
+      font-size: 15px;
+      color: var(--text-muted);
+      opacity: 0;
+      transition: opacity 120ms ease;
     }
+    .token-copy:hover .token-copy-icon,
+    .token-copy:focus-visible .token-copy-icon { opacity: 1; }
+    @media (hover: none) { .token-copy-icon { opacity: 1; } }
 
     /* ---------- Asset download (JS-injected hover button on any asset tile) ---------- */
     /* .glyph-cell is here for its own corner Copy button, not for .asset-dl — the
@@ -1332,6 +1430,7 @@
 
     @media (max-width: 767.98px) {
       .type-row { grid-template-columns: 1fr; gap: var(--space-2); }
+      .type-row .type-meta { text-align: left; }
     }
 
     /* Tables */
@@ -1551,17 +1650,28 @@
     .search-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(2, 12, 6, 0.55);
+      /* Navy-black, not the green-black this inherited from the Cargill original.
+         Backdrop blur pushes the page back so the panel reads as the only live
+         surface. */
+      background: rgba(9, 16, 31, 0.58);
+      -webkit-backdrop-filter: blur(3px);
+              backdrop-filter: blur(3px);
       display: flex;
       align-items: flex-start;
       justify-content: center;
       padding: 12vh var(--space-5) var(--space-5);
       z-index: 100;
+      animation: rba-overlay-in 140ms ease-out;
     }
     .search-overlay[hidden] { display: none; }
+    @keyframes rba-overlay-in { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes rba-panel-in {
+      from { opacity: 0; transform: translateY(-8px) scale(0.985); }
+      to   { opacity: 1; transform: none; }
+    }
     .search-panel {
       width: 100%;
-      max-width: 560px;
+      max-width: 600px;
       max-height: 70vh;
       background: var(--surface);
       border-radius: var(--corner-radius-lg);
@@ -1570,7 +1680,31 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      animation: rba-panel-in 180ms cubic-bezier(0.16, 0.8, 0.3, 1);
     }
+    @media (prefers-reduced-motion: reduce) {
+      .search-overlay, .search-panel { animation: none; }
+    }
+
+    /* The input row had NO rule at all. Its children were laid out inline, so the
+       input fell back to its default ~20ch width and the Esc chip landed on top of
+       the placeholder — which is exactly what it looked like. It is a flex row with
+       real padding and a divider under it. */
+    .search-input-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: 0 var(--space-5);
+      min-height: 58px;
+      border-bottom: 1px solid var(--border);
+    }
+    .search-input-row > .material-symbols-rounded {
+      font-size: 20px;
+      color: var(--text-muted);
+      flex: none;
+    }
+    /* The magnifier tracks focus so the row reads as one control. */
+    .search-input-row:focus-within > .material-symbols-rounded { color: var(--brand); }
     /* The Cmd+K palette's bare text input. Named .search-field, NOT .search-input:
        .search-input is the Search Input *component* (a bordered, filled <label>
        wrapper) defined above. Both were once called .search-input at equal
@@ -1580,26 +1714,57 @@
     .search-field {
       flex: 1;
       min-width: 0;
+      align-self: stretch;
       border: none;
       outline: none;
       background: transparent;
       font-family: var(--font-sans);
-      font-size: 16px;
+      font-size: 17px;
       color: var(--text);
     }
     .search-field::placeholder { color: var(--text-muted); }
+    .search-field::-webkit-search-cancel-button { display: none; }
     .search-esc {
       font-family: var(--font-micro);
       font-size: 10px;
-      letter-spacing: normal;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.04em;
       text-transform: none;
-      padding: 2px 6px;
-      border-radius: 4px;
+      padding: 5px 8px;
+      border-radius: 5px;
       border: 1px solid var(--border);
-      color: var(--text-soft);
-      flex-shrink: 0;
+      background: var(--neutral-50);
+      color: var(--text-muted);
+      flex: none;
     }
     .search-results { overflow-y: auto; padding: var(--space-3); }
+    .search-results:empty { display: none; }
+    /* A quiet footer of keyboard hints. The palette is a keyboard surface first;
+       saying so costs one line and saves people reaching for the mouse. */
+    .search-foot {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: 10px var(--space-5);
+      border-top: 1px solid var(--border);
+      background: var(--neutral-50);
+      font-family: var(--font-micro);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .search-foot kbd {
+      font-family: var(--font-micro);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 6px;
+      margin-right: 5px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--surface);
+      color: var(--text-soft);
+    }
+    @media (max-width: 560px) { .search-foot { display: none; } }
     .search-result-item {
       width: 100%;
       display: flex;
@@ -1625,8 +1790,19 @@
       color: var(--text-muted);
       flex-shrink: 0;
     }
+    .search-result-item { position: relative; transition: background-color 90ms ease; }
     .search-result-item--active,
     .search-result-item:hover { background: var(--sky-50); }
+    /* Keyboard selection gets a marker, not just a wash — the wash alone is easy to
+       lose track of while arrowing, and it is the only state that moves. */
+    .search-result-item--active::before {
+      content: '';
+      position: absolute;
+      left: 4px; top: 8px; bottom: 8px;
+      width: 3px;
+      border-radius: 2px;
+      background: var(--brand);
+    }
     .search-result-item:active { background: var(--sky-100); }
     .search-empty {
       padding: var(--space-6);
@@ -1714,14 +1890,21 @@
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-bottom: var(--space-4);
+      margin-top: var(--space-4);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--border);
     }
+    /* Squared-off and tinted — a toggle, not an input. The pill radius they used
+       to share with the search field made the two read as the same control. */
     .lib-filter-btn {
       font-family: var(--font-sans);
       font-size: 13px;
       line-height: 18px;
       padding: 6px 12px;
-      border-radius: var(--radius-pill);
+      /* Squared, not the pill the inputs use — see the note above. Declared once,
+         here. It was briefly set twice with !important, which beat the pressed
+         state below and rendered the active chip white text on white. */
+      border-radius: 7px;
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text-soft);
@@ -1969,6 +2152,106 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
       gap: var(--space-3);
+    }
+
+    /* ---------- Data-visualization examples ----------
+       Worked charts rather than a swatch row, because the palette's real
+       constraint only shows up in use: eight values from one narrow blue-slate
+       range do not separate on colour, so every series here carries a pattern
+       and a direct label and the colour is brand, not information.
+
+       Plain inline SVG. A chart library for three static figures would be the
+       first dependency on a site that has none. */
+    .viz-subhead {
+      font-family: var(--font-sans);
+      font-weight: 800;
+      font-size: 17px;
+      color: var(--brand);
+      margin: var(--space-7) 0 var(--space-2);
+    }
+    .viz-examples {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: var(--space-5);
+      margin-top: var(--space-4);
+    }
+    /* The chart surface stays light in BOTH themes, like the logo cards. These
+       eight values are specified against a light page and do not re-point for
+       dark — --viz-1 is #1D366D, which on the dark background is near-invisible.
+       A figure demonstrating the chart palette has to show the palette as
+       specified, or it documents the theme instead of the brand. Flip these to a
+       dark set only when the canonical source defines one. */
+    .viz-figure {
+      margin: 0;
+      padding: var(--space-5);
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--corner-radius-base);
+      min-width: 0;              /* let the SVG shrink inside the grid track */
+      color-scheme: light;
+    }
+    .viz-figure .viz-figure-title { color: #1A1A1A; }
+    .viz-figure .viz-figure-note  { color: #666666; }
+    .viz-figure .viz-figure-note code { background: #F0F2F5; color: #333333; }
+    .viz-figure .viz-value text { fill: #1A1A1A; }
+    .viz-figure .viz-label text { fill: #666666; }
+    .viz-figure .viz-grid line  { stroke: #E4E7EC; }
+    .viz-figure .viz-axis       { stroke: #C2C7D0; }
+    .viz-figure--wide { grid-column: 1 / -1; }
+    .viz-figure-head { display: block; margin-bottom: var(--space-4); }
+    .viz-figure-title {
+      display: block;
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+    }
+    .viz-figure-note {
+      display: block;
+      margin-top: 2px;
+      font-family: var(--font-micro);
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+    .viz-chart { display: block; width: 100%; height: auto; overflow: visible; }
+
+    /* Recessive by design: the grid is a reference, not a subject. */
+    .viz-grid line { stroke: var(--border); stroke-width: 1; }
+    .viz-axis { stroke: var(--neutral-400); stroke-width: 1; }
+    .viz-line {
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .viz-line--dash { stroke-dasharray: 9 5; }
+    .viz-line--dot  { stroke-dasharray: 2 5; }
+
+    /* Text wears text tokens. A value tinted to match its own bar is harder to
+       read and tells you nothing the bar hasn't already said. */
+    .viz-value text {
+      font-family: var(--font-micro);
+      font-size: 12px;
+      font-weight: 700;
+      fill: var(--text);
+      text-anchor: middle;
+    }
+    .viz-label text {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      fill: var(--text-muted);
+      text-anchor: middle;
+    }
+    /* The one place a series colour carries text: the label sits AT the line it
+       names, so the colour is a tie-break on an already-unambiguous label. */
+    .viz-series-label text {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    @media (max-width: 640px) {
+      .viz-examples { grid-template-columns: 1fr; }
     }
     .viz-chip {
       display: flex;
