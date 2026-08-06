@@ -3,16 +3,16 @@
 RBA Consulting's design system — brand foundations and a downloadable asset library. Static HTML,
 CSS and JavaScript — no build step, no dependencies, no package manager.
 
-> **Logos, the palette and the icons are real. Images are not yet.** The logo files,
-> favicons, and every colour and type value are imported from the brand's own source, and
-> the icon library holds 1,490 real icons. The image tiles are still placeholder stubs,
-> marked as such wherever they appear. The templates link to SharePoint rather than being
-> copied here.
+> **Logos, the palette and the icons are real. Photography is not — it hasn't been bought
+> yet.** The logo files, favicons and every colour and type value are imported from the
+> brand's own source, and the icon library holds 1,490 real icons, all named. The templates
+> link to SharePoint rather than being copied here.
 >
-> The image gallery stays on placeholders deliberately: no photography exists in the
-> canonical source, and the only real photos available are Getty stock, which cannot be
-> redistributed from a public repo. See
-> [`assets/images/README.md`](assets/images/README.md).
+> `images.html` is a **shortlist of fifty Adobe Stock candidates to license**, not a
+> gallery. It carries the reasoning and links out to each asset; it shows no thumbnails,
+> because nothing is licensed and Adobe blocks fetching the watermarked previews anyway.
+> Licence an image, drop it in as `assets/images/shortlist/<adobe-id>.jpg`, and its card
+> fills itself. See [`assets/images/README.md`](assets/images/README.md).
 >
 > The icons are **purchased stock packs** and carry no licence file. Most stock licences
 > allow use but not redistribution as standalone downloads, which is what the icon page
@@ -26,7 +26,7 @@ CSS and JavaScript — no build step, no dependencies, no package manager.
 |---|---|
 | `index.html` | Home, plus Colors, Typography, Logos |
 | `icons.html` | Icon library — 1,490 icons in 80 packs; search, filter, SVG/PNG download, copy SVG |
-| `images.html` | Brand image gallery — filter, download |
+| `images.html` | Brand image shortlist — 50 Adobe Stock candidates to license; filter, search, link out |
 | `templates.html` | Templates & decks — a plain table of files |
 
 The logo, favicons and all token values were imported from the RBA Design System project on

@@ -1,77 +1,90 @@
 # Brand images
 
-The six files here are **placeholders** — gradient tiles, not photographs.
+**A shortlist, not an asset library.** Fifty Adobe Stock candidates, ranked within
+five categories. **Nothing here is licensed.** The page exists so the shortlist can
+be reviewed and decided on, not so images can be downloaded from it.
 
-## Adding an image
-
-1. Drop the file in this folder. JPG or PNG for photography; WebP is fine too.
-2. Add a row to the manifest at the bottom of `images.html` (`#image-manifest`).
-
-```json
-{
-  "name": "Team collaboration",
-  "file": "assets/images/team-collaboration.jpg",
-  "category": "People",
-  "alt": "Four colleagues around a whiteboard mid-discussion",
-  "format": "JPG",
-  "dimensions": "2400×1600",
-  "size": "480 KB",
-  "tags": ["team", "meeting", "whiteboard"]
-}
+```
+assets/images/
+├── RBA_Adobe_Stock_Shortlist.xlsx   ← source of truth
+└── shortlist/                        ← licensed files go here, named by Adobe ID
 ```
 
-`dimensions` and `size` are recorded by hand. A static page can't measure a file it
-hasn't downloaded, and the whole point of showing them is to let someone decide
-*before* downloading whether an image is big enough for the slide they're building.
-Get them from Finder, or:
+## Why there are no thumbnails
+
+The workbook carries titles, contributors, dimensions, reasoning and Adobe Stock
+URLs. It carries no images, and there is no honest way to add them yet:
+
+- **Nothing is licensed.** The only previews that exist are watermarked comps for
+  work RBA has not bought.
+- **Adobe Stock blocks fetching them.** Automated requests to the asset pages
+  return `403`, so the previews cannot be pulled programmatically even setting the
+  licensing question aside.
+
+So each card renders a labelled slot at the right size and links out to Adobe
+Stock, which is the one place the actual image can be seen today.
+
+## Filling a card in
+
+Licence the image, then drop the file here named after its Adobe Stock ID:
+
+```
+assets/images/shortlist/1904000970.jpg
+```
+
+`.jpg`, `.jpeg`, `.png` and `.webp` all work — the page tries each in turn. The
+card picks it up on the next load. **No manifest edit, no rebuild, no code
+change**, which is the whole reason cards key on the Adobe ID rather than on a
+filename someone has to keep in step.
+
+Frames are 3:2, which is what most of the shortlist is shot at, so a real file
+drops in without the layout shifting under it.
+
+## Changing the shortlist
+
+Edit the workbook — the **All 50 Images** sheet — then regenerate:
 
 ```bash
-identify -format '%wx%h %b\n' team-collaboration.jpg   # ImageMagick
+./tools/images-sync.py
 ```
 
-`alt` is not optional. Write what is actually in the frame, for someone who can't
-see it — not the filename again.
-
-## Sizing
-
-Export at roughly 2× the largest place it will be used, then compress. A 6 MB hero
-photo is a 6 MB download for every person who opens this page.
-
-## Rights
-
-Only put an image here if RBA has cleared it for use. If the licence is
-project-limited or time-limited, note that in the `name` — this folder is treated
-as "safe to use anywhere," so anything with strings attached needs to say so
-loudly or stay out.
-
-## After adding images
+It rewrites the manifest at the bottom of `images.html`; don't hand-edit that
+block. A new category needs a line in the `SHORT` table in the script, which fails
+on an unknown one rather than filing it under nothing.
 
 ```bash
-./tools/build-bundles.sh
+./tools/images-sync.py --check    # report drift, write nothing
 ```
 
-## Why this folder is still placeholders
+## Before anything is bought
 
-Searched, August 2026. Recording it so nobody repeats the hunt:
+Every row needs its **AI disclosure confirmed**. The review found no explicit
+disclosure on any asset page, which is not the same as confirming there is none —
+and the brief excludes AI-generated imagery, so this is the check that decides
+whether a pick is valid at all.
 
-**The canonical design-system project has no photo library.** Its `uploads/` folder holds
-screenshots, pasted conversation images, PDFs and spreadsheets — no photography. Its own
-slide templates prove the point: `slides/14-photo-background.html` and
-`slides/11-image-grid.html` both render gradient placeholders labelled "Photo background
-placeholder" and "Photo 01/02/03". The published RBA system is in the same position this
-folder is.
+Also per asset: the licence tier (several picks are Stocksy or other
+premium-collection assets a standard subscription does not cover), the model
+release against the intended use, and — for anything carrying the brand — whether
+a standard-collection image is too widely licensed to be sensible.
 
-**There are 32 real photographs in OneDrive** — `office/` (9), `factory/` (14),
-`bio industrial/` (9) — and every one is Getty stock. The embedded XMP is unambiguous:
-`photoshop:Credit="Getty Images"`, a named contributor under `dc:Rights`, an
-`xmpRights:WebStatement` pointing at Getty's EULA, and `plus:DataMining` set to prohibited.
+## There is no bundle
 
-They are not in this repo on purpose. This repo is **public**, and the gallery ships a
-"Download all" zip — that combination is redistribution of licensed third-party stock, and
-it would also make this page's own "cleared for RBA use" line false. If that changes, the
-order of operations is: make the repo private (or move to the internal hub) first, confirm
-the licence covers internal redistribution, then import with per-image credit.
+`tools/build-bundles.sh` has no images entry. A zip of unlicensed comps would be
+worse than no zip. Add one back when there is a licensed set worth shipping
+together.
 
-**What would unblock this properly:** photography RBA owns outright, or stock licensed for
-public redistribution. Either can be dropped straight in — the gallery, filtering,
-downloads and bundle are all built and working against the stubs.
+## What was here before
+
+Six gradient SVG stand-ins wired into a generic photo gallery, both now removed —
+the shortlist board replaced the gallery, and a placeholder that looks like a
+finished asset is worse than an empty section.
+
+The earlier hunt for real photography is worth not repeating. The canonical
+design-system project has no photo library: its `uploads/` folder is screenshots
+and documents, and its own slide templates render gradient placeholders labelled
+"Photo background placeholder". The 32 photographs in OneDrive — `office/`,
+`factory/`, `bio industrial/` — are all Getty stock, with `photoshop:Credit="Getty
+Images"`, an `xmpRights:WebStatement` pointing at Getty's EULA and
+`plus:DataMining` prohibited. This Adobe Stock shortlist is the answer to that
+gap, which is why it needs licensing rather than importing.

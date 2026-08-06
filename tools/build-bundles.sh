@@ -36,7 +36,10 @@ COLLECTIONS=(
   "logos:rba-logos:*"
   "icons:rba-icons-svg:*.svg"
   "icons:rba-icons-png:*.png"
-  "images:rba-images:*"
+  # No images entry: assets/images/ holds the shortlist workbook and, once
+  # anything is licensed, files under shortlist/. Neither is a "download the
+  # whole set" collection, and a zip of unlicensed comps would be worse than
+  # none. Add one back when there is a licensed set worth shipping together.
   "templates:rba-templates:*"
 )
 

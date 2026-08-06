@@ -505,7 +505,7 @@
     // failure mode, so the date the bundles were last built is shown next to every
     // "download all" button rather than left implicit. tools/build-bundles.sh rewrites
     // the line below when it runs — keep it on one line, in this exact shape.
-    const RBA_BUNDLE_BUILT = '2026-08-05';
+    const RBA_BUNDLE_BUILT = '2026-08-06';
     (function () {
       document.querySelectorAll('.js-bundle-date').forEach(el => {
         el.textContent = RBA_BUNDLE_BUILT;
@@ -788,131 +788,168 @@
       apply();
     })();
 
-    // Asset library · renders the image grid from an inlined JSON manifest, then
-    // filters it by free text and category. Icons have their own renderer above; this
-    // one stayed generic because a second file-backed gallery is likely and the shape
-    // it needs — name, category, tags, a thumbnail — is the ordinary case.
+    // Brand-image shortlist · fifty Adobe Stock candidates rendered from the
+    // manifest tools/images-sync.py writes into the bottom of images.html.
     //
-    // The manifest is inlined in a <script type="application/json"> rather than fetched
-    // so the page works when opened straight off disk — a fetch() of a local file is
-    // blocked by the file:// origin rules, which would leave the grid permanently empty
-    // for anyone who downloaded the repo instead of visiting the hosted site.
-    //
-    // Adding an asset is therefore two steps and no more: drop the file in assets/, add
-    // its row to the manifest. Nothing here is generated at build time.
+    // There are no image files. The workbook is a buying shortlist, nothing on it
+    // is licensed, and the previews are watermarked comps that Adobe blocks
+    // fetching anyway. So each card paints a slot and then ASKS whether a real
+    // file exists at assets/images/shortlist/<adobe-id>.<ext>, trying the
+    // plausible extensions in turn. Keying on the Adobe ID rather than a
+    // hand-written filename is what lets someone drop a licensed image in and
+    // have the card fill itself with no manifest edit and no rebuild.
     (function () {
-      const GRIDS = [
-        { grid: 'image-grid', manifest: 'image-manifest', noun: 'image', render: imageTile },
-      ];
+      const grid = document.getElementById('image-grid');
+      const dataEl = document.getElementById('image-manifest');
+      if (!grid || !dataEl) return;                 // no-ops on every other page
 
-      function imageTile(item) {
-        const card = document.createElement('div');
-        card.className = 'photo-card';
-        const frame = document.createElement('div');
-        frame.className = 'photo-card-img';
-        const img = document.createElement('img');
-        img.src = item.file;
-        img.alt = item.alt || item.name;
-        img.loading = 'lazy';
-        frame.appendChild(img);
-        const label = document.createElement('div');
-        label.className = 'photo-card-label';
-        label.textContent = item.name;
-        const meta = document.createElement('div');
-        meta.className = 'photo-card-meta';
-        meta.textContent = [item.format, item.dimensions, item.size].filter(Boolean).join(' · ');
-        card.append(frame, label, meta);
-        if (item.placeholder) card.setAttribute('data-placeholder', 'true');
-        return card;
+      let data = {};
+      try {
+        data = JSON.parse(dataEl.textContent) || {};
+      } catch (e) {
+        grid.innerHTML = '<p class="lib-empty">The shortlist manifest could not be read. ' +
+                         'View source and check the <code>#image-manifest</code> block.</p>';
+        return;
+      }
+      const items = data.items || [];
+      const cats = data.categories || [];
+      const EXTS = ['jpg', 'jpeg', 'png', 'webp'];
+
+      const flatten = s => s.toLowerCase().replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
+      items.forEach(it => {
+        it.hay = flatten([it.title, it.cat, it.by, it.why, it.use, it.crop, it.priority, it.id].join(' '));
+      });
+
+      // Try each extension in turn; the first that loads wins. A miss on all of
+      // them just leaves the slot, which is the honest state until someone buys
+      // the image.
+      function findImage(cell, item) {
+        let i = 0;
+        const probe = new Image();
+        probe.onload = () => {
+          const frame = cell.querySelector('.shot-frame');
+          frame.classList.add('shot-frame--filled');
+          frame.style.backgroundImage = 'url("' + probe.src + '")';
+          const slot = frame.querySelector('.shot-slot');
+          if (slot) slot.remove();
+        };
+        probe.onerror = () => { if (++i < EXTS.length) probe.src = base + EXTS[i]; };
+        const base = 'assets/images/shortlist/' + item.id + '.';
+        probe.src = base + EXTS[0];
       }
 
-      GRIDS.forEach(cfg => {
-        const grid = document.getElementById(cfg.grid);
-        const dataEl = document.getElementById(cfg.manifest);
-        if (!grid || !dataEl) return;               // no-ops on every other page
+      function card(item) {
+        const a = document.createElement('a');
+        a.className = 'shot-card';
+        a.href = item.url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.setAttribute('aria-label', item.title + ' — open on Adobe Stock');
 
-        let items = [];
-        try {
-          items = (JSON.parse(dataEl.textContent) || {}).items || [];
-        } catch (e) {
-          grid.innerHTML = '<p class="lib-empty">The manifest for this page could not be read. ' +
-                           'View source and check the <code>#' + cfg.manifest + '</code> block.</p>';
-          return;
-        }
+        const frame = document.createElement('div');
+        frame.className = 'shot-frame';
+        const slot = document.createElement('span');
+        slot.className = 'shot-slot';
+        slot.innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">imagesmode</span>' +
+                         '<span class="shot-slot-id">' + item.id + '</span>' +
+                         '<span class="shot-slot-note">not licensed</span>';
+        frame.appendChild(slot);
 
-        const scope = grid.closest('.lib-scope') || document;
-        const search = scope.querySelector('.lib-search-input');
-        const chips = scope.querySelector('.lib-filter');
-        const count = scope.querySelector('.lib-count');
+        const rank = document.createElement('span');
+        rank.className = 'shot-rank';
+        rank.textContent = item.cat + ' · ' + item.rank;
+        frame.appendChild(rank);
 
-        // One chip per category actually present, so the filter can never offer an
-        // option that matches nothing.
-        const categories = [];
-        items.forEach(i => { if (i.category && categories.indexOf(i.category) < 0) categories.push(i.category); });
-        let activeCat = 'all';
+        const pri = document.createElement('span');
+        pri.className = 'shot-priority shot-priority--' +
+          (item.priority === 'Primary pick' ? 'primary'
+            : item.priority === 'Strong alternative' ? 'alt' : 'support');
+        pri.textContent = item.priority;
+        frame.appendChild(pri);
 
-        if (chips) {
-          const mk = (value, label, pressed) => {
-            const b = document.createElement('button');
-            b.type = 'button';
-            b.className = 'lib-filter-btn';
-            b.setAttribute('data-filter', value);
-            b.setAttribute('aria-pressed', pressed ? 'true' : 'false');
-            b.textContent = label;
-            return b;
-          };
-          chips.appendChild(mk('all', 'All', true));
-          categories.forEach(c => chips.appendChild(mk(c, c, false)));
-          chips.addEventListener('click', ev => {
-            const btn = ev.target.closest('.lib-filter-btn');
-            if (!btn) return;
-            activeCat = btn.getAttribute('data-filter');
-            chips.querySelectorAll('.lib-filter-btn').forEach(b => {
-              b.setAttribute('aria-pressed', String(b === btn));
-            });
-            apply();
+        const body = document.createElement('div');
+        body.className = 'shot-body';
+        body.innerHTML =
+          '<span class="shot-title"></span>' +
+          '<span class="shot-meta"></span>' +
+          '<span class="shot-why"></span>' +
+          '<span class="shot-use"><strong>Use</strong> <span class="shot-use-text"></span></span>' +
+          '<span class="shot-crop"></span>';
+        body.querySelector('.shot-title').textContent = item.title;
+        body.querySelector('.shot-meta').textContent = item.by + ' · ' + item.dim;
+        body.querySelector('.shot-why').textContent = item.why;
+        body.querySelector('.shot-use-text').textContent = item.use;
+        body.querySelector('.shot-crop').textContent = item.crop;
+
+        const foot = document.createElement('span');
+        foot.className = 'shot-foot';
+        foot.innerHTML = '<span>View on Adobe Stock</span>' +
+                         '<span class="material-symbols-rounded" aria-hidden="true">open_in_new</span>';
+
+        a.append(frame, body, foot);
+        findImage(a, item);
+        return a;
+      }
+
+      const scope = grid.closest('.lib-scope') || document;
+      const search = scope.querySelector('.lib-search-input');
+      const chips = scope.querySelector('.lib-filter');
+      const count = scope.querySelector('.lib-count');
+      let activeCat = 'all';
+
+      if (chips) {
+        const mk = (value, label, pressed) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'lib-filter-btn';
+          b.setAttribute('data-filter', value);
+          b.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+          b.textContent = label;
+          return b;
+        };
+        chips.appendChild(mk('all', 'All 50', true));
+        cats.forEach(c => chips.appendChild(mk(c, c, false)));
+        chips.addEventListener('click', ev => {
+          const btn = ev.target.closest('.lib-filter-btn');
+          if (!btn) return;
+          activeCat = btn.getAttribute('data-filter');
+          chips.querySelectorAll('.lib-filter-btn').forEach(b => {
+            b.setAttribute('aria-pressed', String(b === btn));
           });
-        }
+          apply();
+        });
+      }
 
-        function matches(item, q) {
-          if (activeCat !== 'all' && item.category !== activeCat) return false;
-          if (!q) return true;
-          const hay = [item.name, item.category, (item.tags || []).join(' ')].join(' ').toLowerCase();
-          return hay.indexOf(q) > -1;
+      function apply() {
+        const terms = search ? flatten(search.value).split(' ').filter(Boolean) : [];
+        let shown = 0;
+        Array.from(grid.children).forEach((el, i) => {
+          const it = items[i];
+          const hit = (activeCat === 'all' || it.cat === activeCat) &&
+                      terms.every(term => it.hay.indexOf(term) > -1);
+          el.hidden = !hit;
+          if (hit) shown++;
+        });
+        if (count) {
+          count.textContent = shown === items.length
+            ? shown + ' candidates'
+            : shown + ' of ' + items.length + ' candidates';
         }
+        const empty = grid.nextElementSibling;
+        if (empty && empty.classList.contains('lib-empty')) empty.hidden = shown > 0;
+      }
 
-        function apply() {
-          const q = search ? search.value.trim().toLowerCase() : '';
-          let shown = 0;
-          Array.from(grid.children).forEach((el, i) => {
-            const hit = matches(items[i], q);
-            el.hidden = !hit;
-            if (hit) shown++;
-          });
-          if (count) {
-            count.textContent = shown === items.length
-              ? shown + ' ' + cfg.noun + (shown === 1 ? '' : 's')
-              : shown + ' of ' + items.length + ' ' + cfg.noun + (items.length === 1 ? '' : 's');
-          }
-          let empty = grid.nextElementSibling;
-          if (empty && empty.classList.contains('lib-empty')) empty.hidden = shown > 0;
-        }
+      const frag = document.createDocumentFragment();
+      items.forEach(it => frag.appendChild(card(it)));
+      grid.appendChild(frag);
 
-        const frag = document.createDocumentFragment();
-        items.forEach(item => frag.appendChild(cfg.render(item)));
-        grid.appendChild(frag);
-
-        if (search) {
-          search.addEventListener('input', apply);
-          // Escape clears rather than blurring — the filter is the page's primary
-          // control here, so getting back to "everything" should not cost a reach
-          // for the mouse.
-          search.addEventListener('keydown', ev => {
-            if (ev.key === 'Escape' && search.value) { search.value = ''; apply(); }
-          });
-        }
-        apply();
-      });
+      if (search) {
+        search.addEventListener('input', apply);
+        search.addEventListener('keydown', ev => {
+          if (ev.key === 'Escape' && search.value) { search.value = ''; apply(); }
+        });
+      }
+      apply();
     })();
 
     // Copy SVG · reads an icon's source file and puts its markup on the clipboard, for
@@ -1021,11 +1058,6 @@
       // anchors, which the hover button would only duplicate — and attaching one to
       // each of 1,490 tiles would add 1,490 buttons and listeners to buy nothing.
       //
-      // Photography → the source image file
-      document.querySelectorAll('.photo-card').forEach(card => {
-        const img = card.querySelector('img');
-        if (!img) return;
-        const file = img.getAttribute('src');
-        attach(card.querySelector('.photo-card-img') || card, file.split('/').pop(), () => ({ file }));
-      });
+      // Nothing for brand images: the shortlist cards are links out to Adobe
+      // Stock, and there is no local file to download until one is licensed.
     })();

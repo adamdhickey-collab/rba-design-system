@@ -987,6 +987,143 @@
     }
     .lib-pack:focus-within .material-symbols-rounded { color: var(--brand); }
 
+    /* ---------- Brand-image shortlist ----------
+       Three across at desktop, because these are photographs being JUDGED, not
+       icons being picked off a shelf: the whole point of the request was that
+       they be big enough to read at a glance. The card is a link to Adobe Stock,
+       since that is the only place the actual image can be seen until one is
+       licensed. */
+    .shot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+    @media (max-width: 1180px) { .shot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 720px)  { .shot-grid { grid-template-columns: 1fr; } }
+
+    .shot-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--corner-radius-base);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 130ms ease, box-shadow 130ms ease, transform 130ms ease;
+    }
+    .shot-card[hidden] { display: none; }
+    .shot-card:hover, .shot-card:focus-visible {
+      border-color: var(--brand);
+      box-shadow: var(--shadow-md, var(--shadow-sm));
+      transform: translateY(-2px);
+    }
+    .shot-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+    /* 3:2, matching the ratio most of the shortlist is shot at, so a real file
+       drops in without the slot changing size under it. */
+    .shot-frame {
+      position: relative;
+      aspect-ratio: 3 / 2;
+      background: var(--grad-sky);
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .shot-frame--filled { background-color: var(--neutral-100); }
+    .shot-slot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      color: var(--brand-deep);
+      opacity: 0.55;
+    }
+    .shot-slot .material-symbols-rounded { font-size: 30px; }
+    .shot-slot-id {
+      font-family: var(--font-micro);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .shot-slot-note {
+      font-family: var(--font-micro);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .shot-rank, .shot-priority {
+      position: absolute;
+      top: 8px;
+      font-family: var(--font-micro);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      backdrop-filter: blur(2px);
+    }
+    .shot-rank {
+      left: 8px;
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--brand-deep);
+    }
+    /* Priority is the reviewer's recommendation, so it is the one thing on the
+       card allowed to carry colour. */
+    .shot-priority { right: 8px; color: #FFFFFF; }
+    .shot-priority--primary { background: var(--midnight); }
+    .shot-priority--alt     { background: var(--accent); }
+    .shot-priority--support { background: var(--neutral-500, #6B7280); }
+
+    .shot-body {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: var(--space-4);
+      flex: 1;
+    }
+    .shot-title {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1.35;
+      color: var(--text);
+    }
+    .shot-meta {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .shot-why {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-soft);
+    }
+    .shot-use, .shot-crop {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+    .shot-use strong { color: var(--text-soft); }
+    .shot-crop { font-style: italic; }
+    .shot-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-2);
+      padding: 10px var(--space-4);
+      border-top: 1px solid var(--border);
+      background: var(--neutral-50);
+      font-family: var(--font-micro);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--brand);
+    }
+    .shot-foot .material-symbols-rounded { font-size: 14px; }
+
     /* ---------- Icon library ---------- */
     .glyph-grid {
       display: grid;
