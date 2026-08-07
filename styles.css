@@ -30,11 +30,16 @@
       --midnight:      #1D366D;  /* Primary: headings, nav, primary buttons.          */
       --primary-hover: #2A4A8A;  /* Primary button hover — lifted, clears AAA.        */
       --primary-dark:  #162A57;  /* Deeper navy accents. Not a button hover.          */
-      --action:        #3178BF;  /* Links, highlights. Absorbed the retired --secondary */
-                                 /* (#185FA5). 4.60:1 on white — AA, but only just, so  */
-                                 /* it is a white-surface colour. See --action-hover.   */
-      --action-hover:  #1D366D;  /* Link hover. Deepens to midnight rather than to a    */
-                                 /* fourth blue, and takes contrast 4.60:1 -> 11.7:1.   */
+      --action:        #185FA5;  /* Links, highlights. Was #3178BF, which cleared AA on */
+                                 /* white by 0.1 and failed on every tint in this        */
+                                 /* palette — 4.37:1 on White Blue, 4.22:1 on Surface    */
+                                 /* Alt, 3.40:1 on Sky Blue. Same hue (210), four steps  */
+                                 /* darker: 6.5:1 on white, 4.8:1 worst case on a tint.  */
+                                 /* Not a new colour — this is the hex the retired       */
+                                 /* --secondary carried. The two were always one hue at  */
+                                 /* two lightnesses, and the merge keeps the usable one. */
+      --action-hover:  #1D366D;  /* Link hover. Deepens to midnight rather than to a     */
+                                 /* third blue: 6.5:1 -> 11.7:1 on white.                */
       --accent:        #0D8FA9;  /* CTA buttons, active states. Passes AA large.      */
       --aqua:          #14BADB;  /* Decorative only — fails AA for text.              */
       --soft-blue:     #8EC3DB;  /* Decorative.                                       */
@@ -69,7 +74,9 @@
       --viz-4: #4A7A99;  /* Slate blue — vert lines */
       --viz-5: #3B586F;  /* Dark teal — cross-hatch */
       --viz-6: #5B8FA8;  /* Mid blue — small dots   */
-      --viz-7: #3178BF;  /* Royal blue — 135° lines */
+      --viz-7: #3178BF;  /* Royal blue — 135° lines. Was --action's hex until
+                            --action darkened for tint safety; the viz set is
+                            judged against white alone, so it keeps the value. */
       --viz-8: #4A5568;  /* Slate grey — large dots */
 
       /* ---- Midnight scaffolding · derived from --midnight for interface depth ---- */
@@ -660,7 +667,7 @@
 
        This is the whole reason for the two-part structure. Setting the label on top of
        the swatch is the more obvious design, but it only works if every color in the
-       palette can carry a label at 4.5:1 — and RBA's Action blue (#3178BF) cannot. Its
+       palette can carry a label at 4.5:1 — and the viz set's royal blue (#3178BF) cannot. Its
        best case is 3.91:1 against near-black and 3.85:1 against white, so neither label
        passes AA. Judging it per color would mean shipping one swatch that fails, or
        quietly making the label bigger to reach the 3:1 large-text threshold and calling
@@ -1895,14 +1902,12 @@
     }
     .demo-link:hover,
     .demo-link.is-hover { color: var(--action-hover); }
-    .demo-link--on-tint,
-    .demo-link--on-tint:hover { color: var(--midnight); }
     /* --sky-blue, not --sky-200. The semantic token re-points to a mid dark blue in dark
        mode, which took the caption beside it to 1.45:1 — the specimen was demonstrating a
        contrast rule while failing it. This panel documents a brand surface, so it holds
        the published value in both themes, the same way the logo cards and swatches do,
-       and its two text colours are fixed to match: 8.6:1 for the link, 5.6:1 for the
-       caption, whatever the page around it is doing. */
+       and its caption is fixed to match at 5.6:1 whatever the page around it is doing.
+       The link on it is plain --action now: that is the point of the row. */
     .spec-row--tinted {
       background: var(--sky-blue);
       border-radius: var(--corner-radius-base);
@@ -1911,8 +1916,11 @@
     .spec-row--tinted .spec-note { color: #4C5462; }
     /* Action Blue is unreadable on the dark page; dark mode's link role is already
        --sky-300, so the specimen follows the page rather than the light-mode value.
-       The on-tint link is exempt — its surface did not change. */
+       The tinted row keeps its light surface, so the link on it must keep the light
+       value too — otherwise the sky-300 override would put a pale blue on a pale tint. */
     [data-theme="dark"] .demo-link { color: var(--sky-300); }
+    [data-theme="dark"] .spec-row--tinted .demo-link { color: var(--action); }
+    [data-theme="dark"] .spec-row--tinted .demo-link.is-hover { color: var(--action-hover); }
     [data-theme="dark"] .demo-link:hover,
     [data-theme="dark"] .demo-link.is-hover { color: var(--aqua); }
 
@@ -2286,7 +2294,12 @@
        matches nothing. So both rules were dead. The secondary button kept its
        light-theme hover (sky-50 on navy-700) in dark mode, and the sidebar
        wordmark fell through to var(--brand), which re-points to aqua. */
-    [data-theme="dark"] .btn-secondary:hover {
+    /* .is-hover has to be listed here too. The dark override only matched :hover, so the
+       Components page's frozen hover specimen kept the LIGHT rule — navy-700 text on
+       sky-50, both of which re-point to near-black in dark mode. The swatch showing what
+       hover looks like was the one thing on the page you could not read. */
+    [data-theme="dark"] .btn-secondary:hover,
+    [data-theme="dark"] .btn-secondary.is-hover {
       background: transparent;
       color: var(--aqua);
       border-color: var(--aqua);

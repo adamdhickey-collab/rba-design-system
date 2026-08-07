@@ -286,12 +286,12 @@
                   </span>
                 </span>
               </button>
-              <button type="button" class="palette-swatch" style="--c: #3178BF" aria-label="Copy Action Blue hex">
+              <button type="button" class="palette-swatch" style="--c: #185FA5" aria-label="Copy Action Blue hex">
                 <span class="palette-swatch-chip" aria-hidden="true"></span>
                 <span class="palette-swatch-text">
                   <span class="palette-swatch-name">Action Blue</span>
                   <span class="palette-swatch-meta">
-                    <span class="palette-swatch-hex">#3178BF</span>
+                    <span class="palette-swatch-hex">#185FA5</span>
                     <span class="palette-swatch-tag">links, highlights</span>
                   </span>
                 </span>
@@ -340,15 +340,16 @@
             </div>
           </div>
 
-          <!-- Retiring --secondary (#185FA5) moved the link role onto Action Blue, and the
-               two are not interchangeable on contrast: 6.6:1 on white against 4.6:1. Action
-               Blue still clears AA for normal text, but with almost no margin, so it fails
-               the moment the surface is tinted — 3.4:1 on Sky Blue. That constraint has to
-               travel with the colour or the swap quietly breaks tinted panels. -->
-          <div class="callout callout--warn">
+          <!-- Action Blue was #3178BF until it had to work on tinted cards. It cleared AA
+               on white by a tenth of a point and failed everywhere else in this palette,
+               so the colour could not do the job its own tag claimed. Darkened four steps
+               at the same hue, which lands exactly on #185FA5 — the hex the retired
+               --secondary carried. The two were always one hue at two lightnesses; the
+               merge simply kept the usable one, and no new value enters the brand. -->
+          <div class="callout">
             <span class="material-symbols-rounded" aria-hidden="true">contrast</span>
             <div class="callout-body">
-              <p><strong>Action Blue is a white-surface colour.</strong> As text it measures 4.60:1 on white &mdash; AA, but only just. On Sky&nbsp;Blue it drops to 3.40:1 and fails. Put a link on a tinted panel and set it in Primary <code>#1D366D</code> instead, which holds at 8.6:1. Hover is <code>#1D366D</code> either way.</p>
+              <p><strong>Action Blue is safe on tinted cards.</strong> As text it clears AA on white (6.5:1) and on every tint here &mdash; White&nbsp;Blue 6.2:1, Surface&nbsp;Alt 6.0:1, Sky&nbsp;Blue 4.8:1. The one surface it cannot sit on is Soft&nbsp;Blue (3.4:1) or anything darker; use Primary <code>#1D366D</code> there. Hover is <code>#1D366D</code> everywhere.</p>
             </div>
           </div>
 
@@ -533,7 +534,7 @@
                 <tr><td class="token-name">--midnight</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#1D366D" aria-label="Copy #1D366D"><span class="token-swatch" style="--c: #1D366D" aria-hidden="true"></span><code class="token-hex">#1D366D</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Headings, nav, primary buttons.</td></tr>
                 <tr><td class="token-name">--primary-hover</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#2A4A8A" aria-label="Copy #2A4A8A"><span class="token-swatch" style="--c: #2A4A8A" aria-hidden="true"></span><code class="token-hex">#2A4A8A</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Primary button hover.</td></tr>
                 <tr><td class="token-name">--primary-dark</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#162A57" aria-label="Copy #162A57"><span class="token-swatch" style="--c: #162A57" aria-hidden="true"></span><code class="token-hex">#162A57</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Deep navy accents.</td></tr>
-                                <tr><td class="token-name">--action</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#3178BF" aria-label="Copy #3178BF"><span class="token-swatch" style="--c: #3178BF" aria-hidden="true"></span><code class="token-hex">#3178BF</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Links and highlights. On white only &mdash; see the note under the palette.</td></tr>
+                                <tr><td class="token-name">--action</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#185FA5" aria-label="Copy #185FA5"><span class="token-swatch" style="--c: #185FA5" aria-hidden="true"></span><code class="token-hex">#185FA5</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Links and highlights. Safe on white and on every tint in this palette.</td></tr>
                                 <tr><td class="token-name">--action-hover</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#1D366D" aria-label="Copy #1D366D"><span class="token-swatch" style="--c: #1D366D" aria-hidden="true"></span><code class="token-hex">#1D366D</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Link hover. Deepens to midnight rather than to a fourth blue.</td></tr>
                 <tr><td class="token-name">--accent</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#0D8FA9" aria-label="Copy #0D8FA9"><span class="token-swatch" style="--c: #0D8FA9" aria-hidden="true"></span><code class="token-hex">#0D8FA9</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>CTA buttons, active states.</td></tr>
                 <tr><td class="token-name">--aqua</td><td><button type="button" class="token-copy js-copy-hex" data-copy="#14BADB" aria-label="Copy #14BADB"><span class="token-swatch" style="--c: #14BADB" aria-hidden="true"></span><code class="token-hex">#14BADB</code><span class="material-symbols-rounded token-copy-icon" aria-hidden="true">content_copy</span></button></td><td>Decorative only — fails AA for text.</td></tr>
