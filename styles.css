@@ -30,8 +30,11 @@
       --midnight:      #1D366D;  /* Primary: headings, nav, primary buttons.          */
       --primary-hover: #2A4A8A;  /* Primary button hover — lifted, clears AAA.        */
       --primary-dark:  #162A57;  /* Deeper navy accents. Not a button hover.          */
-      --secondary:     #185FA5;  /* Secondary links and elements.                     */
-      --action:        #3178BF;  /* Links, highlights.                                */
+      --action:        #3178BF;  /* Links, highlights. Absorbed the retired --secondary */
+                                 /* (#185FA5). 4.60:1 on white — AA, but only just, so  */
+                                 /* it is a white-surface colour. See --action-hover.   */
+      --action-hover:  #1D366D;  /* Link hover. Deepens to midnight rather than to a    */
+                                 /* fourth blue, and takes contrast 4.60:1 -> 11.7:1.   */
       --accent:        #0D8FA9;  /* CTA buttons, active states. Passes AA large.      */
       --aqua:          #14BADB;  /* Decorative only — fails AA for text.              */
       --soft-blue:     #8EC3DB;  /* Decorative.                                       */
@@ -126,6 +129,7 @@
          at a tightened size. The token stays so the type scale has one name per
          role and swapping in a real micro cut later is a one-line change. */
       --font-micro:   "Montserrat", Arial, Helvetica, sans-serif;
+      --font-mono:    ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       --display-tracking:    -0.02em;
       --display-tracking-sm: -0.01em;
       /* One size for every top-level heading on the site — the page title, the
@@ -140,7 +144,7 @@
       --fs-page-heading:     60px;
 
       /* ---- Space · 4px base ---- */
-      --space-2: 8px;   --space-3: 12px;  --space-4: 16px;
+      --space-1: 4px;   --space-2: 8px;   --space-3: 12px;  --space-4: 16px;
       --space-5: 20px;  --space-6: 24px;  --space-7: 32px;
       --space-8: 40px;  --space-9: 48px;
       --spacing-sm: 8px;  --spacing-md: 16px;
@@ -190,7 +194,7 @@
     a { color: var(--navy-700); text-decoration: underline; text-underline-offset: 3px; }
     a:hover { color: var(--navy-900); }
     code {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-family: var(--font-mono);
       font-size: 0.85em;
       background: var(--neutral-100);
       padding: 2px 6px;
@@ -644,7 +648,7 @@
       color: var(--text);
     }
     .swatch-hex {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-family: var(--font-mono);
       font-size: 12px;
       color: var(--text-muted);
       text-transform: none;
@@ -724,12 +728,12 @@
        whole second line reads as one piece of data rather than a value plus a caption.
        "logo only", "headings", "dark bg" — a sentence here would defeat the point. */
     .palette-swatch-tag {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-family: var(--font-mono);
       font-size: 11px;
       color: var(--text-muted);
     }
     .palette-swatch-hex {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-family: var(--font-mono);
       font-size: 12px;
       text-transform: none;
       color: var(--text-muted);
@@ -1017,7 +1021,7 @@
       font-weight: 700;
       color: var(--text-soft);
       white-space: nowrap;
-      padding-left: var(--space-1, 4px);
+      padding-left: var(--space-1);
     }
     /* Pushed to its own end of the strip: it acts on the whole collection, not on
        whatever the filter currently shows, and sitting beside the count would imply
@@ -1617,7 +1621,7 @@
       background: var(--neutral-50);
     }
     .token-table .token-name {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-family: var(--font-mono);
       font-size: 13px;
       color: var(--text);
       white-space: nowrap;
@@ -1653,7 +1657,7 @@
       box-shadow: inset 0 0 0 1px rgba(20, 20, 15, 0.14);
     }
     .token-hex {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-family: var(--font-mono);
       font-size: 13px;
       color: var(--text-soft);
       letter-spacing: 0.01em;
@@ -1859,13 +1863,46 @@
     /* The hand-off line. Monospace because these are values to be copied, and full-width
        under the demo because it applies to the whole specimen rather than one part. */
     .spec-line {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-family: var(--font-mono);
       font-size: 12px;
       line-height: 20px;
       color: var(--text-muted);
       margin-top: var(--space-3);
       padding-left: var(--space-1);
     }
+
+    /* The link specimen exists to show the one thing the swatch board cannot: that this
+       colour is conditional. Default and hover on white, then the same link on a tinted
+       panel where Action Blue is not allowed, side by side. */
+    .demo-link {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      color: var(--action);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .demo-link:hover,
+    .demo-link.is-hover { color: var(--action-hover); }
+    .demo-link--on-tint,
+    .demo-link--on-tint:hover { color: var(--midnight); }
+    /* --sky-blue, not --sky-200. The semantic token re-points to a mid dark blue in dark
+       mode, which took the caption beside it to 1.45:1 — the specimen was demonstrating a
+       contrast rule while failing it. This panel documents a brand surface, so it holds
+       the published value in both themes, the same way the logo cards and swatches do,
+       and its two text colours are fixed to match: 8.6:1 for the link, 5.6:1 for the
+       caption, whatever the page around it is doing. */
+    .spec-row--tinted {
+      background: var(--sky-blue);
+      border-radius: var(--corner-radius-base);
+      padding: var(--space-4);
+    }
+    .spec-row--tinted .spec-note { color: #4C5462; }
+    /* Action Blue is unreadable on the dark page; dark mode's link role is already
+       --sky-300, so the specimen follows the page rather than the light-mode value.
+       The on-tint link is exempt — its surface did not change. */
+    [data-theme="dark"] .demo-link { color: var(--sky-300); }
+    [data-theme="dark"] .demo-link:hover,
+    [data-theme="dark"] .demo-link.is-hover { color: var(--aqua); }
 
     .demo-grid { display: grid; gap: var(--space-4); }
     .demo-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -2813,12 +2850,16 @@
       .lib-filter-btn:active,
       .palette-swatch:active,
       .glyph-cell-copy:active,
+      .btn:active,
       .asset-dl:active { transform: none; }
       .glyph-cell,
       .palette-swatch,
       .glyph-cell-copy,
       .lib-filter-btn,
       .lib-search-input,
+      .btn,
+      .home-card-icon,
+      .demo-link,
       .asset-dl { transition-duration: 1ms; }
     }
 
@@ -2986,7 +3027,7 @@
       color: var(--text-muted);
     }
     .viz-swatch-hex {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-family: var(--font-mono);
       font-size: 11px;
       color: var(--text);
     }
