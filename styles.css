@@ -666,13 +666,21 @@
        quietly making the label bigger to reach the 3:1 large-text threshold and calling
        it done. Moving the label off the color makes every swatch legible by
        construction, whatever gets added to the palette later. */
-    /* Four across, fixed — not auto-fill. The source board is a 4x2 block and the
-       two-row rhythm is part of how it reads; auto-fill would reflow it to 5 or 6 on a
-       wide screen and the pairing of row one to row two would go with it. */
+    /* Four across, and the last row fills the width rather than leaving a hole.
+       Grid was right while both cards held eight; retiring Secondary left Primary Colors
+       on seven, and a fixed four-column track turned that into 4 + 3 with a visibly empty
+       cell — which reads as a swatch that failed to load rather than as a board with
+       seven colours in it. Flex basis of a quarter keeps four per row whenever there are
+       four to place, and lets a short final row grow to close the gap. The board now
+       survives a colour being added or retired without anyone re-counting the columns. */
     .palette-columns {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      display: flex;
+      flex-wrap: wrap;
       gap: var(--space-3);
+    }
+    .palette-columns > .palette-swatch {
+      flex: 1 1 calc(25% - var(--space-3));
+      min-width: 168px;
     }
     /* Kept so the markup can still group colors (primary / neutral) without the grid
        collapsing them into one run. */
@@ -782,7 +790,7 @@
 
     /* lg (1024) · wide token grids reflow at the same point the nav does */
     @media (max-width: 1023.98px) {
-      .palette-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .palette-columns > .palette-swatch { flex-basis: calc(50% - var(--space-3)); min-width: 0; }
     }
 
     /* Plain-language glossary of UI terms, used on the Color foundation page */
@@ -1776,6 +1784,10 @@
 
     /* Styles · light theme */
 
+    /* Still .btn-secondary, though the colour called Secondary is gone. The two were
+       never related — this is the second weight in a button hierarchy, and it has always
+       been navy. Renaming it to .btn-outline would touch thirteen call sites to fix a
+       collision that only ever existed in the label, so the label is what changed. */
     .btn-secondary {
       background: transparent;
       color: var(--brand);
