@@ -721,17 +721,17 @@
     },
     {
       "source": "envato",
-      "id": "BPBYGAY",
-      "file": "envato-BPBYGAY.webp",
+      "id": "Q7WUVFA",
+      "file": "envato-Q7WUVFA.webp",
       "cat": "Technology",
       "status": "undecided",
-      "title": "Mid air cloud in data centre cabinet",
-      "by": "ImageSourceCur",
+      "title": "Structured cabling in a data centre patch panel",
+      "by": "svitlanah",
       "dim": "1200 x 630",
-      "why": "TODO why this one",
-      "use": "TODO where it is for",
-      "crop": "",
-      "url": "https://elements.envato.com/item-BPBYGAY"
+      "why": "Replaced a literal \"cloud\" floating in a server aisle, which read as smoke or a suppression discharge rather than a metaphor. This is the same subject without the visual pun: real cabling, real labels, and a blue that is close to Action Blue rather than a filter over grey.",
+      "use": "Infrastructure, networking, managed services, section backgrounds",
+      "crop": "Holds at any width; the cable run reads as texture when cropped small.",
+      "url": "https://elements.envato.com/item-Q7WUVFA"
     }
   ]
 }
