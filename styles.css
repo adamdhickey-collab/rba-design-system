@@ -662,10 +662,13 @@
        quietly making the label bigger to reach the 3:1 large-text threshold and calling
        it done. Moving the label off the color makes every swatch legible by
        construction, whatever gets added to the palette later. */
+    /* Four across, fixed — not auto-fill. The source board is a 4x2 block and the
+       two-row rhythm is part of how it reads; auto-fill would reflow it to 5 or 6 on a
+       wide screen and the pairing of row one to row two would go with it. */
     .palette-columns {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
-      gap: var(--space-4);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-3);
     }
     /* Kept so the markup can still group colors (primary / neutral) without the grid
        collapsing them into one run. */
@@ -699,26 +702,31 @@
       background: var(--c, var(--surface-pill));
       box-shadow: inset 0 0 0 1px rgba(13, 24, 47, 0.08);
     }
+    /* Name over value, not name beside value. Side by side, a long name and a hex met
+       in the middle and the column of hexes stopped lining up; stacked, every card has
+       its label on line one and its value on line two whatever it is called. */
     .palette-swatch-text {
       display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: var(--space-2);
-      padding: 9px 12px;
+      flex-direction: column;
+      gap: 2px;
+      padding: 9px 12px 11px;
       font-size: 13px;
       line-height: 18px;
     }
-    .palette-swatch-name { font-weight: 700; }
-    /* The usage rule travels with the color. Putting "Logo only" on the RBA Red swatch is
-       the difference between publishing a palette and publishing a palette people can
-       follow without opening a second document. */
-    .palette-swatch-note {
-      font-family: var(--font-micro);
+    .palette-swatch-name { font-weight: 700; color: var(--brand); }
+    .palette-swatch-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: var(--space-2);
+    }
+    /* The usage tag: one or two lowercase words, in the same mono as the hex so the
+       whole second line reads as one piece of data rather than a value plus a caption.
+       "logo only", "headings", "dark bg" — a sentence here would defeat the point. */
+    .palette-swatch-tag {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       font-size: 11px;
-      line-height: 15px;
-      text-align: left;
       color: var(--text-muted);
-      padding: 0 12px 10px;
     }
     .palette-swatch-hex {
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -749,6 +757,15 @@
        than a fifth h3: "Primary" is still one thing in the page outline, and promoting
        every family would have split it into four sections that all need the same lede. */
     .palette-group + .palette-group { margin-top: var(--space-6); }
+    /* The grid sits inside a bordered card, with the title and one-line description
+       outside and above it — the source's arrangement, and it keeps the two boards
+       reading as two objects rather than one long run of tiles. */
+    .palette-card {
+      border: 1px solid var(--border);
+      border-radius: var(--corner-radius-lg);
+      background: var(--surface);
+      padding: var(--space-4);
+    }
     .palette-group-title {
       font-family: var(--font-sans);
       font-weight: 700;
@@ -761,9 +778,7 @@
 
     /* lg (1024) · wide token grids reflow at the same point the nav does */
     @media (max-width: 1023.98px) {
-      .palette-columns {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      }
+      .palette-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     /* Plain-language glossary of UI terms, used on the Color foundation page */

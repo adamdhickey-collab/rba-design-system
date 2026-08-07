@@ -162,212 +162,187 @@
             </div>
           </div>
 
-          <h3 class="subhead">Primary</h3>
-          <p class="palette-note">Eleven values doing four different jobs. They are grouped by the job, and inside each group they run in the order you would reach for them &mdash; so a hover sits with the color it is a hover for, not three cards away from it.</p>
+          <!-- Two cards, neutrals first, four across. This mirrors the board in the
+               Figma-side system rather than inventing a third arrangement: same two
+               groups, same order within them, same terse lowercase usage tag after the
+               hex. Deliberately NOT a role taxonomy — an earlier pass split these into
+               six job-named families and it was still one more scheme for a reader to
+               learn. Two cards of eight is a thing you can take in at a glance.
 
-          <!-- These four groups were one flat eleven-swatch grid. Nothing was wrong with
-               the values or the notes; the problem was that a single auto-fill run has
-               no order a reader can name, so --primary-hover landed third for no reason
-               anyone could see, and the wrap point moved with the viewport. Grouping by
-               job fixes the position AND the relationship: Midnight and its hover are
-               now visibly one family rather than two peers that happen to be adjacent. -->
-
-          <div class="palette-group">
-            <h4 class="palette-group-title">Brand mark</h4>
-            <p class="palette-note palette-note--group">One color, one use. It belongs to the logo and appears nowhere else in an interface.</p>
-            <div class="palette-columns">
-              <div class="palette-col">
-              <button type="button" class="palette-swatch" style="--c: #C8252D" aria-label="Copy RBA Red hex">
-                <span class="palette-swatch-chip" aria-hidden="true"></span>
-                <span class="palette-swatch-text">
-                  <span class="palette-swatch-name">RBA Red</span>
-                  <span class="palette-swatch-hex">#C8252D</span>
-                </span>
-                <span class="palette-swatch-note">Logo only</span>
-              </button>
-              </div>
-            </div>
-          </div>
+               Two consequences worth knowing. Primary Hover (#2A4A8A) and Primary Dark
+               (#162A57) are not on this board, because they are not on the source one —
+               they are button states, and they live in the token table below and on the
+               button spec. And the names here are the source's names: Midnight is
+               "Primary", the greys are Text / Text Muted / Border Strong / Border. -->
 
           <div class="palette-group">
-            <h4 class="palette-group-title">Primary navy</h4>
-            <p class="palette-note palette-note--group">Midnight is the base and carries most of the surface area. The two beside it are variants of it, not colors in their own right.</p>
-            <div class="palette-columns">
-              <div class="palette-col">
-              <button type="button" class="palette-swatch" style="--c: #1D366D" aria-label="Copy Midnight hex">
-                <span class="palette-swatch-chip" aria-hidden="true"></span>
-                <span class="palette-swatch-text">
-                  <span class="palette-swatch-name">Midnight</span>
-                  <span class="palette-swatch-hex">#1D366D</span>
-                </span>
-                <span class="palette-swatch-note">Base &middot; headings, nav, primary buttons</span>
-              </button>
-              <button type="button" class="palette-swatch" style="--c: #2A4A8A" aria-label="Copy Primary Hover hex">
-                <span class="palette-swatch-chip" aria-hidden="true"></span>
-                <span class="palette-swatch-text">
-                  <span class="palette-swatch-name">Primary Hover</span>
-                  <span class="palette-swatch-hex">#2A4A8A</span>
-                </span>
-                <span class="palette-swatch-note">Hover state of Midnight</span>
-              </button>
-              <button type="button" class="palette-swatch" style="--c: #162A57" aria-label="Copy Primary Dark hex">
-                <span class="palette-swatch-chip" aria-hidden="true"></span>
-                <span class="palette-swatch-text">
-                  <span class="palette-swatch-name">Primary Dark</span>
-                  <span class="palette-swatch-hex">#162A57</span>
-                </span>
-                <span class="palette-swatch-note">Deep navy accents &middot; not a hover</span>
-              </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="palette-group">
-            <h4 class="palette-group-title">Links and actions</h4>
-            <p class="palette-note palette-note--group">In increasing order of emphasis: a secondary link, then a link or highlight, then a call to action.</p>
-            <div class="palette-columns">
-              <div class="palette-col">
-              <button type="button" class="palette-swatch" style="--c: #185FA5" aria-label="Copy Secondary hex">
-                <span class="palette-swatch-chip" aria-hidden="true"></span>
-                <span class="palette-swatch-text">
-                  <span class="palette-swatch-name">Secondary</span>
-                  <span class="palette-swatch-hex">#185FA5</span>
-                </span>
-                <span class="palette-swatch-note">Secondary links</span>
-              </button>
-              <button type="button" class="palette-swatch" style="--c: #3178BF" aria-label="Copy Action Blue hex">
-                <span class="palette-swatch-chip" aria-hidden="true"></span>
-                <span class="palette-swatch-text">
-                  <span class="palette-swatch-name">Action Blue</span>
-                  <span class="palette-swatch-hex">#3178BF</span>
-                </span>
-                <span class="palette-swatch-note">Links, highlights</span>
-              </button>
-              <button type="button" class="palette-swatch" style="--c: #0D8FA9" aria-label="Copy Accent hex">
-                <span class="palette-swatch-chip" aria-hidden="true"></span>
-                <span class="palette-swatch-text">
-                  <span class="palette-swatch-name">Accent</span>
-                  <span class="palette-swatch-hex">#0D8FA9</span>
-                </span>
-                <span class="palette-swatch-note">CTA buttons, active states</span>
-              </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="palette-group">
-            <h4 class="palette-group-title">Tints and surfaces</h4>
-            <p class="palette-note palette-note--group">Backgrounds and decoration, deepest to palest. None of these can carry text &mdash; when a teal has to, use Accent.</p>
-            <div class="palette-columns">
-              <div class="palette-col">
-              <button type="button" class="palette-swatch" style="--c: #14BADB" aria-label="Copy Aqua hex">
-                <span class="palette-swatch-chip" aria-hidden="true"></span>
-                <span class="palette-swatch-text">
-                  <span class="palette-swatch-name">Aqua</span>
-                  <span class="palette-swatch-hex">#14BADB</span>
-                </span>
-                <span class="palette-swatch-note">Decorative only</span>
-              </button>
+            <h4 class="palette-group-title">Neutrals &amp; Surfaces</h4>
+            <p class="palette-note palette-note--group">Soft blues, surfaces, text &amp; border neutrals.</p>
+            <div class="palette-card">
+              <div class="palette-columns">
               <button type="button" class="palette-swatch" style="--c: #8EC3DB" aria-label="Copy Soft Blue hex">
                 <span class="palette-swatch-chip" aria-hidden="true"></span>
                 <span class="palette-swatch-text">
                   <span class="palette-swatch-name">Soft Blue</span>
-                  <span class="palette-swatch-hex">#8EC3DB</span>
+                  <span class="palette-swatch-meta">
+                    <span class="palette-swatch-hex">#8EC3DB</span>
+                  </span>
                 </span>
-                <span class="palette-swatch-note">Decorative</span>
               </button>
               <button type="button" class="palette-swatch" style="--c: #BDE4F1" aria-label="Copy Sky Blue hex">
                 <span class="palette-swatch-chip" aria-hidden="true"></span>
                 <span class="palette-swatch-text">
                   <span class="palette-swatch-name">Sky Blue</span>
-                  <span class="palette-swatch-hex">#BDE4F1</span>
+                  <span class="palette-swatch-meta">
+                    <span class="palette-swatch-hex">#BDE4F1</span>
+                  </span>
                 </span>
-                <span class="palette-swatch-note">Backgrounds</span>
               </button>
               <button type="button" class="palette-swatch" style="--c: #F5FAFC" aria-label="Copy White Blue hex">
                 <span class="palette-swatch-chip" aria-hidden="true"></span>
                 <span class="palette-swatch-text">
                   <span class="palette-swatch-name">White Blue</span>
-                  <span class="palette-swatch-hex">#F5FAFC</span>
+                  <span class="palette-swatch-meta">
+                    <span class="palette-swatch-hex">#F5FAFC</span>
+                  </span>
                 </span>
-                <span class="palette-swatch-note">Tinted surface</span>
               </button>
-              </div>
-            </div>
-          </div>
-
-          <h3 class="subhead">Neutrals</h3>
-          <p class="palette-note">Same idea as above: a grey ramp that runs darkest to palest, and two dark surfaces that are not part of it.</p>
-
-          <div class="palette-group">
-            <h4 class="palette-group-title">Grey ramp</h4>
-            <p class="palette-note palette-note--group">Text, rules and surfaces, darkest to palest. Black is <code>#333333</code> &mdash; pure black is not in the palette.</p>
-            <div class="palette-columns">
-              <div class="palette-col">
-              <button type="button" class="palette-swatch" style="--c: #333333" aria-label="Copy Black hex">
+              <button type="button" class="palette-swatch" style="--c: #F5F5F5" aria-label="Copy Surface Alt hex">
                 <span class="palette-swatch-chip" aria-hidden="true"></span>
                 <span class="palette-swatch-text">
-                  <span class="palette-swatch-name">Black</span>
-                  <span class="palette-swatch-hex">#333333</span>
+                  <span class="palette-swatch-name">Surface Alt</span>
+                  <span class="palette-swatch-meta">
+                    <span class="palette-swatch-hex">#F5F5F5</span>
+                  </span>
                 </span>
-                <span class="palette-swatch-note">Body text</span>
               </button>
-              <button type="button" class="palette-swatch" style="--c: #666666" aria-label="Copy Dark Grey hex">
+              <button type="button" class="palette-swatch" style="--c: #333333" aria-label="Copy Text hex">
                 <span class="palette-swatch-chip" aria-hidden="true"></span>
                 <span class="palette-swatch-text">
-                  <span class="palette-swatch-name">Dark Grey</span>
-                  <span class="palette-swatch-hex">#666666</span>
+                  <span class="palette-swatch-name">Text</span>
+                  <span class="palette-swatch-meta">
+                    <span class="palette-swatch-hex">#333333</span>
+                    <span class="palette-swatch-tag">body</span>
+                  </span>
                 </span>
-                <span class="palette-swatch-note">Muted text</span>
               </button>
-              <button type="button" class="palette-swatch" style="--c: #AAAAAA" aria-label="Copy Medium Grey hex">
+              <button type="button" class="palette-swatch" style="--c: #666666" aria-label="Copy Text Muted hex">
                 <span class="palette-swatch-chip" aria-hidden="true"></span>
                 <span class="palette-swatch-text">
-                  <span class="palette-swatch-name">Medium Grey</span>
-                  <span class="palette-swatch-hex">#AAAAAA</span>
+                  <span class="palette-swatch-name">Text Muted</span>
+                  <span class="palette-swatch-meta">
+                    <span class="palette-swatch-hex">#666666</span>
+                    <span class="palette-swatch-tag">meta</span>
+                  </span>
                 </span>
-                <span class="palette-swatch-note">Strong borders</span>
               </button>
-              <button type="button" class="palette-swatch" style="--c: #DDDDDD" aria-label="Copy Light Grey hex">
+              <button type="button" class="palette-swatch" style="--c: #AAAAAA" aria-label="Copy Border Strong hex">
                 <span class="palette-swatch-chip" aria-hidden="true"></span>
                 <span class="palette-swatch-text">
-                  <span class="palette-swatch-name">Light Grey</span>
-                  <span class="palette-swatch-hex">#DDDDDD</span>
+                  <span class="palette-swatch-name">Border Strong</span>
+                  <span class="palette-swatch-meta">
+                    <span class="palette-swatch-hex">#AAAAAA</span>
+                  </span>
                 </span>
-                <span class="palette-swatch-note">Borders</span>
               </button>
-              <button type="button" class="palette-swatch" style="--c: #F5F5F5" aria-label="Copy White Grey hex">
+              <button type="button" class="palette-swatch" style="--c: #DDDDDD" aria-label="Copy Border hex">
                 <span class="palette-swatch-chip" aria-hidden="true"></span>
                 <span class="palette-swatch-text">
-                  <span class="palette-swatch-name">White Grey</span>
-                  <span class="palette-swatch-hex">#F5F5F5</span>
+                  <span class="palette-swatch-name">Border</span>
+                  <span class="palette-swatch-meta">
+                    <span class="palette-swatch-hex">#DDDDDD</span>
+                    <span class="palette-swatch-tag">cards</span>
+                  </span>
                 </span>
-                <span class="palette-swatch-note">Alt surface</span>
               </button>
               </div>
             </div>
           </div>
 
           <div class="palette-group">
-            <h4 class="palette-group-title">Dark surfaces</h4>
-            <p class="palette-note palette-note--group">Navy-tinted, not grey. These are backgrounds to put light type on, not steps at the end of the ramp above.</p>
-            <div class="palette-columns">
-              <div class="palette-col">
+            <h4 class="palette-group-title">Primary Colors</h4>
+            <p class="palette-note palette-note--group">Brand red, navies, action blue, accent aqua.</p>
+            <div class="palette-card">
+              <div class="palette-columns">
+              <button type="button" class="palette-swatch" style="--c: #C8252D" aria-label="Copy Brand Red hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">Brand Red</span>
+                  <span class="palette-swatch-meta">
+                    <span class="palette-swatch-hex">#C8252D</span>
+                    <span class="palette-swatch-tag">logo only</span>
+                  </span>
+                </span>
+              </button>
+              <button type="button" class="palette-swatch" style="--c: #1D366D" aria-label="Copy Primary hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">Primary</span>
+                  <span class="palette-swatch-meta">
+                    <span class="palette-swatch-hex">#1D366D</span>
+                    <span class="palette-swatch-tag">headings</span>
+                  </span>
+                </span>
+              </button>
+              <button type="button" class="palette-swatch" style="--c: #185FA5" aria-label="Copy Secondary hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">Secondary</span>
+                  <span class="palette-swatch-meta">
+                    <span class="palette-swatch-hex">#185FA5</span>
+                    <span class="palette-swatch-tag">links</span>
+                  </span>
+                </span>
+              </button>
+              <button type="button" class="palette-swatch" style="--c: #3178BF" aria-label="Copy Action Blue hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">Action Blue</span>
+                  <span class="palette-swatch-meta">
+                    <span class="palette-swatch-hex">#3178BF</span>
+                    <span class="palette-swatch-tag">highlights</span>
+                  </span>
+                </span>
+              </button>
+              <button type="button" class="palette-swatch" style="--c: #0D8FA9" aria-label="Copy Accent hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">Accent</span>
+                  <span class="palette-swatch-meta">
+                    <span class="palette-swatch-hex">#0D8FA9</span>
+                    <span class="palette-swatch-tag">CTAs</span>
+                  </span>
+                </span>
+              </button>
+              <button type="button" class="palette-swatch" style="--c: #14BADB" aria-label="Copy Aqua hex">
+                <span class="palette-swatch-chip" aria-hidden="true"></span>
+                <span class="palette-swatch-text">
+                  <span class="palette-swatch-name">Aqua</span>
+                  <span class="palette-swatch-meta">
+                    <span class="palette-swatch-hex">#14BADB</span>
+                    <span class="palette-swatch-tag">decorative</span>
+                  </span>
+                </span>
+              </button>
               <button type="button" class="palette-swatch" style="--c: #182449" aria-label="Copy Navy Dark hex">
                 <span class="palette-swatch-chip" aria-hidden="true"></span>
                 <span class="palette-swatch-text">
                   <span class="palette-swatch-name">Navy Dark</span>
-                  <span class="palette-swatch-hex">#182449</span>
+                  <span class="palette-swatch-meta">
+                    <span class="palette-swatch-hex">#182449</span>
+                    <span class="palette-swatch-tag">dark bg</span>
+                  </span>
                 </span>
-                <span class="palette-swatch-note">Deck dark background</span>
               </button>
-              <button type="button" class="palette-swatch" style="--c: #1A2332" aria-label="Copy Background Dark hex">
+              <button type="button" class="palette-swatch" style="--c: #1A2332" aria-label="Copy BG Dark hex">
                 <span class="palette-swatch-chip" aria-hidden="true"></span>
                 <span class="palette-swatch-text">
-                  <span class="palette-swatch-name">Background Dark</span>
-                  <span class="palette-swatch-hex">#1A2332</span>
+                  <span class="palette-swatch-name">BG Dark</span>
+                  <span class="palette-swatch-meta">
+                    <span class="palette-swatch-hex">#1A2332</span>
+                    <span class="palette-swatch-tag">footer</span>
+                  </span>
                 </span>
-                <span class="palette-swatch-note">Footer, dark CTA</span>
               </button>
               </div>
             </div>
