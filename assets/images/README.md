@@ -154,6 +154,29 @@ from the card and the composition from the item page. When you download the clea
 full-size file, save it over the same filename and both problems disappear with
 no library edit.
 
+### Adobe Stock, without an API key
+
+Adobe returns `403` to any scripted request for an item **page** — every user
+agent, every header combination, and the oembed endpoint. Its image **CDN** has no
+check at all: a plain GET with no user agent and no referer returns the
+watermarked comp.
+
+So paste the image address rather than the page address. Right-click the preview
+on Adobe Stock, choose **Copy image address**, and give that to the importer:
+
+```bash
+./tools/images-add.py --cat Technology --title "Two engineers at a whiteboard" \
+  "https://as2.ftcdn.net/jpg/19/04/00/09/1000_F_1904000970_WvhiNxc....webp"
+```
+
+The Adobe id is inside that filename (`1000_F_<id>_<hash>`), so the entry and its
+link back to Adobe are rebuilt from it. Only the title needs supplying, because
+the CDN serves an image and not a page to read one off — and Adobe deliberately
+puts its own logo in `og:image`, so even the page would not give you the picture.
+
+This is how the original fifty comps were obtained; they just were not automated
+at the time.
+
 **Free is not automatically cheaper.** Five Unsplash candidates were reviewed for
 the Engineering category and one was used. Of the rejects: one carried a Twitter
 logo and a client's hashtag on the office signage, one was a geology CAD screen

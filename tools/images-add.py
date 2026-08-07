@@ -23,9 +23,22 @@ without a session. So the importer is generic — it reads the tags, not the sit
 A service it has never seen still works; it just falls back to the domain name for
 the label and asks you to fill in the licence line once.
 
-The exception is Adobe Stock, which returns 403 to scripted requests. Those fifty
-comps were saved by hand and there is no way around it short of an API key. The
-script says so rather than failing obscurely.
+ADOBE STOCK, WITHOUT AN API KEY
+-------------------------------
+Adobe returns 403 to any scripted request for an item PAGE — every user agent,
+every header combination, and the oembed endpoint too. Its image CDN, however,
+has no check of any kind: a plain GET with no user agent and no referer returns
+the watermarked comp.
+
+So paste the IMAGE address instead of the page address. On the Adobe Stock page,
+right-click the preview and choose "Copy image address":
+
+    ./tools/images-add.py --cat Technology --title "Two engineers at a whiteboard" \
+      "https://as2.ftcdn.net/jpg/19/04/00/09/1000_F_1904000970_WvhiNxc....webp"
+
+The id is in that filename, so the entry and its link back to Adobe are rebuilt
+from it. Only the title has to be supplied, because the CDN serves an image and
+not a page to read one off.
 
 REPLACING RATHER THAN ADDING
 ----------------------------
@@ -83,9 +96,19 @@ KNOWN = {
 }
 
 BLOCKED = {'stock.adobe.com': (
-    'Adobe Stock returns 403 to scripted requests, so the preview cannot be '
-    'fetched. Save the image by hand into assets/images/shortlist/ as '
-    'adobe-<id>.webp, then run ./tools/images-sync.py --adopt.')}
+    'Adobe Stock returns 403 to scripted requests for the PAGE — but not for the '
+    'image itself.\n'
+    '  Open the image on Adobe Stock, right-click the preview, "Copy image '
+    'address", and paste THAT here instead. It looks like\n'
+    '  https://as2.ftcdn.net/jpg/.../1000_F_<id>_<hash>.webp\n'
+    '  Add --title "..." to save filling it in afterwards.')}
+
+# Adobe's watermarked comp, served straight off their CDN as
+# 1000_F_<id>_<hash>.webp. The hash cannot be derived from the id, which is why
+# the id alone is not enough — but the CDN itself has no UA, referer or session
+# check, so once you have the URL the download is a plain GET. That is the whole
+# trick: Adobe defends the HTML page and leaves the image open.
+FTCDN = re.compile(r'/\d+_F_(\d+)_[A-Za-z0-9]+\.(?:webp|jpe?g|png)', re.I)
 
 
 def get(url, binary=False):
@@ -153,7 +176,19 @@ def title_from_slug(url):
     return ' '.join(words).capitalize() if words else ''
 
 
-def scrape(url):
+def scrape(url, title_override=None):
+    # A direct Adobe comp URL. No page fetch at all: the id is in the filename and
+    # the canonical page can be rebuilt from it, so this route sidesteps the 403
+    # entirely and needs no API key.
+    m = FTCDN.search(url)
+    if m and 'ftcdn' in url:
+        ident = m.group(1)
+        meta_ = KNOWN['stock.adobe.com']
+        return {'source': meta_[0], 'sourceName': meta_[1], 'tier': meta_[2],
+                'licence': meta_[3], 'id': ident,
+                'url': 'https://stock.adobe.com/images/' + ident,
+                'title': title_override or 'TODO title', 'by': '', 'preview': url}
+
     source, name, tier, licence = identify(url)
     host = urllib.parse.urlparse(url).netloc.lower().lstrip('www.')
     if host in BLOCKED:
@@ -213,6 +248,7 @@ def main():
     ap.add_argument('--cat', help='category for the new entries')
     ap.add_argument('--replace', metavar='FILE',
                     help='take this entry\'s place and delete its file')
+    ap.add_argument('--title', help='set the title (the CDN route cannot read one)')
     ap.add_argument('--status', default='undecided',
                     help='undecided (default), keep, cut, licensed')
     ap.add_argument('--no-sync', action='store_true', help='skip regenerating the page')
@@ -248,7 +284,7 @@ def main():
     added = 0
     for url in args.urls:
         try:
-            info = scrape(url)
+            info = scrape(url, args.title)
             fname, dim = stage(info)
         except Exception as exc:                          # noqa: BLE001
             print('failed %s\n  %s' % (url, exc), file=sys.stderr)
