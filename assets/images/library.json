@@ -18,6 +18,12 @@
       "tier": "subscription",
       "licence": "Covered by the RBA subscription — licensed on download, usable in production.",
       "note": "The only source here that is actually licensed. Previews staged by tools/images-fetch-envato.py are watermarked 1200x630 social crops; download the clean full-size file over the same filename and the watermark goes."
+    },
+    "istock": {
+      "name": "iStock",
+      "tier": "paid",
+      "licence": "Not licensed. Credit or subscription required before use.",
+      "note": "Getty's affordable tier. Signature collection is exclusive to Getty/iStock, so it is not resold through Adobe — that is the reason to have it here rather than a price one."
     }
   },
   "categories": [
@@ -226,32 +232,6 @@
     },
     {
       "source": "adobe",
-      "id": "598538572",
-      "file": "adobe-598538572.webp",
-      "cat": "Engineering & cloud",
-      "title": "Diverse software development team meeting for code review",
-      "by": "Gorodenkoff",
-      "dim": "7680 × 4050",
-      "why": "Combines engineering specificity with team collaboration and supports RBA's co-delivery positioning.",
-      "use": "Agile delivery, code review, project teams",
-      "crop": "Keep screen and participants in the same frame.",
-      "url": "https://stock.adobe.com/images/diverse-software-development-team-meeting-for-code-review/598538572"
-    },
-    {
-      "source": "adobe",
-      "id": "470107495",
-      "file": "adobe-470107495.webp",
-      "cat": "Engineering & cloud",
-      "title": "Diverse IT professionals planning a software application",
-      "by": "Gorodenkoff",
-      "dim": "5120 × 2880",
-      "why": "Shows engineering as a collaborative planning discipline rather than an isolated coding activity.",
-      "use": "Architecture, product teams, application strategy",
-      "crop": "Strong 16:9 service-page image.",
-      "url": "https://stock.adobe.com/images/diverse-it-professionals-planning-a-software-application/470107495"
-    },
-    {
-      "source": "adobe",
       "id": "249144163",
       "file": "adobe-249144163.webp",
       "cat": "Engineering & cloud",
@@ -288,19 +268,6 @@
       "use": "Security, infrastructure support, technical workforce",
       "crop": "Keep the server aisle depth for visual impact.",
       "url": "https://stock.adobe.com/images/female-technicians-using-a-tablet-in-a-server-room/606000400"
-    },
-    {
-      "source": "adobe",
-      "id": "597200725",
-      "file": "adobe-597200725.webp",
-      "cat": "Engineering & cloud",
-      "title": "Young Asian female software developer with colleagues in a data protection center",
-      "by": "Gorodenkoff",
-      "dim": "7680 × 4050",
-      "why": "Connects software, operational monitoring, and security in one modern workplace scene.",
-      "use": "Secure engineering, operations, data protection",
-      "crop": "Best used wide; avoid over-cropping the monitoring environment.",
-      "url": "https://stock.adobe.com/images/young-asian-female-software-developer-with-colleagues-in-a-data-protection-center/597200725"
     },
     {
       "source": "envato",
@@ -563,19 +530,6 @@
       "url": "https://stock.adobe.com/images/financial-advisor-discussing-options-with-a-senior-woman-using-a-laptop/588310218"
     },
     {
-      "source": "adobe",
-      "id": "372231087",
-      "file": "adobe-372231087.webp",
-      "cat": "Data, AI & security",
-      "title": "Data science engineers working with charts and graphs in a modern office",
-      "by": "Gorodenkoff",
-      "dim": "",
-      "why": "Team-scale analytics work rather than a single screen.",
-      "use": "Data practice, analytics services",
-      "crop": "Wide crops only; keep both figures.",
-      "url": "https://stock.adobe.com/images/372231087"
-    },
-    {
       "source": "envato",
       "id": "4UGVFMX",
       "file": "envato-4UGVFMX.webp",
@@ -691,6 +645,48 @@
       "use": "TODO where it is for",
       "crop": "",
       "url": "https://stock.adobe.com/images/2108240402"
+    },
+    {
+      "source": "istock",
+      "id": "2196870531",
+      "file": "istock-2196870531.webp",
+      "cat": "Collaboration",
+      "status": "undecided",
+      "title": "Two colleagues walking and reading a tablet",
+      "by": "",
+      "dim": "509 x 339",
+      "why": "Movement rather than a posed desk. Both absorbed in the screen, no eye contact — the register RBA uses on its own site.",
+      "use": "Consulting approach, advisory, careers",
+      "crop": "Preview is 509 x 339, an exact 3:2 — it fills the card without cropping.",
+      "url": "https://www.istockphoto.com/photo/making-decision-on-the-move-gm2196870531-614864609"
+    },
+    {
+      "source": "istock",
+      "id": "2132005794",
+      "file": "istock-2132005794.webp",
+      "cat": "Collaboration",
+      "status": "undecided",
+      "title": "Two colleagues reading a laptop together at a desk",
+      "by": "",
+      "dim": "509 x 339",
+      "why": "Bright, business casual, both looking at the work rather than the camera. Real office defocused behind, exactly the house style.",
+      "use": "Delivery teams, collaboration, homepage",
+      "crop": "Preview is 509 x 339, an exact 3:2 — it fills the card without cropping.",
+      "url": "https://www.istockphoto.com/photo/asian-woman-and-black-man-looking-at-laptop-screen-gm2132005794-568029933"
+    },
+    {
+      "source": "istock",
+      "id": "2165154407",
+      "file": "istock-2165154407.webp",
+      "cat": "Collaboration",
+      "status": "undecided",
+      "title": "Two colleagues sharing a laptop screen in a bright office",
+      "by": "",
+      "dim": "509 x 339",
+      "why": "Genuine expressions rather than a stock smile, and the room reads as a real workplace.",
+      "use": "Culture, teams, careers",
+      "crop": "Preview is 509 x 339, an exact 3:2 — it fills the card without cropping.",
+      "url": "https://www.istockphoto.com/photo/two-professional-women-collaborating-on-a-project-in-office-gm2165154407-585373153"
     }
   ]
 }

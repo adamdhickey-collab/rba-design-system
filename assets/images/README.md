@@ -125,7 +125,8 @@ What actually suits this brand:
 | **Envato Elements** | subscription | **Start here.** RBA already pays for it, and the subscription licenses on download — the only source in this table whose images can ship today. | Widely subscribed, so no exclusivity. Quality is uneven; the search results need filtering. |
 | **Adobe Stock** | paid | The bulk of the current library. Also resells Stocksy, Westend61 and peopleimages. | Everything here is an **unlicensed comp**, and the standard subscription does not cover those premium collections. |
 | **Stocksy United** | paid | The least stock-looking work available. Artist co-op, tight curation. | Priciest per image, smaller library. |
-| **Getty / iStock** | paid | Collections Adobe does not carry; iStock Signature is the affordable end. | Easy to overpay for Getty when iStock has the same look. |
+| **iStock** | paid | **In use.** Getty's affordable tier, and Signature is exclusive to Getty/iStock — not resold through Adobe, which is the reason to have it rather than a price one. | Item pages answer scripted requests, but a link needs BOTH numbers (`…-gm<id>-<asset>`); the id alone 404s. |
+| **Getty Images** | paid | The premium end of the same library. | Easy to overpay when iStock has the same look. |
 | **Offset / Cavan** | paid | Exclusive to their agency, so nobody else's site has it. | Advertising-tier pricing. |
 | **Unsplash / Pexels** | free | Internal decks, wireframes, placeholders, anything low-stakes. | Zero exclusivity, and **no screening for third-party logos** — see below. |
 

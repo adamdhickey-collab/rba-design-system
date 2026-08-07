@@ -110,6 +110,11 @@ BLOCKED = {'stock.adobe.com': (
 # trick: Adobe defends the HTML page and leaves the image open.
 FTCDN = re.compile(r'/\d+_F_(\d+)_[A-Za-z0-9]+\.(?:webp|jpe?g|png)', re.I)
 
+# iStock needs no special case: unlike Adobe, its item pages answer a scripted
+# request, so the ordinary og: route handles them. Paste the item URL, not the
+# image URL — an iStock item link carries TWO numbers (…-gm<id>-<asset>) and only
+# the first is in the CDN path, so a link rebuilt from the image address 404s.
+
 
 def get(url, binary=False):
     req = urllib.request.Request(url, headers={'User-Agent': UA})
