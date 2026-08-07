@@ -185,6 +185,31 @@ rather than anything consulting-shaped, and two were portrait crops that will no
 survive the 3:2 frame. That hit rate is the real cost of the free tiers — the
 curation work that a paid library has already done for you.
 
+### What rbaconsulting.com actually looks like
+
+Worth matching, because the library and the website should not look like two
+different companies. The photography on rbaconsulting.com is strikingly
+consistent:
+
+- **One person, mid-shot.** Not teams, not boardrooms.
+- **Holding a device, looking down at it.** Absorbed in the work, not presenting
+  to camera. Almost none of their images make eye contact.
+- **A real environment behind, softly defocused** — a data wall, a warehouse
+  aisle, an office floor. The place is legible but never competes.
+- **Bright and naturally lit.** Nothing cinematically graded, no teal-and-orange.
+- **Business casual.** Shirts, no suits, no hi-vis, no hard hats.
+
+Measured against that, the biggest mismatch in this library is the Gorodenkoff
+material: dark, cool-graded, often industrial PPE. It is 18% of the set and it is
+the furthest thing here from how RBA presents itself.
+
+**The sources of their images could not be identified.** Three routes were tried
+and all are closed: the filenames are renamed on upload
+(`IT-Leader.png`, `Operations-and-biz-leader.png`), the EXIF and IPTC are stripped
+by their CDN's re-encoding, and reverse image search is not available here. If you
+want a specific one added, run it through Google Images or TinEye yourself and
+paste the Adobe Stock link — the CDN route above turns that into one command.
+
 **Exclusivity is the thing worth paying for.** For a page that says "this is what
 RBA looks like", the failure mode is not a mediocre photo, it is the same photo on
 a competitor's site. That argues for premium collections on the hero images and
