@@ -484,7 +484,9 @@
     @media (max-width: 767.98px) {
       .container { padding-left: var(--space-4); padding-right: var(--space-4); }
       .block { padding: var(--space-6) 0; }
-      .hero { padding: var(--space-6) 0 var(--space-5); }
+      /* .hero's padding used to be re-declared here and never applied — same
+         specificity as the base rule, earlier in the file. It is a clamp() now, which
+         handles the phone on its own. */
       .section-head { gap: var(--space-4); }
     }
 
@@ -497,38 +499,39 @@
     .hero {
       background: var(--grad-sky);
       color: var(--text);
-      padding: var(--space-9) 0 var(--space-8);
+      /* ~100px of air above and below the text block, equal on both sides, so the copy
+         sits centred in the band rather than resting on its floor. Off the spacing scale
+         on purpose: the scale tops out at 48 and this is a page-level band, not
+         component padding. clamp rather than a media-query override, because the md
+         block above this one sets .hero padding at the SAME specificity and, sitting
+         earlier in the file, has never once won — the phone value it declares has been
+         dead the whole time. One declaration can't lose that argument. */
+      padding: clamp(40px, 9vw, 100px) 0;
       position: relative;
       overflow: hidden;
       border-bottom: 1px solid var(--border);
     }
-    /* The blueprint illustration, above the headline on the home page only — it is the
-       landing moment, and repeating it on Icons or Templates would make it wallpaper.
-       Capped well short of the container so it stays an illustration rather than a
-       band: at full width it read as a second header competing with the title. */
-    .hero-figure {
-      display: block;
-      width: 100%;
-      max-width: 620px;
-      height: auto;
-      margin-bottom: var(--space-6);
-    }
-    /* Sized off the hero's own height, not the viewport — a vw-sized mark on a short
-       band got cropped on three sides at once and stopped reading as anything.
-       Deliberately oversized: at 150% of a hero this tall it bleeds off three edges and
-       lands as a field rather than a logo, which is the only way a mark this large stays
-       a watermark. Pushed to -10% so its bulk sits right of the illustration instead of
-       through it, and dropped to 7% because area and opacity trade off — the same 8%
-       that read as paper at a third this size read as a shape. */
+    /* Cropped, not shrunk. The device is a four-lobed knot around a circular void with a
+       gap in one side, and at any size that fits the band you get the whole logo, small
+       and polite. Blown up past the frame instead, that void's edge becomes a long
+       crescent sweeping through the right of the hero and the lobes read as soft masses
+       — a shape with some life in it, rather than a second logo competing with the one
+       in the rail.
+
+       205% of the hero's height puts the void about 80% across the band, and -22% throws
+       the right-hand lobes off the edge so the eye finishes the form. Off the hero's
+       height rather than the viewport, so the crop is the same composition at every
+       width. Opacity is the whole trick: at 12% the crescent starts arguing with the
+       headline, at 7% there is no shape left to look at. */
     .hero-mark {
       position: absolute;
       top: 50%;
-      right: -10%;
+      right: -22%;
       width: auto;
-      height: 150%;
+      height: 205%;
       transform: translateY(-50%);
       color: var(--midnight);
-      opacity: 0.07;
+      opacity: 0.10;
       pointer-events: none;
       user-select: none;
     }
