@@ -980,6 +980,32 @@
       border-radius: 4px;
     }
 
+    /* Numbered steps inside a callout. This replaced a 90-word paragraph that
+       carried four separate instructions and the evidence for them in one run of
+       prose — everything was stated, and nothing was findable. The rule comes
+       first, the reasoning goes underneath in .callout-aside. */
+    .how-steps {
+      margin: var(--space-3) 0 0;
+      padding-left: 1.3em;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text-soft);
+    }
+    .how-steps li::marker { color: var(--text-muted); font-weight: 700; }
+    .how-steps strong { color: var(--text); }
+    /* The evidence, one step quieter than the rules it supports. */
+    .callout-aside {
+      font-size: 12.5px;
+      line-height: 1.55;
+      color: var(--text-muted);
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--border-subtle);
+    }
+
     /* Task, then the command that does it. A definition list rather than prose
        because someone arriving at this page wants to find their one job and copy
        one line, not read a paragraph and extract it. */
@@ -1185,30 +1211,8 @@
     .shot-priority--alt     { background: var(--accent); }
     .shot-priority--support { background: var(--neutral-500, #6B7280); }
 
-    /* The decision. Sits bottom-left of the frame so it never fights the rank and
-       priority chips along the top, and carries an icon as well as a colour —
-       "keep" and "cut" are the pair it would be most costly to misread. Only the
-       three decided states get a badge; undecided is most of the library and a
-       badge on almost every card would be wallpaper. */
-    .shot-status {
-      position: absolute;
-      left: 8px;
-      bottom: 8px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-family: var(--font-micro);
-      font-size: 10px;
-      font-weight: 700;
-      padding: 3px 8px 3px 6px;
-      border-radius: var(--radius-pill);
-      color: #FFFFFF;
-      backdrop-filter: blur(2px);
-    }
-    .shot-status .material-symbols-rounded { font-size: 13px; }
-    .shot-status--keep     { background: var(--midnight); }
-    .shot-status--licensed { background: var(--accent); }
-    .shot-status--cut      { background: rgba(51, 51, 51, 0.82); }
+    /* No badge on the frame for the decision — see the note in app.js. Cut images
+       leave the grid; everything else is worked through with the filter above it. */
 
     /* No dimmed state for cut images: they are filtered out of the grid entirely
        and only reappear under the "Cut" filter, where dimming them would be
@@ -1222,71 +1226,9 @@
       background: var(--surface-input);
     }
 
-    .shot-body {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      padding: var(--space-4);
-      flex: 1;
-    }
-    .shot-title {
-      font-family: var(--font-sans);
-      font-weight: 700;
-      font-size: 14px;
-      line-height: 1.35;
-      color: var(--text);
-    }
-    .shot-meta {
-      font-family: var(--font-micro);
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-    /* Contributor on the left, the licence verdict on the right. One line, because
-       the only question being asked while scrolling is "what is it and can I use
-       it?". The reviewer's notes — why, intended use, cropping, dimensions — used
-       to sit here as four more blocks of small type; they live on the card's
-       tooltip and in library.json now. */
-    .shot-meta {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: var(--space-3);
-      font-family: var(--font-micro);
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-    .shot-meta > :first-child {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    /* Keyed to the tier, because the useful distinction is not who sells it but
-       whether you may actually use it. The marker changes SHAPE as well as colour:
-       someone scanning in a hurry has to get this right, and colour alone fails
-       for anyone who cannot separate the teal from the grey. */
-    .shot-licence {
-      flex: none;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-    .shot-licence::before {
-      content: "";
-      display: inline-block;
-      width: 6px; height: 6px;
-      margin-right: 5px;
-      border-radius: 50%;
-      background: currentColor;
-      vertical-align: middle;
-    }
-    /* Licensed and ready: filled circle, brand navy. */
-    .shot-licence--subscription { color: var(--brand); }
-    /* Free: hollow circle — usable, but nothing exclusive about it. */
-    .shot-licence--free { color: var(--accent); }
-    .shot-licence--free::before { background: transparent; box-shadow: inset 0 0 0 2px currentColor; }
-    /* Comp: a square, the odd one out, because this is the tier that cannot ship. */
-    .shot-licence--paid { color: var(--text-muted); }
-    .shot-licence--paid::before { border-radius: 1px; }
+    /* .shot-body, .shot-title, .shot-meta and .shot-licence lived here. The card
+       is a picture and a link to its source now — see the note in app.js on why
+       the text came off. */
 
     .shot-foot {
       display: flex;

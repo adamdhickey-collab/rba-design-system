@@ -327,7 +327,14 @@
           <div class="callout callout--warn u-mt-md">
             <span class="material-symbols-rounded" aria-hidden="true">warning</span>
             <div class="callout-body">
-              <p><strong>The patterns are not optional, and not just for print.</strong> Measured as a categorical set, these eight do not separate on colour alone: the closest pair, <code>--viz-5</code> and <code>--viz-8</code>, sit at a perceptual distance of 2.2 where about 15 is the readable floor, and no reordering gets the worst neighbouring pair above 7.9. That is a property of eight values drawn from one narrow blue-slate range, not of the ordering. So a series is identified by <strong>pattern plus a direct label</strong>, and colour is the thing that makes the chart look like RBA rather than the thing that tells the series apart. Past about four series, split the chart rather than reaching for <code>--viz-5</code>.</p>
+              <p><strong>Build a chart in this order.</strong> These eight colours do not tell series apart on their own, so the pattern and the label are doing that work &mdash; not the colour.</p>
+              <ol class="how-steps">
+                <li><strong>Take the colours in order</strong> from <code>--viz-1</code>. Never pick by eye.</li>
+                <li><strong>Give every series its pattern</strong>, the one paired with its colour above. This is not a print fallback; it is how the series are told apart on screen.</li>
+                <li><strong>Label each series on the mark</strong> &mdash; at the end of its line, inside or above its bar. A legend makes the reader match colours the palette cannot support.</li>
+                <li><strong>Stop at four series.</strong> Past that, split the chart rather than reaching for <code>--viz-5</code>.</li>
+              </ol>
+              <p class="u-mt-sm callout-aside"><strong>Why the ceiling is four:</strong> measured as a categorical set, the closest pair (<code>--viz-5</code> and <code>--viz-8</code>) sit at a perceptual distance of 2.2 where about 15 is the readable floor, and no reordering gets the worst neighbouring pair above 7.9. That follows from drawing eight values out of one narrow blue-slate range, so it cannot be fixed by reordering them.</p>
             </div>
           </div>
 

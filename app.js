@@ -984,16 +984,13 @@
         probe.src = 'assets/images/shortlist/' + item.file;
       }
 
-      // The decision, and how it reads on the card. "undecided" gets no badge at
-      // all: it is the default state of most of the library, and a badge on almost
-      // every card is decoration rather than information. The badge earns its place
-      // by marking the ones somebody has actually ruled on.
-      const STATUS = {
-        keep:     { label: 'Keep',     icon: 'check_circle' },
-        cut:      { label: 'Cut',      icon: 'do_not_disturb_on' },
-        licensed: { label: 'Licensed', icon: 'verified' },
-      };
-
+      // No badge on the card for the decision. A green "Keep" tick sitting on two
+      // cards out of fifty raised more questions than it answered — it looks like
+      // the system asserting something about the picture rather than a note
+      // somebody left. The decision still exists and still does its work: cut
+      // images leave the grid, and the filter above the grid is where you act on
+      // status. It is a way of working through the library, not a property of the
+      // photograph, so it belongs in the controls rather than on the artwork.
       function card(item) {
         const a = document.createElement('a');
         const status = item.status || 'undecided';
@@ -1006,10 +1003,8 @@
         // on this card used to say "Adobe Stock" outright, which was true of all
         // fifty images and would have been a lie about the first one that wasn't.
         const where = item.sourceName || 'the source';
-        a.setAttribute('aria-label',
-          item.title + ' — ' + (wanted ? 'not downloaded yet, ' : '') +
-          (STATUS[status] ? STATUS[status].label.toLowerCase() + ', ' : '') +
-          'open on ' + where);
+        a.setAttribute('aria-label', item.title +
+          (wanted ? ' — not downloaded yet' : '') + ' — open on ' + where);
 
         const frame = document.createElement('div');
         frame.className = 'shot-frame';
@@ -1026,14 +1021,6 @@
         slot.querySelector('.shot-slot-id').textContent = item.id;
         frame.appendChild(slot);
 
-        if (STATUS[status]) {
-          const badge = document.createElement('span');
-          badge.className = 'shot-status shot-status--' + status;
-          badge.innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">' +
-                            STATUS[status].icon + '</span><span></span>';
-          badge.lastChild.textContent = STATUS[status].label;
-          frame.appendChild(badge);
-        }
 
         // Nothing else goes on the frame. It carried a rank chip ("Data, AI &
         // security · 1", both facts already on screen) and a priority chip
@@ -1056,20 +1043,13 @@
         // The rest is reference for when you are looking at one image closely, and
         // it has not been deleted — it is all still in library.json, and the whole
         // note is on the card's tooltip.
-        // Title only. The contributor's name and a licence verdict used to sit
-        // under it; both are gone from the face of the card. The contributor is
-        // not something anyone chooses an image by, and the licence position is
-        // already stated once at the top of the page and again by the service name
-        // in the footer — repeating it 56 times was belt, braces and a third belt.
-        // Both are still in library.json and both are on the tooltip.
-        const body = document.createElement('div');
-        body.className = 'shot-body';
-        body.innerHTML = '<span class="shot-title"></span>';
-        body.querySelector('.shot-title').textContent = item.title;
-
-        // Reasoning moves to the tooltip: available on the one card you are looking
-        // at, absent from the forty you are scrolling past.
-        const notes = [item.why, item.use && 'Use: ' + item.use, item.crop,
+        // No text on the card. The title, contributor, licence and reviewer notes
+        // all used to sit under the photograph; the whole point of this page is
+        // comparing pictures, and eight lines of small type under each one is the
+        // main thing stopping you doing that. A grid of images reads as a grid of
+        // images. Everything is still in library.json, and the full note is on the
+        // tooltip of whichever card you are actually looking at.
+        const notes = [item.title, item.why, item.use && 'Use: ' + item.use, item.crop,
                        item.by && 'By ' + item.by, item.licence, item.dim]
           .filter(Boolean).join('\n\n');
         if (notes) a.title = notes;
@@ -1080,7 +1060,7 @@
                          '<span class="material-symbols-rounded" aria-hidden="true">open_in_new</span>';
         foot.firstChild.textContent = where;
 
-        a.append(frame, body, foot);
+        a.append(frame, foot);
         findImage(a, item);
         return a;
       }
