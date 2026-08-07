@@ -281,9 +281,10 @@
            is the current one by construction rather than by somebody remembering to
            re-export it.
 
-           No download links on purpose: half of these are page designs rather than
-           documents, and a "download" that hands you a PNG of a white paper would be
-           worse than nothing. -->
+           Each thumbnail links to its full-size 200dpi render — the card is a crop,
+           the click is the whole artifact. Still no "download" buttons: half of these
+           are page designs rather than documents, and a download that hands you a PNG
+           of a white paper would still be worse than nothing. A view is not a file. -->
       <section class="block" id="kits">
         <div class="container">
           <div class="section-head">
@@ -293,49 +294,49 @@
 
           <div class="kit-grid">
             <figure class="kit">
-              <img class="kit-shot" src="assets/images/kits/case-study.png" alt="Case study PDF layout" loading="lazy" decoding="async" />
+              <a class="kit-link" href="assets/images/kits/case-study.png" target="_blank" rel="noopener" aria-label="Open the full-size render"><img class="kit-shot" src="assets/images/kits/case-study.png" alt="Case study PDF layout" loading="lazy" decoding="async" /></a>
               <figcaption class="kit-cap">
                 <span class="kit-name">Case study PDF</span>
                 <span class="kit-desc">Four-page shell: cover, challenge, approach, impact, CTA.</span>
               </figcaption>
             </figure>
             <figure class="kit">
-              <img class="kit-shot" src="assets/images/kits/one-pager.png" alt="One-pager — case study layout" loading="lazy" decoding="async" />
+              <a class="kit-link" href="assets/images/kits/one-pager.png" target="_blank" rel="noopener" aria-label="Open the full-size render"><img class="kit-shot" src="assets/images/kits/one-pager.png" alt="One-pager — case study layout" loading="lazy" decoding="async" /></a>
               <figcaption class="kit-cap">
                 <span class="kit-name">One-pager &mdash; case study</span>
                 <span class="kit-desc">Two pages: outcomes, client quote, approach, timeline.</span>
               </figcaption>
             </figure>
             <figure class="kit">
-              <img class="kit-shot" src="assets/images/kits/one-pager-pdf.png" alt="One-pager — service offering layout" loading="lazy" decoding="async" />
+              <a class="kit-link" href="assets/images/kits/one-pager-pdf.png" target="_blank" rel="noopener" aria-label="Open the full-size render"><img class="kit-shot" src="assets/images/kits/one-pager-pdf.png" alt="One-pager — service offering layout" loading="lazy" decoding="async" /></a>
               <figcaption class="kit-cap">
                 <span class="kit-name">One-pager &mdash; service offering</span>
                 <span class="kit-desc">Two pages: title and stats, then process, deliverables and CTA.</span>
               </figcaption>
             </figure>
             <figure class="kit">
-              <img class="kit-shot" src="assets/images/kits/white-paper.png" alt="White paper layout" loading="lazy" decoding="async" />
+              <a class="kit-link" href="assets/images/kits/white-paper.png" target="_blank" rel="noopener" aria-label="Open the full-size render"><img class="kit-shot" src="assets/images/kits/white-paper.png" alt="White paper layout" loading="lazy" decoding="async" /></a>
               <figcaption class="kit-cap">
                 <span class="kit-name">White paper</span>
                 <span class="kit-desc">Ten pages, and the widest sampling of the kit &mdash; most components appear at least once.</span>
               </figcaption>
             </figure>
             <figure class="kit">
-              <img class="kit-shot" src="assets/images/kits/envision.png" alt="Envision deck layout" loading="lazy" decoding="async" />
+              <a class="kit-link" href="assets/images/kits/envision.png" target="_blank" rel="noopener" aria-label="Open the full-size render"><img class="kit-shot" src="assets/images/kits/envision.png" alt="Envision deck layout" loading="lazy" decoding="async" /></a>
               <figcaption class="kit-cap">
                 <span class="kit-name">Envision deck</span>
                 <span class="kit-desc">Twelve slides. The reference for section rhythm and divider treatment.</span>
               </figcaption>
             </figure>
             <figure class="kit">
-              <img class="kit-shot" src="assets/images/kits/kickoff.png" alt="Kickoff deck layout" loading="lazy" decoding="async" />
+              <a class="kit-link" href="assets/images/kits/kickoff.png" target="_blank" rel="noopener" aria-label="Open the full-size render"><img class="kit-shot" src="assets/images/kits/kickoff.png" alt="Kickoff deck layout" loading="lazy" decoding="async" /></a>
               <figcaption class="kit-cap">
                 <span class="kit-name">Kickoff deck</span>
                 <span class="kit-desc">Built to the Envision rhythm: section dividers, consistent eyebrows, themed imagery.</span>
               </figcaption>
             </figure>
             <figure class="kit">
-              <img class="kit-shot" src="assets/images/kits/marketing.png" alt="Marketing page layout" loading="lazy" decoding="async" />
+              <a class="kit-link" href="assets/images/kits/marketing.png" target="_blank" rel="noopener" aria-label="Open the full-size render"><img class="kit-shot" src="assets/images/kits/marketing.png" alt="Marketing page layout" loading="lazy" decoding="async" /></a>
               <figcaption class="kit-cap">
                 <span class="kit-name">Marketing page</span>
                 <span class="kit-desc">rbaconsulting.com: nav, hero, services, stats, approach, case study, footer.</span>
@@ -344,6 +345,34 @@
           </div>
 
           <p class="palette-note u-mt-md">Two things to take from these rather than the specifics: every page has one idea on it, and the type is doing the work &mdash; not boxes, rules or shading.</p>
+        </div>
+      </section>
+
+      <section class="block" id="mockups">
+        <div class="container">
+          <div class="section-head">
+            <h2 class="section-title">Device mockups</h2>
+            <p class="section-lede">Put a screen into a device frame without owning design software. <a href="https://shots.so/" target="_blank" rel="noopener">shots.so</a> generates phone, tablet and browser mockups from a screenshot &mdash; free, fast, and current-generation devices.</p>
+          </div>
+
+          <div class="callout">
+            <span class="material-symbols-rounded" aria-hidden="true">smartphone</span>
+            <div class="callout-body">
+              <p><strong>Phone mockups need the status bar first.</strong> The tool frames your image exactly as supplied, and a phone screen with no status bar reads as fake at a glance. Composite the brand status bar onto the top of your UI image before uploading &mdash; it's the difference between a screenshot in a frame and a believable device.</p>
+            </div>
+          </div>
+
+          <p class="palette-note u-mt-md">
+            <a class="btn btn-secondary btn--sm" href="assets/images/status-bar.svg" download>
+              <span class="material-symbols-rounded" aria-hidden="true">download</span>
+              <span>Download status bar (SVG)</span>
+            </a>
+            <a class="btn btn-secondary btn--sm" href="https://shots.so/" target="_blank" rel="noopener">
+              <span class="material-symbols-rounded" aria-hidden="true">open_in_new</span>
+              <span>Open shots.so</span>
+            </a>
+            <span class="lib-bundle-note lib-bundle-note--inline">SVG scales to any device resolution; drop it on a white or light UI</span>
+          </p>
         </div>
       </section>
 

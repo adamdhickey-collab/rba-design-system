@@ -276,10 +276,11 @@
         { title: 'Typography',        category: 'Foundations', page: 'index.html',     anchor: '#type',     keywords: 'font fonts typeface montserrat libre caslon serif sans type scale heading body' },
         { title: 'Logos',             category: 'Foundations', page: 'index.html',     anchor: '#logo',     keywords: 'logo mark wordmark monogram clear space reversed svg' },
         { title: 'Voice',             category: 'Foundations', page: 'index.html',     anchor: '#voice',    keywords: 'tone voice writing copy words banned jargon buzzwords style wording language proposal' },
-        { title: 'Components',        category: 'Build',       page: 'components.html', anchor: '',         keywords: 'button buttons card cards cta stat stats bullet list layout spacing padding radius corner shadow spec token tokens' },
+        { title: 'Components',        category: 'Build',       page: 'components.html', anchor: '',         keywords: 'button buttons card cards cta stat stats bullet list layout spacing padding radius corner shadow spec token tokens accent line bar section' },
         { title: 'Icons',             category: 'Library',     page: 'icons.html',     anchor: '',          keywords: 'icon iconography glyph symbol svg png outline line download library chart people finance data document technology' },
         { title: 'Brand images',      category: 'Library',     page: 'images.html',    anchor: '',          keywords: 'photo photography image picture illustration stock download' },
         { title: 'Templates & decks', category: 'Library',     page: 'templates.html', anchor: '',          keywords: 'powerpoint pptx deck slides word docx template letterhead document download' },
+        { title: 'Device mockups',    category: 'Library',     page: 'templates.html', anchor: '#mockups',  keywords: 'mockup mockups phone tablet browser device frame shots screenshot status bar' },
       ];
 
       const overlay = document.getElementById('search-overlay');

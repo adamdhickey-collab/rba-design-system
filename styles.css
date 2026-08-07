@@ -389,6 +389,26 @@
       min-width: 0;
     }
 
+    /* ---------- Page entrance ---------- */
+    /* One staggered rise on load: the mark, then the hero copy, then the first
+       block, 10px and done. Three elements, one direction, no bounce — the premium
+       read comes from restraint and timing, not from distance. Transform and
+       opacity only, so nothing lays out twice; `both` fill so there is no flash
+       of unstyled position before the delay. Replays on each page navigation,
+       which is why the whole sequence is under half a second. */
+    @keyframes rba-enter {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .hero-mark { animation: rba-enter 480ms cubic-bezier(0.2, 0.6, 0.2, 1) both; }
+    .hero .container { animation: rba-enter 360ms cubic-bezier(0.2, 0.6, 0.2, 1) 60ms both; }
+    .app-main > .block:first-of-type > .container { animation: rba-enter 360ms cubic-bezier(0.2, 0.6, 0.2, 1) 140ms both; }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-mark,
+      .hero .container,
+      .app-main > .block:first-of-type > .container { animation: none; }
+    }
+
     /* ==========================================================================
        Responsive navigation · below the system's lg (1024) breakpoint
        --------------------------------------------------------------------------
@@ -646,6 +666,20 @@
       line-height: 1.2;
       color: var(--brand);
       letter-spacing: normal;
+    }
+    /* Section accent line — the canonical 50x5 aqua bar above an H2 on content
+       pages, 15px of air beneath it. Values are the published spec, not this
+       site's own: 50px x 5px, #14BADB, 15px margin-bottom. Aqua is legal here
+       because the bar is a graphic, not text. The spec's two exclusions — never
+       on dashboards, never directly below a header band — both hold on this
+       site: it isn't a dashboard, and no .section-title sits against the hero. */
+    .section-title::before {
+      content: "";
+      display: block;
+      width: 50px;
+      height: 5px;
+      background: var(--aqua);
+      margin-bottom: 15px;
     }
     /* The hero steps to 38px on phones; a fixed 40px section title would outrank it. */
     @media (max-width: 599.98px) { .section-title { font-size: 32px; } }
@@ -1971,6 +2005,23 @@
       align-items: center;
       gap: var(--space-4);
     }
+    /* The accent-line specimen: bar and heading at the published values (the
+       heading is the official 40px h2, not this site's furniture). */
+    .demo-accent-bar {
+      display: block;
+      width: 50px;
+      height: 5px;
+      background: var(--aqua);
+      margin-bottom: 15px;
+    }
+    .demo-accent-title {
+      font-family: var(--font-sans);
+      font-weight: 800;
+      font-size: 40px;
+      line-height: 1.2;
+      color: var(--brand);
+      margin-bottom: var(--space-3);
+    }
     .spec-note {
       font-family: var(--font-micro);
       font-size: 11px;
@@ -2248,6 +2299,15 @@
       object-position: top center;
       border-bottom: 1px solid var(--border-subtle);
       background: var(--surface-pill);
+    }
+    /* The thumbnail links to its full-size render. The affordance is deliberately
+       quiet — a brightness lift on hover, a visible ring on focus — because the
+       card caption, not the picture, is where the eye reads. */
+    .kit-link { display: block; }
+    .kit-link:hover .kit-shot { filter: brightness(1.04); }
+    .kit-link:focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: -2px;
     }
     .kit-cap {
       display: flex;
