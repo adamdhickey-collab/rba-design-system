@@ -50,10 +50,14 @@
          Both are vertical (180deg). The stops and the angle are the specification, not
          a starting point — a 135deg version of this wash is a different asset. */
       --grad-sky:  linear-gradient(180deg, #E6F8FB 0%, #9DDBF6 100%);
-      --grad-hero: linear-gradient(180deg, #E6F8FB 0%, #BDE4F1 100%);
+      /* --grad-hero is gone. It was the same ramp as Sky stopping short, nothing used
+         it, and having two washes that differ only in where they stop made people pick
+         between them for no reason. Its end stop is still on the page as the Sky Blue
+         swatch. --grad-c went with it; --grad-a and --grad-b document Sky's own stops
+         and are likewise referenced by nothing, but they describe a gradient that still
+         exists, so they stay. */
       --grad-a:    #E6F8FB;   /* shared first stop, for swatch documentation */
       --grad-b:    #9DDBF6;   /* --grad-sky's end stop                      */
-      --grad-c:    #BDE4F1;   /* --grad-hero's end stop                     */
 
       /* ---- Brand · neutrals ---- */
       --black:        #333333;  /* Body text. Note: not #000000.  */
@@ -522,27 +526,27 @@
       overflow: hidden;
       border-bottom: 1px solid var(--border);
     }
-    /* Cropped, not shrunk. The device is a four-lobed knot around a circular void with a
-       gap in one side, and at any size that fits the band you get the whole logo, small
-       and polite. Blown up past the frame instead, that void's edge becomes a long
-       crescent sweeping through the right of the hero and the lobes read as soft masses
-       — a shape with some life in it, rather than a second logo competing with the one
-       in the rail.
+    /* Nearly whole, and lighter than the page rather than darker.
 
-       205% of the hero's height puts the void about 80% across the band, and -22% throws
-       the right-hand lobes off the edge so the eye finishes the form. Off the hero's
-       height rather than the viewport, so the crop is the same composition at every
-       width. Opacity is the whole trick: at 12% the crescent starts arguing with the
-       headline, at 7% there is no shape left to look at. */
+       Two changes from the previous pass, which had it at 205% and cropped to a
+       crescent. At 112% the four-lobed knot and its circular void both sit inside the
+       band — it reads as the device again instead of an abstract sweep, with just enough
+       bleed top and bottom that it is not a logo someone placed.
+
+       And it is white now, not midnight. A dark watermark is a stain on the gradient: it
+       sits on top of the wash and every edge is a smudge. White at 45% catches the
+       gradient the way an emboss does, which is both softer and structurally safer —
+       lightening the surface behind the copy can only help the dark type on it, where
+       darkening it was eating into the headline's contrast. */
     .hero-mark {
       position: absolute;
       top: 50%;
-      right: -22%;
+      right: 3%;
       width: auto;
-      height: 205%;
+      height: 112%;
       transform: translateY(-50%);
-      color: var(--midnight);
-      opacity: 0.10;
+      color: #FFFFFF;
+      opacity: 0.45;
       pointer-events: none;
       user-select: none;
     }
@@ -560,7 +564,9 @@
         width: 62%;
         height: auto;
         transform: translateY(-14%);
-        opacity: 0.05;
+        /* 0.05 was calibrated for a dark mark. Against white it is invisible — the
+           phone hero would have had no device on it at all. */
+        opacity: 0.40;
       }
     }
     .hero > .container { position: relative; }
@@ -2418,9 +2424,9 @@
     [data-theme="dark"] .hero {
       background: linear-gradient(180deg, var(--midnight) 0%, var(--bg) 100%);
     }
-    /* Midnight-on-midnight is nothing. The watermark switches to aqua, which is the
-       role --brand already takes in dark mode. */
-    [data-theme="dark"] .hero-mark { color: var(--aqua); opacity: 0.07; }
+    /* White at 45% would be a floodlight on a near-black page. Dark mode keeps the same
+       lighter-than-the-surface idea at the weight that surface can take. */
+    [data-theme="dark"] .hero-mark { color: #FFFFFF; opacity: 0.055; }
 
     /* Outline and ghost hovers read in aqua, not midnight.
 
@@ -3087,7 +3093,6 @@
       box-shadow: inset 0 0 0 1px rgba(13, 24, 47, 0.08);
     }
     .gradient-demo--sky  { background: var(--grad-sky); }
-    .gradient-demo--hero { background: var(--grad-hero); }
 
     /* ---------- Data-visualization palette ----------
        One card, eight swatches, one row. The page previously carried a chip grid
