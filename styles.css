@@ -49,7 +49,6 @@
 
       /* ---- Brand · neutrals ---- */
       --black:        #333333;  /* Body text. Note: not #000000.  */
-      --text-sec:     #444441;  /* Secondary text.                */
       --dark-grey:    #666666;  /* Muted text.                    */
       --med-grey:     #AAAAAA;  /* Strong borders.                */
       --light-grey:   #DDDDDD;  /* Default borders.               */
@@ -769,7 +768,11 @@
       font-size: 12px;
       color: var(--text-muted);
     }
-    .font-get-alt:hover { color: var(--brand); }
+    /* Underline on hover only. A permanently underlined link sitting immediately
+       beside a button reads as a second, broken button; in this row the context
+       already makes it obviously a link. */
+    .font-get-alt { text-decoration: none; }
+    .font-get-alt:hover { color: var(--brand); text-decoration: underline; }
 
     /* ---------- Type specimen · the official scale ----------
        These classes exist to DOCUMENT the published scale, so their values are copied
@@ -1002,18 +1005,25 @@
        flex-basis with a floor, so it keeps the text whole at desktop widths and
        still gives way before the search field does when the row gets tight. */
     .lib-pack:has(.lib-status-select) { flex: 0 1 250px; min-width: 190px; }
-    .lib-pack .material-symbols-rounded {
+    /* Scoped to :first-child so it cannot also claim the caret. It used to be
+       `.lib-pack .material-symbols-rounded`, which at 0,2,0 outweighed the 0,1,0
+       `.lib-pack-caret` rule below — the caret kept left:12px from here AND took
+       right:12px from there, so it stretched across the field and drew its glyph
+       on top of the leading icon. Two icons in the same place, one of them the
+       wrong way round. */
+    .lib-pack > .material-symbols-rounded:first-child {
       position: absolute;
       left: 12px;
       font-size: 20px;
       color: var(--text-muted);
       pointer-events: none;
     }
-    .lib-pack-caret {
+    .lib-pack .lib-pack-caret {
       position: absolute;
-      right: 12px;
-      font-size: 18px;
-      color: var(--text-muted);
+      left: auto;
+      right: 10px;
+      font-size: 20px;
+      color: var(--text-soft);
       pointer-events: none;
     }
     .lib-pack-select {
@@ -1023,9 +1033,12 @@
       font-size: 14px;
       line-height: 22px;
       width: 100%;
-      padding: 10px 34px 10px 40px;
+      padding: 10px 38px 10px 40px;
       border: 1px solid var(--border-input);
-      border-radius: var(--radius-pill);
+      /* A rectangle, not a pill. A pill reads as a filter chip you toggle; this is
+         a menu you open, and the search field beside it is the only thing on the
+         row that should look like a pill. */
+      border-radius: var(--corner-radius-base);
       background: var(--surface-input);
       color: var(--text);
       min-height: var(--touch-target-min);
@@ -1155,12 +1168,10 @@
     .shot-status--licensed { background: var(--accent); }
     .shot-status--cut      { background: rgba(51, 51, 51, 0.82); }
 
-    /* A cut image stays on the board — the record of having rejected something is
-       worth as much as the shortlist — but it stops competing with the live ones.
-       Full opacity returns on hover so it can still be reconsidered. */
-    .shot-card--cut { opacity: 0.48; filter: saturate(0.4); }
-    .shot-card--cut:hover,
-    .shot-card--cut:focus-within { opacity: 1; filter: none; }
+    /* No dimmed state for cut images: they are filtered out of the grid entirely
+       and only reappear under the "Cut" filter, where dimming them would be
+       perverse. The rejection is still recorded in library.json, which is where a
+       record belongs — a browsable library should show what you might use. */
 
     /* Wanted: shortlisted, not downloaded. Dashed rather than dimmed, because this
        is an open task rather than a closed decision. */
@@ -1562,49 +1573,39 @@
     @media (hover: none) { .token-copy-icon { opacity: 1; } }
 
     /* ---------- Asset download (JS-injected hover button on any asset tile) ---------- */
-    /* .glyph-cell is here for its own corner Copy button, not for .asset-dl — the
-       icon tiles carry explicit SVG/PNG links instead of a hover download. */
+    /* .glyph-cell is here for its own corner Copy button; the icon tiles carry
+       explicit SVG/PNG links of their own. */
     .logo-card, .glyph-cell, .photo-card-img { position: relative; }
+    /* Swatch on top, its download underneath. The wrapper exists only so the link
+       has somewhere to live outside the coloured card. */
+    .logo-item { display: flex; flex-direction: column; align-items: flex-start; }
+    .logo-item .logo-card { width: 100%; }
+
+    /* A labelled link under the tile, in flow. This used to be a 32px icon button
+       positioned over the top-right corner at opacity 0, revealed on hover — which
+       hid the primary action of an asset library behind a mouse gesture, and hid it
+       permanently on any touch device. Being in flow also means it can never cover
+       part of the logo it belongs to. */
     .asset-dl {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      width: 32px;
-      height: 32px;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      padding: 0;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-pill);
-      background: var(--surface);
-      color: var(--text-soft);
+      gap: 5px;
+      margin-top: var(--space-3);
+      padding: 4px 0;
+      border: 0;
+      background: none;
+      font-family: var(--font-micro);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--brand);
       cursor: pointer;
-      box-shadow: var(--shadow-sm);
-      opacity: 0;
-      transform: translateY(-2px);
-      transition: opacity 120ms ease, transform 120ms ease, background 120ms ease, color 120ms ease, border-color 120ms ease;
-      z-index: 4;
+      transition: color 120ms ease;
     }
-    .asset-dl .material-symbols-rounded { font-size: 18px; }
-    .asset-dl:hover, .asset-dl:focus-visible {
-      background: var(--brand);
-      color: var(--on-accent);
-      border-color: var(--brand);
-    }
-    /* The button is revealed on hover, so :focus-visible has to reveal it too — a
-       keyboard user tabbing to an invisible download button is the whole failure. */
-    .asset-dl:focus-visible { opacity: 1; transform: none; outline: 2px solid var(--brand); outline-offset: 2px; }
+    .asset-dl .material-symbols-rounded { font-size: 15px; }
+    .asset-dl:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    .asset-dl:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 3px; }
     .asset-dl:active { transform: translateY(1px); }
-    .logo-card:hover .asset-dl, .logo-card:focus-within .asset-dl,
-    .photo-card:hover .asset-dl, .photo-card:focus-within .asset-dl {
-      opacity: 1;
-      transform: none;
-    }
-    /* Touch / no-hover devices: keep the affordance visible */
-    @media (hover: none) {
-      .asset-dl { opacity: 1; transform: none; }
-    }
 
     /* ---------- Brand photography gallery ---------- */
     .photo-grid {
@@ -1630,6 +1631,11 @@
 
     /* Buttons */
     .btn {
+      /* Buttons are never underlined, including when they are anchors. The base
+         `a` rule underlines everything, and .btn never opted out — so a download
+         button drew a line under its label AND under the icon sitting beside it,
+         because the icon is inside the same anchor. */
+      text-decoration: none;
       font-family: var(--font-sans);
       font-weight: 700;
       font-size: 16px;
@@ -2431,12 +2437,17 @@
        this width and orphaned the eighth on a row of its own, which read as a
        bug. Fixed count also gives each chip enough width for the pattern to be
        legible rather than a texture hint. */
+    /* All eight in one row, so the palette reads as one set rather than two rows of
+       four that invite comparison within a row and not across it. The swatches are
+       square (see .viz-chip-band) and the patterns are drawn in a square viewBox,
+       so circles stay circles at every width. */
     .viz-row {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: var(--space-3);
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: var(--space-2);
     }
-    @media (max-width: 900px) { .viz-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 1180px) { .viz-row { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    @media (max-width: 640px)  { .viz-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
     /* ---------- Data-visualization examples ----------
        Worked charts rather than a swatch row, because the palette's real
@@ -2657,8 +2668,12 @@
     }
     .viz-chip:hover { border-color: var(--brand); box-shadow: var(--shadow-sm); }
     .viz-chip:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-    .viz-chip-band { display: block; width: 100%; height: 52px; }
-    .viz-chip-meta { display: block; padding: 8px 10px 9px; }
+    /* Square. The patterns are what make this palette work at all — four series is
+       its honest ceiling on colour alone — so the swatch has to show enough of one
+       to read its texture and its scale. A 52px band cropped the diagonals to a
+       few strokes and made two different hatches look like the same grey. */
+    .viz-chip-band { display: block; width: 100%; aspect-ratio: 1 / 1; height: auto; }
+    .viz-chip-meta { display: block; padding: 7px 8px 8px; }
     .viz-chip-hex {
       display: block;
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;

@@ -1035,16 +1035,15 @@
           frame.appendChild(badge);
         }
 
-        // The rank chip used to sit here reading "Data, AI & security · 1". It was
-        // removed: the category repeats the filter chip you just pressed, and the
-        // rank repeats the card's position in a grid you are already reading in
-        // order. Two facts, both already on screen, competing with the photograph.
-        const pri = document.createElement('span');
-        pri.className = 'shot-priority shot-priority--' +
-          (item.priority === 'Primary pick' ? 'primary'
-            : item.priority === 'Strong alternative' ? 'alt' : 'support');
-        pri.textContent = item.priority;
-        frame.appendChild(pri);
+        // Nothing else goes on the frame. It carried a rank chip ("Data, AI &
+        // security · 1", both facts already on screen) and a priority chip
+        // ("Primary pick" / "Strong alternative" / "Supporting option"). Priority
+        // was a second ranking sitting on top of the first — the cards are already
+        // in rank order — and it competed with the decision badge, which is the
+        // ranking that actually means something now that you can mark things.
+        //
+        // Priority is still DERIVED and still in the manifest, so ordering the
+        // library by it is a one-line change if it is ever wanted back.
 
         // The card carried eight separate pieces of text under a 240px-tall
         // photograph: title, contributor, dimensions, a paragraph of reasoning, an
@@ -1057,26 +1056,21 @@
         // The rest is reference for when you are looking at one image closely, and
         // it has not been deleted — it is all still in library.json, and the whole
         // note is on the card's tooltip.
+        // Title only. The contributor's name and a licence verdict used to sit
+        // under it; both are gone from the face of the card. The contributor is
+        // not something anyone chooses an image by, and the licence position is
+        // already stated once at the top of the page and again by the service name
+        // in the footer — repeating it 56 times was belt, braces and a third belt.
+        // Both are still in library.json and both are on the tooltip.
         const body = document.createElement('div');
         body.className = 'shot-body';
-        body.innerHTML = '<span class="shot-title"></span><span class="shot-meta"></span>';
+        body.innerHTML = '<span class="shot-title"></span>';
         body.querySelector('.shot-title').textContent = item.title;
-
-        // Contributor and licence on one line. The licence is a two-word verdict
-        // rather than the full sentence, because at a glance the only question is
-        // "can this ship?" — "Comp · not licensed" answers it; a paragraph does not.
-        const verdict = item.tier === 'subscription' ? 'Licensed'
-                      : item.tier === 'free' ? 'Free to use'
-                      : 'Comp · not licensed';
-        const meta = body.querySelector('.shot-meta');
-        meta.innerHTML = '<span></span><span class="shot-licence shot-licence--' +
-                         (item.tier || 'paid') + '"></span>';
-        meta.firstChild.textContent = item.by || where;
-        meta.lastChild.textContent = verdict;
 
         // Reasoning moves to the tooltip: available on the one card you are looking
         // at, absent from the forty you are scrolling past.
-        const notes = [item.why, item.use && 'Use: ' + item.use, item.crop, item.dim]
+        const notes = [item.why, item.use && 'Use: ' + item.use, item.crop,
+                       item.by && 'By ' + item.by, item.licence, item.dim]
           .filter(Boolean).join('\n\n');
         if (notes) a.title = notes;
 
@@ -1162,17 +1156,27 @@
         Array.from(grid.children).forEach((el, i) => {
           const it = items[i];
           const st = it.status || 'undecided';
+          // Cut means gone. It used to dim and stay in the grid on the theory that
+          // the record of a rejection is worth keeping — it is, but it belongs in
+          // library.json, not taking up a slot in a library you are browsing. The
+          // reasoning survives in the file and the image is one filter away.
+          const cutAway = st === 'cut' && activeStatus !== 'cut';
           const statusOk = activeStatus === 'all'
             || (activeStatus === 'wanted' ? !it.file : st === activeStatus);
-          const hit = (activeCat === 'all' || it.cat === activeCat) && statusOk &&
+          const hit = !cutAway && (activeCat === 'all' || it.cat === activeCat) && statusOk &&
                       terms.every(term => it.hay.indexOf(term) > -1);
           el.hidden = !hit;
           if (hit) shown++;
         });
         if (count) {
-          count.textContent = shown === items.length
-            ? shown + ' candidates'
-            : shown + ' of ' + items.length + ' candidates';
+          // The denominator excludes cut images unless you are looking at them.
+          // Counting things the grid will never show under the current filter
+          // reads as a bug — "50 of 52" with no way to reach the other two.
+          const pool = activeStatus === 'cut' ? items.length
+            : items.filter(i => (i.status || 'undecided') !== 'cut').length;
+          count.textContent = shown === pool
+            ? shown + ' image' + (shown === 1 ? '' : 's')
+            : shown + ' of ' + pool + ' images';
         }
         const empty = grid.nextElementSibling;
         if (empty && empty.classList.contains('lib-empty')) empty.hidden = shown > 0;
@@ -1322,14 +1326,29 @@
         return URL.createObjectURL(new Blob([out], { type: 'image/svg+xml' }));
       }
 
+      // A labelled link under the tile, not a button that appears on hover.
+      //
+      // The hover button was invisible until you moved the mouse over the right
+      // 40 pixels, which meant the download — the entire point of an asset library
+      // — was the one thing on the page you had to discover. It also could not
+      // exist on a touch device, where there is no hover, so the affordance was
+      // simply missing for anyone on a tablet.
+      //
+      // A permanent "Download SVG" underneath costs one line of 11px type and
+      // tells you both that the file is downloadable and what you will get. The
+      // icon tiles have worked this way all along; this brings the logos into line
+      // with them.
       function attach(host, name, srcFn) {
         if (!host || host.querySelector(':scope > .asset-dl')) return;
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'asset-dl';
-        btn.innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">download</span>';
+        const kind = /\.svg$/i.test(name) ? 'SVG' : name.split('.').pop().toUpperCase();
+        btn.innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">download</span>' +
+                        '<span></span>';
+        btn.lastChild.textContent = 'Download ' + kind;
         btn.setAttribute('aria-label', 'Download ' + name);
-        btn.title = 'Download ' + name;
+        btn.title = name;
         btn.addEventListener('click', ev => {
           ev.preventDefault(); ev.stopPropagation();
           const src = srcFn();
@@ -1345,7 +1364,10 @@
         if (!svg) return;
         const cls = Array.from(svg.classList).find(c => c.indexOf('brand-logo--') === 0);
         const v = cls ? cls.slice('brand-logo--'.length) : 'mark';
-        attach(card, 'rba-logo-' + v + '.svg', () => ({ svg }));
+        // The wrapper, not the card. The card is a fixed-aspect coloured swatch
+        // with the logo centred in it — anything appended inside lands on top of
+        // the artwork it belongs to.
+        attach(card.closest('.logo-item') || card, 'rba-logo-' + v + '.svg', () => ({ svg }));
       });
       // Icon tiles are deliberately NOT handled here. They carry their own SVG and PNG
       // anchors, which the hover button would only duplicate — and attaching one to
