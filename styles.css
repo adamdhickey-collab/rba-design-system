@@ -497,24 +497,38 @@
     .hero {
       background: var(--grad-sky);
       color: var(--text);
-      padding: var(--space-8) 0 var(--space-7);
+      padding: var(--space-9) 0 var(--space-8);
       position: relative;
       overflow: hidden;
       border-bottom: 1px solid var(--border);
     }
-    /* Sized off the hero's own height, not the viewport. A vw-sized mark on a band this
-       short got cropped on three sides at once and stopped reading as the device at all
-       — it looked like a stray blob. At 118% it bleeds top and bottom by a sliver and
-       keeps the interlock, which is the part that makes it recognisable, in frame. */
+    /* The blueprint illustration, above the headline on the home page only — it is the
+       landing moment, and repeating it on Icons or Templates would make it wallpaper.
+       Capped well short of the container so it stays an illustration rather than a
+       band: at full width it read as a second header competing with the title. */
+    .hero-figure {
+      display: block;
+      width: 100%;
+      max-width: 620px;
+      height: auto;
+      margin-bottom: var(--space-6);
+    }
+    /* Sized off the hero's own height, not the viewport — a vw-sized mark on a short
+       band got cropped on three sides at once and stopped reading as anything.
+       Deliberately oversized: at 150% of a hero this tall it bleeds off three edges and
+       lands as a field rather than a logo, which is the only way a mark this large stays
+       a watermark. Pushed to -10% so its bulk sits right of the illustration instead of
+       through it, and dropped to 7% because area and opacity trade off — the same 8%
+       that read as paper at a third this size read as a shape. */
     .hero-mark {
       position: absolute;
       top: 50%;
-      right: 4%;
+      right: -10%;
       width: auto;
-      height: 118%;
+      height: 150%;
       transform: translateY(-50%);
       color: var(--midnight);
-      opacity: 0.08;
+      opacity: 0.07;
       pointer-events: none;
       user-select: none;
     }
