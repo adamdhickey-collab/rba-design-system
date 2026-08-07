@@ -77,15 +77,22 @@
         </button>
       </div>
 
+      <!-- Grouped by what kind of thing each destination is — the same three
+           categories the search palette reports. Labels only, deliberately not
+           collapsible: an earlier collapsing version cost ~90 lines of CSS and JS
+           to navigate eight links, and the headings alone carry the grouping. -->
       <nav class="sidebar-nav" aria-label="Design system">
+        <span class="sidebar-group-label">Foundations</span>
         <a href="#colors" class="sidebar-link">Colors</a>
         <a href="#type" class="sidebar-link">Typography</a>
         <a href="#logo" class="sidebar-link">Logos</a>
         <a href="#voice" class="sidebar-link">Voice</a>
-        <a href="components.html" class="sidebar-link">Components</a>
+        <span class="sidebar-group-label">Library</span>
         <a href="icons.html" class="sidebar-link">Icons</a>
         <a href="images.html" class="sidebar-link">Brand images</a>
         <a href="templates.html" class="sidebar-link">Templates &amp; decks</a>
+        <span class="sidebar-group-label">Build</span>
+        <a href="components.html" class="sidebar-link">Components</a>
       </nav>
 
       <div class="sidebar-foot">
@@ -105,47 +112,71 @@
         </div>
       </header>
 
+      <!-- Position indicator for a page four sections and many screens tall. The
+           sidebar spies the same sections on desktop, but on a phone the rail is an
+           off-canvas drawer, and this strip is the only visible answer to "where am
+           I". Same-page hashes on purpose — the scroll-spy binds to them. -->
+      <nav class="subnav" aria-label="On this page">
+        <div class="container subnav-inner">
+          <a href="#colors" class="subnav-link">Colors</a>
+          <a href="#type" class="subnav-link">Typography</a>
+          <a href="#logo" class="subnav-link">Logos</a>
+          <a href="#voice" class="subnav-link">Voice</a>
+        </div>
+      </nav>
+
       <section class="block" id="start">
         <div class="container">
           <div class="callout">
             <span class="material-symbols-rounded" aria-hidden="true">lightbulb</span>
             <div class="callout-body">
-              <p><strong>How to use this.</strong> Foundations tell you what the brand is — copy a hex, check a typeface, grab a logo. The library is where files live: every asset has its own download link, or take a whole collection as a zip. Press <kbd>⌘K</kbd> to jump anywhere.</p>
-              <p>Light and dark both ship. The toggle in the sidebar remembers your choice across pages.</p>
+              <p><strong>How to use this.</strong> Pick your job below, or press <kbd>⌘K</kbd> to jump anywhere. Every asset has its own download link — or take a whole collection as a zip.</p>
             </div>
           </div>
 
-          <div class="home-grid">
-            <a class="home-card" href="#colors">
-              <span class="material-symbols-rounded home-card-icon" aria-hidden="true">palette</span>
-              <span class="home-card-title">Colors</span>
-              <span class="home-card-desc">The palette with hex values, click any swatch to copy.</span>
-            </a>
-            <a class="home-card" href="#type">
-              <span class="material-symbols-rounded home-card-icon" aria-hidden="true">text_fields</span>
-              <span class="home-card-title">Typography</span>
-              <span class="home-card-desc">Montserrat and Libre Caslon Text, with the full scale.</span>
-            </a>
-            <a class="home-card" href="#logo">
-              <span class="material-symbols-rounded home-card-icon" aria-hidden="true">workspaces</span>
-              <span class="home-card-title">Logos</span>
-              <span class="home-card-desc">Every colorway, on every background it has to survive.</span>
-            </a>
-            <a class="home-card" href="icons.html">
-              <span class="material-symbols-rounded home-card-icon" aria-hidden="true">interests</span>
-              <span class="home-card-title">Icons</span>
-              <span class="home-card-desc">1,490 named icons. Search, then take an SVG or a PNG.</span>
-            </a>
-            <a class="home-card" href="images.html">
-              <span class="material-symbols-rounded home-card-icon" aria-hidden="true">image</span>
-              <span class="home-card-title">Brand images</span>
-              <span class="home-card-desc">Fifty photographs and backgrounds, searchable by subject.</span>
-            </a>
-            <a class="home-card" href="templates.html">
-              <span class="material-symbols-rounded home-card-icon" aria-hidden="true">description</span>
-              <span class="home-card-title">Templates &amp; decks</span>
-              <span class="home-card-desc">PowerPoint, Word and Excel, linked to the live copies.</span>
-            </a>
+          <!-- Task-based entry, not a section directory. The rail already lists every
+               section; repeating it here as six identical cards answered a question
+               nobody arrives with. People arrive with a job — a deck due, a proposal
+               to write — so each block below is a job, deep-linked to the three or
+               four places that actually answer it. -->
+          <div class="task-grid">
+            <section class="task-card">
+              <h3 class="task-title">Building a deck</h3>
+              <p class="task-desc">Start from the master, never from last quarter's copy.</p>
+              <ul class="task-links">
+                <li><a href="templates.html">Open the PowerPoint master</a></li>
+                <li><a href="templates.html#kits">See what a finished deck looks like</a></li>
+                <li><a href="#colors">Copy a hex from the palette</a></li>
+                <li><a href="#type">Check a type size or weight</a></li>
+              </ul>
+            </section>
+            <section class="task-card">
+              <h3 class="task-title">Writing a proposal or one-pager</h3>
+              <p class="task-desc">The words, and the shell they go in.</p>
+              <ul class="task-links">
+                <li><a href="#voice">How RBA sounds &mdash; and the banned words</a></li>
+                <li><a href="templates.html#kits">One-pager layouts to check against</a></li>
+                <li><a href="#type">The two typefaces and their rules</a></li>
+              </ul>
+            </section>
+            <section class="task-card">
+              <h3 class="task-title">Making something on-brand</h3>
+              <p class="task-desc">The raw material &mdash; every asset is downloadable.</p>
+              <ul class="task-links">
+                <li><a href="#colors">The palette, click to copy</a></li>
+                <li><a href="#logo">The right logo for the background</a></li>
+                <li><a href="icons.html">1,490 icons, SVG or PNG</a></li>
+                <li><a href="images.html">The photography shortlist</a></li>
+              </ul>
+            </section>
+            <section class="task-card">
+              <h3 class="task-title">Building for the web</h3>
+              <p class="task-desc">Live specimens with the numbers underneath.</p>
+              <ul class="task-links">
+                <li><a href="components.html">Component specs &mdash; buttons, cards, layout</a></li>
+                <li><a href="#tokens">Color tokens for stylesheets</a></li>
+              </ul>
+            </section>
           </div>
         </div>
       </section>
@@ -176,7 +207,9 @@
                (#162A57) are not on this board, because they are not on the source one —
                they are button states, and they live in the token table below and on the
                button spec. And the names here are the source's names: Midnight is
-               "Primary", the greys are Text / Text Muted / Border Strong / Border. -->
+               "Primary", the greys are Text / Text Muted / Border Strong / Border.
+               Each swatch also carries its CSS token name, so "Primary" and
+               --midnight read as one colour rather than two. -->
 
           <div class="palette-group">
             <h4 class="palette-group-title">Primary Colors</h4>
@@ -189,6 +222,7 @@
                   <span class="palette-swatch-name">Brand Red</span>
                   <span class="palette-swatch-meta">
                     <span class="palette-swatch-hex">#C8252D</span>
+                    <span class="palette-swatch-token">--rba-red</span>
                     <span class="palette-swatch-tag">logo only</span>
                   </span>
                 </span>
@@ -199,6 +233,7 @@
                   <span class="palette-swatch-name">Primary</span>
                   <span class="palette-swatch-meta">
                     <span class="palette-swatch-hex">#1D366D</span>
+                    <span class="palette-swatch-token">--midnight</span>
                     <span class="palette-swatch-tag">headings</span>
                   </span>
                 </span>
@@ -209,6 +244,7 @@
                   <span class="palette-swatch-name">Action Blue</span>
                   <span class="palette-swatch-meta">
                     <span class="palette-swatch-hex">#185FA5</span>
+                    <span class="palette-swatch-token">--action</span>
                     <span class="palette-swatch-tag">links, highlights</span>
                   </span>
                 </span>
@@ -219,6 +255,7 @@
                   <span class="palette-swatch-name">Accent</span>
                   <span class="palette-swatch-meta">
                     <span class="palette-swatch-hex">#0D8FA9</span>
+                    <span class="palette-swatch-token">--accent</span>
                     <span class="palette-swatch-tag">CTAs</span>
                   </span>
                 </span>
@@ -229,6 +266,7 @@
                   <span class="palette-swatch-name">Aqua</span>
                   <span class="palette-swatch-meta">
                     <span class="palette-swatch-hex">#14BADB</span>
+                    <span class="palette-swatch-token">--aqua</span>
                     <span class="palette-swatch-tag">decorative</span>
                   </span>
                 </span>
@@ -239,6 +277,7 @@
                   <span class="palette-swatch-name">Navy Dark</span>
                   <span class="palette-swatch-meta">
                     <span class="palette-swatch-hex">#182449</span>
+                    <span class="palette-swatch-token">--navy-dark</span>
                     <span class="palette-swatch-tag">dark bg</span>
                   </span>
                 </span>
@@ -249,6 +288,7 @@
                   <span class="palette-swatch-name">BG Dark</span>
                   <span class="palette-swatch-meta">
                     <span class="palette-swatch-hex">#1A2332</span>
+                    <span class="palette-swatch-token">--bg-dark</span>
                     <span class="palette-swatch-tag">footer</span>
                   </span>
                 </span>
@@ -268,6 +308,7 @@
                   <span class="palette-swatch-name">Soft Blue</span>
                   <span class="palette-swatch-meta">
                     <span class="palette-swatch-hex">#8EC3DB</span>
+                    <span class="palette-swatch-token">--soft-blue</span>
                   </span>
                 </span>
               </button>
@@ -277,6 +318,7 @@
                   <span class="palette-swatch-name">Sky Blue</span>
                   <span class="palette-swatch-meta">
                     <span class="palette-swatch-hex">#BDE4F1</span>
+                    <span class="palette-swatch-token">--sky-blue</span>
                   </span>
                 </span>
               </button>
@@ -286,6 +328,7 @@
                   <span class="palette-swatch-name">White Blue</span>
                   <span class="palette-swatch-meta">
                     <span class="palette-swatch-hex">#F5FAFC</span>
+                    <span class="palette-swatch-token">--white-blue</span>
                   </span>
                 </span>
               </button>
@@ -295,6 +338,7 @@
                   <span class="palette-swatch-name">Surface Alt</span>
                   <span class="palette-swatch-meta">
                     <span class="palette-swatch-hex">#F5F5F5</span>
+                    <span class="palette-swatch-token">--white-grey</span>
                   </span>
                 </span>
               </button>
@@ -304,6 +348,7 @@
                   <span class="palette-swatch-name">Text</span>
                   <span class="palette-swatch-meta">
                     <span class="palette-swatch-hex">#333333</span>
+                    <span class="palette-swatch-token">--black</span>
                     <span class="palette-swatch-tag">body</span>
                   </span>
                 </span>
@@ -314,6 +359,7 @@
                   <span class="palette-swatch-name">Text Muted</span>
                   <span class="palette-swatch-meta">
                     <span class="palette-swatch-hex">#666666</span>
+                    <span class="palette-swatch-token">--dark-grey</span>
                     <span class="palette-swatch-tag">meta</span>
                   </span>
                 </span>
@@ -324,6 +370,7 @@
                   <span class="palette-swatch-name">Border Strong</span>
                   <span class="palette-swatch-meta">
                     <span class="palette-swatch-hex">#AAAAAA</span>
+                    <span class="palette-swatch-token">--med-grey</span>
                   </span>
                 </span>
               </button>
@@ -333,6 +380,7 @@
                   <span class="palette-swatch-name">Border</span>
                   <span class="palette-swatch-meta">
                     <span class="palette-swatch-hex">#DDDDDD</span>
+                    <span class="palette-swatch-token">--light-grey</span>
                     <span class="palette-swatch-tag">cards</span>
                   </span>
                 </span>
@@ -522,7 +570,17 @@
             <p class="viz-palette-foot">All 8 pass WCAG&nbsp;1.4.11 vs white. Pair every series with its pattern &mdash; color alone never conveys data.</p>
           </div>
 
-          <h3 class="subhead">Tokens</h3>
+          <!-- Collapsed by default: 20 rows of custom-property names are the one part
+               of this section a non-technical reader should be told they can skip.
+               app.js opens it automatically when a link targets #tokens. -->
+          <details class="dev-disclosure" id="tokens">
+            <summary class="dev-disclosure-summary">
+              <span class="material-symbols-rounded" aria-hidden="true">code</span>
+              <span class="dev-disclosure-title">For developers &mdash; color tokens</span>
+              <span class="dev-disclosure-hint">Skip this unless you're writing a stylesheet</span>
+              <span class="material-symbols-rounded dev-disclosure-caret" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="dev-disclosure-body">
           <p class="palette-note">Reference these rather than raw hex, so a palette correction lands everywhere at once.</p>
           <div class="token-table-scroll" tabindex="0" role="region" aria-label="Color tokens, scrollable">
             <table class="token-table">
@@ -553,6 +611,8 @@
               </tbody>
             </table>
           </div>
+            </div>
+          </details>
         </div>
       </section>
       <section class="block" id="type">
@@ -639,7 +699,14 @@
             </div>
           </div>
 
-          <h3 class="subhead">Tokens</h3>
+          <details class="dev-disclosure" id="type-tokens">
+            <summary class="dev-disclosure-summary">
+              <span class="material-symbols-rounded" aria-hidden="true">code</span>
+              <span class="dev-disclosure-title">For developers &mdash; type tokens</span>
+              <span class="dev-disclosure-hint">Skip this unless you're writing a stylesheet</span>
+              <span class="material-symbols-rounded dev-disclosure-caret" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="dev-disclosure-body">
           <div class="token-table-scroll" tabindex="0" role="region" aria-label="Typography tokens, scrollable">
             <table class="token-table">
               <thead><tr><th>Token</th><th>Value</th><th>Role</th></tr></thead>
@@ -653,6 +720,8 @@
               </tbody>
             </table>
           </div>
+            </div>
+          </details>
 
           <h3 class="subhead">Rules</h3>
           <div class="token-table-scroll" tabindex="0" role="region" aria-label="Typography rules, scrollable">

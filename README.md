@@ -3,6 +3,9 @@
 RBA Consulting's design system — brand foundations and a downloadable asset library. Static HTML,
 CSS and JavaScript — no build step, no dependencies, no package manager.
 
+**Start here: [the live site](https://adamdhickey-collab.github.io/rba-design-system/).** This
+README is about maintaining the repo; the site is the thing itself.
+
 > **Logos, the palette and the icons are real. Photography is not — it hasn't been bought
 > yet.** The logo files, favicons and every colour and type value are imported from the
 > brand's own source, and the icon library holds 1,490 real icons, all named. The templates
@@ -20,31 +23,33 @@ CSS and JavaScript — no build step, no dependencies, no package manager.
 >
 > The icons are **purchased stock packs** and carry no licence file. Most stock licences
 > allow use but not redistribution as standalone downloads, which is what the icon page
-> does. The repo is private for that reason; the Pages site is still public, because
-> private Pages needs GitHub Enterprise Cloud. Obscure, not private — see
-> [`assets/icons/README.md`](assets/icons/README.md).
+> does. The repo is public by choice; that redistribution question is a stated risk, not
+> a solved one — see [`assets/icons/README.md`](assets/icons/README.md).
 
 ## Pages
 
 | Page | Contents |
 |---|---|
-| `index.html` | Home, plus Colors, Typography, Logos |
+| `index.html` | Home with task-based entry points, plus Colors, Typography, Logos, Voice |
+| `components.html` | Component specimens — buttons, links, cards, stat blocks, layout tokens |
 | `icons.html` | Icon library — 1,490 icons in 80 packs; search, filter, SVG/PNG download, copy SVG |
 | `images.html` | Brand image shortlist — 50 Adobe Stock candidates to license; filter, search, link out |
-| `templates.html` | Templates & decks — a plain table of files |
+| `templates.html` | Templates & decks — a table of SharePoint-linked files, plus "What good looks like" reference layouts |
 
 The logo, favicons and all token values were imported from the RBA Design System project on
 claude.ai/design via `DesignSync`. The PowerPoint master is **not** copied into this repo:
 SharePoint holds the version that actually gets updated, and a duplicate here would go
 stale without anyone noticing, so `templates.html` links to it instead.
 
-The theme toggle and ⌘K search palette are identical across all four pages. The rail is a
-flat list of six links — it previously had Foundations/Library groups with collapse state
-persisted to localStorage, which was two levels of hierarchy and ~90 lines of CSS and JS
-to navigate six destinations.
+The theme toggle and ⌘K search palette are identical across all five pages. The rail
+groups its eight links under three static labels — Foundations / Library / Build — the
+same categories the search palette reports. The labels are plain headings, not
+collapsible: an earlier version persisted collapse state to localStorage, which was ~90
+lines of CSS and JS to navigate eight destinations, and the labels alone deliver the
+grouping without any of it.
 
 **The rail is NOT identical across pages, in two deliberate ways.** Each page marks its
-own link with `sidebar-link--active` and `aria-current="page"`. And the first three links
+own link with `sidebar-link--active` and `aria-current="page"`. And the first four links
 point at sections that only exist on the home page, so they are written `#colors` on
 `index.html` — a same-page scroll, which is what the scroll-spy binds to — and
 `index.html#colors` everywhere else. Writing a bare `#colors` on the library pages is the

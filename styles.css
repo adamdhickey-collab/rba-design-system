@@ -350,14 +350,22 @@
       font-weight: 700;
     }
 
-    /* Collapsible sidebar groups · Foundations / System / Components can each be expanded
-       or collapsed independently, so a long nav (10 Foundations+System links plus ~50
-       component anchors) doesn't have to render fully open all the time. Getting started
-       is a single always-visible link, not a group — nothing to collapse. State is
-       per-group and remembered across page loads (localStorage), but the group containing
-       the CURRENT page/section is always force-expanded on load — see
-       rbaExpandActiveNavGroup in app.js — so navigating in never lands on a
-       collapsed target. */
+    /* Static group labels · Foundations / Library / Build. Headings, not controls —
+       an earlier collapsible version persisted per-group state to localStorage, which
+       was ~90 lines of CSS and JS to navigate eight links. The labels alone tell a
+       first-time visitor that Voice and Icons are different kinds of thing, which is
+       the whole job. */
+    .sidebar-group-label {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 0 var(--space-3);
+      margin: var(--space-5) 0 var(--space-1);
+    }
+    .sidebar-group-label:first-child { margin-top: 0; }
 
     .sidebar-foot {
       padding: var(--space-5) var(--space-6) 0;
@@ -373,6 +381,48 @@
     .app-main {
       flex: 1;
       min-width: 0;
+    }
+
+    /* ---------- Home · sticky in-page sub-nav ---------- */
+    /* The home page is four sections and a very long scroll; this strip is the
+       always-visible answer to "where am I". On desktop the sidebar spies the same
+       sections, but below lg the rail is an off-canvas drawer and this is the only
+       position indicator on screen. Sticks under the mobile bar when the drawer
+       chrome is active (the bar is 68px: 44px trigger + 12px padding each side). */
+    .subnav {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .subnav-inner {
+      display: flex;
+      gap: var(--space-2);
+      padding-top: var(--space-2);
+      padding-bottom: var(--space-2);
+      overflow-x: auto;
+    }
+    .subnav-link {
+      flex-shrink: 0;
+      padding: 6px var(--space-3);
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-soft);
+      transition: background-color 120ms ease, color 120ms ease;
+    }
+    .subnav-link:hover { background: var(--neutral-50); color: var(--text); }
+    .subnav-link:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--brand); }
+    .subnav-link--active {
+      background: var(--sky-50);
+      color: var(--brand-deep);
+      font-weight: 700;
+    }
+    @media (max-width: 1023.98px) {
+      [data-nav="drawer"] .subnav { top: 68px; }
     }
 
     /* ==========================================================================
@@ -757,6 +807,15 @@
       font-family: var(--font-mono);
       font-size: 12px;
       text-transform: none;
+      color: var(--text-muted);
+    }
+    /* The CSS token name, beside the brand name it belongs to. The board used to show
+       only the source's names ("Primary") while the token table two screens down said
+       --midnight — same colour, two names, and a reader had to cross-reference to
+       learn they were one thing. */
+    .palette-swatch-token {
+      font-family: var(--font-mono);
+      font-size: 11px;
       color: var(--text-muted);
     }
 
@@ -1615,6 +1674,54 @@
        focusable, labelled region so the scroll is reachable by
        keyboard, and padding-bottom keeps a classic scrollbar off the table's
        bottom border. */
+    /* ---------- "For developers" disclosure ---------- */
+    /* Token tables live behind these on the home page. The values matter to someone
+       writing a stylesheet and read as noise to everyone else — and a non-technical
+       visitor who hits 20 rows of --custom-properties concludes the whole site is
+       for developers. Closed by default; app.js opens one when a link targets an
+       anchor inside it. */
+    .dev-disclosure {
+      border: 1px solid var(--border);
+      border-radius: var(--corner-radius-base);
+      background: var(--surface);
+      margin-bottom: var(--space-6);
+    }
+    .dev-disclosure-summary {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-4) var(--space-5);
+      cursor: pointer;
+      list-style: none;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--text-soft);
+      border-radius: var(--corner-radius-base);
+    }
+    .dev-disclosure-summary::-webkit-details-marker { display: none; }
+    .dev-disclosure-summary:hover { background: var(--neutral-50); }
+    .dev-disclosure-summary:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--brand);
+    }
+    .dev-disclosure-summary .material-symbols-rounded { font-size: 20px; color: var(--text-muted); }
+    .dev-disclosure-title { font-weight: 700; color: var(--text); }
+    .dev-disclosure-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .dev-disclosure-caret {
+      margin-left: auto;
+      transition: transform 160ms ease;
+    }
+    .dev-disclosure[open] .dev-disclosure-caret { transform: rotate(180deg); }
+    .dev-disclosure[open] .dev-disclosure-summary { border-radius: var(--corner-radius-base) var(--corner-radius-base) 0 0; }
+    .dev-disclosure-body { padding: 0 var(--space-5) var(--space-4); }
+    .dev-disclosure-body .token-table-scroll { margin-top: var(--space-2); }
+    @media (max-width: 599.98px) {
+      .dev-disclosure-hint { display: none; }
+    }
+
     .token-table-scroll {
       overflow-x: auto;
       border-radius: var(--corner-radius-base);
@@ -1767,7 +1874,10 @@
       margin: 0;
     }
 
-    /* Buttons */
+    /* Buttons — set to the canonical spec the Components page publishes (48px tall,
+       14px/600, padding 0 20, radius 4). The site's chrome used to run its own
+       metrics (16px/700 at 8x16, radius 8), which meant the page documenting the
+       button spec contradicted it with every button it drew. One spec, obeyed. */
     .btn {
       /* Buttons are never underlined, including when they are anchors. The base
          `a` rule underlines everything, and .btn never opted out — so a download
@@ -1775,11 +1885,12 @@
          because the icon is inside the same anchor. */
       text-decoration: none;
       font-family: var(--font-sans);
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 24px;
-      padding: 8px 16px;
-      border-radius: var(--corner-radius-base);
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 20px;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: var(--radius-sm);
       border: 1px solid transparent;
       cursor: pointer;
       transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
@@ -1803,8 +1914,9 @@
       border-color: transparent !important;
     }
 
-    /* Sizes */
-    .btn--sm { padding: 8px 12px; font-size: 12px; line-height: 18px; }
+    /* Sizes — the compact variant for dense chrome (table rows, download rows).
+       A smaller size is part of the spec; a different default was the contradiction. */
+    .btn--sm { min-height: 36px; padding: 0 12px; font-size: 12px; line-height: 18px; }
 
     /* Icon-only */
     .btn .material-symbols-rounded { font-size: 20px; }
@@ -1876,17 +1988,8 @@
       gap: var(--space-5);
     }
     .spec-demo--tint { background: var(--surface-pill); }
-    /* Buttons inside a specimen are set to the CANONICAL spec (48px tall, 14px/600,
-       padding 0 20, radius 4) rather than to this site's own .btn metrics, which are
-       16px/700 at 8x16. The page documents the system, not itself. Worth knowing that
-       those two are out of step — the site's chrome predates the spec. */
-    .spec-demo .btn {
-      font-size: 14px;
-      font-weight: 600;
-      height: 48px;
-      padding: 0 20px;
-      border-radius: var(--radius-sm, 4px);
-    }
+    /* No .spec-demo .btn override any more: the base .btn IS the canonical spec now,
+       so the specimens and the site's own chrome draw the same button. */
     .spec-row {
       display: flex;
       flex-wrap: wrap;
@@ -2927,13 +3030,16 @@
       margin-top: 2px;
     }
 
-    /* ---------- Home · section cards ---------- */
-    .home-grid {
+    /* ---------- Home · task-based entry ---------- */
+    /* Not links themselves — each card is a small table of contents for one job, and
+       the links inside it are the interactive things. That is why there is no hover
+       lift here: a card that lifts promises to be clickable, and this one isn't. */
+    .task-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: var(--space-4);
     }
-    .home-card {
+    .task-card {
       display: flex;
       flex-direction: column;
       gap: var(--space-2);
@@ -2941,80 +3047,49 @@
       border: 1px solid var(--border);
       border-radius: var(--corner-radius-base);
       background: var(--surface);
-      color: inherit;
-      text-decoration: none;
-      transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
     }
-    .home-card:hover {
-      border-color: var(--brand);
-      box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
-      text-decoration: none;
-    }
-    .home-card:focus-visible {
-      outline: 2px solid var(--brand);
-      outline-offset: 3px;
-      border-color: var(--brand);
-      text-decoration: none;
-    }
-    /* Settles back to rest on press — the lift is "you can pick this up", so releasing
-       it should read as putting it down. */
-    .home-card:active {
-      transform: translateY(0);
-      box-shadow: var(--shadow-sm);
-    }
-    /* Was bare midnight on white: correct, and invisible — six dark glyphs on six white
-       cards read as punctuation. Putting each one on a sky tile in accent teal gives the
-       row a first thing to look at without adding a second heading level. Accent rather
-       than midnight because the tile is already a cool light field: 3.4:1 against
-       --sky-100, which clears 1.4.11 for a non-text graphic. */
-    .home-card-icon {
-      display: grid;
-      place-items: center;
-      width: 44px;
-      height: 44px;
-      border-radius: var(--corner-radius-base);
-      background: var(--sky-100);
-      color: var(--accent);
-      font-size: 24px;
-      margin-bottom: var(--space-2);
-      transition: background-color 120ms ease, color 120ms ease;
-    }
-    /* The tile fills on hover, so the lift has something to travel with. */
-    .home-card:hover .home-card-icon {
-      background: var(--accent);
-      color: #FFFFFF;
-    }
-    [data-theme="dark"] .home-card-icon {
-      background: var(--surface-pill);
-      color: var(--aqua);
-    }
-    [data-theme="dark"] .home-card:hover .home-card-icon {
-      background: var(--aqua);
-      color: var(--on-accent);
-    }
-    .home-card-title {
+    .task-title {
       font-family: var(--font-sans);
       font-weight: 700;
       font-size: 17px;
       line-height: 24px;
-      color: var(--text);
+      color: var(--brand);
     }
-    .home-card-desc {
+    .task-desc {
       font-family: var(--font-sans);
       font-size: 14px;
       line-height: 20px;
       color: var(--text-muted);
+    }
+    .task-links {
+      list-style: none;
+      margin: var(--space-2) 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    /* Square aqua bullet — the brand's own bullet rule, at list scale. */
+    .task-links li {
+      position: relative;
+      padding-left: var(--space-4);
+      font-size: 14px;
+      line-height: 20px;
+    }
+    .task-links li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 6px;
+      height: 6px;
+      background: var(--aqua);
     }
     /* One place for every motion opt-out on this page, so a new transition can't quietly
        escape the preference. Transforms are removed outright rather than shortened — a
        2px lift with no animation still reads as a jump. Color and border transitions are
        left alone: they carry state, and instant is fine. */
     @media (prefers-reduced-motion: reduce) {
-      .home-card,
-      .home-card:hover,
-      .home-card:active { transform: none; }
-      .home-card { transition: border-color 1ms linear, box-shadow 1ms linear; }
       .lib-filter-btn:active,
       .palette-swatch:active,
       .glyph-cell-copy:active,
@@ -3026,7 +3101,6 @@
       .lib-filter-btn,
       .lib-search-input,
       .btn,
-      .home-card-icon,
       .demo-link,
       .asset-dl { transition-duration: 1ms; }
     }

@@ -7,6 +7,13 @@
       if (!id) return;
       const el = document.getElementById(id);
       if (!el) return;
+      // A target inside (or itself) a closed <details> — the "For developers"
+      // disclosures — would scroll to a collapsed row. Open the chain first.
+      let details = el.closest('details');
+      while (details) {
+        details.open = true;
+        details = details.parentElement ? details.parentElement.closest('details') : null;
+      }
       // The `behavior` option alone doesn't reliably beat the CSS scroll-behavior
       // rule in every engine, so force it via inline style for this one jump.
       const root = document.documentElement;
@@ -15,6 +22,9 @@
       el.scrollIntoView({ block: 'start' });
       root.style.scrollBehavior = prevBehavior;
     }
+    // Any same-page hash navigation that isn't intercepted below (the task links on
+    // the home page, for one) still needs the disclosure-opening jump.
+    window.addEventListener('hashchange', () => rbaJumpToHash(location.hash));
     if (location.hash) {
       const hashToJump = location.hash;
       // Let any (possibly broken) native browser attempt at the hash-scroll
@@ -50,13 +60,19 @@
       return active;
     }
 
-    // Sidebar scroll-spy · highlight the section closest to (and above) the viewport top
+    // Scroll-spy · highlight the section closest to (and above) the viewport top.
+    // Drives both the sidebar rail and the home page's sticky sub-nav — two links
+    // can share one section id, so ids map to arrays of links.
     (function () {
-      const links = Array.from(document.querySelectorAll('.sidebar-link[href^="#"]'));
+      const links = Array.from(document.querySelectorAll('.sidebar-link[href^="#"], .subnav-link[href^="#"]'));
       if (!links.length) return;
-      const linkBy = Object.fromEntries(links.map(l => [l.getAttribute('href').substring(1), l]));
-      const sections = links
-        .map(l => document.getElementById(l.getAttribute('href').substring(1)))
+      const linkBy = {};
+      links.forEach(l => {
+        const id = l.getAttribute('href').substring(1);
+        (linkBy[id] = linkBy[id] || []).push(l);
+      });
+      const sections = Object.keys(linkBy)
+        .map(id => document.getElementById(id))
         .filter(Boolean);
       if (!sections.length) return;
 
@@ -69,8 +85,10 @@
       function setActive(id) {
         if (id === currentId) return;
         currentId = id;
-        links.forEach(l => l.classList.remove('sidebar-link--active'));
-        if (linkBy[id]) linkBy[id].classList.add('sidebar-link--active');
+        links.forEach(l => l.classList.remove('sidebar-link--active', 'subnav-link--active'));
+        (linkBy[id] || []).forEach(l =>
+          l.classList.add(l.classList.contains('subnav-link') ? 'subnav-link--active' : 'sidebar-link--active')
+        );
       }
 
       function update() {
@@ -266,7 +284,7 @@
         { title: 'Typography',        category: 'Foundations', page: 'index.html',     anchor: '#type',     keywords: 'font fonts typeface montserrat libre caslon serif sans type scale heading body' },
         { title: 'Logos',             category: 'Foundations', page: 'index.html',     anchor: '#logo',     keywords: 'logo mark wordmark monogram clear space reversed svg' },
         { title: 'Voice',             category: 'Foundations', page: 'index.html',     anchor: '#voice',    keywords: 'tone voice writing copy words banned jargon buzzwords style wording language proposal' },
-        { title: 'Components',        category: 'Library',     page: 'components.html', anchor: '',         keywords: 'button buttons card cards cta stat stats bullet list layout spacing padding radius corner shadow spec' },
+        { title: 'Components',        category: 'Build',       page: 'components.html', anchor: '',         keywords: 'button buttons card cards cta stat stats bullet list layout spacing padding radius corner shadow spec token tokens' },
         { title: 'Icons',             category: 'Library',     page: 'icons.html',     anchor: '',          keywords: 'icon iconography glyph symbol svg png outline line download library chart people finance data document technology' },
         { title: 'Brand images',      category: 'Library',     page: 'images.html',    anchor: '',          keywords: 'photo photography image picture illustration stock download' },
         { title: 'Templates & decks', category: 'Library',     page: 'templates.html', anchor: '',          keywords: 'powerpoint pptx deck slides word docx template letterhead document download' },
