@@ -980,6 +980,48 @@
       border-radius: 4px;
     }
 
+    /* Task, then the command that does it. A definition list rather than prose
+       because someone arriving at this page wants to find their one job and copy
+       one line, not read a paragraph and extract it. */
+    .how-list {
+      display: grid;
+      grid-template-columns: minmax(150px, auto) 1fr;
+      gap: 6px var(--space-5);
+      margin: var(--space-4) 0 0;
+      align-items: baseline;
+    }
+    .how-list dt {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .how-list dd {
+      margin: 0;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-soft);
+      min-width: 0;
+    }
+    .how-list dd code {
+      display: inline-block;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }
+    /* The aside under a command, one step quieter than the command itself. */
+    .how-list dd span {
+      display: block;
+      font-family: var(--font-micro);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    @media (max-width: 700px) {
+      .how-list { grid-template-columns: 1fr; gap: 2px; }
+      .how-list dd { margin-bottom: var(--space-3); }
+    }
+
     .lib-empty {
       font-family: var(--font-sans);
       font-size: 15px;

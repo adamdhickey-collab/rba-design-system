@@ -97,11 +97,22 @@
       <section class="block" id="images">
         <div class="container lib-scope">
 
-          <div class="callout callout--warn">
-            <span class="material-symbols-rounded" aria-hidden="true">shopping_cart</span>
+          <div class="callout">
+            <span class="material-symbols-rounded" aria-hidden="true">add_photo_alternate</span>
             <div class="callout-body">
-              <p><strong>Most of these are still candidates, not assets.</strong> Anything watermarked is a comp for work nobody has bought and may not be used in anything that ships &mdash; the Envato images are the exception, since the subscription licenses them on download. Every card links back to its source, and hovering one shows the reasoning behind it.</p>
-              <p class="u-mt-sm">To add an image, paste its page URL: <code>./tools/images-add.py --cat Technology &lt;url&gt;</code>. To swap one out, <code>--replace &lt;file&gt; &lt;url&gt;</code>. Licensing an image means dropping the clean file over the comp under the same name &mdash; the watermark disappears with no edit anywhere.</p>
+              <p><strong>Updating this library takes one command.</strong> Find a picture on any stock site, copy the address from your browser, and paste it in. Everything else &mdash; the title, the photographer, the preview, the link back &mdash; is read off the page for you.</p>
+              <dl class="how-list">
+                <dt>Add one</dt>
+                <dd><code>./tools/images-add.py --cat Technology &lt;paste the URL&gt;</code></dd>
+                <dt>Replace one with something better</dt>
+                <dd><code>./tools/images-add.py --replace envato-4UGVFMX.webp &lt;paste the URL&gt;</code><span>Takes its place in the order and deletes the old file.</span></dd>
+                <dt>Reorder or delete</dt>
+                <dd>Edit <code>assets/images/library.json</code>, then run <code>./tools/images-sync.py</code>.<span>Position in the list is the ranking; there is no number to keep in step.</span></dd>
+                <dt>See what needs attention</dt>
+                <dd><code>./tools/images-sync.py --review</code><span>Flags one photographer dominating the set, near-duplicates, and crops the frame will ruin.</span></dd>
+              </dl>
+              <p class="u-mt-sm"><strong>The tags on the cards are decisions, and they are yours to set.</strong> A green <em>Keep</em> means somebody has looked at that image and wants it. Mark one by setting <code>"status"</code> on its entry to <code>keep</code>, <code>cut</code> or <code>licensed</code> &mdash; anything unmarked is simply undecided and carries no tag. <em>Cut</em> images disappear from this page but stay on record in the file. Use the <strong>Any decision</strong> menu above to work through whatever is still undecided.</p>
+              <p class="u-mt-sm">Most of these are <strong>watermarked comps</strong> &mdash; pictures nobody has bought yet, fine for choosing between and not for anything that ships. The Envato ones are the exception: the subscription licenses them the moment you download one. Buying an image means dropping the clean file over the comp under the same name, and the watermark disappears with nothing else to change.</p>
             </div>
           </div>
 
