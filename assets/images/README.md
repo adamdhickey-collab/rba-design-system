@@ -1,9 +1,15 @@
 # Brand images
 
-**A working library, mostly not licensed yet.** Photography and abstracts in six
-visual families, from any stock service. The page exists so images can be searched,
-compared and decided on — not downloaded from. Envato images are licensed by the
-subscription; the rest are comps until somebody buys them.
+**A working library, not licensed yet.** Photography and abstracts in six visual
+families. The page exists so images can be searched, compared and decided on — not
+downloaded from. Every image in it is a watermarked comp until somebody buys it.
+
+**All sixty are currently Adobe Stock.** That is a deliberate choice about how the
+set hangs together, not a limit of the tooling: `images-add.py` imports from any
+service that publishes Open Graph tags, and the table further down is still the
+guide to which one to reach for. A mixed-source run was tried and reverted — the
+Adobe frames held the register better as a set, and coherence beat the licensing
+saving. If that trade changes, the swap is one command per image.
 
 ```
 assets/images/
@@ -122,22 +128,27 @@ What actually suits this brand:
 
 | Service | Tier | What it is good for | The catch |
 |---|---|---|---|
-| **Envato Elements** | subscription | **Start here.** RBA already pays for it, and the subscription licenses on download — the only source in this table whose images can ship today. | Widely subscribed, so no exclusivity. Quality is uneven; the search results need filtering. |
-| **Adobe Stock** | paid | The bulk of the current library. Also resells Stocksy, Westend61 and peopleimages. | Everything here is an **unlicensed comp**, and the standard subscription does not cover those premium collections. |
+| **Adobe Stock** | paid | **All sixty of the current library.** The deepest catalogue, the only one of these with a real exclude-generative-AI filter, and it resells Stocksy, Westend61 and peopleimages. | Everything here is an **unlicensed comp**, and the standard subscription does not cover those premium collections. |
+| **Envato Elements** | subscription | **The cheapest way to ship.** RBA already pays for it, and the subscription licenses on download — the only source in this table whose images can be used today. | Widely subscribed, so no exclusivity. Quality is uneven and the candid register this brand wants is thinner; the results need filtering. |
 | **Stocksy United** | paid | The least stock-looking work available. Artist co-op, tight curation. | Priciest per image, smaller library. |
-| **iStock** | paid | **In use.** Getty's affordable tier, and Signature is exclusive to Getty/iStock — not resold through Adobe, which is the reason to have it rather than a price one. | Item pages answer scripted requests, but a link needs BOTH numbers (`…-gm<id>-<asset>`); the id alone 404s. |
+| **iStock** | paid | Getty's affordable tier, and Signature is exclusive to Getty/iStock — not resold through Adobe, which is the reason to reach for it rather than a price one. | Item pages answer scripted requests, but a link needs BOTH numbers (`…-gm<id>-<asset>`); the id alone 404s. |
 | **Getty Images** | paid | The premium end of the same library. | Easy to overpay when iStock has the same look. |
 | **Offset / Cavan** | paid | Exclusive to their agency, so nobody else's site has it. | Advertising-tier pricing. |
 | **Unsplash / Pexels** | free | Internal decks, wireframes, placeholders, anything low-stakes. | Zero exclusivity, and **no screening for third-party logos** — see below. |
 
 ### Envato is the one that is actually licensed
 
-Worth stating plainly, because it inverts how this page should be read: the fifty
-Adobe images are comps for work nobody has bought and **cannot be used in
-anything**. Envato images are covered by the subscription the moment they are
-downloaded. Given a choice between an Adobe comp and a comparable Envato image,
-the Envato one is not merely cheaper — it is the only one of the two that exists
-as an option.
+Worth stating plainly, because it is the standing argument against the current
+all-Adobe set: every one of these sixty images is a comp for work nobody has
+bought, and **none of them can be used in anything** until they are. Envato
+images are covered by the subscription the moment they are downloaded.
+
+A rebalance toward Envato was run and then reverted — the Adobe frames held the
+photographic register better as a set, and one coherent world beat a cheaper
+mixed one. That was a judgement about this library, not about the services: when
+an Envato image genuinely matches, it is not merely cheaper, it is the only one
+of the two that exists as an option. Re-running that trade is one command per
+image, and the history is in git.
 
 ```bash
 ./tools/images-fetch-envato.py --cat "Data, AI & security" 9Z4YMDX NKPJ5GC
