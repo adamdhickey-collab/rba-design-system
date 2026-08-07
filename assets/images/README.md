@@ -1,10 +1,12 @@
 # Brand images
 
-**A working library, not licensed yet.** Photography and abstracts in eight visual
-families. The page exists so images can be searched, compared and decided on — not
-downloaded from. Every image in it is a watermarked comp until somebody buys it.
+**A working library, not licensed yet.** Photography and abstracts in named visual
+families — `library.json` holds the current list, and the count moves as candidates
+are added and cut. The page exists so images can be searched, compared and decided
+on — not downloaded from. Every image in it is a watermarked comp until somebody
+buys it.
 
-**All eighty are currently Adobe Stock.** That is a deliberate choice about how the
+**The whole library is currently Adobe Stock.** That is a deliberate choice about how the
 set hangs together, not a limit of the tooling: `images-add.py` imports from any
 service that publishes Open Graph tags, and the table further down is still the
 guide to which one to reach for. A mixed-source run was tried and reverted — the
@@ -128,7 +130,7 @@ What actually suits this brand:
 
 | Service | Tier | What it is good for | The catch |
 |---|---|---|---|
-| **Adobe Stock** | paid | **All sixty of the current library.** The deepest catalogue, the only one of these with a real exclude-generative-AI filter, and it resells Stocksy, Westend61 and peopleimages. | Everything here is an **unlicensed comp**, and the standard subscription does not cover those premium collections. |
+| **Adobe Stock** | paid | **The whole current library.** The deepest catalogue, the only one of these with a real exclude-generative-AI filter, and it resells Stocksy, Westend61 and peopleimages. | Everything here is an **unlicensed comp**, and the standard subscription does not cover those premium collections. |
 | **Envato Elements** | subscription | **The cheapest way to ship.** RBA already pays for it, and the subscription licenses on download — the only source in this table whose images can be used today. | Widely subscribed, so no exclusivity. Quality is uneven and the candid register this brand wants is thinner; the results need filtering. |
 | **Stocksy United** | paid | The least stock-looking work available. Artist co-op, tight curation. | Priciest per image, smaller library. |
 | **iStock** | paid | Getty's affordable tier, and Signature is exclusive to Getty/iStock — not resold through Adobe, which is the reason to reach for it rather than a price one. | Item pages answer scripted requests, but a link needs BOTH numbers (`…-gm<id>-<asset>`); the id alone 404s. |
@@ -139,7 +141,7 @@ What actually suits this brand:
 ### Envato is the one that is actually licensed
 
 Worth stating plainly, because it is the standing argument against the current
-all-Adobe set: every one of these sixty images is a comp for work nobody has
+all-Adobe set: every image here is a comp for work nobody has
 bought, and **none of them can be used in anything** until they are. Envato
 images are covered by the subscription the moment they are downloaded.
 
@@ -229,7 +231,7 @@ free stock only where nobody is forming an impression of the brand.
 
 ## Every thumbnail is a watermarked comp
 
-All fifty cards show a picture, and **every one of those pictures is an Adobe Stock
+Every card shows a picture, and **every one of those pictures is an Adobe Stock
 comp with the watermark still across it.** That is the point: a comp exists to be
 reviewed, and this page is the review. It is not an image library, and nothing in
 `shortlist/` may be used in anything that ships.
