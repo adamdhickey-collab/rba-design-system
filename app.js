@@ -992,10 +992,17 @@
       // status. It is a way of working through the library, not a property of the
       // photograph, so it belongs in the controls rather than on the artwork.
       function card(item) {
-        const a = document.createElement('a');
+        // The card is a DIV wrapping a link, not a link wrapping everything. It has
+        // to be: the copy button below is a <button>, and a button inside an anchor
+        // is invalid HTML that breaks both — the click target becomes ambiguous and
+        // keyboard users get one control where there are two.
+        const cell = document.createElement('div');
         const status = item.status || 'undecided';
         const wanted = !item.file;
-        a.className = 'shot-card shot-card--' + status + (wanted ? ' shot-card--wanted' : '');
+        cell.className = 'shot-card shot-card--' + status + (wanted ? ' shot-card--wanted' : '');
+
+        const a = document.createElement('a');
+        a.className = 'shot-link';
         a.href = item.url;
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
@@ -1059,10 +1066,36 @@
         foot.innerHTML = '<span></span>' +
                          '<span class="material-symbols-rounded" aria-hidden="true">open_in_new</span>';
         foot.firstChild.textContent = where;
-
         a.append(frame, foot);
-        findImage(a, item);
-        return a;
+
+        // The source URL, one line, with a copy button — because the commands that
+        // maintain this library take a URL, and reading one off a card and retyping
+        // it is exactly the friction that stops anyone bothering.
+        //
+        // Truncated with CSS rather than by slicing the string, so what gets copied
+        // is always the whole URL no matter how narrow the card is. A copy that
+        // silently hands you "https://elements.envato.com/item-9Z…" would be worse
+        // than no copy at all.
+        const urlRow = document.createElement('div');
+        urlRow.className = 'shot-url';
+        const txt = document.createElement('span');
+        txt.className = 'shot-url-text';
+        txt.textContent = item.url.replace(/^https?:\/\//, '');
+        const copy = document.createElement('button');
+        copy.type = 'button';
+        copy.className = 'shot-url-copy';
+        copy.innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">content_copy</span>';
+        copy.setAttribute('aria-label', 'Copy the link to ' + item.title);
+        copy.title = item.url;
+        copy.addEventListener('click', ev => {
+          ev.preventDefault(); ev.stopPropagation();
+          rbaCopy(item.url, 'Copied the link');
+        });
+        urlRow.append(txt, copy);
+
+        cell.append(a, urlRow);
+        findImage(cell, item);
+        return cell;
       }
 
       const scope = grid.closest('.lib-scope') || document;
