@@ -288,6 +288,11 @@
       letter-spacing: var(--display-tracking-sm);
       color: var(--brand);
     }
+    /* "Connect" is the product name and carries the weight; "Design System" is what it
+       is. Medium gives the wordmark a two-part reading without a second size, a second
+       color, or a line break. Weight-relative rather than an absolute pair, so it works
+       against the rail's 800 and the footer's 700 from one declaration. */
+    .wordmark-soft { font-weight: 500; }
 
     /* 2px, not --space-5. Six links with 24px between them read as six unrelated
        buttons rather than one list, and pushed the last one most of a screen down
@@ -484,14 +489,53 @@
     }
 
     /* ---------- Hero ---------- */
+    /* The published Sky gradient, at its published 180deg — the same token the
+       gradient swatch below documents, not a hero-only wash mixed by eye. It runs
+       light-to-deep top-to-bottom, so the band ends on --sky-blue and meets the white
+       section under it at the existing hairline. Both text roles were checked against
+       that end stop, the worst case: --brand title 7.7:1, --text-soft sub 5.1:1. */
     .hero {
-      background: var(--surface);
+      background: var(--grad-sky);
       color: var(--text);
       padding: var(--space-8) 0 var(--space-7);
       position: relative;
       overflow: hidden;
       border-bottom: 1px solid var(--border);
     }
+    /* Sized off the hero's own height, not the viewport. A vw-sized mark on a band this
+       short got cropped on three sides at once and stopped reading as the device at all
+       — it looked like a stray blob. At 118% it bleeds top and bottom by a sliver and
+       keeps the interlock, which is the part that makes it recognisable, in frame. */
+    .hero-mark {
+      position: absolute;
+      top: 50%;
+      right: 4%;
+      width: auto;
+      height: 118%;
+      transform: translateY(-50%);
+      color: var(--midnight);
+      opacity: 0.08;
+      pointer-events: none;
+      user-select: none;
+    }
+    /* Below tablet the text runs the full width AND wraps to six or seven lines, so a
+       height-derived mark grows with the copy instead of shrinking with the screen — at
+       375px it came out nearly 900px wide and sat under every line. Sized off the hero's
+       width here and pinned to the top-right corner, so it stays a corner detail however
+       long a page's sub-heading runs. Has to live BELOW the base rule, not up in the md
+       block with the rest of the phone overrides: same specificity, so source order is
+       the only thing deciding it, and from up there it lost silently. */
+    @media (max-width: 767.98px) {
+      .hero-mark {
+        top: 0;
+        right: -12%;
+        width: 62%;
+        height: auto;
+        transform: translateY(-14%);
+        opacity: 0.05;
+      }
+    }
+    .hero > .container { position: relative; }
     /* Libre Caslon, per the canonical source: colors_and_type.css defines .hero-display
        as the serif at 100px/110%/-3% and comments that the hero is "only place Libre
        Caslon is used". An earlier pass set this to Montserrat on the reasoning that a
@@ -683,6 +727,20 @@
       color: var(--text-muted);
       margin-bottom: var(--space-4);
     }
+
+    /* A family of swatches that share a job. Deliberately a level below .subhead rather
+       than a fifth h3: "Primary" is still one thing in the page outline, and promoting
+       every family would have split it into four sections that all need the same lede. */
+    .palette-group + .palette-group { margin-top: var(--space-6); }
+    .palette-group-title {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 22px;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .palette-note--group { margin-bottom: var(--space-3); max-width: 68ch; }
 
     /* lg (1024) · wide token grids reflow at the same point the nav does */
     @media (max-width: 1023.98px) {
@@ -878,12 +936,17 @@
       gap: var(--space-3);
       margin-bottom: var(--space-4);
     }
+    /* The field was capped at 360px to leave room for a pack select beside it. That
+       select is gone, so the cap was reserving space for nothing — and search is now
+       the only way to narrow below a group chip, which makes it the primary control on
+       the row rather than one of two. Wide enough to show the whole placeholder, and
+       still yields to the count and the bundle buttons before they wrap. */
     .lib-search {
       position: relative;
       display: flex;
       align-items: center;
-      flex: 1 1 240px;
-      max-width: 360px;
+      flex: 1 1 420px;
+      max-width: 620px;
     }
     .lib-search .material-symbols-rounded {
       position: absolute;
@@ -1089,70 +1152,6 @@
       border-radius: 8px;
     }
     .lib-search-note[hidden] { display: none; }
-
-    /* Pack select · 80 packs is far too many for chips, so the group chips narrow to
-       eight and this narrows within them. Sized to fit the longest pack name so the
-       control doesn't resize as the option changes and shove the count sideways. */
-    .lib-pack {
-      position: relative;
-      display: flex;
-      align-items: center;
-      flex: 0 1 210px;
-    }
-    /* The decision filter carries a count in every label, so its longest option is
-       "Not downloaded (2)" rather than a pack name. 210px clipped it mid-word.
-       flex-basis with a floor, so it keeps the text whole at desktop widths and
-       still gives way before the search field does when the row gets tight. */
-    .lib-pack:has(.lib-status-select) { flex: 0 1 250px; min-width: 190px; }
-    /* Scoped to :first-child so it cannot also claim the caret. It used to be
-       `.lib-pack .material-symbols-rounded`, which at 0,2,0 outweighed the 0,1,0
-       `.lib-pack-caret` rule below — the caret kept left:12px from here AND took
-       right:12px from there, so it stretched across the field and drew its glyph
-       on top of the leading icon. Two icons in the same place, one of them the
-       wrong way round. */
-    .lib-pack > .material-symbols-rounded:first-child {
-      position: absolute;
-      left: 12px;
-      font-size: 20px;
-      color: var(--text-muted);
-      pointer-events: none;
-    }
-    .lib-pack .lib-pack-caret {
-      position: absolute;
-      left: auto;
-      right: 10px;
-      font-size: 20px;
-      color: var(--text-soft);
-      pointer-events: none;
-    }
-    .lib-pack-select {
-      -webkit-appearance: none;
-      appearance: none;
-      font-family: var(--font-sans);
-      font-size: 14px;
-      line-height: 22px;
-      width: 100%;
-      padding: 10px 38px 10px 40px;
-      border: 1px solid var(--border-input);
-      /* A rectangle, not a pill. A pill reads as a filter chip you toggle; this is
-         a menu you open, and the search field beside it is the only thing on the
-         row that should look like a pill. */
-      border-radius: var(--corner-radius-base);
-      background: var(--surface-input);
-      color: var(--text);
-      min-height: var(--touch-target-min);
-      cursor: pointer;
-      /* appearance:none plus our own caret: the native control renders at a
-         different height and metal on each OS, which is what made this sit half a
-         pixel off the search field beside it. The caret still says "menu". */
-    }
-    .lib-pack-select:hover { border-color: var(--neutral-400); }
-    .lib-pack-select:focus {
-      outline: none;
-      border-color: var(--brand);
-      box-shadow: 0 0 0 3px var(--sky-200);
-    }
-    .lib-pack:focus-within .material-symbols-rounded { color: var(--brand); }
 
     /* ---------- Brand-image shortlist ----------
        Three across at desktop, because these are photographs being JUDGED, not
@@ -1857,6 +1856,17 @@
     [data-theme="dark"] a { color: var(--sky-300); }
     [data-theme="dark"] a:hover { color: var(--aqua); }
 
+    /* Sky is a light-mode gradient — dropped onto a near-black page it would read as a
+       lit panel bolted to the top. The dark hero keeps the same move (a brand wash that
+       settles into the page) with the dark side's own values: midnight down to --bg, so
+       the band has no bottom edge at all. Aqua title 5.0:1 on midnight, sub 6.0:1. */
+    [data-theme="dark"] .hero {
+      background: linear-gradient(180deg, var(--midnight) 0%, var(--bg) 100%);
+    }
+    /* Midnight-on-midnight is nothing. The watermark switches to aqua, which is the
+       role --brand already takes in dark mode. */
+    [data-theme="dark"] .hero-mark { color: var(--aqua); opacity: 0.07; }
+
     /* Outline and ghost hovers read in aqua, not midnight.
 
        This rule lost its declaration block in the original scaffold and nothing
@@ -2387,7 +2397,36 @@
       transform: translateY(0);
       box-shadow: var(--shadow-sm);
     }
-    .home-card .material-symbols-rounded { color: var(--brand); }
+    /* Was bare midnight on white: correct, and invisible — six dark glyphs on six white
+       cards read as punctuation. Putting each one on a sky tile in accent teal gives the
+       row a first thing to look at without adding a second heading level. Accent rather
+       than midnight because the tile is already a cool light field: 3.4:1 against
+       --sky-100, which clears 1.4.11 for a non-text graphic. */
+    .home-card-icon {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: var(--corner-radius-base);
+      background: var(--sky-100);
+      color: var(--accent);
+      font-size: 24px;
+      margin-bottom: var(--space-2);
+      transition: background-color 120ms ease, color 120ms ease;
+    }
+    /* The tile fills on hover, so the lift has something to travel with. */
+    .home-card:hover .home-card-icon {
+      background: var(--accent);
+      color: #FFFFFF;
+    }
+    [data-theme="dark"] .home-card-icon {
+      background: var(--surface-pill);
+      color: var(--aqua);
+    }
+    [data-theme="dark"] .home-card:hover .home-card-icon {
+      background: var(--aqua);
+      color: var(--on-accent);
+    }
     .home-card-title {
       font-family: var(--font-sans);
       font-weight: 700;

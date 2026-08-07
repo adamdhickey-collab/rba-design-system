@@ -727,10 +727,8 @@
       const scope = grid.closest('.lib-scope') || document;
       const search = scope.querySelector('.lib-search-input');
       const chips = scope.querySelector('.lib-filter');
-      const select = scope.querySelector('.lib-pack-select');
       const count = scope.querySelector('.lib-count');
       let activeGroup = 'all';
-      let activePack = 'all';
 
       if (chips) {
         const mk = (value, label, pressed) => {
@@ -751,34 +749,8 @@
           chips.querySelectorAll('.lib-filter-btn').forEach(b => {
             b.setAttribute('aria-pressed', String(b === btn));
           });
-          // Narrowing the group narrows the pack list with it. Leaving all 80 packs
-          // selectable would let someone pick a combination that matches nothing and
-          // reads as a broken page rather than an empty intersection.
-          fillPacks();
-          activePack = 'all';
           apply();
         });
-      }
-
-      function fillPacks() {
-        if (!select) return;
-        const visible = packs.filter(p => activeGroup === 'all' || p.group === activeGroup);
-        select.innerHTML = '';
-        const all = document.createElement('option');
-        all.value = 'all';
-        all.textContent = 'All packs (' + visible.length + ')';
-        select.appendChild(all);
-        visible.forEach(p => {
-          const o = document.createElement('option');
-          o.value = p.slug;
-          o.textContent = p.name + ' · ' + p.count;
-          select.appendChild(o);
-        });
-      }
-
-      if (select) {
-        fillPacks();
-        select.addEventListener('change', () => { activePack = select.value; apply(); });
       }
 
       // Light word-form folding, applied to the QUERY only. Each variant can only
@@ -864,8 +836,7 @@
         let shown = 0;
         for (let i = 0; i < icons.length; i++) {
           const item = icons[i];
-          const inScope = (activeGroup === 'all' || item.pack.group === activeGroup) &&
-                          (activePack === 'all' || item.pack.slug === activePack);
+          const inScope = activeGroup === 'all' || item.pack.group === activeGroup;
           let tier = -1;
           if (inScope) {
             if (!terms.length) tier = 0;
