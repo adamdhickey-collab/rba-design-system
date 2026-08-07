@@ -1,7 +1,7 @@
 # Brand images
 
-**A working library, mostly not licensed yet.** Photography and backgrounds across
-six categories, from any stock service. The page exists so images can be searched,
+**A working library, mostly not licensed yet.** Photography in five visual
+families, from any stock service. The page exists so images can be searched,
 compared and decided on — not downloaded from. Envato images are licensed by the
 subscription; the rest are comps until somebody buys them.
 
