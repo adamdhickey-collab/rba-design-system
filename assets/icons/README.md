@@ -18,7 +18,7 @@ deleted the next time anyone runs the sync script.
 
 ## Adding a pack
 
-1. Unzip the pack into `icons/` at the repo root, keeping the folder name the
+1. Unzip the pack into `icon-packs-source/` at the repo root, keeping the folder name the
    drop came with (`<name>-outline-icons-<date>-utc`, holding `svg/` and `png/`).
 2. Add it to the `PACKS` table in `tools/icons-sync.py` with a display name, one
    of the eight groups, and search keywords. The script **fails** on a pack that
@@ -31,7 +31,7 @@ deleted the next time anyone runs the sync script.
 
 Commit `assets/icons/`, `icons.html`, `downloads/` and `app.js` together.
 
-`icons/` itself is gitignored: 124 MB of it is Illustrator and EPS sources that
+`icon-packs-source/` itself is gitignored: 124 MB of it is Illustrator and EPS sources that
 nobody downloading an icon from a web page will open. **It is not backed up by
 this repository** — keep the original download somewhere safe, because it is the
 only copy of the vector sources.

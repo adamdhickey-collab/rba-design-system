@@ -1,10 +1,10 @@
 # Brand images
 
-**A working library, not licensed yet.** Photography and abstracts in six visual
+**A working library, not licensed yet.** Photography and abstracts in eight visual
 families. The page exists so images can be searched, compared and decided on — not
 downloaded from. Every image in it is a watermarked comp until somebody buys it.
 
-**All sixty are currently Adobe Stock.** That is a deliberate choice about how the
+**All eighty are currently Adobe Stock.** That is a deliberate choice about how the
 set hangs together, not a limit of the tooling: `images-add.py` imports from any
 service that publishes Open Graph tags, and the table further down is still the
 guide to which one to reach for. A mixed-source run was tried and reverted — the

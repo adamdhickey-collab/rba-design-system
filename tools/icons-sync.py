@@ -6,11 +6,11 @@
 
 WHY THIS EXISTS
 ---------------
-The icons arrive as 80 stock packs under icons/, each one a folder holding an
+The icons arrive as 80 stock packs under icon-packs-source/, each one a folder holding an
 Illustrator source, an EPS, a svg/ folder and a png/ folder. Only the svg/ and
-png/ files belong on the site: icons/ itself is 124 MB, almost all of it .ai and
-.eps that nobody downloading an icon from a web page will ever open. So icons/
-is a working drop — gitignored — and this script copies the 2,980 files that are
+png/ files belong on the site: icon-packs-source/ itself is 124 MB, almost all of it .ai and
+.eps that nobody downloading an icon from a web page will ever open. So
+icon-packs-source/ is a working drop — gitignored — and this script copies the 2,980 files that are
 actually served into assets/icons/, one folder per pack.
 
 Doing it by hand is not an option at this size, and doing it by hand is also how
@@ -54,7 +54,7 @@ import sys
 from datetime import date
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.join(ROOT, 'icons')
+SRC = os.path.join(ROOT, 'icon-packs-source')
 DEST = os.path.join(ROOT, 'assets', 'icons')
 PAGE = os.path.join(ROOT, 'icons.html')
 
@@ -192,9 +192,9 @@ def die(msg):
 
 
 def scan_source():
-    """Read icons/ into [(slug, [numbers]), ...], failing loudly on anything odd."""
+    """Read icon-packs-source/ into [(slug, [numbers]), ...], failing loudly on anything odd."""
     if not os.path.isdir(SRC):
-        die('no source drop at %s. This script syncs FROM icons/ INTO assets/icons/;\n'
+        die('no source drop at %s. This script syncs FROM icon-packs-source/ INTO assets/icons/;\n'
             '       without it there is nothing to sync. Use --check to verify what is\n'
             '       already staged.' % os.path.relpath(SRC, ROOT))
 

@@ -11,7 +11,7 @@ README is about maintaining the repo; the site is the thing itself.
 > brand's own source, and the icon library holds 1,490 real icons, all named. The templates
 > link to SharePoint rather than being copied here.
 >
-> `images.html` is a **shortlist of candidates to license**, not a gallery. Fifty are
+> `images.html` is a **shortlist of candidates to license**, not a gallery. All eighty are
 > Adobe Stock **watermarked comps** — not licensed, and not usable in anything that ships.
 > The shortlist takes images from any service: sources are declared in
 > `assets/images/library.json`, which is the hand-edited source of truth, and
@@ -33,7 +33,7 @@ README is about maintaining the repo; the site is the thing itself.
 | `index.html` | Home with task-based entry points, plus Colors, Typography, Logos, Voice |
 | `components.html` | Component specimens — buttons, links, cards, stat blocks, layout tokens |
 | `icons.html` | Icon library — 1,490 icons in 80 packs; search, filter, SVG/PNG download, copy SVG |
-| `images.html` | Brand image shortlist — 50 Adobe Stock candidates to license; filter, search, link out |
+| `images.html` | Brand image shortlist — 80 Adobe Stock candidates to license in 8 categories; filter, search, link out |
 | `templates.html` | Templates & decks — a table of SharePoint-linked files, plus "What good looks like" reference layouts |
 
 The logo, favicons and all token values were imported from the RBA Design System project on
@@ -78,14 +78,14 @@ Two steps, and no build:
 2. Add a row to that page's manifest (images) or a `<tr>` (templates).
 
 **Icons are the exception** — there are 1,490 of them, so `assets/icons/` is generated
-and hand-added files there get deleted on the next sync. Drop the pack into `icons/` at
+and hand-added files there get deleted on the next sync. Drop the pack into `icon-packs-source/` at
 the repo root, add it to the `PACKS` table in `tools/icons-sync.py`, and run:
 
 ```bash
 ./tools/icons-sync.py
 ```
 
-`icons/` is gitignored: only about 11 MB of its 124 MB is servable, the rest being
+`icon-packs-source/` is gitignored: only about 11 MB of its 124 MB is servable, the rest being
 Illustrator and EPS sources. **It is not backed up here** — keep the original download.
 
 Each folder has its own README with the exact filenames, formats and manifest shape:
