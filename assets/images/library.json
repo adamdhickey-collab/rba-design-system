@@ -1,19 +1,5 @@
 {
   "_comment": "Source of truth for the brand-image shortlist. Hand-edit this file, then run ./tools/images-sync.py. Rank is the ORDER within a category — move an entry up to promote it, delete it to drop it. Priority is derived from rank unless you set it explicitly.",
-  "priority_bands": [
-    [
-      3,
-      "Primary pick"
-    ],
-    [
-      6,
-      "Strong alternative"
-    ],
-    [
-      null,
-      "Supporting option"
-    ]
-  ],
   "sources": {
     "adobe": {
       "name": "Adobe Stock",
@@ -197,8 +183,7 @@
       "why": "Real code on the screens and a desk that has actually been worked at. Reads as observed rather than staged, which is the register the Collaboration set is already in and the dark cinematic frames are not.",
       "use": "Engineering practice, delivery teams, careers",
       "crop": "Wide and card crops both hold. Keep the monitors legible; do not crop past the second screen.",
-      "url": "https://unsplash.com/photos/woman-in-green-shirt-sitting-in-front-of-computer-64YrPKiguAE",
-      "status": "keep"
+      "url": "https://unsplash.com/photos/woman-in-green-shirt-sitting-in-front-of-computer-64YrPKiguAE"
     },
     {
       "source": "adobe",
@@ -328,8 +313,7 @@
       "why": "A team reading data, not another over-the-shoulder laptop. Daylight, business casual, a real dashboard on the screen — the register the Collaboration set is in, which this category had lost entirely.",
       "use": "Data practice, analytics services, advisory",
       "crop": "Preview is a wide social crop. Check the real composition on the item page before committing.",
-      "url": "https://elements.envato.com/item-9Z4YMDX",
-      "status": "keep"
+      "url": "https://elements.envato.com/item-9Z4YMDX"
     },
     {
       "source": "envato",
@@ -342,8 +326,7 @@
       "why": "Presenting findings rather than staring at a screen. Bright and energetic; note the yellow and teal wall sits awkwardly beside RBA navy, so crop tight or use it small.",
       "use": "Reporting, insight delivery, client readouts",
       "crop": "Crop toward the screen and speaker; the coloured wall is the weakest part of the frame.",
-      "url": "https://elements.envato.com/item-NKPJ5GC",
-      "status": "keep"
+      "url": "https://elements.envato.com/item-NKPJ5GC"
     },
     {
       "source": "envato",
@@ -356,36 +339,7 @@
       "why": "Closest thing in the set to an actual consulting engagement. A little staged, which is why it sits below the other two rather than above them.",
       "use": "Client workshops, engagement models",
       "crop": "Wide crops hold; keep the screen legible.",
-      "url": "https://elements.envato.com/item-V245CP9",
-      "status": "keep"
-    },
-    {
-      "source": "adobe",
-      "id": "456373844",
-      "file": "adobe-456373844.webp",
-      "cat": "Data, AI & security",
-      "title": "Data analyst using a data analytics dashboard",
-      "by": "Andrey Popov",
-      "dim": "7956 × 5303",
-      "why": "A direct, legible data-work scenario that looks operational rather than abstract or science-fictional.",
-      "use": "Data and analytics, business intelligence, dashboards",
-      "crop": "Preserve analyst and visible dashboard together.",
-      "url": "https://stock.adobe.com/images/data-analyst-using-a-data-analytics-dashboard/456373844",
-      "status": "cut"
-    },
-    {
-      "source": "adobe",
-      "id": "538423998",
-      "file": "adobe-538423998.webp",
-      "cat": "Data, AI & security",
-      "title": "Data analyst using KPI analytics",
-      "by": "Andrey Popov",
-      "dim": "8153 × 5435",
-      "why": "Strong technical specificity, clean office styling, and a useful visual emphasis on measurable outcomes.",
-      "use": "Data visualization, performance tracking, insights",
-      "crop": "Good hero or feature-card image.",
-      "url": "https://stock.adobe.com/images/data-analyst-using-kpi-analytics/538423998",
-      "status": "cut"
+      "url": "https://elements.envato.com/item-V245CP9"
     },
     {
       "source": "adobe",
@@ -623,66 +577,9 @@
     },
     {
       "source": "envato",
-      "id": "EF3WBBH",
-      "file": "envato-EF3WBBH.webp",
-      "cat": "Abstract",
-      "status": "undecided",
-      "title": "Abstract Background Gradient of Blue and Purple",
-      "by": "chayanitc",
-      "dim": "1200 x 630",
-      "why": "TODO why this one",
-      "use": "TODO where it is for",
-      "crop": "",
-      "url": "https://elements.envato.com/item-EF3WBBH"
-    },
-    {
-      "source": "envato",
-      "id": "WG9F64L",
-      "file": "envato-WG9F64L.webp",
-      "cat": "Abstract",
-      "status": "undecided",
-      "title": "Soft Abstract Blue Grainy Texture Gradient Background",
-      "by": "colnihko",
-      "dim": "1200 x 630",
-      "why": "TODO why this one",
-      "use": "TODO where it is for",
-      "crop": "",
-      "url": "https://elements.envato.com/item-WG9F64L"
-    },
-    {
-      "source": "envato",
-      "id": "RX5KTBB",
-      "file": "envato-RX5KTBB.webp",
-      "cat": "Abstract",
-      "status": "undecided",
-      "title": "Solid Blue Background for Design and Text",
-      "by": "tenkende",
-      "dim": "1200 x 630",
-      "why": "TODO why this one",
-      "use": "TODO where it is for",
-      "crop": "",
-      "url": "https://elements.envato.com/item-RX5KTBB"
-    },
-    {
-      "source": "envato",
-      "id": "JXVDGH4",
-      "file": "envato-JXVDGH4.webp",
-      "cat": "Abstract",
-      "status": "undecided",
-      "title": "Modern Background with Blue and White Lines",
-      "by": "Rawpixel",
-      "dim": "1200 x 630",
-      "why": "TODO why this one",
-      "use": "TODO where it is for",
-      "crop": "",
-      "url": "https://elements.envato.com/item-JXVDGH4"
-    },
-    {
-      "source": "envato",
       "id": "4UGVFMX",
       "file": "envato-4UGVFMX.webp",
       "cat": "Technology",
-      "status": "undecided",
       "title": "Data center with endless servers. Network and information servers behind glass panels",
       "by": "larich",
       "dim": "1200 x 630",
@@ -696,7 +593,6 @@
       "id": "NQGUR4T",
       "file": "envato-NQGUR4T.webp",
       "cat": "Technology",
-      "status": "undecided",
       "title": "server room, data center, networking, database, computing, rack, big data",
       "by": "akportfolio24",
       "dim": "1200 x 630",
@@ -710,7 +606,6 @@
       "id": "WH4994T",
       "file": "envato-WH4994T.webp",
       "cat": "Technology",
-      "status": "undecided",
       "title": "Data Servers Stacked in a Row, Blue Illumination",
       "by": "seventyfourimages",
       "dim": "1200 x 630",
@@ -724,7 +619,6 @@
       "id": "Q7WUVFA",
       "file": "envato-Q7WUVFA.webp",
       "cat": "Technology",
-      "status": "undecided",
       "title": "Structured cabling in a data centre patch panel",
       "by": "svitlanah",
       "dim": "1200 x 630",
@@ -732,6 +626,71 @@
       "use": "Infrastructure, networking, managed services, section backgrounds",
       "crop": "Holds at any width; the cable run reads as texture when cropped small.",
       "url": "https://elements.envato.com/item-Q7WUVFA"
+    },
+    {
+      "source": "adobe",
+      "id": "2076722176",
+      "file": "adobe-2076722176.webp",
+      "cat": "Abstract",
+      "title": "Distorted wireframe mesh surface",
+      "by": "",
+      "dim": "1000 x 500",
+      "why": "TODO why this one",
+      "use": "TODO where it is for",
+      "crop": "",
+      "url": "https://stock.adobe.com/images/2076722176"
+    },
+    {
+      "source": "adobe",
+      "id": "2070669215",
+      "file": "adobe-2070669215.webp",
+      "cat": "Abstract",
+      "title": "Particle vortex forming an open aperture",
+      "by": "",
+      "dim": "1000 x 562",
+      "why": "TODO why this one",
+      "use": "TODO where it is for",
+      "crop": "",
+      "url": "https://stock.adobe.com/images/2070669215"
+    },
+    {
+      "source": "adobe",
+      "id": "2119784064",
+      "file": "adobe-2119784064.webp",
+      "cat": "Abstract",
+      "title": "Interwoven ribbons in blue and green",
+      "by": "",
+      "dim": "1000 x 563",
+      "why": "TODO why this one",
+      "use": "TODO where it is for",
+      "crop": "",
+      "url": "https://stock.adobe.com/images/2119784064"
+    },
+    {
+      "source": "adobe",
+      "id": "1785847543",
+      "file": "adobe-1785847543.webp",
+      "cat": "Abstract",
+      "title": "Soft iridescent glass forms",
+      "by": "",
+      "dim": "1000 x 561",
+      "why": "TODO why this one",
+      "use": "TODO where it is for",
+      "crop": "",
+      "url": "https://stock.adobe.com/images/1785847543"
+    },
+    {
+      "source": "adobe",
+      "id": "2108240402",
+      "file": "adobe-2108240402.webp",
+      "cat": "Abstract",
+      "title": "Dark particle field with a single light crest",
+      "by": "",
+      "dim": "1000 x 563",
+      "why": "TODO why this one",
+      "use": "TODO where it is for",
+      "crop": "",
+      "url": "https://stock.adobe.com/images/2108240402"
     }
   ]
 }

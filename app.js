@@ -984,22 +984,18 @@
         probe.src = 'assets/images/shortlist/' + item.file;
       }
 
-      // No badge on the card for the decision. A green "Keep" tick sitting on two
-      // cards out of fifty raised more questions than it answered — it looks like
-      // the system asserting something about the picture rather than a note
-      // somebody left. The decision still exists and still does its work: cut
-      // images leave the grid, and the filter above the grid is where you act on
-      // status. It is a way of working through the library, not a property of the
-      // photograph, so it belongs in the controls rather than on the artwork.
+      // No decision state on this page at all. Keep / cut / licensed was tried —
+      // a badge on the card and a filter above the grid — and every part of it read
+      // as clutter on a page whose job is comparing photographs. Removing an image
+      // now means removing it: delete the entry and the file. Nothing is archived.
       function card(item) {
         // The card is a DIV wrapping a link, not a link wrapping everything. It has
         // to be: the copy button below is a <button>, and a button inside an anchor
         // is invalid HTML that breaks both — the click target becomes ambiguous and
         // keyboard users get one control where there are two.
         const cell = document.createElement('div');
-        const status = item.status || 'undecided';
         const wanted = !item.file;
-        cell.className = 'shot-card shot-card--' + status + (wanted ? ' shot-card--wanted' : '');
+        cell.className = 'shot-card' + (wanted ? ' shot-card--wanted' : '');
 
         const a = document.createElement('a');
         a.className = 'shot-link';
@@ -1102,41 +1098,7 @@
       const search = scope.querySelector('.lib-search-input');
       const chips = scope.querySelector('.lib-filter');
       const count = scope.querySelector('.lib-count');
-      const statusSel = scope.querySelector('.lib-status-select');
       let activeCat = 'all';
-      let activeStatus = 'all';
-
-      // A select rather than a second row of chips. The category chips already wrap
-      // to two lines, and the decision filter is used differently anyway: it is a
-      // mode you work in for a whole session ("show me the undecided ones"), not
-      // something you flick between while browsing.
-      if (statusSel) {
-        const n = s => items.filter(i => (i.status || 'undecided') === s).length;
-        const opts = [
-          ['all', 'Any decision'],
-          ['undecided', 'Undecided'],
-          ['keep', 'Keep'],
-          ['cut', 'Cut'],
-          ['licensed', 'Licensed'],
-          ['wanted', 'Not downloaded'],
-        ];
-        opts.forEach(pair => {
-          const o = document.createElement('option');
-          o.value = pair[0];
-          const c = pair[0] === 'all' ? items.length
-                  : pair[0] === 'wanted' ? items.filter(i => !i.file).length
-                  : n(pair[0]);
-          o.textContent = pair[1] + ' (' + c + ')';
-          // Never offer a filter that would empty the grid — an option reading
-          // "Cut (0)" invites a click that answers with nothing.
-          if (c === 0 && pair[0] !== 'all') o.disabled = true;
-          statusSel.appendChild(o);
-        });
-        statusSel.addEventListener('change', () => {
-          activeStatus = statusSel.value;
-          apply();
-        });
-      }
 
       if (chips) {
         const mk = (value, label, pressed) => {
@@ -1168,28 +1130,15 @@
         let shown = 0;
         Array.from(grid.children).forEach((el, i) => {
           const it = items[i];
-          const st = it.status || 'undecided';
-          // Cut means gone. It used to dim and stay in the grid on the theory that
-          // the record of a rejection is worth keeping — it is, but it belongs in
-          // library.json, not taking up a slot in a library you are browsing. The
-          // reasoning survives in the file and the image is one filter away.
-          const cutAway = st === 'cut' && activeStatus !== 'cut';
-          const statusOk = activeStatus === 'all'
-            || (activeStatus === 'wanted' ? !it.file : st === activeStatus);
-          const hit = !cutAway && (activeCat === 'all' || it.cat === activeCat) && statusOk &&
+          const hit = (activeCat === 'all' || it.cat === activeCat) &&
                       terms.every(term => it.hay.indexOf(term) > -1);
           el.hidden = !hit;
           if (hit) shown++;
         });
         if (count) {
-          // The denominator excludes cut images unless you are looking at them.
-          // Counting things the grid will never show under the current filter
-          // reads as a bug — "50 of 52" with no way to reach the other two.
-          const pool = activeStatus === 'cut' ? items.length
-            : items.filter(i => (i.status || 'undecided') !== 'cut').length;
-          count.textContent = shown === pool
+          count.textContent = shown === items.length
             ? shown + ' image' + (shown === 1 ? '' : 's')
-            : shown + ' of ' + pool + ' images';
+            : shown + ' of ' + items.length + ' images';
         }
         const empty = grid.nextElementSibling;
         if (empty && empty.classList.contains('lib-empty')) empty.hidden = shown > 0;

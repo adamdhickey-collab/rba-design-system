@@ -33,13 +33,13 @@ THREE THINGS THIS MAKES CHEAP
   Add     Drop <source>-<id>.<ext> into shortlist/ and run --adopt. You get a
           stub entry with TODO markers, last in its category, ready to fill in.
 
-RANK AND PRIORITY ARE DERIVED
------------------------------
+RANK IS DERIVED
+---------------
 Rank is an item's position among the items sharing its category — move an entry
-up the array to promote it. Priority follows from rank via priority_bands in
-library.json (top 3 primary, next 3 strong alternative, rest supporting) unless
-the entry sets priority itself. Both used to be stored per row, which meant
-deleting the 4th of ten images left a gap and made nine other rows wrong.
+up the array to promote it. It used to be stored per row, which meant deleting
+the 4th of ten images left a gap and made nine other rows wrong. A "priority"
+band (primary / strong alternative / supporting) was derived from it and shown on
+each card; that went when the cards were stripped back to the picture.
 """
 
 import argparse
@@ -70,12 +70,6 @@ FILENAME = re.compile(r'^([a-z0-9]+)-(.+)\.(webp|jpg|jpeg|png)$', re.I)
 # somebody's notes and got lost.
 REQUIRED = ('source', 'id', 'title', 'cat', 'url')
 
-# The decision, kept separate from whether the file happens to be on disk. Staging
-# is a fact about the filesystem; status is a judgement about the picture, and
-# conflating them would mean you could not say "downloaded, looked at, rejected".
-STATUSES = ('undecided', 'keep', 'cut', 'licensed')
-DEFAULT_STATUS = 'undecided'
-
 STUB = {'title': 'TODO title', 'by': 'TODO contributor', 'dim': '',
         'why': 'TODO why this one', 'use': 'TODO where it is for', 'crop': '',
         'url': 'TODO link to the asset page'}
@@ -99,13 +93,6 @@ def staged():
             if n.lower().endswith(EXTS) and not n.startswith('.')}
 
 
-def priority_for(rank, bands):
-    for upto, label in bands:
-        if upto is None or rank <= upto:
-            return label
-    return bands[-1][1] if bands else ''
-
-
 def validate(lib, files):
     errs, warns = [], []
     sources = lib.get('sources', {})
@@ -127,14 +114,6 @@ def validate(lib, files):
         if key in seen:
             errs.append('%s: duplicate %s/%s' % (where, key[0], key[1]))
         seen.add(key)
-
-        st = it.get('status', DEFAULT_STATUS)
-        if st not in STATUSES:
-            errs.append('%s: status "%s" is not one of %s'
-                        % (where, st, ', '.join(STATUSES)))
-        if st == 'licensed' and not it.get('file'):
-            warns.append('%s: marked licensed but nothing is staged — the licensed '
-                         'file should be in shortlist/' % where)
 
         f = it.get('file')
         # A missing "file" key means wanted-but-not-downloaded, which is fine. A
@@ -163,7 +142,6 @@ def validate(lib, files):
 
 
 def build(lib):
-    bands = [(None if u is None else int(u), l) for u, l in lib.get('priority_bands', [])]
     cats = lib['categories']
     per = {c: 0 for c in cats}
     items = []
@@ -178,11 +156,9 @@ def build(lib):
             'licence': src.get('licence', ''),
             'tier': src.get('tier', ''),
             'file': it.get('file', ''),
-            'status': it.get('status', DEFAULT_STATUS),
             'title': it['title'],
             'cat': it['cat'],
             'rank': rank,
-            'priority': it.get('priority') or priority_for(rank, bands),
             'by': it.get('by', ''),
             'dim': it.get('dim', ''),
             'why': it.get('why', ''),
@@ -303,7 +279,7 @@ def review(lib, files):
     # Contributor concentration. The original fifty had one photographer supplying
     # ten of them across four categories, which is how a brand library ends up
     # looking like one person's portfolio.
-    by = collections.Counter(i.get('by', '') for i in items if i.get('by'))
+    by = collections.Counter(i.get('by', '').strip() for i in items if i.get('by', '').strip())
     for name, count in by.most_common():
         if count >= max(4, n * 0.08):
             cats = sorted({i['cat'] for i in items if i.get('by') == name})
@@ -316,13 +292,14 @@ def review(lib, files):
         rows = [i for i in items if i['cat'] == cat]
         if len(rows) < 4:
             continue
-        spread = collections.Counter(i.get('by', '') for i in rows)
+        spread = collections.Counter(i.get('by', '').strip() or '(uncredited %d)' % n
+                                     for n, i in enumerate(rows))
         top, count = spread.most_common(1)[0]
         if count >= max(3, len(rows) * 0.35):
             notes.append('"%s": %d of %d from %s' % (cat, count, len(rows), top or 'one contributor'))
         if len(spread) <= len(rows) / 2.5:
-            notes.append('"%s": only %d contributors for %d images'
-                         % (cat, len(spread), len(rows)))
+            notes.append('"%s": only %d contributor%s for %d images'
+                         % (cat, len(spread), '' if len(spread) == 1 else 's', len(rows)))
 
     # Probable near-duplicates: same category, same contributor, and titles that
     # describe the same thing. Any one of those alone is fine; all three together
@@ -386,41 +363,27 @@ def review(lib, files):
     return notes
 
 
-def retire(lib, files, apply_it):
-    """Delete the staged file for anything cut, keeping the entry as the record.
+def remove(lib, files, targets):
+    """Delete entries and their files outright. Nothing is archived.
 
-    The library only improves if things leave it, and the ones that should leave
-    first are unlicensed comps that have already been ruled out — they cannot be
-    used, they are the bulk of what this repo publishes, and once a decision is
-    made they are dead weight sitting on a public URL.
-
-    The ENTRY survives, with its reasoning intact. Knowing that a picture was
-    considered and rejected is worth as much as the shortlist itself; it is what
-    stops the same image being proposed again in six months. What goes is the file,
-    which turns the row back into a wanted entry — recoverable in one download if
-    the decision is ever reversed.
-
-    Only comps are retired. A 'free' or 'subscription' image is licensed, costs
-    nothing to keep, and might be wanted again.
+    There was a --retire that emptied the file but kept the entry as a record of
+    the rejection. It went with the rest of the decision machinery: if an image is
+    out, it is out, and a library you have to filter to see properly is not simpler
+    than one with fewer things in it.
     """
-    done = []
+    gone = []
+    keep = []
     for it in lib['items']:
-        if it.get('status') != 'cut' or not it.get('file'):
-            continue
-        tier = lib['sources'].get(it['source'], {}).get('tier')
-        if tier != 'paid':
-            print('  kept %s — %s is %s, not an unlicensed comp'
-                  % (it['file'], it['source'], tier or 'untiered'))
-            continue
-        path = files.get(it['file'])
-        print('  %s %s (%s)' % ('retiring' if apply_it else 'would retire',
-                                it['file'], it['title'][:44]))
-        if apply_it:
-            if path and os.path.exists(path):
-                os.remove(path)
-            it.pop('file', None)
-        done.append(it['id'])
-    return done
+        if it.get('file') in targets or it.get('id') in targets:
+            f = files.get(it.get('file'))
+            if f and os.path.exists(f):
+                os.remove(f)
+            print('  removed %s (%s)' % (it.get('file') or it['id'], it['title'][:44]))
+            gone.append(it.get('file') or it['id'])
+        else:
+            keep.append(it)
+    lib['items'] = keep
+    return gone
 
 
 def main():
@@ -431,10 +394,8 @@ def main():
     ap.add_argument('--prune', action='store_true', help='drop entries whose file is gone')
     ap.add_argument('--review', action='store_true',
                     help='curation health: concentration, near-duplicates, bad aspects')
-    ap.add_argument('--retire', action='store_true',
-                    help='delete staged comps for anything cut; keeps the entry')
-    ap.add_argument('--dry-run', action='store_true',
-                    help='with --retire, list what would go and change nothing')
+    ap.add_argument('--remove', nargs='+', metavar='FILE',
+                    help='delete these entries and their files outright')
     args = ap.parse_args()
 
     lib = load()
@@ -451,18 +412,13 @@ def main():
             print('  · %s' % note)
         return 0
 
-    if args.retire:
-        print('Retiring cut comps%s:' % (' (dry run)' if args.dry_run else ''))
-        gone = retire(lib, files, not args.dry_run)
-        if not gone:
-            print('  nothing to retire — mark something "cut" in library.json first')
-        elif not args.dry_run:
+    if args.remove:
+        print('Removing:')
+        if not remove(lib, files, set(args.remove)):
+            print('  nothing matched')
+        else:
             save(lib)
             files = staged()
-            print('  retired %d; entries kept as wanted, files deleted\n' % len(gone))
-        else:
-            print('  %d would be retired. Re-run without --dry-run.\n' % len(gone))
-            return 0
 
     if args.adopt or args.prune:
         if args.adopt:
@@ -502,15 +458,10 @@ def main():
 
     n = len(lib['items'])
     wanted = sum(1 for it in lib['items'] if not it.get('file'))
-    by_status = collections.Counter(it.get('status', DEFAULT_STATUS) for it in lib['items'])
 
     def summary():
-        print('  staged %d, wanted %d' % (n - wanted, wanted))
-        print('  ' + ', '.join('%s %d' % (s, by_status[s]) for s in STATUSES if by_status[s]))
-        undecided = by_status['undecided']
-        if undecided:
-            print('  %d still undecided — ./tools/images-sync.py --review for '
-                  'what to look at first' % undecided)
+        if wanted:
+            print('  staged %d, wanted %d' % (n - wanted, wanted))
 
     if args.check:
         print('%d images, %d categories, %d sources — %s'

@@ -300,7 +300,11 @@ def main():
         lib['items'].insert(at, {
             'source': info['source'], 'id': info['id'], 'file': fname, 'cat': cat,
             'status': args.status, 'title': info['title'],
-            'by': info['by'] or info['sourceName'], 'dim': dim,
+            # Left EMPTY when unknown rather than falling back to the service
+            # name. Filling it with "Adobe Stock" made --review count the
+            # service as a photographer and report a concentration that was
+            # really just five images with no credit recorded.
+            'by': info['by'], 'dim': dim,
             'why': 'TODO why this one', 'use': 'TODO where it is for', 'crop': '',
             'url': info['url']})
         at += 1
