@@ -391,18 +391,22 @@
 
     /* ---------- Page entrance ---------- */
     /* One staggered rise on load: the mark, then the hero copy, then the first
-       block, 10px and done. Three elements, one direction, no bounce — the premium
-       read comes from restraint and timing, not from distance. Transform and
-       opacity only, so nothing lays out twice; `both` fill so there is no flash
-       of unstyled position before the delay. Replays on each page navigation,
-       which is why the whole sequence is under half a second. */
+       block. Three elements, one direction, no bounce — the premium read comes
+       from restraint and timing, not from distance. Transform and opacity only,
+       so nothing lays out twice; `both` fill so there is no flash of unstyled
+       position before the delay. Replays on each page navigation, which is why
+       the whole sequence stays under a second.
+
+       First cut was 360ms/10px and read as nothing at all — an entrance the eye
+       cannot catch is indistinguishable from a bug. These timings are the floor
+       of perceptibility, not the ceiling of taste. */
     @keyframes rba-enter {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: none; }
     }
-    .hero-mark { animation: rba-enter 480ms cubic-bezier(0.2, 0.6, 0.2, 1) both; }
-    .hero .container { animation: rba-enter 360ms cubic-bezier(0.2, 0.6, 0.2, 1) 60ms both; }
-    .app-main > .block:first-of-type > .container { animation: rba-enter 360ms cubic-bezier(0.2, 0.6, 0.2, 1) 140ms both; }
+    .hero-mark { animation: rba-enter 700ms cubic-bezier(0.16, 0.7, 0.3, 1) both; }
+    .hero .container { animation: rba-enter 650ms cubic-bezier(0.16, 0.7, 0.3, 1) 120ms both; }
+    .app-main > .block:first-of-type > .container { animation: rba-enter 650ms cubic-bezier(0.16, 0.7, 0.3, 1) 260ms both; }
     @media (prefers-reduced-motion: reduce) {
       .hero-mark,
       .hero .container,
