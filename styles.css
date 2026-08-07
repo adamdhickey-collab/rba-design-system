@@ -687,7 +687,7 @@
     }
     .palette-columns > .palette-swatch {
       flex: 1 1 calc(25% - var(--space-3));
-      min-width: 168px;
+      min-width: 0;
     }
     /* Kept so the markup can still group colors (primary / neutral) without the grid
        collapsing them into one run. */
@@ -797,7 +797,22 @@
 
     /* lg (1024) · wide token grids reflow at the same point the nav does */
     @media (max-width: 1023.98px) {
-      .palette-columns > .palette-swatch { flex-basis: calc(50% - var(--space-3)); min-width: 0; }
+      /* Was a single step here: four across above 1024, two below, nothing between.
+         A swatch is a colour chip plus a name and a hex, and three of them fit
+         comfortably from about 700px up — so the tablet range was throwing away half
+         the width it had. Stepped now, and the basis is what decides the count; the
+         flex line still lets a short final row grow to fill. */
+      .palette-columns > .palette-swatch { flex-basis: calc(33.333% - var(--space-3)); min-width: 0; }
+    }
+
+    @media (max-width: 699.98px) {
+      .palette-columns > .palette-swatch { flex-basis: calc(50% - var(--space-3)); }
+    }
+    /* At 320 two across leaves ~100px a tile, which breaks "Border Strong" over three
+       lines and puts the hex under its own name. One across is the honest answer at
+       that width — the board gets longer, but every row is still readable. */
+    @media (max-width: 399.98px) {
+      .palette-columns > .palette-swatch { flex-basis: 100%; }
     }
 
     /* Plain-language glossary of UI terms, used on the Color foundation page */
@@ -2168,6 +2183,128 @@
       font-size: 14px;
       line-height: 21px;
       color: var(--text-muted);
+    }
+
+    /* ---------- Touch input ----------
+       Keyed to the input method, not the screen. Two components already did this here
+       (.glyph-cell-copy, .lib-filter-btn) and the rest never followed, so on a phone the
+       theme switch was 33px tall, every hex-copy button in the token tables was 36, and
+       the asset download links were 23 — all of them below the 44px the codebase already
+       declares in --touch-target-min and uses in exactly three places.
+
+       (hover: none) rather than a width query on purpose: a touch laptop at 1400px needs
+       the bigger targets and a narrow desktop window does not. Padding does the work
+       rather than height, so nothing changes shape — the hit area grows around the
+       label it already had. */
+    @media (hover: none) {
+      .theme-toggle,
+      .theme-toggle-track { min-height: var(--touch-target-min); }
+      .sidebar-brand-link { padding: 3px 0; }
+      .btn { min-height: var(--touch-target-min); }
+      .token-copy { min-height: var(--touch-target-min); padding-top: 6px; padding-bottom: 6px; }
+      /* Inline-ish download links: they sit in a row of their own, so vertical padding
+         is free and does not push the surrounding text around. */
+      .asset-dl,
+      .font-get-alt { min-height: var(--touch-target-min); display: inline-flex; align-items: center; }
+      .sidebar-link { min-height: var(--touch-target-min); display: flex; align-items: center; }
+      .viz-swatch-btn,
+      .palette-swatch { min-height: var(--touch-target-min); }
+      /* The skip link is the first thing a switch or keyboard user lands on; 42px was
+         two pixels short of the same bar everything else has to clear. */
+      .skip-link { min-height: var(--touch-target-min); display: inline-flex; align-items: center; }
+    }
+
+    /* ---------- Print ----------
+       There was no print stylesheet at all, which for a colour and type reference is a
+       real gap: this is a page people take into a meeting. Printed as-is you got the
+       navigation rail down the left of every sheet, swatches rendered as empty outlines
+       because browsers drop backgrounds by default, and any table wider than the paper
+       silently clipped its right-hand columns inside its scroll container.
+
+       The governing decision is print-color-adjust: exact on the swatches. Everywhere
+       else, dropping colour to save ink is the right default — on a colour board it
+       destroys the document. */
+    @media print {
+      /* Dark mode must not reach paper. Re-point the surface and text tokens back to
+         their light values rather than chasing every component that reads them. */
+      :root,
+      [data-theme="dark"] {
+        --bg: #FFFFFF;
+        --surface: #FFFFFF;
+        --surface-pill: #FFFFFF;
+        --surface-input: #FFFFFF;
+        --text: #000000;
+        --text-soft: #222222;
+        --text-muted: #444444;
+        --border: #999999;
+        --border-subtle: #BBBBBB;
+        --brand: #1D366D;
+      }
+      @page { margin: 16mm 14mm; }
+      html, body { background: #FFFFFF; }
+
+      /* Chrome that means nothing on paper. */
+      .sidebar, .mobile-bar, .nav-scrim, .search-overlay, .skip-link,
+      .theme-toggle-row, .hero-mark, .sidebar-search,
+      .token-copy-icon, .glyph-cell-copy, .lib-bundle,
+      .asset-dl { display: none !important; }
+      /* The reference layouts stay. They were in the hide list on ink-cost grounds,
+         which gets the section exactly backwards — "what good looks like" with the
+         pictures removed is a list of filenames. Shorter on paper than on screen,
+         since the printed page has no hover and no reason to fill a card. */
+      .kit-shot {
+        height: 130px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .app-layout { display: block; }
+      .app-main { margin: 0; width: auto; }
+      .container { max-width: none; padding: 0; }
+
+      /* The hero gradient is a full-bleed ink flood. Keep the words, drop the wash. */
+      .hero { background: none !important; padding: 0 0 12pt; border-bottom: 1pt solid #999; }
+      .hero-title { color: #1D366D !important; }
+
+      /* Scroll containers cannot scroll on paper — a table wider than the sheet just
+         loses its right-hand columns. Let them lay out and wrap instead. */
+      .token-table-scroll { overflow: visible !important; }
+      .table { width: 100%; table-layout: fixed; word-break: break-word; }
+
+      /* The one place ink is not negotiable. Without this the entire palette prints as
+         empty rectangles and the document is worthless. */
+      .palette-swatch-chip,
+      .token-swatch,
+      .gradient-demo,
+      .viz-swatch-band,
+      .logo-card {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      /* Keep a swatch, a specimen or a table row from being split across two sheets. */
+      .palette-swatch, .viz-swatch, .spec, .kit, .logo-item, tr, .callout {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      section.block { break-before: auto; padding: 12pt 0; border-bottom: none; }
+      .subhead, .section-title { break-after: avoid; page-break-after: avoid; }
+
+      /* Type that was sized for a screen at arm's length. */
+      body { font-size: 10.5pt; line-height: 1.45; }
+      .section-title { font-size: 18pt; }
+      .subhead { font-size: 13pt; }
+
+      /* A printed page loses the href. Put it back, but only for real destinations —
+         not for in-page anchors, which would print as a page full of "(#colors)". */
+      main a[href^="http"]::after,
+      main a[href$=".html"]::after {
+        content: " (" attr(href) ")";
+        font-size: 8.5pt;
+        color: #444;
+        word-break: break-all;
+      }
+      a { text-decoration: underline; color: inherit; }
     }
 
     /* ---------- Footer ---------- */
