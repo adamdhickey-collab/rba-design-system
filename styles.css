@@ -471,6 +471,10 @@
         background: var(--surface-header);
         border-bottom: 1px solid var(--border);
       }
+      /* Fixed white, not theme tokens: the band behind these is dark navy in BOTH
+         themes (--surface-header), so --text and --brand — which flip with the
+         theme — were near-black-on-navy in light mode. White is the one color
+         that holds on both navies, same rule as the reversed logo. */
       .mobile-bar-trigger {
         all: unset;
         display: inline-flex;
@@ -479,13 +483,13 @@
         width: var(--touch-target-min);
         height: var(--touch-target-min);
         border-radius: var(--corner-radius-base);
-        color: var(--text);
+        color: #FFFFFF;
         cursor: pointer;
         flex-shrink: 0;
       }
-      .mobile-bar-trigger:hover { background: var(--sky-50); }
+      .mobile-bar-trigger:hover { background: rgba(255, 255, 255, 0.14); }
       .mobile-bar-trigger:focus-visible {
-        outline: 2px solid var(--brand);
+        outline: 2px solid #FFFFFF;
         outline-offset: -2px;
       }
       .mobile-bar-trigger .material-symbols-rounded { font-size: 24px; }
@@ -496,7 +500,7 @@
         font-weight: 800;
         font-size: 17px;
         line-height: 1;
-        color: var(--brand);
+        color: #FFFFFF;
       }
 
       /* Scrim */
