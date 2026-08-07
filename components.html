@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Components · Connect Design System</title>
+  <meta name="description" content="The Connect Design System — brand foundations and downloadable assets for RBA Consulting — colors, typography, logos, icons, images and templates." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..700,0..1,-25..0&display=block" />
+  <link rel="icon" href="assets/favicons/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="assets/favicons/favicon-16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/favicons/apple-touch-180.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <!-- The RBA mark, imported verbatim from the brand's own SVG (assets/logos/). The
+       wordmark and the linked-rings device are a SINGLE color: every path is
+       fill="currentColor", so `color` alone drives all four colorways and there is no
+       second custom property to keep in step. Do not recolor the paths individually.
+
+       The block lockup below is a separate ASSET, not a colorway — a red field with the
+       mark knocked out of it — so it carries its own fixed fills. -->
+  <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true" focusable="false">
+    <symbol id="rba-logo" viewBox="0 0 736 187">
+      <path d="M355.643 109.492V111.963L390.222 157.249V183.596L387.751 186.066H372.112L367.171 183.596L312.828 115.264L307.886 112.793H281.55L279.079 115.264V183.596L276.609 186.066H244.506L242.035 183.596V4.1158L244.506 1.64515H331.772C368.822 1.64515 395.173 19.7597 395.173 56.804C395.625 68.7852 391.945 80.5577 384.752 90.1497C377.558 99.7416 367.287 106.57 355.658 109.492M331.772 32.928H281.555L279.084 35.3986V77.3841L281.555 79.8547H331.772C347.416 79.8547 358.119 74.9135 358.119 55.9787C358.119 37.044 347.416 32.928 331.772 32.928Z" fill="currentColor"></path>
+      <path d="M507.126 186.881H417.394L414.923 184.411V4.1158L417.394 1.64515H501.365C527.711 1.64515 554.053 14.8185 554.053 49.3921C554.053 67.5066 545.821 83.9707 527.706 88.9069V91.3775C549.111 97.139 559.814 112.783 559.814 136.664C559.814 173.708 533.468 186.881 507.126 186.881ZM496.439 32.928H454.438L451.967 35.3986V72.4479L454.438 74.9185H496.439C501.543 75.3316 506.611 73.7676 510.595 70.5497C514.579 67.3319 517.174 62.7063 517.844 57.6291V54.3383C517.844 41.165 512.903 32.928 496.439 32.928ZM496.439 107.026H454.438L451.967 109.497V151.483L454.438 153.953H496.439C514.553 153.953 522.785 145.721 522.785 130.077C522.785 114.433 514.553 107.026 496.439 107.026Z" fill="currentColor"></path>
+      <path d="M732.704 186.881H708.828L706.358 184.411L693.189 149.832L688.248 147.362H622.387L617.446 149.832L603.452 183.586L600.982 186.056H577.111L574.64 183.586V157.239L635.56 4.1158L638.041 1.64515H672.609L675.08 4.1158L736 157.244V183.591L732.704 186.881ZM656.155 49.3921H652.865L628.984 112.788L631.454 115.259H676.74L679.211 112.788L656.155 49.3921Z" fill="currentColor"></path>
+      <path d="M186.056 79.0348C183.346 73.6881 179.233 69.1785 174.158 65.9879C169.083 62.7973 163.237 61.0457 157.244 60.9202C148.732 60.9096 140.571 57.5233 134.552 51.5042C128.533 45.4851 125.147 37.3245 125.136 28.8122C125.181 22.7816 123.5 16.8641 120.29 11.7586C117.08 6.65307 112.476 2.5729 107.021 0H79.0346C73.6879 2.71052 69.1783 6.82296 65.9877 11.8978C62.7971 16.9726 61.0455 22.819 60.9201 28.8122V29.6374C60.7368 38.0196 57.2693 45.9947 51.2641 51.8456C45.2589 57.6965 37.1963 60.9552 28.8121 60.9202C22.7816 60.875 16.8641 62.5566 11.7586 65.7665C6.65307 68.9764 2.57289 73.5804 0 79.0348V107.027C2.62397 112.442 6.71602 117.011 11.81 120.213C16.904 123.416 22.795 125.123 28.8121 125.141C37.1963 125.106 45.2589 128.365 51.2641 134.216C57.2693 140.067 60.7368 148.042 60.9201 156.424V157.249C60.8748 163.28 62.5564 169.197 65.7663 174.303C68.9762 179.408 73.5802 183.489 79.0346 186.061H107.847C114.689 182.561 120.085 176.77 123.093 169.699C126.102 162.627 126.533 154.724 124.311 147.367L104.556 127.607C101.342 126.66 98.0255 126.107 94.6785 125.961H93.033C84.6508 125.778 76.6758 122.311 70.8249 116.305C64.9741 110.3 61.7153 102.238 61.7503 93.8535C61.8538 85.5114 65.1579 77.5278 70.9798 71.5523C76.8017 65.5768 84.6965 62.0661 93.033 61.7454C101.291 61.6648 109.258 64.7975 115.249 70.4818C121.24 76.1661 124.788 83.9568 125.141 92.208V93.0333C125.287 96.3803 125.84 99.6971 126.786 102.911L147.366 122.671C150.58 123.617 153.897 124.17 157.244 124.316C163.274 124.361 169.192 122.68 174.297 119.47C179.403 116.26 183.483 111.656 186.056 106.202V79.0348Z" fill="currentColor"></path>
+    </symbol>
+    <!-- The linked-rings device on its own, lifted verbatim from #rba-logo's fourth
+         path so there is one source of truth for the geometry. Cropped to its own
+         187x187 box so it can be placed as a standalone mark; still currentColor. -->
+    <symbol id="rba-connect" viewBox="0 0 187 187">
+      <path d="M186.056 79.0348C183.346 73.6881 179.233 69.1785 174.158 65.9879C169.083 62.7973 163.237 61.0457 157.244 60.9202C148.732 60.9096 140.571 57.5233 134.552 51.5042C128.533 45.4851 125.147 37.3245 125.136 28.8122C125.181 22.7816 123.5 16.8641 120.29 11.7586C117.08 6.65307 112.476 2.5729 107.021 0H79.0346C73.6879 2.71052 69.1783 6.82296 65.9877 11.8978C62.7971 16.9726 61.0455 22.819 60.9201 28.8122V29.6374C60.7368 38.0196 57.2693 45.9947 51.2641 51.8456C45.2589 57.6965 37.1963 60.9552 28.8121 60.9202C22.7816 60.875 16.8641 62.5566 11.7586 65.7665C6.65307 68.9764 2.57289 73.5804 0 79.0348V107.027C2.62397 112.442 6.71602 117.011 11.81 120.213C16.904 123.416 22.795 125.123 28.8121 125.141C37.1963 125.106 45.2589 128.365 51.2641 134.216C57.2693 140.067 60.7368 148.042 60.9201 156.424V157.249C60.8748 163.28 62.5564 169.197 65.7663 174.303C68.9762 179.408 73.5802 183.489 79.0346 186.061H107.847C114.689 182.561 120.085 176.77 123.093 169.699C126.102 162.627 126.533 154.724 124.311 147.367L104.556 127.607C101.342 126.66 98.0255 126.107 94.6785 125.961H93.033C84.6508 125.778 76.6758 122.311 70.8249 116.305C64.9741 110.3 61.7153 102.238 61.7503 93.8535C61.8538 85.5114 65.1579 77.5278 70.9798 71.5523C76.8017 65.5768 84.6965 62.0661 93.033 61.7454C101.291 61.6648 109.258 64.7975 115.249 70.4818C121.24 76.1661 124.788 83.9568 125.141 92.208V93.0333C125.287 96.3803 125.84 99.6971 126.786 102.911L147.366 122.671C150.58 123.617 153.897 124.17 157.244 124.316C163.274 124.361 169.192 122.68 174.297 119.47C179.403 116.26 183.483 111.656 186.056 106.202V79.0348Z" fill="currentColor"></path>
+    </symbol>
+    <symbol id="rba-logo-block" viewBox="0 0 344 344">
+      <path d="M344 0H0V344H344V0Z" fill="#C8252D"></path>
+      <path d="M167.342 262.628V263.586L180.745 281.139V291.352L179.787 292.309H173.725L171.81 291.352L150.746 264.865L148.83 263.908H138.622L137.664 264.865V291.352L136.707 292.309H124.263L123.305 291.352V221.783L124.263 220.825H158.089C172.45 220.825 182.664 227.846 182.664 242.205C182.839 246.849 181.413 251.413 178.625 255.131C175.836 258.849 171.855 261.496 167.348 262.628M158.089 232.951H138.624L137.666 233.908V250.182L138.624 251.14H158.089C164.153 251.14 168.301 249.225 168.301 241.885C168.301 234.546 164.153 232.951 158.089 232.951Z" fill="white"></path>
+      <path d="M226.055 292.625H191.273L190.316 291.668V221.783L191.273 220.825H223.822C234.034 220.825 244.245 225.931 244.245 239.332C244.245 246.354 241.054 252.736 234.032 254.649V255.607C242.329 257.84 246.478 263.904 246.478 273.16C246.478 287.519 236.266 292.625 226.055 292.625ZM221.912 232.951H205.632L204.675 233.908V248.269L205.632 249.227H221.912C223.891 249.387 225.855 248.781 227.4 247.533C228.944 246.286 229.95 244.493 230.21 242.525V241.25C230.21 236.143 228.294 232.951 221.912 232.951ZM221.912 261.672H205.632L204.675 262.63V278.904L205.632 279.862H221.912C228.934 279.862 232.125 276.671 232.125 270.607C232.125 264.543 228.934 261.672 221.912 261.672Z" fill="white"></path>
+      <path d="M313.492 292.625H304.237L303.28 291.668L298.175 278.265L296.26 277.307H270.731L268.816 278.265L263.392 291.348L262.434 292.306H253.181L252.224 291.348V281.136L275.837 221.783L276.799 220.825H290.198L291.156 221.783L314.769 281.137V291.35L313.492 292.625ZM283.82 239.332H282.545L273.288 263.906L274.246 264.863H291.799L292.757 263.906L283.82 239.332Z" fill="white"></path>
+      <path d="M101.604 250.822C100.553 248.75 98.9591 247.002 96.992 245.765C95.0249 244.528 92.7587 243.849 90.4357 243.801C87.1362 243.796 83.973 242.484 81.6399 240.151C79.3068 237.818 77.9942 234.655 77.9901 231.355C78.0076 229.017 77.3558 226.724 76.1116 224.745C74.8674 222.766 73.0828 221.184 70.9686 220.187H60.1204C58.048 221.238 56.3 222.832 55.0633 224.799C53.8265 226.766 53.1476 229.032 53.099 231.355V231.675C53.0279 234.924 51.6838 238.015 49.3561 240.283C47.0284 242.551 43.9032 243.814 40.6534 243.801C38.3158 243.783 36.0221 244.435 34.0431 245.679C32.0642 246.923 30.4826 248.708 29.4853 250.822V261.672C30.5024 263.771 32.0886 265.542 34.0631 266.784C36.0376 268.025 38.3211 268.687 40.6534 268.694C43.9032 268.68 47.0284 269.943 49.3561 272.211C51.6838 274.479 53.0279 277.57 53.099 280.819V281.139C53.0814 283.477 53.7332 285.771 54.9774 287.75C56.2217 289.729 58.0062 291.31 60.1204 292.307H71.2885C73.9405 290.951 76.0321 288.706 77.1984 285.965C78.3647 283.224 78.5317 280.16 77.6702 277.309L70.0129 269.649C68.7673 269.282 67.4816 269.068 66.1843 269.012H65.5465C62.2974 268.941 59.2061 267.597 56.9382 265.269C54.6704 262.941 53.4072 259.816 53.4208 256.566C53.4609 253.333 54.7416 250.238 56.9983 247.922C59.2549 245.606 62.3151 244.245 65.5465 244.12C68.7476 244.089 71.8355 245.304 74.1578 247.507C76.4801 249.71 77.855 252.73 77.9921 255.928V256.248C78.0487 257.545 78.2628 258.831 78.6298 260.077L86.607 267.736C87.8527 268.103 89.1383 268.317 90.4357 268.374C92.7732 268.391 95.0669 267.74 97.0459 266.495C99.0249 265.251 100.606 263.467 101.604 261.352V250.822Z" fill="white"></path>
+    </symbol>
+  </svg>
+
+  <div class="app-layout">
+
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="sidebar-brand-link"><svg class="brand-logo brand-logo--primary" viewBox="0 0 736 187" role="img" aria-label="RBA"><use href="#rba-logo"/></svg></a>
+        <span class="sidebar-brand-title">Connect <span class="wordmark-soft">Design System</span></span>
+        <div class="theme-toggle-row">
+          <button type="button" id="theme-toggle" class="theme-toggle" role="switch" aria-checked="false" aria-label="Light mode">
+            <span class="theme-toggle-track" aria-hidden="true">
+              <span class="theme-toggle-thumb"></span>
+              <span class="theme-toggle-opt theme-toggle-opt--light">
+                <span class="material-symbols-rounded theme-toggle-glyph">light_mode</span>
+                <span class="theme-toggle-opt-label">Light</span>
+              </span>
+              <span class="theme-toggle-opt theme-toggle-opt--dark">
+                <span class="material-symbols-rounded theme-toggle-glyph">dark_mode</span>
+                <span class="theme-toggle-opt-label">Dark</span>
+              </span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="sidebar-search">
+        <button type="button" class="sidebar-search-trigger" id="search-trigger" aria-haspopup="dialog">
+          <span class="material-symbols-rounded" aria-hidden="true">search</span>
+          <span class="sidebar-search-trigger-label">Search</span>
+          <span class="sidebar-search-kbd">⌘K</span>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Design system">
+        <a href="index.html#colors" class="sidebar-link">Colors</a>
+        <a href="index.html#type" class="sidebar-link">Typography</a>
+        <a href="index.html#logo" class="sidebar-link">Logos</a>
+        <a href="index.html#voice" class="sidebar-link">Voice</a>
+        <a href="components.html" class="sidebar-link sidebar-link--active" aria-current="page">Components</a>
+        <a href="icons.html" class="sidebar-link">Icons</a>
+        <a href="images.html" class="sidebar-link">Brand images</a>
+        <a href="templates.html" class="sidebar-link">Templates &amp; decks</a>
+      </nav>
+
+      <div class="sidebar-foot">
+        <span class="js-release">—</span>
+      </div>
+    </aside>
+
+    <main class="app-main" id="main-content" tabindex="-1">
+
+      <!-- The device is decoration, not content: aria-hidden, and it sits behind the
+           container rather than inside it so it can bleed past the text column. -->
+      <header class="hero">
+        <svg class="hero-mark" viewBox="0 0 187 187" aria-hidden="true" focusable="false"><use href="#rba-connect"/></svg>
+        <div class="container">
+          <h1 class="hero-title">Components</h1>
+          <p class="hero-sub">The pieces the brand is actually assembled from &mdash; buttons, cards, stat blocks &mdash; each shown as it should look, with the numbers underneath. If you are building something new, start here rather than measuring a screenshot.</p>
+        </div>
+      </header>
+
+      <section class="block" id="components">
+        <div class="container">
+
+          <div class="callout">
+            <span class="material-symbols-rounded" aria-hidden="true">draw</span>
+            <div class="callout-body">
+              <p><strong>These are specimens, not screenshots.</strong> Every example below is live markup using the same tokens the templates use, so what you see is what the value actually produces. The grey line under each one is the spec &mdash; the numbers to hand a developer, or to set by hand in PowerPoint.</p>
+            </div>
+          </div>
+
+          <h3 class="subhead">Buttons</h3>
+          <p class="palette-note">Three kinds, in order of weight: primary for the one action that matters, secondary for the alternative, accent for a call to action that has to carry a section on its own. Hover shown beside each.</p>
+          <div class="spec">
+            <div class="spec-demo">
+              <div class="spec-row">
+                <button type="button" class="btn btn-primary">Get in touch</button>
+                <button type="button" class="btn btn-primary is-hover">Hover</button>
+                <span class="spec-note">Primary &middot; #1D366D &rarr; #2A4A8A &middot; lifted, AAA</span>
+              </div>
+              <div class="spec-row">
+                <button type="button" class="btn btn-secondary">Learn more</button>
+                <button type="button" class="btn btn-secondary is-hover">Hover</button>
+                <span class="spec-note">Secondary &middot; outline navy on tint</span>
+              </div>
+              <div class="spec-row">
+                <button type="button" class="btn btn-accent">Start the conversation</button>
+                <button type="button" class="btn btn-accent is-hover">Hover</button>
+                <span class="spec-note">Accent CTA &middot; #0D8FA9 &middot; AA large</span>
+              </div>
+            </div>
+            <p class="spec-line">Radius 4px &middot; weight 600 &middot; 14px &middot; padding 0&times;20 &middot; height 48px</p>
+          </div>
+
+          <h3 class="subhead">Cards</h3>
+          <p class="palette-note">A bordered box at rest; the shadow is the hover state, not the default. A page of cards that all float has nothing left to signal with.</p>
+          <div class="spec">
+            <div class="spec-demo spec-demo--tint">
+              <div class="demo-grid demo-grid--2">
+                <div class="demo-card">
+                  <span class="demo-card-eyebrow">Default</span>
+                  <h4 class="demo-card-title">Digital Experience</h4>
+                  <p class="demo-card-body">Connected commerce and content platforms built to scale.</p>
+                  <p class="spec-note">1px border &middot; radius 8 &middot; padding 22</p>
+                </div>
+                <div class="demo-card demo-card--hover">
+                  <span class="demo-card-eyebrow">Hover</span>
+                  <h4 class="demo-card-title">Applied AI</h4>
+                  <p class="demo-card-body">Production AI integrations &mdash; not demos.</p>
+                  <p class="spec-note">Shadow 0 4px 20 rgba(29,54,109,.10)</p>
+                </div>
+              </div>
+            </div>
+            <p class="spec-line">1px border &middot; radius 8px &middot; padding 22px &middot; hover shadow 0 4px 20px rgba(29,54,109,.10)</p>
+          </div>
+
+          <h3 class="subhead">CTA box</h3>
+          <p class="palette-note">A tinted panel with one button in it. Goes in the right column of a one-pager, or at the end of a case study &mdash; not both.</p>
+          <div class="spec">
+            <div class="spec-demo">
+              <div class="demo-cta">
+                <h4 class="demo-cta-title">Ready to talk?</h4>
+                <p class="demo-cta-body">Schedule a 30-minute conversation to discuss your support needs.</p>
+                <button type="button" class="btn btn-primary">Start the conversation</button>
+              </div>
+            </div>
+            <p class="spec-line">Background #F5FAFC &middot; radius 8 &middot; right column of one-pagers, or end of case studies</p>
+          </div>
+
+          <h3 class="subhead">Stat block</h3>
+          <p class="palette-note">Big aqua numeral, small grey descriptor. Three is the maximum &mdash; a fourth turns a claim into a table and nobody reads it.</p>
+          <div class="spec">
+            <div class="spec-demo">
+              <div class="demo-stats">
+                <div class="demo-stat"><span class="demo-stat-num">99.9%</span><span class="demo-stat-label">uptime SLA</span></div>
+                <div class="demo-stat"><span class="demo-stat-num">&lt;4hr</span><span class="demo-stat-label">response time</span></div>
+                <div class="demo-stat"><span class="demo-stat-num">200+</span><span class="demo-stat-label">systems monitored</span></div>
+              </div>
+            </div>
+            <p class="spec-line">Numeral aqua #14BADB &middot; 56px &middot; weight 800 &middot; descriptor 12px #666 &middot; max 3 per block</p>
+          </div>
+
+          <h3 class="subhead">Bullet list</h3>
+          <p class="palette-note">Square aqua bullets, never round. Each line is a bold label and one sentence &mdash; if it needs two, it is a paragraph, not a bullet.</p>
+          <div class="spec">
+            <div class="spec-demo">
+              <ul class="demo-bullets">
+                <li><strong>Proactive monitoring.</strong> We detect and resolve issues before your users do.</li>
+                <li><strong>Dedicated team.</strong> Same experts who built it support it.</li>
+                <li><strong>Transparent reporting.</strong> Monthly scorecards &mdash; no surprises.</li>
+                <li><strong>Flex capacity.</strong> Scale up during launches, down during steady state.</li>
+              </ul>
+            </div>
+            <p class="spec-line">8&times;8 square aqua (#14BADB) bullet &middot; no round bullets &middot; bold label + one-sentence description</p>
+          </div>
+
+          <h3 class="subhead">Layout</h3>
+          <p class="palette-note">The measurements a page is built on. Worth knowing even if you never open a stylesheet: section padding is why a deck and the website feel like the same company.</p>
+          <div class="token-table-scroll" tabindex="0" role="region" aria-label="Layout tokens, scrollable">
+            <table class="table">
+              <thead><tr><th>Token</th><th>Value</th><th>Use</th></tr></thead>
+              <tbody>
+                <tr><td class="token-name">Container max</td><td><code>1280px</code></td><td>Full-width marketing pages.</td></tr>
+                <tr><td class="token-name">Container padding</td><td><code>40px</code></td><td>Side padding on the container.</td></tr>
+                <tr><td class="token-name">Section padding</td><td><code>80px 0</code></td><td>Between major sections.</td></tr>
+                <tr><td class="token-name">Nav height</td><td><code>64px sticky</code></td><td>Primary top nav.</td></tr>
+                <tr><td class="token-name">Card padding</td><td><code>24&ndash;28px</code></td><td>Card interior.</td></tr>
+                <tr><td class="token-name">Sidebar (dashboard)</td><td><code>232px fixed</code></td><td>App-shell left rail.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="subhead">Corners and shadow</h3>
+          <p class="palette-note">Three radii, one shadow. The radius is chosen by what the box is, not by how big it is.</p>
+          <div class="spec">
+            <div class="spec-demo">
+              <div class="demo-grid demo-grid--4">
+                <div class="demo-radius" style="--r: 4px"><span class="demo-radius-val">4px</span><span class="spec-note">Buttons &middot; <code>--radius-sm</code></span></div>
+                <div class="demo-radius" style="--r: 8px"><span class="demo-radius-val">8px</span><span class="spec-note">Cards, inputs &middot; <code>--radius</code></span></div>
+                <div class="demo-radius" style="--r: 12px"><span class="demo-radius-val">12px</span><span class="spec-note">Process containers &middot; <code>--radius-lg</code></span></div>
+                <div class="demo-radius demo-radius--shadow" style="--r: 8px"><span class="demo-radius-val">Hover</span><span class="spec-note">0 4px 20px rgba(29,54,109,.10)</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <footer>
+        <div class="container footer-inner">
+          <div>
+            <p class="footer-mark">Connect <span class="wordmark-soft">Design System</span></p>
+            <p class="footer-meta u-mt-xs">Brand foundations &amp; asset library</p>
+          </div>
+          <p class="footer-meta">Every value on this page is already in the templates. Copy a spec here only when you are building something new.</p>
+        </div>
+      </footer>
+    </main><!-- /.app-main -->
+  </div><!-- /.app-layout -->
+
+  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search the Connect Design System" hidden>
+    <div class="search-panel">
+      <div class="search-input-row">
+        <span class="material-symbols-rounded" aria-hidden="true">search</span>
+        <input type="text" class="search-field" id="search-input" placeholder="Search colors, type, logos, icons, templates…" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="search-results" aria-label="Search the Connect Design System" />
+        <kbd class="search-esc">Esc</kbd>
+      </div>
+      <div class="search-results" id="search-results" role="listbox" aria-label="Search results"></div>
+      <div class="search-foot" aria-hidden="true">
+        <span><kbd>&uarr;</kbd><kbd>&darr;</kbd> navigate</span>
+        <span><kbd>&crarr;</kbd> open</span>
+        <span><kbd>Esc</kbd> close</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -258,13 +258,15 @@
 
     // Search · Cmd/Ctrl+K palette across every section of the system
     (function () {
-      // Six sections, six entries. The keywords field is what makes this useful for
+      // One entry per section. The keywords field is what makes this useful for
       // people who don't know our vocabulary — someone hunting the deck template
       // searches "powerpoint", not "templates".
       const INDEX = [
         { title: 'Colors',            category: 'Foundations', page: 'index.html',     anchor: '#colors',   keywords: 'palette hex swatch red midnight navy aqua blue grey gradient token' },
         { title: 'Typography',        category: 'Foundations', page: 'index.html',     anchor: '#type',     keywords: 'font fonts typeface montserrat libre caslon serif sans type scale heading body' },
         { title: 'Logos',             category: 'Foundations', page: 'index.html',     anchor: '#logo',     keywords: 'logo mark wordmark monogram clear space reversed svg' },
+        { title: 'Voice',             category: 'Foundations', page: 'index.html',     anchor: '#voice',    keywords: 'tone voice writing copy words banned jargon buzzwords style wording language proposal' },
+        { title: 'Components',        category: 'Library',     page: 'components.html', anchor: '',         keywords: 'button buttons card cards cta stat stats bullet list layout spacing padding radius corner shadow spec' },
         { title: 'Icons',             category: 'Library',     page: 'icons.html',     anchor: '',          keywords: 'icon iconography glyph symbol svg png outline line download library chart people finance data document technology' },
         { title: 'Brand images',      category: 'Library',     page: 'images.html',    anchor: '',          keywords: 'photo photography image picture illustration stock download' },
         { title: 'Templates & decks', category: 'Library',     page: 'templates.html', anchor: '',          keywords: 'powerpoint pptx deck slides word docx template letterhead document download' },

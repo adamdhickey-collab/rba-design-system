@@ -1784,6 +1784,335 @@
     }
     .btn-secondary[disabled] { background: transparent !important; border-color: var(--neutral-300) !important; color: var(--neutral-400) !important; }
 
+    /* .btn-primary and .btn-accent did not exist. .btn-secondary was the only variant
+       ever defined, so any markup asking for the other two got the bare .btn — a
+       transparent box with a 1px transparent border. Nothing on the site used them yet,
+       which is why it went unnoticed; the Components page documents all three, so all
+       three now exist. */
+    .btn-primary {
+      background: var(--midnight);
+      color: #FFFFFF;
+      border-color: var(--midnight);
+    }
+    .btn-primary:hover,
+    .btn-primary.is-hover {
+      background: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
+    .btn-accent {
+      background: var(--accent);
+      color: #FFFFFF;
+      border-color: var(--accent);
+    }
+    .btn-accent:hover,
+    .btn-accent.is-hover {
+      background: #0A7A91;
+      border-color: #0A7A91;
+    }
+    /* A hover state you can look at without hovering. The Components page shows rest and
+       hover side by side, which a :hover rule alone cannot do — you would have to take
+       the reader's word for the second one. */
+    .btn-secondary.is-hover {
+      background: var(--sky-50);
+      color: var(--navy-700);
+      border-color: var(--navy-700);
+    }
+
+    /* ---------- Components page · specimen blocks ---------- */
+    /* A specimen is the live component plus the numbers that produced it. The two are one
+       unit — split them and the spec drifts from the thing it describes. */
+    .spec { margin-bottom: var(--space-7); }
+    .spec-demo {
+      border: 1px solid var(--border);
+      border-radius: var(--corner-radius-lg);
+      background: var(--surface);
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+    .spec-demo--tint { background: var(--surface-pill); }
+    /* Buttons inside a specimen are set to the CANONICAL spec (48px tall, 14px/600,
+       padding 0 20, radius 4) rather than to this site's own .btn metrics, which are
+       16px/700 at 8x16. The page documents the system, not itself. Worth knowing that
+       those two are out of step — the site's chrome predates the spec. */
+    .spec-demo .btn {
+      font-size: 14px;
+      font-weight: 600;
+      height: 48px;
+      padding: 0 20px;
+      border-radius: var(--radius-sm, 4px);
+    }
+    .spec-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    .spec-note {
+      font-family: var(--font-micro);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    /* The hand-off line. Monospace because these are values to be copied, and full-width
+       under the demo because it applies to the whole specimen rather than one part. */
+    .spec-line {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 20px;
+      color: var(--text-muted);
+      margin-top: var(--space-3);
+      padding-left: var(--space-1);
+    }
+
+    .demo-grid { display: grid; gap: var(--space-4); }
+    .demo-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .demo-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .demo-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 22px;
+    }
+    .demo-card--hover {
+      border-color: transparent;
+      box-shadow: 0 4px 20px rgba(29, 54, 109, 0.10);
+    }
+    .demo-card-eyebrow {
+      display: block;
+      font-family: var(--font-micro);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--space-2);
+    }
+    .demo-card-title {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 28px;
+      color: var(--brand);
+    }
+    .demo-card-body {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 23px;
+      color: var(--text-soft);
+      margin: var(--space-2) 0 var(--space-3);
+    }
+
+    .demo-cta {
+      background: var(--sky-50);
+      border-radius: 8px;
+      padding: var(--space-6);
+      max-width: 520px;
+    }
+    .demo-cta-title {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 22px;
+      line-height: 30px;
+      color: var(--brand);
+    }
+    .demo-cta-body {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 23px;
+      color: var(--text-soft);
+      margin: var(--space-2) 0 var(--space-4);
+    }
+
+    .demo-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+      text-align: center;
+    }
+    .demo-stat-num {
+      display: block;
+      font-family: var(--font-sans);
+      font-weight: 800;
+      font-size: clamp(36px, 5vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--aqua);
+    }
+    .demo-stat-label {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: var(--space-2);
+    }
+
+    /* Square bullets, drawn rather than listed: list-style has no square that is 8x8 at
+       a fixed colour, and the rule that matters here is that they are never round. */
+    .demo-bullets { list-style: none; display: grid; gap: var(--space-3); margin: 0; padding: 0; }
+    .demo-bullets li {
+      position: relative;
+      padding-left: 22px;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 23px;
+      color: var(--text-soft);
+    }
+    .demo-bullets li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 8px;
+      height: 8px;
+      background: var(--aqua);
+    }
+    .demo-bullets strong { color: var(--brand); }
+
+    .demo-radius {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      min-height: 96px;
+      padding: var(--space-4);
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: var(--r, 8px);
+      background: var(--surface);
+    }
+    .demo-radius--shadow { border-color: transparent; box-shadow: 0 4px 20px rgba(29, 54, 109, 0.10); }
+    .demo-radius-val { font-family: var(--font-sans); font-weight: 700; font-size: 15px; color: var(--brand); }
+
+    /* ---------- Voice ---------- */
+    .voice-cols {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+    /* The left border is the whole signal: teal for keep, red for stop. It is doing the
+       job a green tick and a red cross would do, without importing two more icons. */
+    .voice-col {
+      border-left: 4px solid var(--accent);
+      border-radius: var(--corner-radius-base);
+      background: var(--sky-50);
+      padding: var(--space-5) var(--space-5) var(--space-5) var(--space-6);
+    }
+    .voice-col--avoid {
+      border-left-color: var(--rba-red);
+      background: rgba(200, 37, 45, 0.04);
+    }
+    .voice-col-title {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 17px;
+      line-height: 24px;
+      color: var(--brand);
+      margin-bottom: var(--space-3);
+    }
+    .voice-list { list-style: none; display: grid; gap: var(--space-2); margin: 0; padding: 0; }
+    .voice-list li {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 23px;
+      color: var(--text-soft);
+    }
+    .voice-list--banned { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2) var(--space-3); }
+    /* Struck through, not just highlighted: the strike says "do not ship this word"
+       without needing the column heading to be in view. */
+    .voice-banned {
+      display: inline-block;
+      font-family: var(--font-micro);
+      font-size: 13px;
+      color: var(--text);
+      text-decoration: line-through;
+      text-decoration-color: var(--rba-red);
+      text-decoration-thickness: 2px;
+    }
+
+    /* md and below · the paired grids stack rather than squeeze */
+    @media (max-width: 767.98px) {
+      .voice-cols,
+      .demo-grid--2 { grid-template-columns: minmax(0, 1fr); }
+      .demo-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .demo-stats { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
+    }
+
+    /* ---------- Dark theme · components + voice ---------- */
+    [data-theme="dark"] .demo-card--hover,
+    [data-theme="dark"] .demo-radius--shadow {
+      border-color: var(--border);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+    }
+    [data-theme="dark"] .demo-cta { background: var(--surface-pill); }
+    /* Midnight fills disappear on a near-black page; the primary button takes the same
+       aqua role --brand already takes in dark mode. */
+    [data-theme="dark"] .btn-primary {
+      background: var(--aqua);
+      border-color: var(--aqua);
+      color: var(--on-accent);
+    }
+    [data-theme="dark"] .btn-primary:hover,
+    [data-theme="dark"] .btn-primary.is-hover {
+      background: #3ECDE8;
+      border-color: #3ECDE8;
+    }
+    [data-theme="dark"] .voice-col { background: var(--surface-pill); }
+    [data-theme="dark"] .voice-col--avoid { background: rgba(200, 37, 45, 0.12); }
+    [data-theme="dark"] .voice-banned { color: var(--text); }
+
+    /* ---------- Reference layouts ---------- */
+    .kit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--space-5);
+    }
+    .kit {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+      border-radius: var(--corner-radius-lg);
+      background: var(--surface);
+      overflow: hidden;
+      margin: 0;
+    }
+    /* Top-aligned inside a fixed box. These are pages of wildly different proportions —
+       a 12-slide deck next to a 10-page white paper — and letting each set its own height
+       turned the grid into a staircase. Cropping from the top keeps every card the same
+       size and shows the part that identifies the layout. */
+    .kit-shot {
+      display: block;
+      width: 100%;
+      height: 208px;
+      object-fit: cover;
+      object-position: top center;
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--surface-pill);
+    }
+    .kit-cap {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+      padding: var(--space-4) var(--space-5) var(--space-5);
+    }
+    .kit-name {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 23px;
+      color: var(--text);
+    }
+    .kit-desc {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 21px;
+      color: var(--text-muted);
+    }
+
     /* ---------- Footer ---------- */
     footer {
       background: var(--navy-950);
