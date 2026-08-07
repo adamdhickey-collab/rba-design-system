@@ -355,17 +355,23 @@
        was ~90 lines of CSS and JS to navigate eight links. The labels alone tell a
        first-time visitor that Voice and Icons are different kinds of thing, which is
        the whole job. */
+    /* Action Blue, not grey: the labels are the rail's landmarks and grey read as
+       disabled. Action is the palette's "highlights" role and holds 6.5:1 at this
+       size; Accent teal was considered and rejected — it only clears AA large, and
+       11px caps is not large text. Dark theme moves to aqua, the accent role that
+       theme already assigns. */
     .sidebar-group-label {
       font-family: var(--font-micro);
       font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+      font-weight: 800;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--action);
       padding: 0 var(--space-3);
       margin: var(--space-5) 0 var(--space-1);
     }
     .sidebar-group-label:first-child { margin-top: 0; }
+    [data-theme="dark"] .sidebar-group-label { color: var(--aqua); }
 
     .sidebar-foot {
       padding: var(--space-5) var(--space-6) 0;
@@ -381,48 +387,6 @@
     .app-main {
       flex: 1;
       min-width: 0;
-    }
-
-    /* ---------- Home · sticky in-page sub-nav ---------- */
-    /* The home page is four sections and a very long scroll; this strip is the
-       always-visible answer to "where am I". On desktop the sidebar spies the same
-       sections, but below lg the rail is an off-canvas drawer and this is the only
-       position indicator on screen. Sticks under the mobile bar when the drawer
-       chrome is active (the bar is 68px: 44px trigger + 12px padding each side). */
-    .subnav {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-    }
-    .subnav-inner {
-      display: flex;
-      gap: var(--space-2);
-      padding-top: var(--space-2);
-      padding-bottom: var(--space-2);
-      overflow-x: auto;
-    }
-    .subnav-link {
-      flex-shrink: 0;
-      padding: 6px var(--space-3);
-      border-radius: var(--radius-pill);
-      text-decoration: none;
-      font-family: var(--font-sans);
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-soft);
-      transition: background-color 120ms ease, color 120ms ease;
-    }
-    .subnav-link:hover { background: var(--neutral-50); color: var(--text); }
-    .subnav-link:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--brand); }
-    .subnav-link--active {
-      background: var(--sky-50);
-      color: var(--brand-deep);
-      font-weight: 700;
-    }
-    @media (max-width: 1023.98px) {
-      [data-nav="drawer"] .subnav { top: 68px; }
     }
 
     /* ==========================================================================
@@ -493,10 +457,12 @@
         outline-offset: -2px;
       }
       .mobile-bar-trigger .material-symbols-rounded { font-size: 24px; }
+      /* Montserrat like the sidebar brand row it stands in for — the serif is the
+         hero display's, and a navigation bar is UI. */
       .mobile-bar-title {
-        font-family: var(--font-display);
-        font-weight: 400;
-        font-size: 20px;
+        font-family: var(--font-sans);
+        font-weight: 800;
+        font-size: 17px;
         line-height: 1;
         color: var(--brand);
       }
@@ -664,21 +630,25 @@
       margin-bottom: var(--space-7);
       max-width: 760px;
     }
-    /* The display serif in midnight, matching .hero-title exactly — same token, same
-       weight, same tracking. Weight 400 because Libre Caslon Text ships only 400 and
-       700, so anything heavier would be a synthesized bold.
+    /* Montserrat 800 at the official h2 size, per the system's own serif rule: the
+       serif is the hero display and nothing else — not sub-heads, and a section
+       title is a sub-head. These were set in the display serif to match .hero-title,
+       which meant the Typography section stated the rule directly beneath a heading
+       that broke it. The hero keeps the serif; it is the one place the rule names.
 
        Midnight, not accent teal: the guidelines assign midnight to headings, and a
        heading colour is not a place to be inventive. Teal was tried here and read as
        a second heading level that doesn't exist. */
     .section-title {
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: var(--fs-page-heading);
-      line-height: 1.1;
+      font-family: var(--font-sans);
+      font-weight: 800;
+      font-size: 40px;
+      line-height: 1.2;
       color: var(--brand);
-      letter-spacing: -0.03em;
+      letter-spacing: normal;
     }
+    /* The hero steps to 38px on phones; a fixed 40px section title would outrank it. */
+    @media (max-width: 599.98px) { .section-title { font-size: 32px; } }
     .section-lede {
       font-size: 18px;
       line-height: 1.5;
@@ -3039,11 +3009,15 @@
     /* Not links themselves — each card is a small table of contents for one job, and
        the links inside it are the interactive things. That is why there is no hover
        lift here: a card that lifts promises to be clickable, and this one isn't. */
+    /* Always 2x2, never auto-fit: four cards at auto-fit minmax(280px) resolve to
+       three columns at desktop widths, orphaning the fourth card on its own row
+       with two card-widths of dead space beside it. */
     .task-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--space-4);
     }
+    @media (max-width: 639.98px) { .task-grid { grid-template-columns: 1fr; } }
     .task-card {
       display: flex;
       flex-direction: column;

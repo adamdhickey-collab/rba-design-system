@@ -60,19 +60,13 @@
       return active;
     }
 
-    // Scroll-spy · highlight the section closest to (and above) the viewport top.
-    // Drives both the sidebar rail and the home page's sticky sub-nav — two links
-    // can share one section id, so ids map to arrays of links.
+    // Sidebar scroll-spy · highlight the section closest to (and above) the viewport top
     (function () {
-      const links = Array.from(document.querySelectorAll('.sidebar-link[href^="#"], .subnav-link[href^="#"]'));
+      const links = Array.from(document.querySelectorAll('.sidebar-link[href^="#"]'));
       if (!links.length) return;
-      const linkBy = {};
-      links.forEach(l => {
-        const id = l.getAttribute('href').substring(1);
-        (linkBy[id] = linkBy[id] || []).push(l);
-      });
-      const sections = Object.keys(linkBy)
-        .map(id => document.getElementById(id))
+      const linkBy = Object.fromEntries(links.map(l => [l.getAttribute('href').substring(1), l]));
+      const sections = links
+        .map(l => document.getElementById(l.getAttribute('href').substring(1)))
         .filter(Boolean);
       if (!sections.length) return;
 
@@ -85,10 +79,8 @@
       function setActive(id) {
         if (id === currentId) return;
         currentId = id;
-        links.forEach(l => l.classList.remove('sidebar-link--active', 'subnav-link--active'));
-        (linkBy[id] || []).forEach(l =>
-          l.classList.add(l.classList.contains('subnav-link') ? 'subnav-link--active' : 'sidebar-link--active')
-        );
+        links.forEach(l => l.classList.remove('sidebar-link--active'));
+        if (linkBy[id]) linkBy[id].classList.add('sidebar-link--active');
       }
 
       function update() {

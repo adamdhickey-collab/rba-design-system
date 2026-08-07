@@ -208,7 +208,9 @@ to be an incomplete subset. Reconciling against the canonical source changed rea
   `--accent`, `--navy-dark`, `--bg-dark` and the 8-value data-visualization set.
 - **There are two gradients, both vertical**, not one at 135°.
 - **The type scale was wrong.** Official is hero 100px Libre Caslon / h1 48 / h2 40 / h3 36
-  / h4 32 / h5 24 / h6 20 / body-lg 20 / body 16 / body-sm 14.
+  / h4 32 / h5 24 / h6 20 / body-lg 20 / body 16 / body-sm 14. (The hero has since been
+  brought down to 72px by decision, Aug 2026 — the one value where this site leads the
+  canonical source rather than following it.)
 - **The hero is the serif.** The canonical file defines the hero as Libre Caslon and
   comments that it is the only place the serif is used. An earlier pass had switched it to
   Montserrat on the reasoning that a reference page isn't an editorial moment; the
@@ -228,9 +230,12 @@ The canonical project bundles the brand-approved TTFs and loads them with `@font
 Same families, open-licensed either way. If a font *download* is ever wanted here, see
 [`assets/templates/README.md`](assets/templates/README.md).
 
-Libre Caslon appears in exactly one place on this site: the type specimen, where it is the
-subject rather than the voice. Headings, including the hero, are Montserrat — the
-guidelines reserve the serif for editorial moments, and a reference page isn't one.
+Libre Caslon appears in two places on this site: the hero title on each page — the one
+use the published system names for the serif — and the type specimen, where it is the
+subject rather than the voice. Every other heading, section titles included, is
+Montserrat 800 per the system's own rule. Section titles were briefly set in the serif
+to match the hero; that put the Typography section's "hero display only" rule directly
+beneath a heading that broke it, so the furniture now obeys the rule it publishes.
 
 ## Moving to the RBA hub
 

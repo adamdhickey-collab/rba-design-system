@@ -112,19 +112,6 @@
         </div>
       </header>
 
-      <!-- Position indicator for a page four sections and many screens tall. The
-           sidebar spies the same sections on desktop, but on a phone the rail is an
-           off-canvas drawer, and this strip is the only visible answer to "where am
-           I". Same-page hashes on purpose — the scroll-spy binds to them. -->
-      <nav class="subnav" aria-label="On this page">
-        <div class="container subnav-inner">
-          <a href="#colors" class="subnav-link">Colors</a>
-          <a href="#type" class="subnav-link">Typography</a>
-          <a href="#logo" class="subnav-link">Logos</a>
-          <a href="#voice" class="subnav-link">Voice</a>
-        </div>
-      </nav>
-
       <section class="block" id="start">
         <div class="container">
           <div class="callout">
@@ -411,13 +398,10 @@
             </div>
           </div>
 
-          <h3 class="subhead">Data visualization</h3>
-          <p class="palette-note">An ordered set, AA-compliant against the page, each value paired with a fill pattern. Use them in order rather than picking by eye.</p>
-
-          <!-- The eight patterns, defined once and used by BOTH the chips below and
-               the charts. They were previously only in the charts, which is why the
-               palette showed flat colour while the copy insisted the pattern was the
-               thing doing the separating.
+          <!-- The eight patterns the chips below reference. Kept OUTSIDE the
+               disclosure on purpose: a closed <details> is display:none, and SVG
+               paint servers inside a display:none subtree are unreliable as
+               reference targets across engines.
 
                Each bakes var(--viz-N) rather than currentColor: inside a <pattern>
                currentColor resolves against the pattern's own ancestor chain, not the
@@ -458,6 +442,19 @@
               </pattern>
             </defs>
           </svg>
+
+          <!-- Collapsed like the token tables, and for the same reason: eight
+               numbered series with fill patterns is chart-maker material, and a
+               reader who came to copy a hex shouldn't have to walk through it. -->
+          <details class="dev-disclosure" id="dataviz">
+            <summary class="dev-disclosure-summary">
+              <span class="material-symbols-rounded" aria-hidden="true">monitoring</span>
+              <span class="dev-disclosure-title">For charts and dashboards &mdash; data visualization</span>
+              <span class="dev-disclosure-hint">Skip this unless you're plotting data</span>
+              <span class="material-symbols-rounded dev-disclosure-caret" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="dev-disclosure-body">
+          <p class="palette-note u-mt-sm">An ordered set, AA-compliant against the page, each value paired with a fill pattern. Use them in order rather than picking by eye.</p>
 
           <!-- The palette, and only the palette. This used to carry a four-step
                callout and three worked charts; they said the same thing the card
@@ -569,6 +566,8 @@
             </ol>
             <p class="viz-palette-foot">All 8 pass WCAG&nbsp;1.4.11 vs white. Pair every series with its pattern &mdash; color alone never conveys data.</p>
           </div>
+            </div>
+          </details>
 
           <!-- Collapsed by default: 20 rows of custom-property names are the one part
                of this section a non-technical reader should be told they can skip.
