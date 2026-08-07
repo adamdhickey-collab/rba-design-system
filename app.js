@@ -536,9 +536,14 @@
       const dataEl = document.getElementById('icon-manifest');
       if (!grid || !dataEl) return;                 // no-ops on every other page
 
-      let packs = [];
+      let packs = [], thesaurus = {};
       try {
-        packs = (JSON.parse(dataEl.textContent) || {}).packs || [];
+        const data = JSON.parse(dataEl.textContent) || {};
+        packs = data.packs || [];
+        // Word-level, not per-icon: names are compositional (invoice-paid =
+        // invoice + paid), so ~850 word entries cover all 1,490 icons, and
+        // improving one word's synonyms improves every icon that uses it.
+        thesaurus = data.thesaurus || {};
       } catch (e) {
         grid.innerHTML = '<p class="lib-empty">The icon manifest could not be read. ' +
                          'View source and check the <code>#icon-manifest</code> block.</p>';
@@ -589,6 +594,18 @@
             nameWords: ' ' + flatten(label + ' ' + filed).split(' ').join('  '),
             hay: flatten(label + ' ' + filed + ' ' + pack.name + ' ' +
                          pack.group + ' ' + pack.keywords),
+            // The thesaurus expansion of the name's words: what people type when
+            // they don't know the name. "invoice-paid" grows "bill billing receipt
+            // statement payment settled", so a search for "billing" still lands.
+            // Kept separate from hay so a synonym match ranks BELOW a name match
+            // and never outranks the icon someone asked for by name.
+            synHay: (function () {
+              let syn = '';
+              flatten(label + ' ' + filed).split(' ').forEach(function (w) {
+                if (thesaurus[w]) syn += ' ' + thesaurus[w];
+              });
+              return syn ? ' ' + flatten(syn) : '';
+            })(),
           });
         }
       });
@@ -764,48 +781,183 @@
         select.addEventListener('change', () => { activePack = select.value; apply(); });
       }
 
-      function apply() {
-        // Every word must appear, in any order: "invoice review" and "review
-        // invoice" both land on invoice-review, and each extra word narrows rather
-        // than widening. A single substring test can do neither.
-        const terms = search ? flatten(search.value).split(' ').filter(Boolean) : [];
-        const cells = grid.children;
+      // Light word-form folding, applied to the QUERY only. Each variant can only
+      // ADD matches — "meetings" also tries "meeting", "planning" tries "plan",
+      // "shipped" tries "ship" — so a miss on the original spelling never hides a
+      // hit, and the haystacks stay exactly what the names say.
+      function variants(t) {
+        const v = [t];
+        if (t.length > 3 && t.slice(-1) === 's' && t.slice(-2) !== 'ss') v.push(t.slice(0, -1));
+        if (t.length > 4 && t.slice(-2) === 'es') v.push(t.slice(0, -2));
+        // -ing/-ed stems shorter than 4 letters are dropped: "billing" usefully
+        // tries "bill", but its doubled-consonant collapse "bil" is a substring
+        // of "mobile" and floods the results with phones.
+        if (t.length > 5 && t.slice(-3) === 'ing') {
+          const s = t.slice(0, -3);
+          if (s.length > 3) v.push(s, s + 'e');
+          if (s.length > 4 && s.slice(-1) === s.slice(-2, -1)) v.push(s.slice(0, -1));
+        }
+        if (t.length > 4 && t.slice(-2) === 'ed') {
+          const s = t.slice(0, -2);
+          if (s.length > 3) v.push(s, s + 'e');
+          if (s.length > 4 && s.slice(-1) === s.slice(-2, -1)) v.push(s.slice(0, -1));
+        }
+        return v;
+      }
+      const foundIn = (hay, t) => variants(t).some(v => hay.indexOf(v) > -1);
+      const startsWordIn = (words, t) => variants(t).some(v => words.indexOf(' ' + v) > -1);
+
+      // The correction vocabulary: every word the search could possibly match,
+      // built once on the first zero-result query rather than up front — most
+      // sessions never misspell anything.
+      let vocabArr = null, allHay = null;
+      function vocab() {
+        if (!vocabArr) {
+          const s = new Set();
+          icons.forEach(it => (it.hay + it.synHay).split(' ').forEach(w => {
+            if (w.length > 2) s.add(w);
+          }));
+          vocabArr = Array.from(s);
+        }
+        return vocabArr;
+      }
+      const anywhere = t => {
+        if (allHay === null) allHay = icons.map(i => i.hay + i.synHay).join(' ');
+        return foundIn(allHay, t);
+      };
+      // Edit distance <= 1, including a transposition ("tiem" -> "time"). One
+      // shared-prefix walk instead of a full matrix: at 1,500 vocabulary words
+      // this runs only when the grid would otherwise be empty, so it can afford
+      // to be simple.
+      function ed1(a, b) {
+        const la = a.length, lb = b.length;
+        if (Math.abs(la - lb) > 1) return false;
+        let i = 0;
+        while (i < la && i < lb && a[i] === b[i]) i++;
+        if (i === la && i === lb) return true;
+        if (la === lb) {
+          if (a.slice(i + 1) === b.slice(i + 1)) return true;                        // substitution
+          return a[i] === b[i + 1] && a[i + 1] === b[i] && a.slice(i + 2) === b.slice(i + 2); // swap
+        }
+        const sh = la < lb ? a : b, lo = la < lb ? b : a;
+        return sh.slice(i) === lo.slice(i + 1);                                      // insert/delete
+      }
+      function correctTerm(t) {
+        if (t.length < 4) return null;   // 1 edit in a 3-letter word is a different word
+        const words = vocab();
+        let best = null;
+        for (let i = 0; i < words.length; i++) {
+          if (ed1(t, words[i])) {
+            // Same first letter is almost always the intended word ("securty" ->
+            // "security", not "purity"); settle for any hit only if nothing shares it.
+            if (words[i][0] === t[0]) return words[i];
+            if (!best) best = words[i];
+          }
+        }
+        return best;
+      }
+
+      // One scoring pass over all icons. allMode=true demands every term; false is
+      // the any-word fallback, where icons matching more of the words sort first.
+      function evaluate(terms, allMode) {
+        const tiers = new Array(icons.length);
         let shown = 0;
         for (let i = 0; i < icons.length; i++) {
           const item = icons[i];
           const inScope = (activeGroup === 'all' || item.pack.group === activeGroup) &&
                           (activePack === 'all' || item.pack.slug === activePack);
-          let hit = inScope, tier = 0;
-          if (hit && terms.length) {
-            hit = terms.every(t => item.hay.indexOf(t) > -1);
-            if (hit) {
-              // Three tiers, because substring matching alone ranks badly once every
-              // icon has a name. "owl" is inside "bowl" and "knowledge", so a plain
-              // contains-test buries owl-graduation-cap under compass-bowl. Matching
-              // the START of a word puts the icon you meant first.
-              //   0 — every term starts a word in the name  (owl → owl-graduation-cap)
-              //   1 — every term appears in the name at all (owl → compass-bowl)
-              //   2 — matched only through the pack's keywords
-              if (terms.every(t => item.nameWords.indexOf(' ' + t) > -1)) tier = 0;
-              else if (terms.every(t => item.nameHay.indexOf(t) > -1)) tier = 1;
-              else tier = 2;
+          let tier = -1;
+          if (inScope) {
+            if (!terms.length) tier = 0;
+            else if (allMode) {
+              const full = item.hay + item.synHay;
+              if (terms.every(t => foundIn(full, t))) {
+                // Four tiers, because substring matching alone ranks badly once
+                // every icon has a name. "owl" is inside "bowl", so a plain
+                // contains-test buries owl-graduation-cap under compass-bowl.
+                //   0 — every term starts a word in the name  (owl → owl-graduation-cap)
+                //   1 — every term appears in the name at all (owl → compass-bowl)
+                //   2 — matched through the name's synonyms   (billing → invoice-paid)
+                //   3 — matched only through the pack's keywords
+                if (terms.every(t => startsWordIn(item.nameWords, t))) tier = 0;
+                else if (terms.every(t => foundIn(item.nameHay, t))) tier = 1;
+                else if (terms.every(t => foundIn(item.nameHay + item.synHay, t))) tier = 2;
+                else tier = 3;
+              }
+            } else {
+              const full = item.hay + item.synHay;
+              const matched = terms.filter(t => foundIn(full, t)).length;
+              // Rank by how many of the words hit; every icon here failed the
+              // all-words test, so matched is always < terms.length.
+              if (matched) tier = terms.length - matched;
             }
           }
-          cells[i].hidden = !hit;
+          tiers[i] = tier;
+          if (tier > -1) shown++;
+        }
+        return { tiers: tiers, shown: shown };
+      }
+
+      // The graceful-degradation note. Sits between the toolbar and the grid, and
+      // only speaks when the search had to loosen something to find results.
+      const noteEl = document.createElement('p');
+      noteEl.className = 'lib-search-note';
+      noteEl.setAttribute('role', 'status');
+      noteEl.hidden = true;
+      grid.parentNode.insertBefore(noteEl, grid);
+
+      function apply() {
+        // Every word must appear, in any order: "invoice review" and "review
+        // invoice" both land on invoice-review, and each extra word narrows rather
+        // than widening.
+        const rawTerms = search ? flatten(search.value).split(' ').filter(Boolean) : [];
+        let result = evaluate(rawTerms, true);
+        let note = '';
+
+        // An empty grid teaches nothing, so before showing one, loosen in two
+        // honest steps and SAY what was loosened:
+        //   1. respell terms that match nothing anywhere ("securty" → "security")
+        //   2. drop the all-words requirement and rank by words matched
+        if (!result.shown && rawTerms.length) {
+          const corrected = rawTerms.map(t => anywhere(t) ? t : (correctTerm(t) || t));
+          const respelled = corrected.join(' ') !== rawTerms.join(' ');
+          if (respelled) {
+            const r = evaluate(corrected, true);
+            if (r.shown) {
+              result = r;
+              note = 'Nothing matches “' + rawTerms.join(' ') + '” — showing results for “' +
+                     corrected.join(' ') + '”.';
+            }
+          }
+          if (!result.shown && rawTerms.length > 1) {
+            const terms = respelled ? corrected : rawTerms;
+            const r = evaluate(terms, false);
+            if (r.shown) {
+              result = r;
+              note = 'No icon matches all of “' + terms.join(' ') + '” — showing icons that match any of the words, best first.';
+            }
+          }
+        }
+
+        const cells = grid.children;
+        for (let i = 0; i < icons.length; i++) {
+          const tier = result.tiers[i];
+          cells[i].hidden = tier < 0;
           // CSS order rather than reordering nodes: moving up to 1,490 elements on
           // every keystroke would cost far more than setting one property on the
           // ones still showing.
-          cells[i].style.order = (hit && terms.length && tier) ? String(tier) : '';
-          if (hit) shown++;
+          cells[i].style.order = (tier > 0 && rawTerms.length) ? String(tier) : '';
         }
+        noteEl.textContent = note;
+        noteEl.hidden = !note;
         if (count) {
-          const n = shown.toLocaleString();
-          count.textContent = shown === icons.length
+          const n = result.shown.toLocaleString();
+          count.textContent = result.shown === icons.length
             ? n + ' icons'
             : n + ' of ' + icons.length.toLocaleString() + ' icons';
         }
         const empty = grid.nextElementSibling;
-        if (empty && empty.classList.contains('lib-empty')) empty.hidden = shown > 0;
+        if (empty && empty.classList.contains('lib-empty')) empty.hidden = result.shown > 0;
         // Let the paint sweep know the visible set changed. Declared below this
         // function and only ever fired from a handler, so the listener is attached
         // by the time anything dispatches.

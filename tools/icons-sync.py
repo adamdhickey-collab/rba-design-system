@@ -246,23 +246,25 @@ def scan_source():
 
 
 def read_existing_manifest():
-    """Pull the current manifest out of icons.html so labels survive a re-sync."""
+    """Pull the current manifest out of icons.html so the hand-maintained parts —
+    labels and the search thesaurus — survive a re-sync."""
     if not os.path.exists(PAGE):
-        return {}
+        return {}, {}
     text = open(PAGE, encoding='utf-8').read()
     i = text.find(BEGIN)
     if i < 0:
-        return {}
+        return {}, {}
     j = text.find(END, i + len(BEGIN))
     if j < 0:
-        return {}
+        return {}, {}
     try:
         data = json.loads(text[i + len(BEGIN):j])
     except ValueError:
         # A hand-edit that broke the JSON must not silently discard labels.
         die('the manifest block in icons.html is not valid JSON. Fix it before\n'
-            '       syncing, or the labels in it will be lost.')
-    return {p['slug']: p.get('labels') or {} for p in data.get('packs', [])}
+            '       syncing, or the labels and thesaurus in it will be lost.')
+    return ({p['slug']: p.get('labels') or {} for p in data.get('packs', [])},
+            data.get('thesaurus') or {})
 
 
 VIEWBOX = re.compile(r'<svg\b[^>]*?viewBox\s*=\s*["\']\s*([-\d.]+)[,\s]+([-\d.]+)[,\s]+'
@@ -332,7 +334,7 @@ def main():
     args = ap.parse_args()
 
     packs = scan_source()
-    labels = read_existing_manifest()
+    labels, thesaurus = read_existing_manifest()
     stats = {'written': 0, 'same': 0, 'removed': 0}
 
     # Stage the files.
@@ -398,8 +400,13 @@ def main():
     lines = ['  {',
              '    "version": "3.0",',
              '    "generated": "%s",' % date.today().isoformat(),
-             '    "total": %d,' % total,
-             '    "packs": [']
+             '    "total": %d,' % total]
+    # The thesaurus is hand-maintained like the labels: word-in-a-name -> what
+    # people type instead. Search folds it in as a tier below real name matches.
+    if thesaurus:
+        lines.append('    "thesaurus": ' +
+                     json.dumps(dict(sorted(thesaurus.items())), ensure_ascii=False) + ',')
+    lines.append('    "packs": [')
     for i, p in enumerate(manifest_packs):
         comma = '' if i == len(manifest_packs) - 1 else ','
         lines.append('      ' + json.dumps(p, ensure_ascii=False) + comma)
