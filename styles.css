@@ -748,11 +748,8 @@
       letter-spacing: normal;
     }
     /* The one caption whose number and rendering disagree, so it says so. */
-    .type-meta-note {
-      display: block;
-      font-style: italic;
-      opacity: 0.85;
-    }
+    /* .type-meta-note went with the "shown at 60px" caveat it existed for — the
+       hero specimen is set at its real 100px now, so no row has a size to excuse. */
     /* Both faces are free, so the useful thing on a specimen card is the way to get
        them. Wraps rather than shrinks: "Download Libre Caslon Text" is a long label
        and the grid column can be 240px. */
@@ -794,13 +791,24 @@
        size the site actually sets it, and the two can't drift. The caption still
        states the real value — the number is the spec, the rendering is just the
        face. */
+    /* 100px, the published value, written out like every other specimen below.
+       This used to be var(--fs-page-heading) — this site's OWN heading size, 60px
+       — so the one specimen that is meant to show the type scale was the only one
+       not set at its real size, and the row had to carry a "shown at 60px" note
+       to admit it. A specimen that needs a footnote explaining it is the wrong
+       size is not a specimen.
+
+       It wraps rather than shrinks on a narrow screen: wrapping keeps the letters
+       the size the label claims, and scaling them down would reintroduce exactly
+       the lie the note was apologising for. */
     .type-hero {
       font-family: var(--font-display);
-      font-size: var(--fs-page-heading);
+      font-size: 100px;
       line-height: 1.10;
       font-weight: 400;
       letter-spacing: -0.03em;
       color: var(--brand);
+      overflow-wrap: anywhere;
     }
     .type-h1 { font-family: var(--font-sans); font-size: 48px; line-height: 1.2; font-weight: 800; color: var(--brand); }
     .type-h2 { font-family: var(--font-sans); font-size: 40px; line-height: 1.2; font-weight: 800; color: var(--brand); }
