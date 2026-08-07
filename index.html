@@ -324,20 +324,6 @@
           <h3 class="subhead">Data visualization</h3>
           <p class="palette-note">An ordered set, AA-compliant against the page, each value paired with a fill pattern. Use them in order rather than picking by eye.</p>
 
-          <div class="callout callout--warn u-mt-md">
-            <span class="material-symbols-rounded" aria-hidden="true">warning</span>
-            <div class="callout-body">
-              <p><strong>Build a chart in this order.</strong> These eight colours do not tell series apart on their own, so the pattern and the label are doing that work &mdash; not the colour.</p>
-              <ol class="how-steps">
-                <li><strong>Take the colours in order</strong> from <code>--viz-1</code>. Never pick by eye.</li>
-                <li><strong>Give every series its pattern</strong>, the one paired with its colour above. This is not a print fallback; it is how the series are told apart on screen.</li>
-                <li><strong>Label each series on the mark</strong> &mdash; at the end of its line, inside or above its bar. A legend makes the reader match colours the palette cannot support.</li>
-                <li><strong>Stop at four series.</strong> Past that, split the chart rather than reaching for <code>--viz-5</code>.</li>
-              </ol>
-              <p class="u-mt-sm callout-aside"><strong>Why the ceiling is four:</strong> measured as a categorical set, the closest pair (<code>--viz-5</code> and <code>--viz-8</code>) sit at a perceptual distance of 2.2 where about 15 is the readable floor, and no reordering gets the worst neighbouring pair above 7.9. That follows from drawing eight values out of one narrow blue-slate range, so it cannot be fixed by reordering them.</p>
-            </div>
-          </div>
-
           <!-- The eight patterns, defined once and used by BOTH the chips below and
                the charts. They were previously only in the charts, which is why the
                palette showed flat colour while the copy insisted the pattern was the
@@ -383,189 +369,116 @@
             </defs>
           </svg>
 
-          <div class="viz-row u-mt-md">
-            <button type="button" class="viz-chip js-copy-hex" data-copy="#1D366D" aria-label="Copy #1D366D">
-              <svg class="viz-chip-band" viewBox="0 0 40 40" preserveAspectRatio="none" aria-hidden="true"><rect width="40" height="40" fill="url(#viz-p1)"/></svg>
-              <span class="viz-chip-meta"><span class="viz-chip-hex">#1D366D</span><span class="viz-chip-note">Solid &middot; <code>--viz-1</code></span></span>
-            </button>
-            <button type="button" class="viz-chip js-copy-hex" data-copy="#6B859C" aria-label="Copy #6B859C">
-              <svg class="viz-chip-band" viewBox="0 0 40 40" preserveAspectRatio="none" aria-hidden="true"><rect width="40" height="40" fill="url(#viz-p2)"/></svg>
-              <span class="viz-chip-meta"><span class="viz-chip-hex">#6B859C</span><span class="viz-chip-note">45° lines &middot; <code>--viz-2</code></span></span>
-            </button>
-            <button type="button" class="viz-chip js-copy-hex" data-copy="#0A7A91" aria-label="Copy #0A7A91">
-              <svg class="viz-chip-band" viewBox="0 0 40 40" preserveAspectRatio="none" aria-hidden="true"><rect width="40" height="40" fill="url(#viz-p3)"/></svg>
-              <span class="viz-chip-meta"><span class="viz-chip-hex">#0A7A91</span><span class="viz-chip-note">Horizontal &middot; <code>--viz-3</code></span></span>
-            </button>
-            <button type="button" class="viz-chip js-copy-hex" data-copy="#4A7A99" aria-label="Copy #4A7A99">
-              <svg class="viz-chip-band" viewBox="0 0 40 40" preserveAspectRatio="none" aria-hidden="true"><rect width="40" height="40" fill="url(#viz-p4)"/></svg>
-              <span class="viz-chip-meta"><span class="viz-chip-hex">#4A7A99</span><span class="viz-chip-note">Vertical &middot; <code>--viz-4</code></span></span>
-            </button>
-            <button type="button" class="viz-chip js-copy-hex" data-copy="#3B586F" aria-label="Copy #3B586F">
-              <svg class="viz-chip-band" viewBox="0 0 40 40" preserveAspectRatio="none" aria-hidden="true"><rect width="40" height="40" fill="url(#viz-p5)"/></svg>
-              <span class="viz-chip-meta"><span class="viz-chip-hex">#3B586F</span><span class="viz-chip-note">Cross-hatch &middot; <code>--viz-5</code></span></span>
-            </button>
-            <button type="button" class="viz-chip js-copy-hex" data-copy="#5B8FA8" aria-label="Copy #5B8FA8">
-              <svg class="viz-chip-band" viewBox="0 0 40 40" preserveAspectRatio="none" aria-hidden="true"><rect width="40" height="40" fill="url(#viz-p6)"/></svg>
-              <span class="viz-chip-meta"><span class="viz-chip-hex">#5B8FA8</span><span class="viz-chip-note">Small dots &middot; <code>--viz-6</code></span></span>
-            </button>
-            <button type="button" class="viz-chip js-copy-hex" data-copy="#3178BF" aria-label="Copy #3178BF">
-              <svg class="viz-chip-band" viewBox="0 0 40 40" preserveAspectRatio="none" aria-hidden="true"><rect width="40" height="40" fill="url(#viz-p7)"/></svg>
-              <span class="viz-chip-meta"><span class="viz-chip-hex">#3178BF</span><span class="viz-chip-note">135° lines &middot; <code>--viz-7</code></span></span>
-            </button>
-            <button type="button" class="viz-chip js-copy-hex" data-copy="#4A5568" aria-label="Copy #4A5568">
-              <svg class="viz-chip-band" viewBox="0 0 40 40" preserveAspectRatio="none" aria-hidden="true"><rect width="40" height="40" fill="url(#viz-p8)"/></svg>
-              <span class="viz-chip-meta"><span class="viz-chip-hex">#4A5568</span><span class="viz-chip-note">Large dots &middot; <code>--viz-8</code></span></span>
-            </button>
+          <!-- The palette, and only the palette. This used to carry a four-step
+               callout and three worked charts; they said the same thing the card
+               says in one line, at ten times the height, and the page is a
+               reference rather than a tutorial. The rules that are load-bearing —
+               take them in order, pair every series with its pattern, stop at
+               four — are in the footer below, where they are read.
+
+               The ordinal is <ol>, not decoration: "take them in order" is the
+               rule this palette lives by, so the order is in the markup. -->
+          <div class="viz-palette u-mt-md">
+            <ol class="viz-palette-row">
+            <li class="viz-swatch">
+              <button type="button" class="viz-swatch-btn js-copy-hex" data-copy="#1D366D"
+                      aria-label="Navy, #1D366D, Solid, --viz-1 — copy the hex">
+                <span class="viz-swatch-band">
+                  <svg viewBox="0 0 40 40" preserveAspectRatio="none" aria-hidden="true"><rect width="40" height="40" fill="url(#viz-p1)"/></svg>
+                  <span class="viz-swatch-index" aria-hidden="true">01</span>
+                </span>
+                <span class="viz-swatch-name">Navy</span>
+                <span class="viz-swatch-meta"><span class="viz-swatch-hex">#1D366D</span> &middot; Solid</span>
+                <span class="viz-swatch-token"><code>--viz-1</code></span>
+              </button>
+            </li>
+            <li class="viz-swatch">
+              <button type="button" class="viz-swatch-btn js-copy-hex" data-copy="#6B859C"
+                      aria-label="Steel blue, #6B859C, 45°, --viz-2 — copy the hex">
+                <span class="viz-swatch-band">
+                  <svg viewBox="0 0 40 40" preserveAspectRatio="none" aria-hidden="true"><rect width="40" height="40" fill="url(#viz-p2)"/></svg>
+                  <span class="viz-swatch-index" aria-hidden="true">02</span>
+                </span>
+                <span class="viz-swatch-name">Steel blue</span>
+                <span class="viz-swatch-meta"><span class="viz-swatch-hex">#6B859C</span> &middot; 45°</span>
+                <span class="viz-swatch-token"><code>--viz-2</code></span>
+              </button>
+            </li>
+            <li class="viz-swatch">
+              <button type="button" class="viz-swatch-btn js-copy-hex" data-copy="#0A7A91"
+                      aria-label="Deep aqua, #0A7A91, Horizontal, --viz-3 — copy the hex">
+                <span class="viz-swatch-band">
+                  <svg viewBox="0 0 40 40" preserveAspectRatio="none" aria-hidden="true"><rect width="40" height="40" fill="url(#viz-p3)"/></svg>
+                  <span class="viz-swatch-index" aria-hidden="true">03</span>
+                </span>
+                <span class="viz-swatch-name">Deep aqua</span>
+                <span class="viz-swatch-meta"><span class="viz-swatch-hex">#0A7A91</span> &middot; Horizontal</span>
+                <span class="viz-swatch-token"><code>--viz-3</code></span>
+              </button>
+            </li>
+            <li class="viz-swatch">
+              <button type="button" class="viz-swatch-btn js-copy-hex" data-copy="#4A7A99"
+                      aria-label="Slate blue, #4A7A99, Vertical, --viz-4 — copy the hex">
+                <span class="viz-swatch-band">
+                  <svg viewBox="0 0 40 40" preserveAspectRatio="none" aria-hidden="true"><rect width="40" height="40" fill="url(#viz-p4)"/></svg>
+                  <span class="viz-swatch-index" aria-hidden="true">04</span>
+                </span>
+                <span class="viz-swatch-name">Slate blue</span>
+                <span class="viz-swatch-meta"><span class="viz-swatch-hex">#4A7A99</span> &middot; Vertical</span>
+                <span class="viz-swatch-token"><code>--viz-4</code></span>
+              </button>
+            </li>
+            <li class="viz-swatch">
+              <button type="button" class="viz-swatch-btn js-copy-hex" data-copy="#3B586F"
+                      aria-label="Dark teal, #3B586F, Cross-hatch, --viz-5 — copy the hex">
+                <span class="viz-swatch-band">
+                  <svg viewBox="0 0 40 40" preserveAspectRatio="none" aria-hidden="true"><rect width="40" height="40" fill="url(#viz-p5)"/></svg>
+                  <span class="viz-swatch-index" aria-hidden="true">05</span>
+                </span>
+                <span class="viz-swatch-name">Dark teal</span>
+                <span class="viz-swatch-meta"><span class="viz-swatch-hex">#3B586F</span> &middot; Cross-hatch</span>
+                <span class="viz-swatch-token"><code>--viz-5</code></span>
+              </button>
+            </li>
+            <li class="viz-swatch">
+              <button type="button" class="viz-swatch-btn js-copy-hex" data-copy="#5B8FA8"
+                      aria-label="Mid blue, #5B8FA8, Small dots, --viz-6 — copy the hex">
+                <span class="viz-swatch-band">
+                  <svg viewBox="0 0 40 40" preserveAspectRatio="none" aria-hidden="true"><rect width="40" height="40" fill="url(#viz-p6)"/></svg>
+                  <span class="viz-swatch-index" aria-hidden="true">06</span>
+                </span>
+                <span class="viz-swatch-name">Mid blue</span>
+                <span class="viz-swatch-meta"><span class="viz-swatch-hex">#5B8FA8</span> &middot; Small dots</span>
+                <span class="viz-swatch-token"><code>--viz-6</code></span>
+              </button>
+            </li>
+            <li class="viz-swatch">
+              <button type="button" class="viz-swatch-btn js-copy-hex" data-copy="#3178BF"
+                      aria-label="Royal blue, #3178BF, 135°, --viz-7 — copy the hex">
+                <span class="viz-swatch-band">
+                  <svg viewBox="0 0 40 40" preserveAspectRatio="none" aria-hidden="true"><rect width="40" height="40" fill="url(#viz-p7)"/></svg>
+                  <span class="viz-swatch-index" aria-hidden="true">07</span>
+                </span>
+                <span class="viz-swatch-name">Royal blue</span>
+                <span class="viz-swatch-meta"><span class="viz-swatch-hex">#3178BF</span> &middot; 135°</span>
+                <span class="viz-swatch-token"><code>--viz-7</code></span>
+              </button>
+            </li>
+            <li class="viz-swatch">
+              <button type="button" class="viz-swatch-btn js-copy-hex" data-copy="#4A5568"
+                      aria-label="Slate grey, #4A5568, Large dots, --viz-8 — copy the hex">
+                <span class="viz-swatch-band">
+                  <svg viewBox="0 0 40 40" preserveAspectRatio="none" aria-hidden="true"><rect width="40" height="40" fill="url(#viz-p8)"/></svg>
+                  <span class="viz-swatch-index" aria-hidden="true">08</span>
+                </span>
+                <span class="viz-swatch-name">Slate grey</span>
+                <span class="viz-swatch-meta"><span class="viz-swatch-hex">#4A5568</span> &middot; Large dots</span>
+                <span class="viz-swatch-token"><code>--viz-8</code></span>
+              </button>
+            </li>
+            </ol>
+            <p class="viz-palette-foot">All eight pass WCAG&nbsp;1.4.11 against the page. Pair every series with its pattern &mdash; colour alone never conveys data. Take them in order from <code>--viz-1</code>, and <strong>stop at four series</strong>: measured as a categorical set the closest pair sit at a perceptual distance of 2.2 where about 15 is the readable floor, and no reordering fixes that.</p>
           </div>
-
-          <h4 class="viz-subhead">In use</h4>
-          <p class="palette-note">Three worked examples. Every series carries a pattern and a label, the grid stays out of the way, and values sit in text ink rather than the series colour. Hover or tab any mark for its value; every figure can also be read as a table.</p>
-
-          <div class="viz-examples">
-
-            <figure class="viz-figure">
-              <figcaption class="viz-figure-head">
-                <span class="viz-figure-title">Engagements by practice, FY26</span>
-                <span class="viz-figure-note">One series &middot; <code>--viz-1</code> &middot; direct-labelled, so no legend &middot; <em>illustrative figures</em></span>
-              </figcaption>
-              <svg class="viz-chart" viewBox="0 0 490 244" role="img"
-                   aria-label="Bar chart of engagements by practice, FY26. Digital experience 48, Data and AI 41, Cloud 33, Managed 22, Strategy 14.">
-                <g class="viz-grid"><line x1="40" y1="30" x2="470" y2="30"/><line x1="40" y1="120" x2="470" y2="120"/></g>
-                <g class="viz-axis-label"><text x="32" y="34">50</text><text x="32" y="124">25</text><text x="32" y="214">0</text></g>
-                  <rect class="viz-mark" x="53" y="37" width="60" height="173" rx="4" fill="url(#viz-p1)"
-                        tabindex="0" data-label="Digital exp." data-value="48 engagements"/>
-                  <rect class="viz-mark" x="139" y="62" width="60" height="148" rx="4" fill="url(#viz-p1)"
-                        tabindex="0" data-label="Data &amp; AI" data-value="41 engagements"/>
-                  <rect class="viz-mark" x="225" y="91" width="60" height="119" rx="4" fill="url(#viz-p1)"
-                        tabindex="0" data-label="Cloud" data-value="33 engagements"/>
-                  <rect class="viz-mark" x="311" y="131" width="60" height="79" rx="4" fill="url(#viz-p1)"
-                        tabindex="0" data-label="Managed" data-value="22 engagements"/>
-                  <rect class="viz-mark" x="397" y="160" width="60" height="50" rx="4" fill="url(#viz-p1)"
-                        tabindex="0" data-label="Strategy" data-value="14 engagements"/>
-                <g class="viz-value">
-                  <text x="83" y="29">48</text>
-                  <text x="169" y="54">41</text>
-                  <text x="255" y="83">33</text>
-                  <text x="341" y="123">22</text>
-                  <text x="427" y="152">14</text>
-                </g>
-                <line class="viz-axis" x1="40" y1="210" x2="470" y2="210"/>
-                <g class="viz-label">
-                  <text x="83" y="230">Digital exp.</text>
-                  <text x="169" y="230">Data &amp; AI</text>
-                  <text x="255" y="230">Cloud</text>
-                  <text x="341" y="230">Managed</text>
-                  <text x="427" y="230">Strategy</text>
-                </g>
-              </svg>
-              <details class="viz-data">
-                <summary>Show the data</summary>
-                <table><caption>Engagements by practice, FY26 &middot; illustrative</caption>
-                  <thead><tr><th>Practice</th><th>Engagements</th></tr></thead>
-                  <tbody><tr><th scope="row">Digital exp.</th><td>48</td></tr><tr><th scope="row">Data &amp; AI</th><td>41</td></tr><tr><th scope="row">Cloud</th><td>33</td></tr><tr><th scope="row">Managed</th><td>22</td></tr><tr><th scope="row">Strategy</th><td>14</td></tr></tbody>
-                </table>
-              </details>
-            </figure>
-
-            <figure class="viz-figure">
-              <figcaption class="viz-figure-head">
-                <span class="viz-figure-title">Delivery hours by quarter</span>
-                <span class="viz-figure-note">Three series &middot; <code>--viz-1</code>, <code>--viz-3</code>, <code>--viz-7</code> &middot; dash as the second cue, labelled at the line end &middot; <em>illustrative figures</em></span>
-              </figcaption>
-              <svg class="viz-chart" viewBox="0 0 490 244" role="img"
-                   aria-label="Line chart of delivery hours by quarter in thousands. Digital experience rises 30 to 76, Data and AI 18 to 62, Cloud flat between 32 and 40.">
-                <g class="viz-grid"><line x1="40" y1="30" x2="400" y2="30"/><line x1="40" y1="75" x2="400" y2="75"/><line x1="40" y1="120" x2="400" y2="120"/><line x1="40" y1="165" x2="400" y2="165"/></g>
-                <g class="viz-axis-label"><text x="32" y="34">80</text><text x="32" y="79">60</text><text x="32" y="124">40</text><text x="32" y="169">20</text><text x="32" y="214">0</text></g>
-                  <polyline class="viz-line" style="stroke: var(--viz-1)" points="40,142 130,116 220,88 310,62 400,39"/>
-                  <polyline class="viz-line viz-line--dash" style="stroke: var(--viz-3)" points="40,170 130,152 220,120 310,93 400,70"/>
-                  <polyline class="viz-line viz-line--dot" style="stroke: var(--viz-7)" points="40,134 130,129 220,138 310,124 400,120"/>
-                  <circle class="viz-dot" cx="40" cy="142" r="5" style="fill: var(--viz-1)"
-                          tabindex="0" data-label="Digital exp. &middot; Q1" data-value="30 thousand hours"/>
-                  <circle class="viz-dot" cx="130" cy="116" r="5" style="fill: var(--viz-1)"
-                          tabindex="0" data-label="Digital exp. &middot; Q2" data-value="42 thousand hours"/>
-                  <circle class="viz-dot" cx="220" cy="88" r="5" style="fill: var(--viz-1)"
-                          tabindex="0" data-label="Digital exp. &middot; Q3" data-value="54 thousand hours"/>
-                  <circle class="viz-dot" cx="310" cy="62" r="5" style="fill: var(--viz-1)"
-                          tabindex="0" data-label="Digital exp. &middot; Q4" data-value="66 thousand hours"/>
-                  <circle class="viz-dot" cx="400" cy="39" r="5" style="fill: var(--viz-1)"
-                          tabindex="0" data-label="Digital exp. &middot; Q5" data-value="76 thousand hours"/>
-                  <circle class="viz-dot" cx="40" cy="170" r="5" style="fill: var(--viz-3)"
-                          tabindex="0" data-label="Data &amp; AI &middot; Q1" data-value="18 thousand hours"/>
-                  <circle class="viz-dot" cx="130" cy="152" r="5" style="fill: var(--viz-3)"
-                          tabindex="0" data-label="Data &amp; AI &middot; Q2" data-value="26 thousand hours"/>
-                  <circle class="viz-dot" cx="220" cy="120" r="5" style="fill: var(--viz-3)"
-                          tabindex="0" data-label="Data &amp; AI &middot; Q3" data-value="40 thousand hours"/>
-                  <circle class="viz-dot" cx="310" cy="93" r="5" style="fill: var(--viz-3)"
-                          tabindex="0" data-label="Data &amp; AI &middot; Q4" data-value="52 thousand hours"/>
-                  <circle class="viz-dot" cx="400" cy="70" r="5" style="fill: var(--viz-3)"
-                          tabindex="0" data-label="Data &amp; AI &middot; Q5" data-value="62 thousand hours"/>
-                  <circle class="viz-dot" cx="40" cy="134" r="5" style="fill: var(--viz-7)"
-                          tabindex="0" data-label="Cloud &middot; Q1" data-value="34 thousand hours"/>
-                  <circle class="viz-dot" cx="130" cy="129" r="5" style="fill: var(--viz-7)"
-                          tabindex="0" data-label="Cloud &middot; Q2" data-value="36 thousand hours"/>
-                  <circle class="viz-dot" cx="220" cy="138" r="5" style="fill: var(--viz-7)"
-                          tabindex="0" data-label="Cloud &middot; Q3" data-value="32 thousand hours"/>
-                  <circle class="viz-dot" cx="310" cy="124" r="5" style="fill: var(--viz-7)"
-                          tabindex="0" data-label="Cloud &middot; Q4" data-value="38 thousand hours"/>
-                  <circle class="viz-dot" cx="400" cy="120" r="5" style="fill: var(--viz-7)"
-                          tabindex="0" data-label="Cloud &middot; Q5" data-value="40 thousand hours"/>
-                <g class="viz-series-label">
-                  <text x="408" y="43" style="fill: var(--viz-1)">Digital exp.</text>
-                  <text x="408" y="74" style="fill: var(--viz-3)">Data &amp; AI</text>
-                  <text x="408" y="124" style="fill: var(--viz-7)">Cloud</text>
-                </g>
-                <line class="viz-axis" x1="40" y1="210" x2="400" y2="210"/>
-                <g class="viz-label"><text x="40" y="230">Q1</text><text x="130" y="230">Q2</text><text x="220" y="230">Q3</text><text x="310" y="230">Q4</text><text x="400" y="230">Q5</text></g>
-              </svg>
-              <details class="viz-data">
-                <summary>Show the data</summary>
-                <table><caption>Delivery hours by quarter, thousands &middot; illustrative</caption>
-                  <thead><tr><th>Series</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Q5</th></tr></thead>
-                  <tbody><tr><th scope="row">Digital exp.</th><td>30</td><td>42</td><td>54</td><td>66</td><td>76</td></tr><tr><th scope="row">Data &amp; AI</th><td>18</td><td>26</td><td>40</td><td>52</td><td>62</td></tr><tr><th scope="row">Cloud</th><td>34</td><td>36</td><td>32</td><td>38</td><td>40</td></tr></tbody>
-                </table>
-              </details>
-            </figure>
-
-            <figure class="viz-figure viz-figure--wide">
-              <figcaption class="viz-figure-head">
-                <span class="viz-figure-title">Programme spend by workstream</span>
-                <span class="viz-figure-note">Four series &middot; a different pattern each &middot; 2px surface gaps, values centred under their segment &middot; <em>illustrative figures</em></span>
-              </figcaption>
-              <svg class="viz-chart" viewBox="0 0 1040 108" role="img"
-                   aria-label="Stacked bar of programme spend. Build 42 percent, Run 27 percent, Discovery 19 percent, Enablement 12 percent.">
-                  <rect class="viz-mark" x="0" y="0" width="432" height="54" rx="4" fill="url(#viz-p1)"
-                        tabindex="0" data-label="Build" data-value="42% of programme spend"/>
-                  <rect class="viz-mark" x="436" y="0" width="277" height="54" rx="4" fill="url(#viz-p3)"
-                        tabindex="0" data-label="Run" data-value="27% of programme spend"/>
-                  <rect class="viz-mark" x="717" y="0" width="195" height="54" rx="4" fill="url(#viz-p7)"
-                        tabindex="0" data-label="Discovery" data-value="19% of programme spend"/>
-                  <rect class="viz-mark" x="916" y="0" width="124" height="54" rx="4" fill="url(#viz-p4)"
-                        tabindex="0" data-label="Enablement" data-value="12% of programme spend"/>
-                <g class="viz-value">
-                  <text x="216" y="80">42%</text>
-                  <text x="574" y="80">27%</text>
-                  <text x="814" y="80">19%</text>
-                  <text x="978" y="80">12%</text>
-                </g>
-                <g class="viz-label">
-                  <text x="216" y="100">Build</text>
-                  <text x="574" y="100">Run</text>
-                  <text x="814" y="100">Discovery</text>
-                  <text x="978" y="100">Enablement</text>
-                </g>
-              </svg>
-              <details class="viz-data">
-                <summary>Show the data</summary>
-                <table><caption>Programme spend by workstream &middot; illustrative</caption>
-                  <thead><tr><th>Workstream</th><th>Share</th></tr></thead>
-                  <tbody><tr><th scope="row">Build</th><td>42%</td></tr><tr><th scope="row">Run</th><td>27%</td></tr><tr><th scope="row">Discovery</th><td>19%</td></tr><tr><th scope="row">Enablement</th><td>12%</td></tr></tbody>
-                </table>
-              </details>
-            </figure>
-
-          </div>
-
-          <div class="viz-tip" id="viz-tip" role="status" aria-live="polite" hidden></div>
 
           <h3 class="subhead">Tokens</h3>
           <p class="palette-note">Reference these rather than raw hex, so a palette correction lands everywhere at once.</p>
