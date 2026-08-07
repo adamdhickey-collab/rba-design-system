@@ -120,12 +120,16 @@
         (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) ? -1 : 1
       );
 
-      let currentId = null;
+      // `undefined` rather than null so the first setActive(null) still runs and
+      // clears whatever the markup shipped with.
+      let currentId;
+      // id may be null — "no section reached yet", which is a real state at the
+      // top of the page and has to be expressible.
       function setActive(id) {
         if (id === currentId) return;
         currentId = id;
         links.forEach(l => l.classList.remove('sidebar-link--active'));
-        if (linkBy[id]) linkBy[id].classList.add('sidebar-link--active');
+        if (id && linkBy[id]) linkBy[id].classList.add('sidebar-link--active');
       }
 
       function update() {
@@ -136,9 +140,13 @@
           setActive(sections[sections.length - 1].id);
           return;
         }
-        // "Active" = last section whose top has scrolled above the upper third of the viewport.
+        // "Active" = last section whose top has scrolled above the upper third of
+        // the viewport. Starts at null, NOT at the first section: the hero and the
+        // task cards sit above Colors, so seeding with sections[0] lit "Colors" on
+        // load while the reader was still looking at the front door. Nothing is
+        // highlighted until its section has actually been reached.
         const threshold = Math.max(120, window.innerHeight * 0.3);
-        let bestId = sections[0].id;
+        let bestId = null;
         for (const s of sections) {
           if (s.getBoundingClientRect().top - threshold <= 0) {
             bestId = s.id;
