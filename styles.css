@@ -980,6 +980,15 @@
       border-radius: 4px;
     }
 
+    /* A command with no instruction on where to type it is half an instruction. */
+    .callout-where {
+      margin: 6px 0 0;
+      font-family: var(--font-micro);
+      font-size: 11.5px;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
     /* Numbered steps inside a callout. This replaced a 90-word paragraph that
        carried four separate instructions and the evidence for them in one run of
        prose — everything was stated, and nothing was findable. The rule comes
