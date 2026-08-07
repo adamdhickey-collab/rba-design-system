@@ -4,16 +4,16 @@
 #
 # GitHub Pages serves static files and cannot zip a folder on request, so the
 # bundles are pre-built and committed. That makes staleness the one real failure
-# mode of this site: a bundle can silently lag the folder it represents. Two
-# things guard against it — this script is the only way bundles are made, and it
-# stamps the build date into app.js so every download button shows how old the
-# bundle is.
+# mode of this site: a bundle can silently lag the folder it represents. This
+# script being the only way bundles are made is the guard — it prints the file
+# count and size of everything it writes, so a bundle that came out smaller than
+# you expected is visible at the point of building it.
 #
 # Run it from anywhere; it locates the repo itself.
 #
 #   ./tools/build-bundles.sh
 #
-# Then COMMIT both the zips and the app.js change. A rebuild that isn't committed
+# Then COMMIT the zips. A rebuild that isn't committed
 # is the same as no rebuild at all.
 
 set -euo pipefail
@@ -79,17 +79,11 @@ for entry in "${COLLECTIONS[@]}"; do
   fi
 done
 
-# Stamp the build date so the pages can show it. Kept as a single-line constant
-# in app.js precisely so this substitution stays a one-liner with no templating.
-STAMP="$(date +%Y-%m-%d)"
-if grep -q "^    const RBA_BUNDLE_BUILT = " app.js; then
-  # BSD and GNU sed disagree about -i, so write through a temp file instead.
-  sed "s/^    const RBA_BUNDLE_BUILT = .*/    const RBA_BUNDLE_BUILT = '${STAMP}';/" app.js > app.js.tmp
-  mv app.js.tmp app.js
-  echo "stamped app.js with build date ${STAMP}"
-else
-  echo "warning: could not find RBA_BUNDLE_BUILT in app.js — build date not stamped" >&2
-fi
+# This used to stamp a build date into a constant in app.js, which the pages printed
+# next to each "download all" button. The pages no longer show it, so the stamp was
+# rewriting a value nothing read — and a build step whose output is invisible is one
+# that quietly rots. The sizes and file counts printed above are the live signal now.
+# See the note where the constant used to be in app.js if it is ever reinstated.
 
 echo
-echo "Done. Commit the files under downloads/ together with app.js."
+echo "Done. Commit the files under downloads/."

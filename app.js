@@ -500,17 +500,16 @@
       document.querySelectorAll('.js-release').forEach(el => { el.textContent = label; });
     })();
 
-    // Bundle build date · the zip bundles under downloads/ are pre-built and committed,
-    // because a static host can't zip on request. That makes staleness the one real
-    // failure mode, so the date the bundles were last built is shown next to every
-    // "download all" button rather than left implicit. tools/build-bundles.sh rewrites
-    // the line below when it runs — keep it on one line, in this exact shape.
-    const RBA_BUNDLE_BUILT = '2026-08-06';
-    (function () {
-      document.querySelectorAll('.js-bundle-date').forEach(el => {
-        el.textContent = RBA_BUNDLE_BUILT;
-      });
-    })();
+    // The bundle build date used to be printed next to every "download all" button —
+    // the zips under downloads/ are pre-built and committed, because a static host
+    // can't zip on request, which makes staleness the one real failure mode. It was
+    // removed because it crowded the buttons with a date nobody was checking, and a
+    // date only helps if you already know when the assets last changed. Staleness is
+    // now handled where it is actually visible: tools/build-bundles.sh reports what
+    // it wrote, and the README makes rebuilding part of adding an asset.
+    //
+    // If it comes back, it needs to come back in all three places at once: the
+    // markup, the constant here, and the stamping step in build-bundles.sh.
 
     // Icon library · 1,490 icons in 80 packs, rendered from the manifest that
     // tools/icons-sync.py writes into the bottom of icons.html.
@@ -606,11 +605,48 @@
           }, { rootMargin: '600px 0px' })
         : null;
 
+      // Once every tile is painted there is nothing left for a sweep to find, and a
+      // scroll handler that walks 1,490 nodes to conclude that is pure waste. The
+      // count lives here rather than in sweep() because the observer paints too, and
+      // a counter that only sweep() decremented would never reach zero.
+      let unpainted = Infinity;   // set to the real total once the grid is built
       function paint(glyph) {
         if (glyph.dataset.painted) return;
         glyph.dataset.painted = '1';
         glyph.style.setProperty('--icon', 'url("' + glyph.dataset.src + '")');
+        unpainted--;
       }
+
+      // Say so when the glyphs cannot be fetched, instead of showing 1,490 empty
+      // boxes and leaving someone to guess.
+      //
+      // A CSS mask fails SILENTLY and INVISIBLY: if the image 404s or the network
+      // is gone, the mask resolves to nothing, which masks the element out
+      // completely. The tile keeps its border, its label and its download buttons,
+      // and the icon is simply absent — indistinguishable from "the icons were
+      // never built". This page was reported as broken three times on exactly that
+      // ambiguity, and the actual cause was mundane: the dev server had stopped,
+      // the HTML, CSS and JS were still being served from browser cache, and only
+      // the 1,454 icon files that had never been fetched were failing.
+      //
+      // One probe, not 1,490. If the first icon cannot load, none of them can.
+      (function warnIfUnreachable() {
+        if (!icons.length) return;
+        const probe = new Image();
+        probe.onerror = () => {
+          const box = document.createElement('p');
+          box.className = 'lib-offline';
+          box.setAttribute('role', 'status');
+          box.innerHTML =
+            '<strong>The icon files could not be loaded.</strong> The page itself is ' +
+            'fine — it is the 1,490 SVGs behind it that are not answering, which is ' +
+            'almost always the local server having stopped. Restart it and reload. ' +
+            'If it is running, check that <code></code> is reachable.';
+          box.querySelector('code').textContent = icons[0].svg;
+          grid.parentNode.insertBefore(box, grid);
+        };
+        probe.src = icons[0].svg;
+      })();
 
       // Icons are painted with a CSS mask, not an <img>. An <img> renders the file's
       // own colors and can't inherit currentColor, so a single monochrome file could
@@ -770,6 +806,10 @@
         }
         const empty = grid.nextElementSibling;
         if (empty && empty.classList.contains('lib-empty')) empty.hidden = shown > 0;
+        // Let the paint sweep know the visible set changed. Declared below this
+        // function and only ever fired from a handler, so the listener is attached
+        // by the time anything dispatches.
+        grid.dispatchEvent(new CustomEvent('rba:filtered'));
       }
 
       const frag = document.createDocumentFragment();
@@ -782,15 +822,100 @@
       // loop — so anything that delays or suppresses that (a background tab, a
       // restored session, a throttled renderer) leaves the visible grid blank,
       // which reads as "the icons are broken" rather than "the icons are late".
-      // Belt and braces: the observer still owns everything below the fold.
-      requestAnimationFrame(() => {
-        const limit = window.innerHeight + 600;
-        grid.querySelectorAll('.glyph-cell-glyph').forEach(g => {
-          if (g.dataset.painted) return;
-          const top = g.getBoundingClientRect().top;
-          if (top < limit) { paint(g); if (io) io.unobserve(g); }
-        });
-      });
+      //
+      // This sweep runs SYNCHRONOUSLY, and that is the whole point. It used to sit
+      // inside a requestAnimationFrame, which meant the safety net was built out of
+      // the very mechanism it exists to survive: a hidden document runs no animation
+      // frames and delivers no observer callbacks, so both the lazy path and its
+      // fallback stalled together and the grid stayed empty.
+      //
+      // It also used to trust window.innerHeight, which is the second half of the
+      // same bug. An embedded or backgrounded view can report a viewport of ZERO —
+      // measured at 0 in the app's own preview pane — and `0 + 600` is a cutoff no
+      // tile in a grid that starts 2,800px down the page can clear. The safety net
+      // computed an empty answer and returned it confidently.
+      //
+      // So when the viewport reports nothing, the head of the grid is painted BY
+      // INDEX instead — no layout required, and no measurement to be wrong about.
+      // Geometry is used when, and only when, there is a real viewport to measure
+      // against.
+      const EAGER = 120;   // ~4 screenfuls of a wide grid; 120 files, ~180KB
+      unpainted = icons.length;
+      function sweep() {
+        if (unpainted <= 0) return;
+        const glyphs = grid.querySelectorAll('.glyph-cell-glyph');
+        const viewportH = Math.max(window.innerHeight || 0,
+                                   document.documentElement.clientHeight || 0);
+        const limit = viewportH + 600;
+        // Read every rect before writing any mask. Interleaving the two dirties
+        // layout on each paint and forces a reflow on the next measurement, 1,490
+        // times, on every keystroke.
+        const due = [];
+        let rank = 0;
+        for (let i = 0; i < glyphs.length; i++) {
+          const g = glyphs[i];
+          if (g.parentNode.hidden) continue;   // filtered out — not worth a request
+          // Rank counts position among the tiles currently SHOWING, and is counted
+          // before the painted check so it stays the same on every pass. Counting
+          // only unpainted tiles would make the blind branch additive — each sweep
+          // would paint another EAGER, and ten keystrokes would quietly fetch the
+          // whole library.
+          const idx = rank++;
+          if (g.dataset.painted) continue;
+          let want;
+          if (viewportH > 0) {
+            const box = g.getBoundingClientRect();
+            want = box.bottom > -600 && box.top < limit;
+          } else {
+            // DOM order, not visual order — search tiers reorder tiles with CSS
+            // `order`. It doesn't matter: this branch only runs when nothing can be
+            // measured, which means nothing is being looked at either.
+            want = idx < EAGER;
+          }
+          if (want) due.push(g);
+        }
+        due.forEach(g => { paint(g); if (io) io.unobserve(g); });
+      }
+      sweep();
+
+      // Filtering moves tiles up into view without scrolling, and a hidden document
+      // won't tell the observer about it. Sweeping after a filter costs one layout
+      // per keystroke on the tiles still unpainted, which shrinks as you go.
+      grid.addEventListener('rba:filtered', sweep);
+
+      // Anything the observer missed while the tab was in the background gets picked
+      // up the moment it comes forward — this is the case that reads as "I opened the
+      // page and the icons are gone".
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) sweep(); });
+      window.addEventListener('pageshow', sweep);
+
+      // Scroll is the one that actually bit. Everything above handles the grid being
+      // wrong when it FIRST appears; none of it helps once you start scrolling,
+      // because painting past the first screenful was the observer's job alone — and
+      // a document the browser considers hidden delivers no observer callbacks at
+      // all. An embedded view (a preview pane, an iframe, a background tab someone is
+      // still looking at) is hidden for its whole life, so the grid painted its top
+      // and then stayed blank however far you scrolled. That reads as "the icons are
+      // broken", and reasonably so.
+      //
+      // The observer still does the work whenever it is awake; this only covers the
+      // case where it never wakes. Throttled on a timestamp rather than rAF for the
+      // same reason the initial sweep is synchronous: rAF is one of the things that
+      // stops in a hidden document, so a rAF-throttled handler would be dead exactly
+      // when it is needed.
+      let lastSweep = 0, sweepTimer = null;
+      function onScroll() {
+        const now = performance.now();
+        if (now - lastSweep >= 120) { lastSweep = now; sweep(); return; }
+        // Trailing call, so coming to rest between throttle windows still paints.
+        if (!sweepTimer) {
+          sweepTimer = setTimeout(() => {
+            sweepTimer = null; lastSweep = performance.now(); sweep();
+          }, 120);
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
 
       if (search) {
         search.addEventListener('input', apply);
@@ -829,26 +954,24 @@
       }
       const items = data.items || [];
       const cats = data.categories || [];
-      const EXTS = ['jpg', 'jpeg', 'png', 'webp'];
-
       const flatten = s => s.toLowerCase().replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
       items.forEach(it => {
-        it.hay = flatten([it.title, it.cat, it.by, it.why, it.use, it.crop, it.priority, it.id].join(' '));
+        it.hay = flatten([it.title, it.cat, it.by, it.why, it.use, it.crop,
+                          it.priority, it.id, it.sourceName].join(' '));
       });
 
-      // Try each extension in turn; the first that loads wins. A miss on all of
-      // them just leaves the slot, which is the honest state until someone buys
-      // the image.
-      // Three ways a card can get a picture, in order of preference:
-      //   1. a licensed file staged at assets/images/shortlist/<adobe-id>.<ext>
-      //   2. a preview URL carried in the manifest ("preview" on the row)
-      //   3. nothing — the slot stays, which is the honest state
-      // Local wins over preview so that licensing an image silently upgrades the
-      // card without anyone having to go and remove the preview URL.
+      // One filename, from the manifest, no guessing. This used to build four
+      // candidate URLs per card by trying each extension in turn, which meant the
+      // page discovered its own content by 404 — 150 failed requests before the
+      // first picture appeared, back when webp was last in the list. The library
+      // records the actual filename, images-sync.py refuses to write a manifest
+      // whose files are missing, so by the time this runs the name is known good.
+      //
+      // A miss still degrades to the labelled slot rather than a broken frame:
+      // that is the honest state for a row whose image has been deleted but whose
+      // entry is still around.
       function findImage(cell, item) {
-        const local = EXTS.map(e => 'assets/images/shortlist/' + item.id + '.' + e);
-        const candidates = local.concat(item.preview ? [item.preview] : []);
-        let i = 0;
+        if (!item.file) return;
         const probe = new Image();
         probe.referrerPolicy = 'no-referrer';
         probe.onload = () => {
@@ -858,32 +981,64 @@
           const slot = frame.querySelector('.shot-slot');
           if (slot) slot.remove();
         };
-        probe.onerror = () => { if (++i < candidates.length) probe.src = candidates[i]; };
-        probe.src = candidates[0];
+        probe.src = 'assets/images/shortlist/' + item.file;
       }
+
+      // The decision, and how it reads on the card. "undecided" gets no badge at
+      // all: it is the default state of most of the library, and a badge on almost
+      // every card is decoration rather than information. The badge earns its place
+      // by marking the ones somebody has actually ruled on.
+      const STATUS = {
+        keep:     { label: 'Keep',     icon: 'check_circle' },
+        cut:      { label: 'Cut',      icon: 'do_not_disturb_on' },
+        licensed: { label: 'Licensed', icon: 'verified' },
+      };
 
       function card(item) {
         const a = document.createElement('a');
-        a.className = 'shot-card';
+        const status = item.status || 'undecided';
+        const wanted = !item.file;
+        a.className = 'shot-card shot-card--' + status + (wanted ? ' shot-card--wanted' : '');
         a.href = item.url;
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
-        a.setAttribute('aria-label', item.title + ' — open on Adobe Stock');
+        // The service name comes from the manifest, not a literal. Three strings
+        // on this card used to say "Adobe Stock" outright, which was true of all
+        // fifty images and would have been a lie about the first one that wasn't.
+        const where = item.sourceName || 'the source';
+        a.setAttribute('aria-label',
+          item.title + ' — ' + (wanted ? 'not downloaded yet, ' : '') +
+          (STATUS[status] ? STATUS[status].label.toLowerCase() + ', ' : '') +
+          'open on ' + where);
 
         const frame = document.createElement('div');
         frame.className = 'shot-frame';
         const slot = document.createElement('span');
         slot.className = 'shot-slot';
-        slot.innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">imagesmode</span>' +
-                         '<span class="shot-slot-id">' + item.id + '</span>' +
-                         '<span class="shot-slot-note">not licensed</span>';
+        // Two different absences, and they are not the same problem. A wanted entry
+        // is working as designed — somebody shortlisted it and has not fetched it.
+        // A named file that will not load is a fault.
+        slot.innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">' +
+                         (wanted ? 'download_for_offline' : 'broken_image') + '</span>' +
+                         '<span class="shot-slot-id"></span>' +
+                         '<span class="shot-slot-note">' +
+                         (wanted ? 'not downloaded yet' : 'image missing') + '</span>';
+        slot.querySelector('.shot-slot-id').textContent = item.id;
         frame.appendChild(slot);
 
-        const rank = document.createElement('span');
-        rank.className = 'shot-rank';
-        rank.textContent = item.cat + ' · ' + item.rank;
-        frame.appendChild(rank);
+        if (STATUS[status]) {
+          const badge = document.createElement('span');
+          badge.className = 'shot-status shot-status--' + status;
+          badge.innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">' +
+                            STATUS[status].icon + '</span><span></span>';
+          badge.lastChild.textContent = STATUS[status].label;
+          frame.appendChild(badge);
+        }
 
+        // The rank chip used to sit here reading "Data, AI & security · 1". It was
+        // removed: the category repeats the filter chip you just pressed, and the
+        // rank repeats the card's position in a grid you are already reading in
+        // order. Two facts, both already on screen, competing with the photograph.
         const pri = document.createElement('span');
         pri.className = 'shot-priority shot-priority--' +
           (item.priority === 'Primary pick' ? 'primary'
@@ -891,24 +1046,45 @@
         pri.textContent = item.priority;
         frame.appendChild(pri);
 
+        // The card carried eight separate pieces of text under a 240px-tall
+        // photograph: title, contributor, dimensions, a paragraph of reasoning, an
+        // intended use, a cropping note, a service name and a full sentence of
+        // licence terms. At three across that is a wall of 11px type competing with
+        // the only thing anyone actually looks at, which is the picture.
+        //
+        // What the page is FOR is deciding whether an image earns its place. That
+        // needs three things: the picture, what it is, and whether you may use it.
+        // The rest is reference for when you are looking at one image closely, and
+        // it has not been deleted — it is all still in library.json, and the whole
+        // note is on the card's tooltip.
         const body = document.createElement('div');
         body.className = 'shot-body';
-        body.innerHTML =
-          '<span class="shot-title"></span>' +
-          '<span class="shot-meta"></span>' +
-          '<span class="shot-why"></span>' +
-          '<span class="shot-use"><strong>Use</strong> <span class="shot-use-text"></span></span>' +
-          '<span class="shot-crop"></span>';
+        body.innerHTML = '<span class="shot-title"></span><span class="shot-meta"></span>';
         body.querySelector('.shot-title').textContent = item.title;
-        body.querySelector('.shot-meta').textContent = item.by + ' · ' + item.dim;
-        body.querySelector('.shot-why').textContent = item.why;
-        body.querySelector('.shot-use-text').textContent = item.use;
-        body.querySelector('.shot-crop').textContent = item.crop;
+
+        // Contributor and licence on one line. The licence is a two-word verdict
+        // rather than the full sentence, because at a glance the only question is
+        // "can this ship?" — "Comp · not licensed" answers it; a paragraph does not.
+        const verdict = item.tier === 'subscription' ? 'Licensed'
+                      : item.tier === 'free' ? 'Free to use'
+                      : 'Comp · not licensed';
+        const meta = body.querySelector('.shot-meta');
+        meta.innerHTML = '<span></span><span class="shot-licence shot-licence--' +
+                         (item.tier || 'paid') + '"></span>';
+        meta.firstChild.textContent = item.by || where;
+        meta.lastChild.textContent = verdict;
+
+        // Reasoning moves to the tooltip: available on the one card you are looking
+        // at, absent from the forty you are scrolling past.
+        const notes = [item.why, item.use && 'Use: ' + item.use, item.crop, item.dim]
+          .filter(Boolean).join('\n\n');
+        if (notes) a.title = notes;
 
         const foot = document.createElement('span');
         foot.className = 'shot-foot';
-        foot.innerHTML = '<span>View on Adobe Stock</span>' +
+        foot.innerHTML = '<span></span>' +
                          '<span class="material-symbols-rounded" aria-hidden="true">open_in_new</span>';
+        foot.firstChild.textContent = where;
 
         a.append(frame, body, foot);
         findImage(a, item);
@@ -919,7 +1095,41 @@
       const search = scope.querySelector('.lib-search-input');
       const chips = scope.querySelector('.lib-filter');
       const count = scope.querySelector('.lib-count');
+      const statusSel = scope.querySelector('.lib-status-select');
       let activeCat = 'all';
+      let activeStatus = 'all';
+
+      // A select rather than a second row of chips. The category chips already wrap
+      // to two lines, and the decision filter is used differently anyway: it is a
+      // mode you work in for a whole session ("show me the undecided ones"), not
+      // something you flick between while browsing.
+      if (statusSel) {
+        const n = s => items.filter(i => (i.status || 'undecided') === s).length;
+        const opts = [
+          ['all', 'Any decision'],
+          ['undecided', 'Undecided'],
+          ['keep', 'Keep'],
+          ['cut', 'Cut'],
+          ['licensed', 'Licensed'],
+          ['wanted', 'Not downloaded'],
+        ];
+        opts.forEach(pair => {
+          const o = document.createElement('option');
+          o.value = pair[0];
+          const c = pair[0] === 'all' ? items.length
+                  : pair[0] === 'wanted' ? items.filter(i => !i.file).length
+                  : n(pair[0]);
+          o.textContent = pair[1] + ' (' + c + ')';
+          // Never offer a filter that would empty the grid — an option reading
+          // "Cut (0)" invites a click that answers with nothing.
+          if (c === 0 && pair[0] !== 'all') o.disabled = true;
+          statusSel.appendChild(o);
+        });
+        statusSel.addEventListener('change', () => {
+          activeStatus = statusSel.value;
+          apply();
+        });
+      }
 
       if (chips) {
         const mk = (value, label, pressed) => {
@@ -931,7 +1141,9 @@
           b.textContent = label;
           return b;
         };
-        chips.appendChild(mk('all', 'All 50', true));
+        // Counted, not typed. It said "All 50" as a literal, which was true for
+        // exactly as long as the shortlist was the original fifty.
+        chips.appendChild(mk('all', 'All ' + items.length, true));
         cats.forEach(c => chips.appendChild(mk(c, c, false)));
         chips.addEventListener('click', ev => {
           const btn = ev.target.closest('.lib-filter-btn');
@@ -949,7 +1161,10 @@
         let shown = 0;
         Array.from(grid.children).forEach((el, i) => {
           const it = items[i];
-          const hit = (activeCat === 'all' || it.cat === activeCat) &&
+          const st = it.status || 'undecided';
+          const statusOk = activeStatus === 'all'
+            || (activeStatus === 'wanted' ? !it.file : st === activeStatus);
+          const hit = (activeCat === 'all' || it.cat === activeCat) && statusOk &&
                       terms.every(term => it.hay.indexOf(term) > -1);
           el.hidden = !hit;
           if (hit) shown++;

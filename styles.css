@@ -129,6 +129,16 @@
       --font-micro:   "Montserrat", Arial, Helvetica, sans-serif;
       --display-tracking:    -0.02em;
       --display-tracking-sm: -0.01em;
+      /* One size for every top-level heading on the site — the page title, the
+         section titles under it, and the hero row of the type specimen. They were
+         on two different clamps (62px vs 56px at the ceiling), which is close
+         enough to look like a mistake rather than a hierarchy. Sharing a token is
+         what stops them drifting apart again.
+
+         A flat value, not a clamp, so 60px is what you actually measure rather than
+         whatever the viewport happens to resolve. It steps down at the two narrow
+         breakpoints below, where 60px stops fitting. */
+      --fs-page-heading:     60px;
 
       /* ---- Space · 4px base ---- */
       --space-2: 8px;   --space-3: 12px;  --space-4: 16px;
@@ -259,13 +269,11 @@
       width: 88px;
       margin-bottom: var(--space-4);
     }
-    /* Sans, not the display serif. RBA is a sans brand — the guidelines reserve Libre
-       Caslon for editorial moments, and a brand name set in it reads as someone else's
-       masthead. The serif appears on this site only in the type specimen. */
-    /* Two lines by design — "Connect Design System" is the system's name and gets to be
-       stated in full, which at 20px in a 288px rail means it wraps. The <br> is in the
-       markup rather than left to chance so the break lands after "Connect" every time
-       instead of orphaning "System". */
+    /* Sans, one weight, one size — the whole name set as a single plain label.
+       A two-typeface lockup was tried here (Libre Caslon "Connect" against a small
+       tracked-out "DESIGN SYSTEM") and rejected: the rail is chrome, and giving the
+       system's own name a masthead treatment made it compete with the page title
+       three inches to its right. The name identifies the site; it isn't the headline. */
     .sidebar-brand-title {
       display: block;
       font-family: var(--font-sans);
@@ -365,6 +373,13 @@
        ========================================================================== */
     .mobile-bar { display: none; }
 
+    /* The only place --fs-page-heading moves. 60px is a desktop measurement; below
+       these widths it stops being a heading and starts being a wall. Both steps are
+       on the token, so the page title, the section titles and the specimen hero all
+       shrink together and stay identical to each other at every width. */
+    @media (max-width: 1023.98px) { :root { --fs-page-heading: 48px; } }
+    @media (max-width: 599.98px)  { :root { --fs-page-heading: 38px; } }
+
     @media (max-width: 1023.98px) {
       /* --- no-JS fallback: stack the sidebar above the content --- */
       .app-layout { flex-direction: column; }
@@ -411,6 +426,7 @@
       .mobile-bar-trigger .material-symbols-rounded { font-size: 24px; }
       .mobile-bar-title {
         font-family: var(--font-display);
+        font-weight: 400;
         font-size: 20px;
         line-height: 1;
         color: var(--brand);
@@ -491,7 +507,7 @@
     .hero-title {
       font-family: var(--font-display);
       font-weight: 400;
-      font-size: clamp(38px, 4.4vw, 62px);
+      font-size: var(--fs-page-heading);
       line-height: 1.1;
       letter-spacing: -0.03em;
       color: var(--brand);
@@ -521,17 +537,20 @@
       margin-bottom: var(--space-7);
       max-width: 760px;
     }
-    /* Sans, matching .hero-title. The display serif is reserved for editorial moments,
-       and a section heading on a reference page isn't one — see the note on
-       .sidebar-brand-title. Libre Caslon appears on this site only in the type
-       specimen, which is the one place it's the subject rather than the voice. */
+    /* The display serif in midnight, matching .hero-title exactly — same token, same
+       weight, same tracking. Weight 400 because Libre Caslon Text ships only 400 and
+       700, so anything heavier would be a synthesized bold.
+
+       Midnight, not accent teal: the guidelines assign midnight to headings, and a
+       heading colour is not a place to be inventive. Teal was tried here and read as
+       a second heading level that doesn't exist. */
     .section-title {
-      font-family: var(--font-sans);
-      font-weight: 800;
-      font-size: clamp(34px, 4.5vw, 56px);
-      line-height: 1.02;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: var(--fs-page-heading);
+      line-height: 1.1;
       color: var(--brand);
-      letter-spacing: var(--display-tracking);
+      letter-spacing: -0.03em;
     }
     .section-lede {
       font-size: 18px;
@@ -729,6 +748,29 @@
       font-weight: 700;
       letter-spacing: normal;
     }
+    /* The one caption whose number and rendering disagree, so it says so. */
+    .type-meta-note {
+      display: block;
+      font-style: italic;
+      opacity: 0.85;
+    }
+    /* Both faces are free, so the useful thing on a specimen card is the way to get
+       them. Wraps rather than shrinks: "Download Libre Caslon Text" is a long label
+       and the grid column can be 240px. */
+    .font-get {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-2) var(--space-4);
+      margin: var(--space-4) 0 0;
+    }
+    .font-get-alt {
+      font-family: var(--font-micro);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .font-get-alt:hover { color: var(--brand); }
+
     /* ---------- Type specimen · the official scale ----------
        These classes exist to DOCUMENT the published scale, so their values are copied
        from the canonical source and nothing else. They are not the sizes this site sets
@@ -742,9 +784,16 @@
        Official: hero 100px Libre Caslon 400 / 110% / -3% · h1 48 · h2 40 · h3 36 ·
        h4 32 · h5 24 · h6 20 · body-lg 20 · body 16 · body-sm 14, all Montserrat 800 for
        headings and 400 for body, line-height 120% on headings and 150% on body. */
+    /* Set at --fs-page-heading rather than at the published 100px. The specimen row
+       is a two-column layout; a 100px serif blew the first column out and pushed its
+       own caption off the line, which made the top of the scale the hardest row to
+       read. Sharing the site's heading token means this row shows the serif at the
+       size the site actually sets it, and the two can't drift. The caption still
+       states the real value — the number is the spec, the rendering is just the
+       face. */
     .type-hero {
       font-family: var(--font-display);
-      font-size: clamp(48px, 8vw, 100px);
+      font-size: var(--fs-page-heading);
       line-height: 1.10;
       font-weight: 400;
       letter-spacing: -0.03em;
@@ -880,27 +929,25 @@
       color: var(--text-muted);
       white-space: nowrap;
     }
-    /* Segmented: two formats of ONE action, so they share a border and a hairline
-       rather than reading as two unrelated buttons shouting at equal volume. */
-    .lib-bundle-group {
-      display: inline-flex;
-      border: 1px solid var(--border-input);
-      border-radius: var(--radius-pill);
-      background: var(--surface);
-      overflow: hidden;
-    }
+    /* Two standalone buttons. These were a segmented pair on the theory that SVG and
+       PNG are two formats of one action — but a segment reads as a toggle, and a
+       toggle implies a persistent choice rather than two downloads you can take
+       either or both of. Each is now its own pill. */
     .lib-bundle-btn {
       font-family: var(--font-micro);
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.04em;
       padding: 7px 14px;
+      border: 1px solid var(--border-input);
+      border-radius: var(--radius-pill);
+      background: var(--surface);
       color: var(--text-soft);
       text-decoration: none;
-      transition: background-color 120ms ease, color 120ms ease;
+      white-space: nowrap;
+      transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
     }
-    .lib-bundle-btn + .lib-bundle-btn { border-left: 1px solid var(--border); }
-    .lib-bundle-btn:hover { background: var(--brand); color: var(--on-accent); }
+    .lib-bundle-btn:hover { background: var(--brand); border-color: var(--brand); color: var(--on-accent); }
     .lib-bundle-btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
     .lib-bundle-note {
       font-family: var(--font-micro);
@@ -908,6 +955,28 @@
       color: var(--text-muted);
       white-space: nowrap;
     }
+    /* Shown only when the icon files themselves cannot be fetched. Deliberately
+       loud: the failure it describes otherwise looks like an empty grid. */
+    .lib-offline {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--sky-50);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--rba-red);
+      border-radius: var(--corner-radius-base);
+      padding: var(--space-4) var(--space-5);
+      margin: 0 0 var(--space-5);
+    }
+    .lib-offline code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: var(--surface);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
     .lib-empty {
       font-family: var(--font-sans);
       font-size: 15px;
@@ -928,6 +997,11 @@
       align-items: center;
       flex: 0 1 210px;
     }
+    /* The decision filter carries a count in every label, so its longest option is
+       "Not downloaded (2)" rather than a pack name. 210px clipped it mid-word.
+       flex-basis with a floor, so it keeps the text whole at desktop widths and
+       still gives way before the search field does when the row gets tight. */
+    .lib-pack:has(.lib-status-select) { flex: 0 1 250px; min-width: 190px; }
     .lib-pack .material-symbols-rounded {
       position: absolute;
       left: 12px;
@@ -1035,27 +1109,65 @@
       text-transform: uppercase;
       letter-spacing: 0.06em;
     }
-    .shot-rank, .shot-priority {
+    /* Priority is the reviewer's recommendation, so it is the one thing on the
+       frame allowed to carry colour. It used to share the top of the frame with a
+       rank chip reading "Data, AI & security · 1" — a category that repeated the
+       filter you had just pressed, and a number that repeated the card's position
+       in a grid being read in order. */
+    .shot-priority {
       position: absolute;
       top: 8px;
+      right: 8px;
       font-family: var(--font-micro);
       font-size: 10px;
       font-weight: 700;
       padding: 3px 8px;
       border-radius: var(--radius-pill);
       backdrop-filter: blur(2px);
+      color: #FFFFFF;
     }
-    .shot-rank {
-      left: 8px;
-      background: rgba(255, 255, 255, 0.88);
-      color: var(--brand-deep);
-    }
-    /* Priority is the reviewer's recommendation, so it is the one thing on the
-       card allowed to carry colour. */
-    .shot-priority { right: 8px; color: #FFFFFF; }
     .shot-priority--primary { background: var(--midnight); }
     .shot-priority--alt     { background: var(--accent); }
     .shot-priority--support { background: var(--neutral-500, #6B7280); }
+
+    /* The decision. Sits bottom-left of the frame so it never fights the rank and
+       priority chips along the top, and carries an icon as well as a colour —
+       "keep" and "cut" are the pair it would be most costly to misread. Only the
+       three decided states get a badge; undecided is most of the library and a
+       badge on almost every card would be wallpaper. */
+    .shot-status {
+      position: absolute;
+      left: 8px;
+      bottom: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-micro);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px 3px 6px;
+      border-radius: var(--radius-pill);
+      color: #FFFFFF;
+      backdrop-filter: blur(2px);
+    }
+    .shot-status .material-symbols-rounded { font-size: 13px; }
+    .shot-status--keep     { background: var(--midnight); }
+    .shot-status--licensed { background: var(--accent); }
+    .shot-status--cut      { background: rgba(51, 51, 51, 0.82); }
+
+    /* A cut image stays on the board — the record of having rejected something is
+       worth as much as the shortlist — but it stops competing with the live ones.
+       Full opacity returns on hover so it can still be reconsidered. */
+    .shot-card--cut { opacity: 0.48; filter: saturate(0.4); }
+    .shot-card--cut:hover,
+    .shot-card--cut:focus-within { opacity: 1; filter: none; }
+
+    /* Wanted: shortlisted, not downloaded. Dashed rather than dimmed, because this
+       is an open task rather than a closed decision. */
+    .shot-card--wanted .shot-frame {
+      border: 1px dashed var(--border-input);
+      background: var(--surface-input);
+    }
 
     .shot-body {
       display: flex;
@@ -1076,20 +1188,53 @@
       font-size: 11px;
       color: var(--text-muted);
     }
-    .shot-why {
-      font-family: var(--font-sans);
-      font-size: 13px;
-      line-height: 1.5;
-      color: var(--text-soft);
-    }
-    .shot-use, .shot-crop {
+    /* Contributor on the left, the licence verdict on the right. One line, because
+       the only question being asked while scrolling is "what is it and can I use
+       it?". The reviewer's notes — why, intended use, cropping, dimensions — used
+       to sit here as four more blocks of small type; they live on the card's
+       tooltip and in library.json now. */
+    .shot-meta {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-3);
       font-family: var(--font-micro);
       font-size: 11px;
-      line-height: 1.5;
       color: var(--text-muted);
     }
-    .shot-use strong { color: var(--text-soft); }
-    .shot-crop { font-style: italic; }
+    .shot-meta > :first-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Keyed to the tier, because the useful distinction is not who sells it but
+       whether you may actually use it. The marker changes SHAPE as well as colour:
+       someone scanning in a hurry has to get this right, and colour alone fails
+       for anyone who cannot separate the teal from the grey. */
+    .shot-licence {
+      flex: none;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .shot-licence::before {
+      content: "";
+      display: inline-block;
+      width: 6px; height: 6px;
+      margin-right: 5px;
+      border-radius: 50%;
+      background: currentColor;
+      vertical-align: middle;
+    }
+    /* Licensed and ready: filled circle, brand navy. */
+    .shot-licence--subscription { color: var(--brand); }
+    /* Free: hollow circle — usable, but nothing exclusive about it. */
+    .shot-licence--free { color: var(--accent); }
+    .shot-licence--free::before { background: transparent; box-shadow: inset 0 0 0 2px currentColor; }
+    /* Comp: a square, the odd one out, because this is the tier that cannot ship. */
+    .shot-licence--paid { color: var(--text-muted); }
+    .shot-licence--paid::before { border-radius: 1px; }
+
     .shot-foot {
       display: flex;
       align-items: center;
@@ -1143,6 +1288,20 @@
        1,490 mask URLs declared up front is 1,490 requests on load. Until it is set the
        mask resolves to nothing and the box is simply empty, which is the correct
        intermediate state. */
+    /* The glyph is a coloured box with the icon punched out of it as a mask, so one
+       monochrome file follows the theme instead of needing a light and a dark copy
+       of all 1,490.
+
+       mask-mode is set explicitly and deliberately. The initial value is
+       match-source, which for an SVG referenced by url() is supposed to mean alpha
+       — but these icons are drawn in near-black (#231F20), so ANY engine that
+       resolves match-source to luminance instead renders every one of them as
+       nothing at all. Not a faint icon: luminance zero is a fully transparent mask,
+       and the glyph disappears while its label and buttons stay put. Naming alpha
+       removes the ambiguity rather than relying on every engine agreeing.
+
+       The other half of that fix is in tools/icons-sync.py, which stamps width and
+       height onto the files — see the note there on dimensionless SVGs. */
     .glyph-cell-glyph {
       width: 44px;
       height: 44px;
@@ -1151,6 +1310,8 @@
       color: var(--brand-deep);
       -webkit-mask: var(--icon) center / contain no-repeat;
               mask: var(--icon) center / contain no-repeat;
+      -webkit-mask-mode: alpha;
+              mask-mode: alpha;
     }
     .glyph-cell-name {
       font-family: var(--font-micro);
@@ -2517,7 +2678,11 @@
 
     /* Type specimen: the two typeface names are set IN their own typeface. */
     .specimen-sans  { font-family: var(--font-sans); }
-    .specimen-serif { font-family: var(--font-display); }
+    /* Regular, always. .specimen-serif is stacked on a .type-h3, which carries
+       font-weight 800 — and Libre Caslon Text ships 400 and 700 only, so 800 asked
+       the browser to synthesize a bold that isn't in the family. The name of a
+       typeface should not be set in a weight the typeface doesn't have. */
+    .specimen-serif { font-family: var(--font-display); font-weight: 400; }
 
     /* The "built <date>" note that trails a bundle button. */
     .lib-bundle-note--inline { margin-left: var(--space-3); }

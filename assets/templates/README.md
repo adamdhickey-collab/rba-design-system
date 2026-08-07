@@ -5,8 +5,9 @@
 
 SharePoint holds the copies that actually get updated. A duplicate in this repo would go
 stale the first time someone revised the original, and nobody would notice — the same
-failure mode the zip bundles guard against with a build date, except here there is no
-build date to warn you. A link is always current; a copy is only current by luck.
+failure mode the zip bundles have, except a bundle at least gets rebuilt by a script
+someone runs, and a forgotten copy of a deck gets nothing. A link is always current; a
+copy is only current by luck.
 
 ## Adding a template
 

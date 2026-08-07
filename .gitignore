@@ -12,5 +12,13 @@
 # of the vector sources, and it is not in this repository.
 /icons/
 
+# The photography drop. Fifty Adobe Stock comps still under their download names
+# (1000_F_<id>_<hash>.webp). They are copied into assets/images/shortlist/ as
+# <adobe-id>.webp, which IS committed, because that is the name the cards look for.
+# Keeping both would commit the same 3.5 MB twice under two naming schemes and
+# leave no way to tell which one the site actually reads. Same arrangement as
+# /icons/ above: a working input, not the asset store.
+/photography/
+
 # Adobe Stock API key. A credential — never commit it.
 /.adobe-stock-key

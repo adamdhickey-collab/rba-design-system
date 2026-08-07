@@ -265,8 +265,58 @@ def read_existing_manifest():
     return {p['slug']: p.get('labels') or {} for p in data.get('packs', [])}
 
 
+VIEWBOX = re.compile(r'<svg\b[^>]*?viewBox\s*=\s*["\']\s*([-\d.]+)[,\s]+([-\d.]+)[,\s]+'
+                     r'([\d.]+)[,\s]+([\d.]+)\s*["\']', re.I)
+HAS_DIM = re.compile(r'<svg\b[^>]*?\bwidth\s*=', re.I)
+
+
+def normalise_svg(text):
+    """Give an SVG explicit width/height from its viewBox.
+
+    959 of the 1,490 source files ship with a viewBox and NOTHING else — no width,
+    no height. Illustrator exports them that way and it is legal SVG, but it leaves
+    the file with no intrinsic size, and an image with no intrinsic size is exactly
+    where engines stop agreeing with each other.
+
+    It matters here because these icons are painted as CSS mask images. Chromium
+    resolves `mask-size: contain` against the viewBox and draws them; WebKit is
+    documented as failing to render dimensionless SVGs used this way, and a mask
+    that fails to render does not fall back to something visible — it masks the
+    element out entirely. So the tile keeps its label, its buttons and its border,
+    and the glyph is simply gone. It looks like the icons were never loaded rather
+    than like a rendering bug, which is what made it hard to find.
+
+    The second reason to do this: these files are downloads. An SVG with no width
+    or height opens at some arbitrary size in Preview, Illustrator and Office, and
+    lands in a Word document as a postage stamp or a full page depending on the
+    app's guess. Stamping the size is a fix for that whether or not any browser
+    ever needed it.
+    """
+    if HAS_DIM.search(text):
+        return text
+    m = VIEWBOX.search(text)
+    if not m:
+        return text
+    w, h = m.group(3), m.group(4)
+    fmt = lambda v: str(int(float(v))) if float(v).is_integer() else v
+    return text[:m.start()] + text[m.start():m.end()].replace(
+        '<svg', '<svg width="%s" height="%s"' % (fmt(w), fmt(h)), 1) + text[m.end():]
+
+
 def copy_if_changed(src, dst, stats):
     os.makedirs(os.path.dirname(dst), exist_ok=True)
+    if dst.endswith('.svg'):
+        with open(src, encoding='utf-8') as fh:
+            out = normalise_svg(fh.read())
+        if os.path.exists(dst):
+            with open(dst, encoding='utf-8') as fh:
+                if fh.read() == out:
+                    stats['same'] += 1
+                    return
+        with open(dst, 'w', encoding='utf-8') as fh:
+            fh.write(out)
+        stats['written'] += 1
+        return
     if os.path.exists(dst) and filecmp.cmp(src, dst, shallow=False):
         stats['same'] += 1
         return

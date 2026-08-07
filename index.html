@@ -107,7 +107,7 @@
           <div class="callout callout--warn">
             <span class="material-symbols-rounded" aria-hidden="true">construction</span>
             <div class="callout-body">
-              <p><strong>Everything here is real except the photography.</strong> The logo files and every colour and type value come from the brand&rsquo;s own source, all 1,490 icons are stocked and named, and the templates link to the copies on SharePoint that actually get updated. The image tiles are still stubs, marked as such wherever they appear &mdash; see the README in <code>assets/images/</code> for why.</p>
+              <p><strong>Everything here is real except the photography.</strong> The logo files and every colour and type value come from the brand&rsquo;s own source, all 1,490 icons are stocked and named, and the templates link to the copies on SharePoint that actually get updated. The brand images are the exception: all fifty are <strong>watermarked comps of unlicensed stock</strong>, there to be chosen from rather than used &mdash; see the README in <code>assets/images/</code>.</p>
             </div>
           </div>
 
@@ -614,20 +614,39 @@
               <p class="type-h3 specimen-sans">Montserrat</p>
               <p class="type-meta">Sans · 100–900, all with italics</p>
               <p class="type-body">Headings, body copy, interface, labels, decks, documents. Everything unless the rule below applies.</p>
+              <p class="font-get">
+                <a class="btn btn-secondary btn--sm" href="https://fonts.google.com/download?family=Montserrat"
+                   target="_blank" rel="noopener noreferrer">
+                  <span class="material-symbols-rounded" aria-hidden="true">download</span>
+                  <span>Download Montserrat</span>
+                </a>
+                <a class="font-get-alt" href="https://fonts.google.com/specimen/Montserrat"
+                   target="_blank" rel="noopener noreferrer">View on Google Fonts</a>
+              </p>
             </div>
             <div class="term-item">
               <p class="type-h3 specimen-serif">Libre Caslon Text</p>
-              <p class="type-meta">Serif · 400, 400 italic, 700</p>
+              <p class="type-meta">Serif · 400 and 400 italic. Regular only — never bold.</p>
               <p class="type-body">The hero display, and nothing else. Not sub-heads, not pull quotes, not body copy, not UI. One place.</p>
+              <p class="font-get">
+                <a class="btn btn-secondary btn--sm" href="https://fonts.google.com/download?family=Libre%20Caslon%20Text"
+                   target="_blank" rel="noopener noreferrer">
+                  <span class="material-symbols-rounded" aria-hidden="true">download</span>
+                  <span>Download Libre Caslon Text</span>
+                </a>
+                <a class="font-get-alt" href="https://fonts.google.com/specimen/Libre+Caslon+Text"
+                   target="_blank" rel="noopener noreferrer">View on Google Fonts</a>
+              </p>
             </div>
           </div>
+          <p class="palette-note u-mt-md">Both faces are open-licensed under the SIL Open Font License, so they can be installed on any machine and embedded in any deck or document without a purchase. The download gives you the full family as <code>.ttf</code>; on the specimen page, <strong>Get font → Download all</strong> is the same file.</p>
 
           <h3 class="subhead">The official scale</h3>
           <p class="palette-note">Copied from the canonical tokens. These are the sizes a marketing page or a deck uses — this reference site sets its own furniture smaller on purpose, but these are the published values.</p>
           <div class="type-stack">
             <div class="type-row">
               <p class="type-hero">Hero display</p>
-              <p class="type-meta">Libre Caslon Text 400 · 100px / 110% · tracking -3% · midnight</p>
+              <p class="type-meta">Libre Caslon Text 400 · 100px / 110% · tracking -3% · midnight <span class="type-meta-note">shown at 60px</span></p>
             </div>
             <div class="type-row">
               <p class="type-h1">Heading 1</p>
@@ -688,7 +707,8 @@
               <thead><tr><th>Rule</th><th>Requirement</th></tr></thead>
               <tbody>
                 <tr><td>The serif</td><td>Hero display only. If you're reaching for Libre Caslon anywhere else, the answer is Montserrat.</td></tr>
-                <tr><td>Heading weight</td><td>800, not 700. The scale is built on ExtraBold; Bold reads as a different brand.</td></tr>
+                <tr><td>Serif weight</td><td>Regular, always. Never bold the serif — the family has no ExtraBold, so software fakes one by smearing the outline, and a faked bold is a different letterform.</td></tr>
+                <tr><td>Heading weight</td><td>800, not 700 — this is a Montserrat rule. The scale is built on ExtraBold; Bold reads as a different brand.</td></tr>
                 <tr><td>Heading color</td><td>Midnight. Not black, and never red.</td></tr>
                 <tr><td>Measure</td><td>Body copy caps around 68 characters. Wider needs a second column, not a longer line.</td></tr>
                 <tr><td>Substitution</td><td>Both faces are free and open-licensed — install them rather than accepting Calibri or Georgia.</td></tr>
@@ -759,7 +779,6 @@
               <span class="material-symbols-rounded" aria-hidden="true">folder_zip</span>
               <span>Download all logos</span>
             </a>
-            <span class="lib-bundle-note lib-bundle-note--inline">Bundle built <span class="js-bundle-date">—</span></span>
           </p>
         </div>
       </section>

@@ -8,11 +8,15 @@ CSS and JavaScript — no build step, no dependencies, no package manager.
 > brand's own source, and the icon library holds 1,490 real icons, all named. The templates
 > link to SharePoint rather than being copied here.
 >
-> `images.html` is a **shortlist of fifty Adobe Stock candidates to license**, not a
-> gallery. It carries the reasoning and links out to each asset; it shows no thumbnails,
-> because nothing is licensed and Adobe blocks fetching the watermarked previews anyway.
-> Licence an image, drop it in as `assets/images/shortlist/<adobe-id>.jpg`, and its card
-> fills itself. See [`assets/images/README.md`](assets/images/README.md).
+> `images.html` is a **shortlist of candidates to license**, not a gallery. Fifty are
+> Adobe Stock **watermarked comps** — not licensed, and not usable in anything that ships.
+> The shortlist takes images from any service: sources are declared in
+> `assets/images/library.json`, which is the hand-edited source of truth, and
+> `./tools/images-sync.py` builds the page from it. Adding, swapping and deleting are
+> each one step, and ranks renumber themselves. See
+> [`assets/images/README.md`](assets/images/README.md) — it carries the review of the
+> original fifty, guidance on which services suit this brand, and a flag that comps are
+> an internal-review licence on a publicly reachable site.
 >
 > The icons are **purchased stock packs** and carry no licence file. Most stock licences
 > allow use but not redistribution as standalone downloads, which is what the icon page
@@ -96,10 +100,14 @@ shipping a zip library for a page that is otherwise dependency-free. So the bund
 `downloads/` are built by `tools/build-bundles.sh` and committed.
 
 **This makes staleness the one real failure mode of this repo.** A bundle can silently lag
-the folder it represents. Two things guard against it: the script is the only way bundles
-are made, and it stamps the build date into `app.js` so every "Download all" button shows
-how old its bundle is. If you add an asset and don't run the script, the button hands
+the folder it represents. If you add an asset and don't run the script, the button hands
 people the old set.
+
+The guard is procedural, not visible: the script is the only way bundles are made, it
+prints the file count and size of everything it writes, and rebuilding is a step in
+"adding an asset" below. The pages used to print the build date beside each "Download all"
+button; that was removed because it crowded the buttons with a date that only means
+something to someone who already knows when the assets last changed.
 
 The script writes no bundle for an empty collection, which is why `templates.html`
 currently shows no bundle button at all rather than a link that would 404.
