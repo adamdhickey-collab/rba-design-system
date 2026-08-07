@@ -1,8 +1,9 @@
 # Brand images
 
-**A shortlist, not an asset library.** Candidates ranked within five categories,
-from any stock service. **Almost nothing here is licensed.** The page exists so the
-shortlist can be reviewed and decided on, not so images can be downloaded from it.
+**A working library, mostly not licensed yet.** Photography and backgrounds across
+six categories, from any stock service. The page exists so images can be searched,
+compared and decided on — not downloaded from. Envato images are licensed by the
+subscription; the rest are comps until somebody buys them.
 
 ```
 assets/images/
@@ -36,9 +37,9 @@ Conflating them would make "downloaded, looked at, rejected" impossible to say.
 
 - `undecided` — the default, and where everything starts. No badge on the card.
 - `keep` — earns its place.
-- `cut` — rejected. The card stays but dims, because *knowing something was
-  considered and rejected* is worth as much as the shortlist; it is what stops the
-  same image being proposed again in six months.
+- `cut` — rejected. The card leaves the grid entirely and only comes back under
+  the "Cut" filter. The entry stays in this file, because *knowing something was
+  considered and rejected* is what stops it being proposed again in six months.
 - `licensed` — bought. Warns if nothing is staged, since a licensed image should
   have its clean file in `shortlist/`.
 
@@ -48,7 +49,7 @@ that, so those candidates lived in somebody's notes and got lost. The card rende
 a dashed frame reading *not downloaded yet* — visibly different from a named file
 that will not load, which is a fault rather than a task.
 
-The decision filter in the toolbar is the point of all this: **"Undecided (50)"**
+The decision filter in the toolbar is the point of all this: **"Undecided (46)"**
 turns the page from a gallery into a queue.
 
 ### Retiring what has been cut
