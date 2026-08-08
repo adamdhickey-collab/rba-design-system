@@ -757,21 +757,18 @@
        quietly making the label bigger to reach the 3:1 large-text threshold and calling
        it done. Moving the label off the color makes every swatch legible by
        construction, whatever gets added to the palette later. */
-    /* Four across, and the last row fills the width rather than leaving a hole.
-       Grid was right while both cards held eight; retiring Secondary left Primary Colors
-       on seven, and a fixed four-column track turned that into 4 + 3 with a visibly empty
-       cell — which reads as a swatch that failed to load rather than as a board with
-       seven colours in it. Flex basis of a quarter keeps four per row whenever there are
-       four to place, and lets a short final row grow to close the gap. The board now
-       survives a colour being added or retired without anyone re-counting the columns. */
+    /* Four across, every swatch the same width, including on a short final row.
+       This was flex with `flex-grow: 1` for a while, so that Primary Colors' seven
+       values filled the card as 4 + 3 rather than leaving a gap at the end. It closed
+       the hole by making three swatches half again as wide as the four above them,
+       which is the worse trade on a board whose whole job is comparing colours: unequal
+       tiles read as unequal importance, and the widest chip on the page was Aqua, the
+       one value marked decorative-only. Ragged is the honest ending. Back to a fixed
+       track, which also gets the gap arithmetic right on its own. */
     .palette-columns {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: var(--space-3);
-    }
-    .palette-columns > .palette-swatch {
-      flex: 1 1 calc(25% - var(--space-3));
-      min-width: 0;
     }
     /* Kept so the markup can still group colors (primary / neutral) without the grid
        collapsing them into one run. */
@@ -893,19 +890,18 @@
       /* Was a single step here: four across above 1024, two below, nothing between.
          A swatch is a colour chip plus a name and a hex, and three of them fit
          comfortably from about 700px up — so the tablet range was throwing away half
-         the width it had. Stepped now, and the basis is what decides the count; the
-         flex line still lets a short final row grow to fill. */
-      .palette-columns > .palette-swatch { flex-basis: calc(33.333% - var(--space-3)); min-width: 0; }
+         the width it had. Stepped now, one column count per breakpoint. */
+      .palette-columns { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
 
     @media (max-width: 699.98px) {
-      .palette-columns > .palette-swatch { flex-basis: calc(50% - var(--space-3)); }
+      .palette-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     /* At 320 two across leaves ~100px a tile, which breaks "Border Strong" over three
        lines and puts the hex under its own name. One across is the honest answer at
        that width — the board gets longer, but every row is still readable. */
     @media (max-width: 399.98px) {
-      .palette-columns > .palette-swatch { flex-basis: 100%; }
+      .palette-columns { grid-template-columns: minmax(0, 1fr); }
     }
 
     /* Plain-language glossary of UI terms, used on the Color foundation page */
