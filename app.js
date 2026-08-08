@@ -231,7 +231,7 @@
         '<button type="button" class="mobile-bar-trigger" aria-expanded="false" aria-controls="' + sidebar.id + '" aria-label="Open navigation">' +
           '<span class="material-symbols-rounded" aria-hidden="true">menu</span>' +
         '</button>' +
-        '<span class="mobile-bar-title">Connect Design System</span>';
+        '<span class="mobile-bar-title">Connect <span class="wordmark-soft">Design System</span></span>';
       layout.parentNode.insertBefore(bar, layout);
 
       const scrim = document.createElement('div');
@@ -560,10 +560,16 @@
     const RBA_VERSION   = 'dev';
     const RBA_PUBLISHED = 'not yet published';
     (function () {
+      // The rail prints the date only. The version is still stamped and still worth
+      // having when someone is working out which build they are looking at, so it
+      // moves to the title rather than being dropped.
       const label = RBA_VERSION === 'dev'
         ? 'Dev build · not published'
-        : 'v' + RBA_VERSION + ' · published ' + RBA_PUBLISHED;
-      document.querySelectorAll('.js-release').forEach(el => { el.textContent = label; });
+        : 'Published ' + RBA_PUBLISHED;
+      document.querySelectorAll('.js-release').forEach(el => {
+        el.textContent = label;
+        if (RBA_VERSION !== 'dev') el.title = 'v' + RBA_VERSION;
+      });
     })();
 
     // The bundle build date used to be printed next to every "download all" button —

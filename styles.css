@@ -40,7 +40,15 @@
                                  /* two lightnesses, and the merge keeps the usable one. */
       --action-hover:  #1D366D;  /* Link hover. Deepens to midnight rather than to a     */
                                  /* third blue: 6.5:1 -> 11.7:1 on white.                */
-      --accent:        #0D8FA9;  /* CTA buttons, active states. Passes AA large.      */
+      --accent:        #0D8FA9;  /* The published accent. Rules, fills, active states.   */
+                                 /* Passes AA LARGE only — 3.8:1 on white — so it can    */
+                                 /* not sit behind a 14px button label or carry small     */
+                                 /* type. Use it for the things that aren't text.        */
+      --accent-strong: #0B758A;  /* The accent when it HAS to carry type. Same hue (190) */
+                                 /* and saturation, four steps down in value — the same  */
+                                 /* move --action made for the same reason: 5.4:1 on     */
+                                 /* white, 4.8:1 on the worst tint in this palette.      */
+      --accent-strong-hover: #096375; /* Deepens on hover, like --action-hover. 6.9:1.  */
       --aqua:          #14BADB;  /* Decorative only — fails AA for text.              */
       --soft-blue:     #8EC3DB;  /* Decorative.                                       */
       --sky-blue:      #BDE4F1;  /* Hero-gradient end, backgrounds.                   */
@@ -1873,7 +1881,10 @@
       transition: color 120ms ease;
     }
     .asset-dl .material-symbols-rounded { font-size: 15px; }
-    .asset-dl:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    /* --accent-strong: this label is 11px, so the published accent's 3.8:1 is a fail,
+       not a borderline. The hover was the only state on the control that dropped
+       below AA. */
+    .asset-dl:hover { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 3px; }
     .asset-dl:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 3px; }
     .asset-dl:active { transform: translateY(1px); }
 
@@ -1980,15 +1991,19 @@
       background: var(--primary-hover);
       border-color: var(--primary-hover);
     }
+    /* --accent-strong, not --accent. White on the published #0D8FA9 is 3.8:1, and a
+       14px/600 button label is not large text — the accent CTA the palette calls for
+       was the one button on the site that failed AA. Four steps down the same hue
+       keeps it unmistakably the accent teal and clears 4.5:1. */
     .btn-accent {
-      background: var(--accent);
+      background: var(--accent-strong);
       color: #FFFFFF;
-      border-color: var(--accent);
+      border-color: var(--accent-strong);
     }
     .btn-accent:hover,
     .btn-accent.is-hover {
-      background: #0A7A91;
-      border-color: #0A7A91;
+      background: var(--accent-strong-hover);
+      border-color: var(--accent-strong-hover);
     }
     /* A hover state you can look at without hovering. The Components page shows rest and
        hover side by side, which a :hover rule alone cannot do — you would have to take
@@ -2065,9 +2080,20 @@
       color: var(--action);
       text-decoration: underline;
       text-underline-offset: 3px;
+      /* Stated rather than left at `auto`, so the hover has a fixed value to double
+         and the spec line underneath is describing a number the browser actually uses. */
+      text-decoration-thickness: 1px;
+      transition: text-decoration-thickness 120ms ease, color 120ms ease;
     }
+    /* The underline THICKENS on hover and the colour deepens. Two signals, both
+       additive: the affordance gets stronger rather than being taken away, and a
+       reader who cannot separate #185FA5 from #1D366D still sees the state change.
+       Removing the underline instead was tried and reverted — it is a legitimate
+       convention and does not breach 1.4.1, since the rest state keeps the underline,
+       but it leans the whole state on a colour shift and reads as a glitch to anyone
+       who expects hover to add emphasis, not remove it. */
     .demo-link:hover,
-    .demo-link.is-hover { color: var(--action-hover); }
+    .demo-link.is-hover { color: var(--action-hover); text-decoration-thickness: 2px; }
     /* --sky-blue, not --sky-200. The semantic token re-points to a mid dark blue in dark
        mode, which took the caption beside it to 1.45:1 — the specimen was demonstrating a
        contrast rule while failing it. This panel documents a brand surface, so it holds
@@ -2129,9 +2155,15 @@
       margin: var(--space-2) 0 var(--space-3);
     }
 
+    /* The accent's own component. The palette gives --accent the CTA role and this was
+       the panel that never used it: a sky tint with a midnight button, indistinguishable
+       from any other card. The 4px rule states the colour at full strength — a rule is
+       not text, so the published #0D8FA9 is used exactly as published — and the button
+       carries it into the action itself via .btn-accent. */
     .demo-cta {
       background: var(--sky-50);
-      border-radius: 8px;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
       padding: var(--space-6);
       max-width: 520px;
     }
@@ -2284,6 +2316,10 @@
       background: #3ECDE8;
       border-color: #3ECDE8;
     }
+    /* --accent-strong re-points to aqua in dark mode, so the accent button's fill
+       goes light and its white label has to flip with it — same pair the primary
+       button uses two rules up. 8.2:1 at rest, 10:1 on hover. */
+    [data-theme="dark"] .btn-accent { color: var(--on-accent); }
     [data-theme="dark"] .voice-col { background: var(--surface-pill); }
     [data-theme="dark"] .voice-col--avoid { background: rgba(200, 37, 45, 0.12); }
     [data-theme="dark"] .voice-banned { color: var(--text); }
@@ -2545,6 +2581,12 @@
       --brand:          var(--aqua);
       --brand-deep:     var(--aqua);
       --on-accent:      #06121C;
+      /* --accent-strong is the light theme's "accent dark enough to carry type".
+         Against a near-black page it inverts: the darkened teal drops to 3.1:1 on
+         --surface, and aqua — decorative only on white — is the readable one here
+         at 7.2:1. Same reasoning that moved --brand to aqua. */
+      --accent-strong:       var(--aqua);
+      --accent-strong-hover: #3ECDE8;
 
       /* Re-point the light interface neutrals so anything referencing them
          inherits dark mode without a per-component override. */

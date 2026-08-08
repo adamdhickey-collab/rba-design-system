@@ -38,7 +38,7 @@ jobs:
         run: |
           set -euo pipefail
           VERSION="1.$(git rev-list --count HEAD)"
-          PUBLISHED="$(date -u '+%d %b %Y')"
+          PUBLISHED="$(date -u '+%a %b %-d %Y')"
 
           # Fail loudly rather than publishing a page that lies about itself.
           grep -q "^    const RBA_VERSION   = 'dev';" app.js
