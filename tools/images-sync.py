@@ -63,6 +63,10 @@ EXTS = ('.webp', '.jpg', '.jpeg', '.png')
 # contain hyphens of their own.
 FILENAME = re.compile(r'^([a-z0-9]+)-(.+)\.(webp|jpg|jpeg|png)$', re.I)
 
+# stock.adobe.com/images/<slug>/<id> — the slug segment is what makes the page
+# resolve. See the check in validate().
+ADOBE_OK = re.compile(r'^https://stock\.adobe\.com/images/[^/]+/\d+/?$')
+
 # "file" is NOT required. An entry without one is a WANTED image: a candidate you
 # have decided is worth looking at but have not downloaded. That is a real state in
 # this workflow — you find six things in a browsing session and stage them later —
@@ -133,6 +137,18 @@ def validate(lib, files):
                 # outbound link sends someone to the wrong picture.
                 warns.append('%s: filename says %s/%s, entry says %s/%s'
                              % (where, m.group(1), m.group(2), it.get('source'), it.get('id')))
+
+        # An Adobe link with no slug segment is a dead link, not an ugly one:
+        # /images/<id> returns "Sorry, that page doesn't exist", and only
+        # /images/<slug>/<id> resolves. Fifteen entries shipped that way because
+        # images-add.py built the short form, and nothing here noticed — the card
+        # rendered, the URL looked right, and it 404'd on click. An error, not a
+        # warning, because there is no case where the short form is what you meant.
+        if it.get('source') == 'adobe' and not ADOBE_OK.match(str(it.get('url', ''))):
+            errs.append('%s: %s is not a resolvable Adobe Stock page. Use '
+                        'https://stock.adobe.com/images/x/%s — the slug segment is '
+                        'required and "x" is a fine stand-in.'
+                        % (where, it.get('url'), it.get('id')))
 
     claimed = {it.get('file') for it in lib.get('items', [])}
     for f in sorted(set(files) - claimed):

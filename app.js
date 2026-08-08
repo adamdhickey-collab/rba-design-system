@@ -1247,19 +1247,23 @@
         foot.firstChild.textContent = where;
         a.append(frame, foot);
 
-        // The source URL, one line, with a copy button — because the commands that
+        // The source URL, whole, with a copy button — because the commands that
         // maintain this library take a URL, and reading one off a card and retyping
         // it is exactly the friction that stops anyone bothering.
         //
-        // Truncated with CSS rather than by slicing the string, so what gets copied
-        // is always the whole URL no matter how narrow the card is. A copy that
-        // silently hands you "https://elements.envato.com/item-9Z…" would be worse
-        // than no copy at all.
+        // The URL is shown COMPLETE, scheme included, and wraps rather than
+        // truncates. It used to be stripped of "https://" and then ellipsised from
+        // the left by a direction:rtl trick, on the theory that the id at the end is
+        // the part that matters. Between them those two made a card show
+        // "…adobe.com/images/x/2021509311" — a string that is not the link, cannot be
+        // pasted, and reads as if the library had mangled it. The copy button always
+        // put the real URL on the clipboard, but nobody trusts a copy button when the
+        // text beside it is visibly wrong.
         const urlRow = document.createElement('div');
         urlRow.className = 'shot-url';
         const txt = document.createElement('span');
         txt.className = 'shot-url-text';
-        txt.textContent = item.url.replace(/^https?:\/\//, '');
+        txt.textContent = item.url;
         const copy = document.createElement('button');
         copy.type = 'button';
         copy.className = 'shot-url-copy';

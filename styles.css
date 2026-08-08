@@ -1366,18 +1366,19 @@
       background: var(--surface);
       min-width: 0;
     }
+    /* Wraps rather than truncates, so the whole URL is on the card. The previous
+       rule ellipsised from the left (direction: rtl) to protect the id at the end,
+       which meant every card displayed a string that was not the link. These URLs
+       are ~43 characters and fit one line at card width; anything narrower takes a
+       second line, which is cheaper than showing a broken address. */
     .shot-url-text {
       flex: 1;
       min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
       font-family: var(--font-mono);
       font-size: 10.5px;
       line-height: 1.5;
       color: var(--text-muted);
-      direction: rtl;          /* keep the END of the URL — the id lives there */
-      text-align: left;
+      overflow-wrap: anywhere;
     }
     .shot-url-copy {
       flex: none;

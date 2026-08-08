@@ -110,6 +110,9 @@ BLOCKED = {'stock.adobe.com': (
 # trick: Adobe defends the HTML page and leaves the image open.
 FTCDN = re.compile(r'/\d+_F_(\d+)_[A-Za-z0-9]+\.(?:webp|jpe?g|png)', re.I)
 
+# The one URL shape that resolves on Adobe Stock when all you have is an id.
+ADOBE_PAGE = 'https://stock.adobe.com/images/x/%s'
+
 # iStock needs no special case: unlike Adobe, its item pages answer a scripted
 # request, so the ordinary og: route handles them. Paste the item URL, not the
 # image URL — an iStock item link carries TWO numbers (…-gm<id>-<asset>) and only
@@ -191,7 +194,13 @@ def scrape(url, title_override=None):
         meta_ = KNOWN['stock.adobe.com']
         return {'source': meta_[0], 'sourceName': meta_[1], 'tier': meta_[2],
                 'licence': meta_[3], 'id': ident,
-                'url': 'https://stock.adobe.com/images/' + ident,
+                # /images/<slug>/<id>, NOT /images/<id> — Adobe answers the second
+                # form with "Sorry, that page doesn't exist". The slug is not checked
+                # against anything, so a literal "x" stands in for the one we cannot
+                # read off a CDN filename. This route built the short form for a long
+                # time and every link it wrote was dead; images-sync.py --check now
+                # fails on the short form so it cannot come back quietly.
+                'url': ADOBE_PAGE % ident,
                 'title': title_override or 'TODO title', 'by': '', 'preview': url}
 
     source, name, tier, licence = identify(url)
