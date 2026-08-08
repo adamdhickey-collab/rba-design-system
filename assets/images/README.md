@@ -130,7 +130,7 @@ What actually suits this brand:
 
 | Service | Tier | What it is good for | The catch |
 |---|---|---|---|
-| **Adobe Stock** | paid | **The whole current library.** The deepest catalogue, the only one of these with a real exclude-generative-AI filter, and it resells Stocksy, Westend61 and peopleimages. | Everything here is an **unlicensed comp**, and the standard subscription does not cover those premium collections. |
+| **Adobe Stock** | paid | **The whole current library.** The deepest catalogue, and it resells Stocksy, Westend61, Blend Images and peopleimages. | Everything here is an **unlicensed comp**. Eight are the Enhanced tier, which a subscription credit does not cover — check `LICENSE TYPE` per asset, not the byline. Its exclude-generative filter only removes what contributors declared, so it is not a screen. |
 | **Envato Elements** | subscription | **The cheapest way to ship.** RBA already pays for it, and the subscription licenses on download — the only source in this table whose images can be used today. | Widely subscribed, so no exclusivity. Quality is uneven and the candid register this brand wants is thinner; the results need filtering. |
 | **Stocksy United** | paid | The least stock-looking work available. Artist co-op, tight curation. | Priciest per image, smaller library. |
 | **iStock** | paid | Getty's affordable tier, and Signature is exclusive to Getty/iStock — not resold through Adobe, which is the reason to reach for it rather than a price one. | Item pages answer scripted requests, but a link needs BOTH numbers (`…-gm<id>-<asset>`); the id alone 404s. |
@@ -314,12 +314,37 @@ down; six images broke it.
 | **Culture & careers** | 8 | Gained the mentoring frame it never had. Street-scene cluster trimmed. |
 | **Backgrounds & texture** | 7 | Rebuilt around real light on real material. One data texture survives; one is the limit. |
 
-### Eleven picks are premium collection
+### Eight picks are Enhanced, and it is not the eight you would guess
 
-Stocksy ×1, Westend61 ×2, peopleimages ×5, Blend Images ×1, Monkey Business ×1,
-Caia ×1 — **11 of 50**. A standard Adobe subscription does not cover these. They
-are also, not coincidentally, among the best images in the set, so this is a budget
-question rather than a mistake to correct.
+**8 of 50**, read off `LICENSE TYPE` on each asset page rather than inferred from
+the contributor:
+
+| Image | Contributor | Large | Small |
+|---|---|---|---|
+| 179326180 | John Fedele/Blend Images | $499.99 | $249.99 |
+| 1705494494 | Westend61 | $499.99 | $249.99 |
+| 1725109912 | Westend61 | $499.99 | $249.99 |
+| 370855681 | Westend61 | $249.99 | $119.99 |
+| 2110070169 | Marko Geber | $249.99 | $119.99 |
+| 2008985972 | Marko Geber | $249.99 | $119.99 |
+| 1708678408 | Santi Nuñez/Stocksy | $249.99 | $119.99 |
+| 2110075031 | Davor | $249.99 | $119.99 |
+
+**US$2,749.92 for all eight at full size, US$1,349.92 at 1688 × 1125**, before any
+negotiated rate. A standard subscription credit does not cover them. They are also
+among the strongest frames in the set, so this is a budget decision rather than a
+mistake to correct.
+
+**The earlier count of eleven was wrong**, and wrong in a way worth recording: it
+was assembled by matching agency names, on the assumption that a peopleimages or
+Monkey Business byline meant a premium tier. It does not. Those, and Jacob Lund,
+are all Standard — while Marko Geber and Davor, which no name-based list would
+have flagged, are Enhanced. The tier is a field on the asset page and nothing
+else is a substitute for reading it:
+
+- `LICENSE TYPE: Enhanced` — two prices shown, per-image purchase, not covered.
+- `LICENSE TYPE: Standard or Extended` — Standard comes from the subscription,
+  Extended is $79.99.
 
 ### Adobe search is now AI-contaminated, and the filter does not save you
 
