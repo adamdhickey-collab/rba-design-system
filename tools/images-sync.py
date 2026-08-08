@@ -180,6 +180,9 @@ def build(lib):
             'why': it.get('why', ''),
             'use': it.get('use', ''),
             'crop': it.get('crop', ''),
+            # Generative provenance, carried rather than re-derived. Eight declared-AI
+            # images of people shipped once because this was nobody's field to fill in.
+            'gen': it.get('gen', ''),
             'url': it['url'],
         })
     return {
