@@ -1107,6 +1107,23 @@
       }
       const items = data.items || [];
       const cats = data.categories || [];
+
+      // Best first, across the whole library rather than family by family.
+      //
+      // The manifest arrives grouped: every Collaboration image, then every
+      // Expertise image, and so on. That is the right shape for library.json —
+      // promoting an image means moving it up its own family — but it is the wrong
+      // shape for a grid, because it puts the tenth-best Collaboration frame above
+      // the best Applied AI one. Someone scrolling the page reads the top row as
+      // "the good ones", and until now the top row was one family's back catalogue.
+      //
+      // Rank is already the quality judgement, derived from position within a
+      // family by images-sync.py. Sorting on it globally interleaves the families:
+      // the seven category leads fill the first row, the seven seconds the next.
+      // Array.prototype.sort is stable, so images sharing a rank stay in the
+      // manifest's family order, and filtering to one family gives back exactly
+      // the order library.json specifies.
+      items.sort((a, b) => (a.rank || 0) - (b.rank || 0));
       const flatten = s => s.toLowerCase().replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
       // Layered haystacks, same idea as the icon search: what a term matched IN
       // decides where the card ranks, so a title hit beats a hit buried in the
