@@ -130,7 +130,7 @@ What actually suits this brand:
 
 | Service | Tier | What it is good for | The catch |
 |---|---|---|---|
-| **Adobe Stock** | paid | **The whole current library.** The deepest catalogue, and it resells Stocksy, Westend61, Blend Images and peopleimages. | Everything here is an **unlicensed comp**. Eight are the Enhanced tier, which a subscription credit does not cover — check `LICENSE TYPE` per asset, not the byline. Its exclude-generative filter only removes what contributors declared, so it is not a screen. |
+| **Adobe Stock** | paid | **The whole current library**, and there is a credit balance against it. The deepest catalogue, and it resells Stocksy, Westend61, Blend Images and peopleimages. | Everything here is still an **unlicensed comp until the credit is spent**. Forty-two are 1 credit each; eight are Enhanced at 25 or 50. Its exclude-generative filter only removes what contributors declared, so it is not a screen. |
 | **Envato Elements** | subscription | **The cheapest way to ship.** RBA already pays for it, and the subscription licenses on download — the only source in this table whose images can be used today. | Widely subscribed, so no exclusivity. Quality is uneven and the candid register this brand wants is thinner; the results need filtering. |
 | **Stocksy United** | paid | The least stock-looking work available. Artist co-op, tight curation. | Priciest per image, smaller library. |
 | **iStock** | paid | Getty's affordable tier, and Signature is exclusive to Getty/iStock — not resold through Adobe, which is the reason to reach for it rather than a price one. | Item pages answer scripted requests, but a link needs BOTH numbers (`…-gm<id>-<asset>`); the id alone 404s. |
@@ -330,10 +330,28 @@ the contributor:
 | 1708678408 | Santi Nuñez/Stocksy | $249.99 | $119.99 |
 | 2110075031 | Davor | $249.99 | $119.99 |
 
-**US$2,749.92 for all eight at full size, US$1,349.92 at 1688 × 1125**, before any
-negotiated rate. A standard subscription credit does not cover them. They are also
-among the strongest frames in the set, so this is a budget decision rather than a
-mistake to correct.
+**US$2,749.92 for all eight at full size, US$1,349.92 at 1688 × 1125.**
+
+### In credits, which is how this actually gets paid for
+
+Credits are universal and a Standard asset is 1 credit, so the arithmetic is
+short:
+
+| | | |
+|---|---|---|
+| Standard | 42 × 1 | **42 credits** |
+| Enhanced | 5 × 25 | **125 credits** |
+| Enhanced | 3 × 50 | **150 credits** |
+| | **whole library** | **317 credits** |
+
+Against a balance around 100: the forty-two Standard frames are covered several
+times over and are not worth deliberating, and about **two** of the Enhanced eight
+fit alongside them. That is the only real decision in this document. Spend them
+where the brand is most exposed — homepage, campaign hero — because the failure
+mode there is not a mediocre photo, it is the same photo on a competitor's site.
+
+Credit prices are readable only when signed in; the tier is readable while signed
+out. Confirm the credit cost at checkout.
 
 **The earlier count of eleven was wrong**, and wrong in a way worth recording: it
 was assembled by matching agency names, on the assumption that a peopleimages or
