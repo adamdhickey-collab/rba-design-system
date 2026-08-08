@@ -272,73 +272,82 @@ API key.
 Frames are 3:2, which is what most of the set is shot at. **Portrait images will be
 cropped hard** — check any tall candidate in the grid before committing to it.
 
-## Review of the original fifty
+## The 66 → 50 pass
 
-Every image was looked at, not just its title. **Nothing has been deleted** — these
-are recommendations, and the cuts are a brand decision. Each one is a line in
-`library.json` and a file in `shortlist/`.
+Every image was looked at, not read off its title: the 66 were laid out as contact
+sheets and judged as a set. **27 were cut and 11 added**, which is the whole
+difference between 66 and 50. `--review` now reports nothing.
 
-### Four problems, in order of how much they matter
+### What was wrong
 
-**1. One contributor is a fifth of the library.** Gorodenkoff supplies **10 of 50**,
-spread across four of the five categories. Andrey Popov supplies another 5. Those
-two hold 15 images between them. A brand library assembled from two photographers'
-back catalogues will look like two photographers' back catalogues.
+**1. The abstracts were one cliché eight times.** Twelve of 66 were backgrounds and
+eight of those were the same picture — glowing plexus nodes, particle waves, neon
+fibre, a data tunnel. Not one was on RBA's palette, most had no quiet area to set
+type in, and collectively they were the visual language of the AI hype cycle on a
+page that argues for pragmatism. All eight went.
 
-**2. There are two incompatible visual registers.** The Collaboration set (Stocksy)
-and the best of Industry context (Westend61) are bright, naturally lit and observed.
-The Gorodenkoff frames are dark, teal-graded and cinematically lit — a completely
-different look, immediately recognisable as stock, and impossible to sit next to the
-others on one page. Pick one register. The daylight one is closer to RBA's own site.
+**2. Four categories described the picture, not the job.** *Collaboration*,
+*Applied AI & data* and *Workspaces & devices* all had a legitimate claim on a
+photograph of three people at a dashboard, so the filter could not be used to find
+anything. The families are now named for the page an image goes on.
 
-**3. Data, AI & security is four near-duplicates.** Ranks 1–4 are all Andrey Popov,
-and 1, 2 and 4 are effectively the same photograph: a white desk, a convertible
-laptop, hands only, a generic dashboard on screen. Three of the four are the
-category's *primary picks*, so the strongest slots are the weakest images. Only 4
-contributors cover the whole category.
+**3. Compositional clusters.** Four takes on "person with a tablet in an industrial
+aisle", three on "pointing at a chart on a screen", four on "colleagues walking and
+talking outdoors". Cut back to one or two of each.
 
-**4. Digital experience is one cliché ten times.** Eight of the ten are wireframes,
-sticky notes or colour swatches. Rank 1 has no face in it at all — a torso in a
-white shirt pointing at printouts. It is the single most generic image in the set
-and it is a primary pick.
+**4. Register drift had crept back.** The dark, cool-graded frames the previous
+review removed as Gorodenkoff had returned under other names — a server room, a
+green-cast machine shop, dead black monitors. Same fault, different contributors.
 
-### Per category
+**5. Faceless frames in a human-centered library.** Heads cropped out of the top of
+the frame, hands-only desks, a laptop with a cactus. The rule was already written
+down; six images broke it.
 
-| Category | Verdict | Suggested action |
+### Per family, after
+
+| Family | Count | Note |
 |---|---|---|
-| **Collaboration** | Strongest set. 8 contributors, consistent daylight register, real interaction. | Keep. Ranks 1–4 are Stocksy, so confirm the budget covers them. |
-| **Digital experience** | Weakest set. Wireframe cliché throughout, faceless primary pick. | Replace ranks 1, 3, 8 and 10. Show the work on screens, not on walls. |
-| **Engineering & cloud** | Split. Rank 1 (Marko Geber) is excellent; 4 Gorodenkoff frames drag it dark. | Keep 1. Cut the Gorodenkoff duplicates back to one. |
-| **Data, AI & security** | Broken by duplication. 4 contributors for 10 images. | Cut two of ranks 1/2/4. Rebuild from a wider pool. |
-| **Industry context** | Good range, best category for real environments. | Keep. Rank 1 (Westend61) is a model for the whole library. |
+| **Client work & collaboration** | 11 | The strongest set and the flagship. Largely intact from before. |
+| **Focused expertise** | 8 | Rebuilt toward one person, mid-shot, absorbed in the work — the composition rbaconsulting.com uses almost exclusively. |
+| **Data & AI in practice** | 8 | Was the worst family, held together by dashboards. Now shows people using software, because "data" photographed literally is always a cliché. |
+| **Industries in action** | 8 | Verticals rather than machinery: agriculture, education, financial services, healthcare, retail, manufacturing, food production. |
+| **Culture & careers** | 8 | Gained the mentoring frame it never had. Street-scene cluster trimmed. |
+| **Backgrounds & texture** | 7 | Rebuilt around real light on real material. One data texture survives; one is the limit. |
 
-### Nine picks are premium collection
+### Eleven picks are premium collection
 
-Stocksy ×4, Westend61 ×2, peopleimages ×3 — **9 of 50**, including Collaboration
-ranks 1–4 and Industry context rank 1. A standard Adobe subscription does not cover
-these. They are also, not coincidentally, among the best images in the set, so this
-is a real budget question rather than a mistake to correct.
+Stocksy ×1, Westend61 ×2, peopleimages ×5, Blend Images ×1, Monkey Business ×1,
+Caia ×1 — **11 of 50**. A standard Adobe subscription does not cover these. They
+are also, not coincidentally, among the best images in the set, so this is a budget
+question rather than a mistake to correct.
 
-### What was actually changed
+### Adobe search is now AI-contaminated, and the filter does not save you
 
-**Four images added, nothing removed.**
+This is the operational finding worth keeping. Sourcing ran ~180 candidates through
+contact sheets. On generic business terms — *dashboard*, *analytics*, *AI*,
+*business team* — **the great majority of first-page results were AI-generated**,
+with `filters[gentech]=0` applied. That filter only removes what the contributor
+declared, and undeclared generative work is now the bulk of the corpus.
 
-- **Data, AI & security ranks 1–3**, from Envato Elements. These directly answer
-  problem 3: the four Andrey Popov near-duplicates now sit at ranks 4–7 instead of
-  holding the category's primary slots. All three show people reading or presenting
-  data together rather than another pair of hands at a laptop, and all three are
-  licensed by the subscription rather than being comps.
-- **Engineering & cloud rank 2**, from Unsplash, free-licensed — real code, real
-  desk, daylight, the same register as the Collaboration set, and better than the
-  Gorodenkoff frames it now sits above.
+Two screens worked, in this order:
 
-Both sets of candidates were reviewed by eye, not by title. The hit rates are worth
-recording, because they are the argument for paying for curation:
+- **Pixel dimensions.** Camera files are large and irregular: 8736 × 4896,
+  7087 × 3911, 6955 × 4637. Diffusion output is small and tidy, and lands on
+  2752 × 1536, 2688 × 1536, or multiples of 64. Under ~4500px wide, or a height of
+  exactly 1024/1536/2048, is a reject until proven otherwise. **Three picks that
+  survived visual review were dropped on this test alone**, after they had already
+  been chosen — which is the argument for running it before you get attached.
+- **Subject matter.** Spaces that are expensive to fake are still real: a substation,
+  a crop field, a classroom, a hospital. Spaces that are cheap to fake — a generic
+  bright office with a dashboard on the wall — are almost entirely synthetic now.
 
-| Source | Reviewed | Used | Rejected for |
+| Search space | Reviewed | Used | Rejected mostly for |
 |---|---|---|---|
-| Envato Elements | 4 | 3 | One dark boardroom shot that read as investment banking. |
-| Unsplash | 5 | 1 | A Twitter logo on office signage, a geology CAD screen, two portrait crops. |
+| Dashboards, analytics, "AI" | 48 | 0 | AI-generated: impossible screen graphics, plastic skin, blank screens being gestured at. |
+| Industries (energy, agriculture, education, health) | 40 | 3 | Real photography, but hi-vis and hard hats — a register RBA's own site never uses. |
+| Mentoring, onboarding, training | 34 | 1 | AI-generated, or backs of heads in a seminar room. |
+| Developers, focused single-person work | 32 | 4 | Dark, teal-graded, or faceless. |
+| Architecture, light, texture | 24 | 2 | Duplicated the glass facade already in the set. |
 
 ## Before anything is bought
 
