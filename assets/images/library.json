@@ -155,19 +155,6 @@
     },
     {
       "source": "adobe",
-      "id": "2051268182",
-      "file": "adobe-2051268182.webp",
-      "cat": "Collaboration & consulting",
-      "title": "Young Entrepreneur Explaining Business Strategy To Colleagues In Open Plan Office",
-      "by": "as-artmedia",
-      "dim": "7375 × 4922",
-      "why": "Shot over shoulders at a speaker mid-explanation. The framing makes the viewer a participant rather than an audience.",
-      "use": "Leadership, internal comms, culture",
-      "crop": "Keep foreground shoulders; they are the composition.",
-      "url": "https://stock.adobe.com/images/x/2051268182"
-    },
-    {
-      "source": "adobe",
       "id": "596501438",
       "file": "adobe-596501438.webp",
       "cat": "Expertise & focused work",
@@ -282,19 +269,6 @@
       "use": "Mobile workflows, reading lists, secondary pages",
       "crop": "Vertical-friendly; also crops to 3:2.",
       "url": "https://stock.adobe.com/images/x/2000178083"
-    },
-    {
-      "source": "adobe",
-      "id": "1920899694",
-      "file": "adobe-1920899694.webp",
-      "cat": "Expertise & focused work",
-      "title": "Developer in headphones working at a monitor with colleagues at desks behind",
-      "by": "BONNINSTUDIO/Stocksy",
-      "dim": "5472 × 3648",
-      "why": "An observed frame rather than a lit one: headphones on, screen mid-task, the rest of the floor going about its day behind. The daylight answer to the cinematically graded profile it replaces.",
-      "use": "Engineering, AI practice, recruiting heroes",
-      "crop": "3:2; keep the depth behind him — the room is half the picture.",
-      "url": "https://stock.adobe.com/images/x/1920899694"
     },
     {
       "source": "adobe",
@@ -731,19 +705,6 @@
     },
     {
       "source": "adobe",
-      "id": "746577613",
-      "file": "adobe-746577613.webp",
-      "cat": "Workspaces & devices",
-      "title": "Designer at a laptop showing a hand-drawn wireframe, printed charts and notes across the desk",
-      "by": "DragonImages",
-      "dim": "8256 × 5504",
-      "why": "Shot over the shoulder, so the viewer reads the screen with her. A sketched wireframe on a real laptop, printouts around it, a colleague working on at the desk behind — digital craft at the stage where it is still pencil and paper. The frame it replaces was blurred hands over a colour-cast pile of props with nobody in it.",
-      "use": "Design and UX, product work, discovery and prototyping",
-      "crop": "3:2. Keep the laptop screen legible and the colleague in the background; do not crop to the hands.",
-      "url": "https://stock.adobe.com/images/746577613"
-    },
-    {
-      "source": "adobe",
       "id": "1860473314",
       "file": "adobe-1860473314.jpg",
       "cat": "Workspaces & devices",
@@ -901,45 +862,6 @@
     },
     {
       "source": "adobe",
-      "id": "448141112",
-      "file": "adobe-448141112.webp",
-      "cat": "Abstract backgrounds",
-      "title": "A field of coloured tiles resolving into four sorted rows, threads running left to right",
-      "by": "arthead",
-      "dim": "Vector (AI/EPS)",
-      "why": "The only one of these that illustrates something specific: unsorted input on the left, ordered output on the right. A picture of what a data practice actually does, rather than a mood about it.",
-      "use": "Data engineering, migration and modernisation, explainer diagrams",
-      "crop": "Crop off the bottom-right — the artwork has \"BIG DATA VISUALISATION\" set into it.",
-      "url": "https://stock.adobe.com/images/448141112"
-    },
-    {
-      "source": "adobe",
-      "id": "144347603",
-      "file": "adobe-144347603.webp",
-      "cat": "Abstract backgrounds",
-      "title": "Radial burst of red and blue plotted points on near-black, threads curling away to the right",
-      "by": "garrykillian",
-      "dim": "Vector (AI/EPS)",
-      "why": "Red and blue on near-black is the closest any of these comes to the brand palette on its own. Dense on the left, open on the right, so it composes rather than fills.",
-      "use": "Thought leadership covers, analytics pages, report dividers",
-      "crop": "Crop out the right third — the artwork carries \"ADVANCED ANALYTICS / BIG DATA\" there. That crop is also where the copy space is, so replace the words rather than working around them.",
-      "url": "https://stock.adobe.com/images/144347603"
-    },
-    {
-      "source": "adobe",
-      "id": "1340518868",
-      "file": "adobe-1340518868.webp",
-      "cat": "Abstract backgrounds",
-      "title": "Sweeping ribbon of blue and orange particles across a deep indigo field",
-      "by": "ec0de",
-      "dim": "Vector (AI/EPS)",
-      "why": "Movement without a single node-and-line cliche, and the warm particles keep it from reading as generic tech blue. Supplied as a layout with headline and stat slots already in it.",
-      "use": "Deck title slides, stat blocks, AI and research topics",
-      "crop": "Delete the sample type and figures on the left before use; that area is the copy space.",
-      "url": "https://stock.adobe.com/images/1340518868"
-    },
-    {
-      "source": "adobe",
       "id": "237043182",
       "file": "adobe-237043182.webp",
       "cat": "Abstract backgrounds",
@@ -977,32 +899,6 @@
       "use": "Data and connectivity stories, sustainability-adjacent pages",
       "crop": "Veins hold detail in tight crops.",
       "url": "https://stock.adobe.com/images/2018039654"
-    },
-    {
-      "source": "adobe",
-      "id": "217742144",
-      "file": "adobe-217742144.webp",
-      "cat": "Abstract backgrounds",
-      "title": "Star trails circling over a dark ridge line, long exposure",
-      "by": "MIKITO",
-      "dim": "6000 × 4000",
-      "why": "Motion recorded rather than rendered, which is a different claim from every graphic above it. The teal cast is off-palette and it is the least corporate frame in the library, so it wants a deliberate placement.",
-      "use": "Long-form editorial, culture and careers, occasional full-bleed header",
-      "crop": "3:2. Type sits in the darker upper-left; keep the ridge line at the bottom edge.",
-      "url": "https://stock.adobe.com/images/217742144"
-    },
-    {
-      "source": "adobe",
-      "id": "273830323",
-      "file": "adobe-273830323.webp",
-      "cat": "Abstract backgrounds",
-      "title": "Empty tropical beach under a wide sky, palms along the treeline, warm flare at the right",
-      "by": "nevodka.com",
-      "dim": "7360 × 4912",
-      "why": "Kept honest: this is a holiday photograph, and it is here because it was asked for. The left two-thirds are open sky and water, which does make it a usable plate for large type.",
-      "use": "Benefits, time off, offsites — not client-facing work",
-      "crop": "3:2. Crop hard to the left; the flare at the right edge is baked in.",
-      "url": "https://stock.adobe.com/images/273830323"
     }
   ]
 }
