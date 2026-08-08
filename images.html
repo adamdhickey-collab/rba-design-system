@@ -144,15 +144,47 @@
             <table class="table">
               <thead><tr><th>Rule</th><th>What it means when choosing an image</th></tr></thead>
               <tbody>
-                <tr><td>Candid over posed</td><td>People engaged with the work or each other, never the camera. Reject synchronized smiles, handshakes, and pointing at meaningless charts.</td></tr>
+                <tr><td>The house composition</td><td><strong>One person, mid-shot, holding the tool of their work and looking down at it, with a real place softly out of focus behind.</strong> This is what rbaconsulting.com uses almost to the exclusion of everything else, and it is the most useful tiebreaker when two candidates are otherwise equal. It is not the only composition here &mdash; the collaboration family is deliberately built on two and three people &mdash; but when in doubt, match this.</td></tr>
+                <tr><td>Candid over posed</td><td>People engaged with the work or each other, never the camera. A photograph is candid when you could remove the photographer and nothing in the scene would change.</td></tr>
                 <tr><td>Human-centered</td><td>The person always outranks the machinery, the screen and the office. An engineer with a tablet beats a dramatic robot arm with nobody around.</td></tr>
                 <tr><td>Environmental portraits</td><td>Show people in their working context with the tools of their craft &mdash; not studio headshots, not arms-folded executives.</td></tr>
-                <tr><td>Technology in human use</td><td>Photograph people <em>using</em> software and devices. No robot heads, glowing brains, blue circuitry faces, holograms or neon cyber-tunnels &mdash; they undermine RBA&rsquo;s pragmatic AI positioning. This rule governs <em>photography</em>; the backgrounds family below is a separate job with separate rules.</td></tr>
+                <tr><td>Technology in human use</td><td>Photograph people <em>using</em> software and devices, and make the screen believable: real code, a real spreadsheet, a real document. No robot heads, glowing brains, blue circuitry faces, holograms or neon cyber-tunnels &mdash; they undermine RBA&rsquo;s pragmatic AI positioning. This rule governs <em>photography</em>; backgrounds are a separate job with separate rules.</td></tr>
                 <tr><td>Contemporary &amp; real</td><td>Natural light, modern workplaces, believable clutter. If it feels obviously like stock, it fails, however beautiful it is.</td></tr>
+                <tr><td>Dressed for the actual room</td><td>Business casual: shirts and knitwear, no suits and ties, no PPE. Clothing is the fastest signal of which industry and which decade a photograph belongs to, and a boardroom of suits reads as banking rather than consulting.</td></tr>
+                <tr><td>Range is a rule, not a nicety</td><td>Judge the library, not only the frame. Age, gender and ethnicity should vary across a family, and so should the kind of work being done &mdash; eight designers at monitors is a narrow library however good each picture is.</td></tr>
                 <tr><td>No forced grading</td><td>Use images as supplied. Trying to make everything beige, blue or desaturated makes a library feel more artificial, not less.</td></tr>
-                <tr><td>Backgrounds are a surface, not a subject</td><td>A background exists to be <em>put something on top of</em> &mdash; a headline, a stat, a section title. Judge one on its quiet area, not its busiest corner: if there is nowhere for type to sit, it is a texture, not a background. Never run one as a hero on its own, and never pair two in the same layout.</td></tr>
-                <tr><td>Real light and real material, not vector abstracts</td><td>The backgrounds family is photography of surfaces &mdash; window light on a wall, a facade, an empty room, a leaf &mdash; because those sit <em>under</em> the photographic families instead of arguing with them. Glowing plexus networks, particle waves, neon fibre and data tunnels are banned by the same rule that bans robot heads from the photography: they are the visual language of the AI hype cycle, and they undercut RBA&rsquo;s pragmatic positioning. Eight of them were cut in this pass; one data texture survives, and one is the limit.</td></tr>
-                <tr><td>Check for baked-in type</td><td>Stock background graphics often ship with sample words set into the artwork. Every image that did has now been cut, so nothing in the current set carries one &mdash; but the check does not retire with them. Look at all four corners of any background before you use it, and if you find words, crop them out or delete them in the vector. Shipping someone else&rsquo;s stock headline is worse than shipping no image.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="subhead">Rejected on sight</h3>
+          <p>Each of these killed at least one real candidate in the last pass and most killed several, so they are worth knowing by name: a reviewer who can spot the trope works far faster than one applying the rules above from scratch. Several had also crept back into the library after an earlier review removed them, which is the argument for writing them down rather than re-deriving them each time.</p>
+          <div class="token-table-scroll" tabindex="0" role="region" aria-label="Photography rejection list, scrollable">
+            <table class="table">
+              <thead><tr><th>The trope</th><th>Why it fails</th></tr></thead>
+              <tbody>
+                <tr><td>Eye contact with the lens</td><td>The moment someone looks at the camera the picture becomes an advertisement. Attention belongs on the work or on the other person &mdash; RBA&rsquo;s own photography almost never makes eye contact.</td></tr>
+                <tr><td>The foreground-blur sandwich</td><td>The subject framed between two out-of-focus heads, shoulders or pot plants. It is meant to read as fly-on-the-wall and instead announces a shoot, because nobody actually stands there. The most common single fault in candidate sets.</td></tr>
+                <tr><td>Faces cropped by the frame edge</td><td>A head cut off at the top of the frame, or a torso with no face at all. These break the human-centered rule while claiming to illustrate people, and cropping cannot fix them.</td></tr>
+                <tr><td>Dead or invented screens</td><td>A black monitor, a blank screen being gestured at, or a dashboard whose chart could not plot real data. If the screen is not plausible the photograph is about nothing &mdash; and on a technology consultancy&rsquo;s site that is the one thing it cannot be.</td></tr>
+                <tr><td>Corporate theatre</td><td>Handshakes, high-fives, fists raised at a milestone slide, colleagues striding past a glass building, anyone pointing at a chart. Nothing is happening in these pictures; they are gestures performed for a camera.</td></tr>
+                <tr><td>Hi-vis and hard hats</td><td>Usually real photographs, and still wrong. PPE reads as heavy-industry contractor rather than consulting, and it is a register rbaconsulting.com never uses. Show the plant manager in a shirt on the floor instead.</td></tr>
+                <tr><td>The cinematic dark grade</td><td>Teal-and-orange, dark server aisles, moody control rooms. Individually striking, collectively impossible &mdash; they cannot sit beside daylight frames in one layout. This fault has now returned twice under different contributors&rsquo; names, so check for it on every intake.</td></tr>
+                <tr><td>One idea photographed twice</td><td>Judge a candidate against the family it is joining, not on its own. Four takes on &ldquo;person with a tablet in an aisle&rdquo; is one image and three wasted slots. <code>./tools/images-sync.py --review</code> catches these by contributor, category and title.</td></tr>
+                <tr><td>The AI tells</td><td>Impossible dashboard graphics, plastic skin, hands that do not resolve, suspiciously symmetrical clutter, nonsense text on signage, a blank screen where content should be. Trust these over the search filter, then confirm with the dimension check in the licensing table below.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="subhead">Backgrounds are a different job</h3>
+          <div class="token-table-scroll" tabindex="0" role="region" aria-label="Background selection rules, scrollable">
+            <table class="table">
+              <thead><tr><th>Rule</th><th>What it means when choosing an image</th></tr></thead>
+              <tbody>
+                <tr><td>A surface, not a subject</td><td>A background exists to be <em>put something on top of</em> &mdash; a headline, a stat, a section title. Judge one on its quiet area, not its busiest corner: if there is nowhere for type to sit, it is a texture, not a background. Never run one as a hero on its own, and never pair two in the same layout.</td></tr>
+                <tr><td>Real light and real material, not vector abstracts</td><td>Photograph surfaces &mdash; window light on a wall, a facade, an empty room, a leaf &mdash; because those sit <em>under</em> the photographic families instead of arguing with them. Glowing plexus networks, particle waves, neon fibre and data tunnels are banned by the same rule that bans robot heads from the photography: they are the visual language of the AI hype cycle, and they undercut RBA&rsquo;s pragmatic positioning. Eight were cut in the last pass; one data texture survives, and one is the limit.</td></tr>
+                <tr><td>Keep a warm one and a cool one</td><td>The family should offer a temperature, not only a shape. A ground for dark text and a ground for reversed white text are different problems, and a set that solves only one of them sends designers back to stock.</td></tr>
+                <tr><td>Check for baked-in type</td><td>Stock background graphics often ship with sample words set into the artwork. Every image that did has now been cut, so nothing in the current set carries one &mdash; but the check does not retire with them. Look at all four corners before using one, and if you find words, crop them out or delete them in the vector. Shipping someone else&rsquo;s stock headline is worse than shipping no image.</td></tr>
               </tbody>
             </table>
           </div>
