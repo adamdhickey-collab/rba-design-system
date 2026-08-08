@@ -204,7 +204,33 @@
       text-rendering: optimizeLegibility;
     }
     h1, h2, h3, h4, h5 { margin: 0; font-weight: 400; }
-    p { margin: 0; }
+
+    /* A paragraph pushes the next block away, the same way every other block here
+       does: .callout ends with --space-6, .subhead opens with --space-8. A
+       paragraph was the one block that pushed nothing, which reads fine while it
+       is followed by a sub-heading and fails the moment it is followed by another
+       paragraph, or by a bare .token-table-scroll, which carries no margin of its
+       own. Eighteen places across the five pages sat flush.
+
+       That this was an oversight rather than a decision is written into
+       .callout-body, which trims `> :first-child` and `> :last-child` margins —
+       trim rules for margins the reset had already taken away.
+
+       Zeroed again below inside the containers that space their own children with
+       `gap`, so nothing gains a stray 16px on top of it. That list is exactly the
+       flex and grid parents and nothing else: an earlier draft also zeroed
+       .demo-cta and .hero .container, which are ordinary blocks, and in doing so
+       overrode .demo-cta-body's own `margin: --space-2 0 --space-4` and left the
+       call-to-action sitting flush on its button. A container only belongs here if
+       it computes to flex or grid. */
+    p { margin: 0 0 var(--space-4); }
+    p:last-child { margin-bottom: 0; }
+    .type-row > p,
+    .task-card > p,
+    .section-head > p,
+    .palette-pair > p,
+    .footer-inner > p,
+    .shot-card p { margin-bottom: 0; }
     /* Prose links use --navy-700, not --brand. At small sizes --brand (navy-600)
        only reaches 4.36:1 on the --neutral-100 page background, under the 4.5:1 AA
        floor; navy-700 clears it on both the page (6.74:1) and --surface (7.44:1),
